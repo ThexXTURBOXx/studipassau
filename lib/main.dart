@@ -34,7 +34,7 @@ class StudiPassauApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: const LoginPage(title: 'StudiPassau Login'),
+      home: LoginPage(),
     );
   }
 }

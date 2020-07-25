@@ -1,33 +1,78 @@
+import 'package:StudiPassau/bloc/blocs/oauth_bloc.dart';
+import 'package:StudiPassau/bloc/events/oauth_event.dart';
+import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
+import 'package:StudiPassau/bloc/states/oauth_state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
-import 'package:studip/studip.dart' as studip;
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class LoginPage extends StatelessWidget {
-  const LoginPage({Key key, this.title}) : super(key: key);
+class LoginPage extends StatefulWidget {
+  final OAuthRepo repo = OAuthRepo();
 
-  final String title;
+  @override
+  State<StatefulWidget> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
+  OAuthBloc _oAuthBloc;
+  AnimationController _fadeController;
+  Animation<double> _fadeAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _oAuthBloc = OAuthBloc(widget.repo);
+    _fadeController = AnimationController(
+        duration: const Duration(milliseconds: 1000), vsync: this);
+    _fadeAnimation =
+        CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
+  }
+
+  /*
+
+    OAuthRepo.init().then((v) {
+      return OAuthRepo.instance.client.apiGetJson('user');
+    }).then((decoded) {
+      print(decoded['name']['formatted']);
+    });
+   */
 
   @override
   Widget build(BuildContext context) {
     //tryLogin(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text('StudiPassau Login'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
-            Text(
-              // TODO(HyperSpeeed): Change text
-              'If no browser opens, install one',
-            )
+          children: <Widget>[
+            FadeTransition(
+              opacity: _fadeAnimation,
+              child: BlocBuilder(
+                cubit: _oAuthBloc,
+                builder: (context, state) {
+                  _fadeController.reset();
+                  _fadeController.forward();
+                  if (state is NotAuthenticated) {
+                    return const Text('Not authenticated.');
+                  } else if (state is Authenticating) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  } else if (state is Authenticated) {
+                    return Text(widget.repo.userData['user_id'].toString());
+                  } else {
+                    return const Text('UNDEFINED');
+                  }
+                },
+              ),
+            ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => tryLogin(context),
+        onPressed: () => login(),
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
@@ -55,22 +100,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  void tryLogin(BuildContext context) {
-    final client = studip.StudIPClient(
-        'https://studip.uni-passau.de/studip/dispatch.php/api',
-        DotEnv().env['CONSUMER_KEY'],
-        DotEnv().env['CONSUMER_SECRET'],
-        apiBaseUrl: 'https://studip.uni-passau.de/studip/api.php/');
-    client.getAuthorizationUrl('studipassau://oauth_callback').then((url) {
-      return FlutterWebAuth.authenticate(
-          url: url, callbackUrlScheme: 'studipassau', saveHistory: false);
-    }).then((res) {
-      final verifier = Uri.parse(res).queryParameters['oauth_verifier'];
-      return client.retrieveAccessToken(verifier);
-    }).then((v) {
-      return client.apiGetJson('user');
-    }).then((decoded) {
-      print(decoded['name']['formatted']);
-    });
+  void login() {
+    _oAuthBloc.add(Authenticate());
   }
 }
