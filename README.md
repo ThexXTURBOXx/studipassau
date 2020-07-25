@@ -2,15 +2,51 @@
 
 StudiPassau Reimagined using Flutter
 
-## Getting Started
+<p align="center">
+  <a href="https://travis-ci.com/ThexXTURBOXx/studipassau"><img src="https://travis-ci.com/ThexXTURBOXx/studipassau.svg?branch=master"></a>
+</p>
 
-This project is a starting point for a Flutter application.
+The successor of the app [StudiPassau](https://play.google.com/store/apps/details?id=studip_uni_passau.femtopedia.de.unipassaustudip),
+completely rewritten in Dart using Flutter framework.
 
-A few resources to get you started if this is your first Flutter project:
+The app is made for use with Android (and later Fuchsia as well), even though it should be compatible with iOS as well (in theory).
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Compiling from source
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The compilation from source should be straight forward (only Android):
+
+1. Fully install the [Flutter SDK](https://flutter.dev/docs/get-started/install)
+2. Clone this repo using `git clone https://github.com/ThexXTURBOXx/studipassau.git`
+3. Create a file called `.env` in the project's root and add your OAuth credentials:
+```
+CONSUMER_KEY=<YourConsumerKeyHere>
+CONSUMER_SECRET=<YourConsumerSecretHere>
+```
+4. Compile it using Android Studio's `Build->Flutter->Build XXX` feature
+
+If you want to compile the app for iOS, I can't really help you as I usually don't for iOS and have no Apple Developer account :/
+
+## Features
+
+### Fully ported from old app
+
+ - ✔ Project Layout (just a placeholder, so I can remember the checkmark-icon, lol)
+
+### WIP
+
+ - 🕒 Authentication using OAuth 1.0
+
+### Planned
+
+ - ❌ Schedule
+ - ❌ Mensa plan
+ - ❌ Customization
+ - ❌ Files
+
+## Changelog
+
+See [here](https://github.com/ThexXTURBOXx/studipassau/releases).
+
+## Feature Requests and Bugs
+
+Please file feature requests and bugs at the [issue tracker](https://github.com/ThexXTURBOXx/studipassau/issues).
