@@ -248,7 +248,7 @@ packages:
       name: studip
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   term_glyph:
     dependency: transitive
     description:

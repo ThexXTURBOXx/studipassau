@@ -2,7 +2,9 @@ import 'package:StudiPassau/bloc/blocs/oauth_bloc.dart';
 import 'package:StudiPassau/bloc/events/oauth_event.dart';
 import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
 import 'package:StudiPassau/bloc/states/oauth_state.dart';
+import 'package:StudiPassau/pages/test.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
@@ -21,24 +23,15 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _oAuthBloc = OAuthBloc(widget.repo);
+    login();
     _fadeController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     _fadeAnimation =
         CurvedAnimation(parent: _fadeController, curve: Curves.easeIn);
   }
 
-  /*
-
-    OAuthRepo.init().then((v) {
-      return OAuthRepo.instance.client.apiGetJson('user');
-    }).then((decoded) {
-      print(decoded['name']['formatted']);
-    });
-   */
-
   @override
   Widget build(BuildContext context) {
-    //tryLogin(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('StudiPassau Login'),
@@ -61,38 +54,22 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is Authenticated) {
-                    return Text(widget.repo.userData['user_id'].toString());
+                    _fadeController.dispose();
+                    SchedulerBinding.instance.addPostFrameCallback((_) {
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => TestPage()),
+                          (Route<dynamic> route) => false);
+                    });
+                    return const Text('');
                   } else {
-                    return const Text('UNDEFINED');
+                    return MaterialButton(
+                      onPressed: () => login(),
+                      child: Text('Try again'.toUpperCase()),
+                    );
                   }
                 },
               ),
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => login(),
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: const Text('Drawer Header'),
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () => print('hello 1'),
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () => print('hello 2'),
             ),
           ],
         ),

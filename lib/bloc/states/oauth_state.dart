@@ -14,3 +14,5 @@ class NotAuthenticated extends OAuthState {}
 class Authenticating extends OAuthState {}
 
 class Authenticated extends OAuthState {}
+
+class AuthenticationError extends OAuthState {}
