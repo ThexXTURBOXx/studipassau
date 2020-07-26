@@ -2,6 +2,7 @@
   "login": {
     "title": "StudiPassau Login",
     "tryagain": "Nochmal versuchen",
-    "notauth": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!"
+    "notauth": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+    "authenticated": "Erfolgreich authentifiziert"
   }
 }

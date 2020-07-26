@@ -65,7 +65,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                           MaterialPageRoute(builder: (context) => TestPage()),
                           (Route<dynamic> route) => false);
                     });
-                    return const Text('');
+                    return I18nText('login.authenticated');
                   } else {
                     return MaterialButton(
                       onPressed: () => login(),
