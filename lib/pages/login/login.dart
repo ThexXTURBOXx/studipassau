@@ -6,6 +6,7 @@ import 'package:StudiPassau/pages/test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 
 class LoginPage extends StatefulWidget {
   final OAuthRepo repo = OAuthRepo();
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('StudiPassau Login'),
+        title: Text(FlutterI18n.translate(context, 'login.title')),
       ),
       body: Center(
         child: Column(
@@ -48,7 +49,10 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                   _fadeController.reset();
                   _fadeController.forward();
                   if (state is NotAuthenticated) {
-                    return const Text('Not authenticated.');
+                    return Text(
+                      FlutterI18n.translate(context, 'login.notauth'),
+                      textAlign: TextAlign.center,
+                    );
                   } else if (state is Authenticating) {
                     return const Center(
                       child: CircularProgressIndicator(),
@@ -65,7 +69,9 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                   } else {
                     return MaterialButton(
                       onPressed: () => login(),
-                      child: Text('Try again'.toUpperCase()),
+                      child: Text(
+                          FlutterI18n.translate(context, 'login.tryagain')
+                              .toUpperCase()),
                     );
                   }
                 },

@@ -1,13 +1,28 @@
 import 'package:StudiPassau/pages/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final flutterI18nDelegate = FlutterI18nDelegate(
+      translationLoader: FileTranslationLoader(
+    decodeStrategies: [JsonDecodeStrategy()],
+    useCountryCode: false,
+    fallbackFile: 'en',
+    basePath: 'assets/locales',
+  ));
   await DotEnv().load('.env');
-  runApp(StudiPassauApp());
+  runApp(StudiPassauApp(flutterI18nDelegate));
 }
 
 class StudiPassauApp extends StatelessWidget {
+  final FlutterI18nDelegate flutterI18nDelegate;
+
+  const StudiPassauApp(this.flutterI18nDelegate);
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -34,6 +49,12 @@ class StudiPassauApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      localizationsDelegates: [
+        flutterI18nDelegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: const [Locale('en'), Locale('de')],
       home: LoginPage(),
     );
   }
