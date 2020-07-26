@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:StudiPassau/pages/login/login.dart';
+import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:sentry/sentry.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,8 +18,17 @@ Future main() async {
     fallbackFile: 'en',
     basePath: 'assets/locales',
   ));
+
   await DotEnv().load('.env');
-  runApp(StudiPassauApp(flutterI18nDelegate));
+
+  final debugOptions = CatcherOptions.getDefaultDebugOptions();
+  final releaseOptions = CatcherOptions(DialogReportMode(),
+      [SentryHandler(SentryClient(dsn: DotEnv().env['SENTRY_DSN']))]);
+  Catcher(
+    StudiPassauApp(flutterI18nDelegate),
+    debugConfig: debugOptions,
+    releaseConfig: releaseOptions,
+  );
 }
 
 class StudiPassauApp extends StatelessWidget {
@@ -49,6 +62,7 @@ class StudiPassauApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      navigatorKey: Catcher.navigatorKey,
       localizationsDelegates: [
         flutterI18nDelegate,
         GlobalMaterialLocalizations.delegate,

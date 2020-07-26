@@ -21,6 +21,7 @@ The compilation from source should be straight forward (only Android):
 ```
 CONSUMER_KEY=<YourConsumerKeyHere>
 CONSUMER_SECRET=<YourConsumerSecretHere>
+SENTRY_DSN=https://0@o0.ingest.sentry.io/0
 ```
 4. Compile it using Android Studio's `Build->Flutter->Build XXX` feature
 

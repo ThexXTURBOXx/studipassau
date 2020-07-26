@@ -36,6 +36,8 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   flutter_i18n: ^0.18.0
+  catcher: ^0.3.17
+  sentry: ^3.0.1
 
 dev_dependencies:
   flutter_test:
