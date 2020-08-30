@@ -2,14 +2,14 @@ import 'package:StudiPassau/bloc/blocs/oauth_bloc.dart';
 import 'package:StudiPassau/bloc/events/oauth_event.dart';
 import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
 import 'package:StudiPassau/bloc/states/oauth_state.dart';
-import 'package:StudiPassau/pages/test.dart';
+import 'package:StudiPassau/pages/schedule/schedule.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 
 class LoginPage extends StatefulWidget {
-  final OAuthRepo repo = OAuthRepo();
+  static final OAuthRepo repo = OAuthRepo();
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();
@@ -23,7 +23,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   @override
   void initState() {
     super.initState();
-    _oAuthBloc = OAuthBloc(widget.repo);
+    _oAuthBloc = OAuthBloc(LoginPage.repo);
     login();
     _fadeController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
@@ -62,7 +62,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
                     SchedulerBinding.instance.addPostFrameCallback((_) {
                       Navigator.pushAndRemoveUntil(
                           context,
-                          MaterialPageRoute(builder: (context) => TestPage()),
+                          MaterialPageRoute(
+                              builder: (context) => SchedulePage()),
                           (Route<dynamic> route) => false);
                     });
                     return I18nText('login.authenticated');

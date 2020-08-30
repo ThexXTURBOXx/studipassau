@@ -1,9 +1,8 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:StudiPassau/bloc/repository/base_repo.dart';
 import 'package:studip/studip.dart';
 
-class OAuthRepo {
+class OAuthRepo extends BaseRepo {
   static OAuthRepo _singleton;
-  final _storage = const FlutterSecureStorage();
   StudIPClient apiClient;
   dynamic userData;
 
@@ -12,7 +11,9 @@ class OAuthRepo {
     return _singleton;
   }
 
-  FlutterSecureStorage get storage => _storage;
-
   OAuthRepo._internal();
+
+  String get userId => userData['user_id'].toString();
+
+  String get username => userData['username'].toString();
 }
