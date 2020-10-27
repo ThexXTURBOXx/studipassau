@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:StudiPassau/pages/login/login.dart';
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sentry/sentry.dart';
+import 'package:time_machine/time_machine.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,6 +26,10 @@ Future main() async {
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
   final releaseOptions = CatcherOptions(DialogReportMode(),
       [SentryHandler(SentryClient(dsn: DotEnv().env['SENTRY_DSN']))]);
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await TimeMachine.initialize({'rootBundle': rootBundle});
+
   Catcher(
     StudiPassauApp(flutterI18nDelegate),
     debugConfig: debugOptions,

@@ -1,11 +1,11 @@
 import 'package:StudiPassau/bloc/blocs/data_bloc.dart';
-import 'package:StudiPassau/bloc/events/data_event.dart';
 import 'package:StudiPassau/bloc/repository/data_repo.dart';
 import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
-import 'package:StudiPassau/bloc/states/data_state.dart';
+import 'package:StudiPassau/pages/schedule/widgets/schedule_parser.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:time_machine/time_machine.dart';
+import 'package:timetable/timetable.dart';
 
 class SchedulePage extends StatefulWidget {
   static final OAuthRepo oAuthRepo = OAuthRepo();
@@ -25,7 +25,7 @@ class _SchedulePagePageState extends State<SchedulePage>
   void initState() {
     super.initState();
     _dataBloc = DataBloc(SchedulePage.dataRepo);
-    _dataBloc.add(FetchSchedule(SchedulePage.oAuthRepo.userId));
+    //_dataBloc.add(FetchSchedule(SchedulePage.oAuthRepo.userId));
     _fadeController = AnimationController(
         duration: const Duration(milliseconds: 250), vsync: this);
     _fadeAnimation =
@@ -34,15 +34,32 @@ class _SchedulePagePageState extends State<SchedulePage>
 
   @override
   Widget build(BuildContext context) {
+    final provider = EventProvider.simpleStream(getSchedule(
+        SchedulePage.dataRepo.apiClient, SchedulePage.oAuthRepo.userId));
+    final controller = TimetableController(
+      eventProvider: provider,
+      initialDate: LocalDate.today(),
+      visibleRange: const VisibleRange.week(),
+      firstDayOfWeek: DayOfWeek.monday,
+    );
     return Scaffold(
-      appBar: AppBar(
-        title: Text(FlutterI18n.translate(context, 'schedule.title')),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizeTransition(
+        appBar: AppBar(
+          title: Text(FlutterI18n.translate(context, 'schedule.title')),
+        ),
+        body: Timetable<BasicEvent>(
+          controller: controller,
+          eventBuilder: (event) => BasicEventWidget(event),
+          allDayEventBuilder: (context, event, info) =>
+              BasicAllDayEventWidget(event, info: info),
+        )
+        /*MaterialButton(
+                child: const Text('ALLALA'),
+                onPressed: () async {
+                  getSchedule(SchedulePage.dataRepo.apiClient,
+                          SchedulePage.oAuthRepo.userId)
+                      .listen((event) => print(''));
+                })*/
+        /*SizeTransition(
               sizeFactor: _fadeAnimation,
               child: BlocBuilder(
                 cubit: _dataBloc,
@@ -62,10 +79,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                   }
                 },
               ),
-            ),
-          ],
-        ),
-      ),
-    );
+            ),*/
+        );
   }
 }

@@ -28,26 +28,29 @@ dependencies:
     sdk: flutter
   studip: ^1.0.3
   flutter_web_auth: ^0.2.4
-  cupertino_icons: ^0.1.3
+  cupertino_icons: ^1.0.0
   flutter_bloc: ^6.0.1
   flutter_secure_storage: ^3.3.3
   flutter_dotenv: ^2.1.0
   equatable: ^1.2.3
   flutter_localizations:
     sdk: flutter
-  flutter_i18n: ^0.18.0
+  flutter_i18n: ^0.20.1
   catcher: ^0.3.17
   sentry: ^3.0.1
+  timetable: ^0.2.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: ^0.7.5
+  flutter_launcher_icons: ^0.8.1
 
 # Use my version of flutter_web_auth to fix NO_HISTORY issue
 dependency_overrides:
   flutter_web_auth:
-    git: 'https://github.com/ThexXTURBOXx/flutter_web_auth.git'
+    git:
+      url: https://github.com/ThexXTURBOXx/flutter_web_auth.git
+      ref: master
 
 flutter_icons:
   image_path: 'assets/icons/studipassau_icon.png'
@@ -72,6 +75,8 @@ flutter:
     - .env
     # Load the I18n files
     - assets/locales/
+    - packages/time_machine/data/cultures/cultures.bin
+    - packages/time_machine/data/tzdb/tzdb.bin
 
   # To add assets to your application, add an assets section, like this:
   # assets:
