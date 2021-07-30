@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "applicationTitle": "StudiPassau",
+  "@applicationTitle": {
+    "description": "The application's name"
+  },
+  "scheduleTitle": "StudiPassau Schedule",
+  "@scheduleTitle": {
+    "description": "The title for the schedule screen"
+  },
+  "loginTitle": "StudiPassau Login",
+  "@loginTitle": {
+    "description": "The title for the login screen"
+  },
+  "loginTryAgain": "Try again",
+  "@loginTryAgain": {
+    "description": "The text for the retry button on failed authentication"
+  },
+  "loginNotAuthenticated": "Starting authentication...",
+  "@loginNotAuthenticated": {
+    "description": "The text shown when authentication hasn't started yet"
+  },
+  "loginLoading": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
+  "@loginLoading": {
+    "description": "The text shown when a browser window should be open"
+  },
+  "loginAuthenticated": "Successfully authenticated",
+  "@loginAuthenticated": {
+    "description": "The text shown after successful login (usually only visible for a fraction of a second)"
+  }
+}

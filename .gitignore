@@ -29,6 +29,7 @@
 .pub-cache/
 .pub/
 /build/
+lib/generated/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -54,4 +55,5 @@ app.*.map.json
 # Environment files for flutter_dotenv
 .env*
 
+# Gradle
 local.properties

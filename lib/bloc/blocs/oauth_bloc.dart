@@ -1,22 +1,20 @@
-import 'package:StudiPassau/bloc/events/oauth_event.dart';
-import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
-import 'package:StudiPassau/bloc/states/oauth_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:studip/studip.dart';
+import 'package:studipassau/bloc/events/oauth_event.dart';
+import 'package:studipassau/bloc/repository/oauth_repo.dart';
+import 'package:studipassau/bloc/states/oauth_state.dart';
 
 class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
   final OAuthRepo _repo;
 
-  OAuthBloc(this._repo)
-      : assert(_repo != null),
-        super(NotAuthenticated());
+  OAuthBloc(this._repo) : super(NotAuthenticated());
 
   @override
   Stream<OAuthState> mapEventToState(OAuthEvent event) async* {
     if (event is Authenticate) {
-      yield Authenticating();
+      yield Loading();
       try {
         final tok = await _repo.storage.readAll();
         var authenticated = false;
@@ -26,8 +24,8 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
           try {
             final client = StudIPClient(
                 'https://studip.uni-passau.de/studip/dispatch.php/api',
-                DotEnv().env['CONSUMER_KEY'],
-                DotEnv().env['CONSUMER_SECRET'],
+                dotenv.env['CONSUMER_KEY']!,
+                dotenv.env['CONSUMER_SECRET']!,
                 accessToken: tok['oauth_token'],
                 accessTokenSecret: tok['oauth_secret'],
                 apiBaseUrl: 'https://studip.uni-passau.de/studip/api.php/');
@@ -41,6 +39,7 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
         }
 
         if (!authenticated) {
+          yield Authenticating();
           await login();
         }
         yield Authenticated();
@@ -53,14 +52,17 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
   Future<void> login() async {
     final client = StudIPClient(
         'https://studip.uni-passau.de/studip/dispatch.php/api',
-        DotEnv().env['CONSUMER_KEY'],
-        DotEnv().env['CONSUMER_SECRET'],
+        dotenv.env['CONSUMER_KEY']!,
+        dotenv.env['CONSUMER_SECRET']!,
         apiBaseUrl: 'https://studip.uni-passau.de/studip/api.php/');
     final url =
         await client.getAuthorizationUrl('studipassau://oauth_callback');
     final params = await FlutterWebAuth.authenticate(
-        url: url, callbackUrlScheme: 'studipassau', saveHistory: false);
-    final verifier = Uri.parse(params).queryParameters['oauth_verifier'];
+      url: url,
+      callbackUrlScheme: 'studipassau',
+      preferEphemeral: true,
+    );
+    final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
     await client.retrieveAccessToken(verifier);
     await _repo.storage.write(key: 'oauth_token', value: client.accessToken);
     await _repo.storage

@@ -6,7 +6,7 @@ abstract class DataEvent extends Equatable {
   const DataEvent([this._props = const []]);
 
   @override
-  List<Object> get props => _props;
+  List<Object> get props => _props as List<Object>;
 }
 
 class FetchSchedule extends DataEvent {

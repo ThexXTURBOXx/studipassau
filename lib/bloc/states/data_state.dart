@@ -6,7 +6,7 @@ abstract class DataState extends Equatable {
   const DataState([this._props = const []]);
 
   @override
-  List<Object> get props => _props;
+  List<dynamic> get props => _props;
 }
 
 class NotFetched extends DataState {}

@@ -1,42 +1,29 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:studip/studip.dart';
-import 'package:time_machine/time_machine.dart';
 import 'package:timetable/timetable.dart';
 
-final epochStart = LocalDateTime(1970, 1, 1, 0, 0, 0);
-
-List<BasicEvent> eventsCache;
-
-Stream<List<BasicEvent>> getSchedule(
-    StudIPClient client, String userId) async* {
-  if (eventsCache == null) {
-    await fetchSchedule(client, userId);
-  }
-  yield eventsCache;
-}
-
-Future<void> fetchSchedule(StudIPClient client, String userId) async {
+Future<List<BasicEvent>> fetchSchedule(
+    StudIPClient client, String userId) async {
   final dynamic jsonSchedule = await client.apiGetJson('user/$userId/schedule');
   final dynamic jsonEvents =
       await client.apiGetJson('user/$userId/events?limit=10000');
-  final events = parseEvents(jsonEvents);
+  final events = _parseEvents(jsonEvents);
   final schedule = _Schedule.fromJson(jsonSchedule);
-  eventsCache = [];
+  final eventsCache = <BasicEvent>[];
   for (final event in events) {
     eventsCache.add(BasicEvent(
       id: event.id,
       title: event.title,
-      start: epochStart.addMilliseconds(event.start),
-      end: epochStart.addMilliseconds(event.end),
-      color: const Color(0xffaaaa00),
+      start: DateTime.fromMillisecondsSinceEpoch(event.start),
+      end: DateTime.fromMillisecondsSinceEpoch(event.end),
+      backgroundColor: const Color(0xffaaaa00),
     ));
   }
+  return eventsCache;
 }
 
-List<_Event> parseEvents(dynamic json) {
+List<_Event> _parseEvents(dynamic json) {
   final events = <_Event>[];
   final collection = json['collection'];
   if (collection != null && collection is List) {
@@ -59,15 +46,15 @@ class _Event extends Equatable {
   final bool canceled;
 
   const _Event({
-    @required this.id,
-    @required this.course,
-    @required this.start,
-    @required this.end,
-    @required this.title,
-    @required this.description,
-    @required this.categories,
-    @required this.room,
-    @required this.canceled,
+    required this.id,
+    required this.course,
+    required this.start,
+    required this.end,
+    required this.title,
+    required this.description,
+    required this.categories,
+    required this.room,
+    required this.canceled,
   });
 
   factory _Event.fromJson(dynamic json) {
@@ -102,20 +89,20 @@ class _Event extends Equatable {
 }
 
 class _Schedule extends Equatable {
-  final List<List<_ScheduleEvent>> events;
+  final List<List<_ScheduleEvent>?> events;
 
   const _Schedule({
-    @required this.events,
+    required this.events,
   });
 
   factory _Schedule.fromJson(dynamic json) {
-    final events = List<List<_ScheduleEvent>>(7);
+    final events = List<List<_ScheduleEvent>?>.generate(7, (index) => null);
     for (var i = 0; i < 7; i++) {
       final dynamic day = json['$i'];
       events[i] = [];
       if (day != null && day is Map) {
         for (final event in (day as Map<String, dynamic>).entries) {
-          events[i].add(_ScheduleEvent.fromJson(event.key, event.value));
+          events[i]!.add(_ScheduleEvent.fromJson(event.key, event.value));
         }
       }
     }
@@ -140,14 +127,14 @@ class _ScheduleEvent extends Equatable {
   final String type;
 
   const _ScheduleEvent({
-    @required this.id,
-    @required this.internalId,
-    @required this.start,
-    @required this.end,
-    @required this.content,
-    @required this.title,
-    @required this.color,
-    @required this.type,
+    required this.id,
+    required this.internalId,
+    required this.start,
+    required this.end,
+    required this.content,
+    required this.title,
+    required this.color,
+    required this.type,
   });
 
   factory _ScheduleEvent.fromJson(String courseId, dynamic json) {

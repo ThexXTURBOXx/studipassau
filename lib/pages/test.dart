@@ -1,5 +1,5 @@
-import 'package:StudiPassau/bloc/repository/oauth_repo.dart';
 import 'package:flutter/material.dart';
+import 'package:studipassau/bloc/repository/oauth_repo.dart';
 
 class TestPage extends StatefulWidget {
   @override

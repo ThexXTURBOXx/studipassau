@@ -6,7 +6,7 @@ abstract class OAuthEvent extends Equatable {
   const OAuthEvent([this._props = const []]);
 
   @override
-  List<Object> get props => _props;
+  List<Object> get props => _props as List<Object>;
 }
 
 class Authenticate extends OAuthEvent {}

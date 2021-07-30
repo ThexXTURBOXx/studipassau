@@ -1,66 +1,44 @@
 import 'dart:async';
 
-import 'package:StudiPassau/pages/login/login.dart';
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:flutter_i18n/loaders/decoders/json_decode_strategy.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sentry/sentry.dart';
-import 'package:time_machine/time_machine.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/login/login.dart';
+import 'package:studipassau/pages/schedule/schedule.dart';
+import 'package:timetable/timetable.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final flutterI18nDelegate = FlutterI18nDelegate(
-      translationLoader: FileTranslationLoader(
-    decodeStrategies: [JsonDecodeStrategy()],
-    useCountryCode: false,
-    fallbackFile: 'en',
-    basePath: 'assets/locales',
-  ));
 
-  await DotEnv().load('.env');
+  await dotenv.load(fileName: '.env');
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
-  final releaseOptions = CatcherOptions(DialogReportMode(),
-      [SentryHandler(SentryClient(dsn: DotEnv().env['SENTRY_DSN']))]);
-
-  WidgetsFlutterBinding.ensureInitialized();
-  await TimeMachine.initialize({'rootBundle': rootBundle});
+  final releaseOptions = CatcherOptions(DialogReportMode(), [
+    SentryHandler(
+        SentryClient(SentryFlutterOptions()..dsn = dotenv.env['SENTRY_DSN']))
+  ]);
 
   Catcher(
-    StudiPassauApp(flutterI18nDelegate),
+    rootWidget: StudiPassauApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class StudiPassauApp extends StatelessWidget {
-  final FlutterI18nDelegate flutterI18nDelegate;
-
-  const StudiPassauApp(this.flutterI18nDelegate);
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'StudiPassau',
+      onGenerateTitle: (context) => S.of(context).applicationTitle,
+      debugShowCheckedModeBanner: false,
+      //themeMode: themeSettings.currentTheme,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
-        // This makes the visual density adapt to the platform that you run
-        // the app on. For desktop platforms, the controls will be smaller and
-        // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(
@@ -69,13 +47,20 @@ class StudiPassauApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       navigatorKey: Catcher.navigatorKey,
-      localizationsDelegates: [
-        flutterI18nDelegate,
+      //locale: localeSettings.currentLocale,
+      localizationsDelegates: const [
+        S.delegate,
+        TimetableLocalizationsDelegate(),
         GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: const [Locale('en'), Locale('de')],
-      home: LoginPage(),
+      supportedLocales: S.delegate.supportedLocales,
+      initialRoute: '/login',
+      routes: {
+        '/login': (ctx) => LoginPage(),
+        '/schedule': (ctx) => SchedulePage(),
+      },
     );
   }
 }
