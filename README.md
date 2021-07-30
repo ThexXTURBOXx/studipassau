@@ -17,15 +17,17 @@ The compilation from source should be straight forward (only Android):
 
 1. Fully install the [Flutter SDK](https://flutter.dev/docs/get-started/install)
 2. Clone this repo using `git clone https://github.com/ThexXTURBOXx/studipassau.git`
-3. Create a file called `.env` in the project's root and add your OAuth credentials:
+3. Create a file called `.env` in the project's root and add the following lines, replacing your OAuth credentials:
 ```
 CONSUMER_KEY=<YourConsumerKeyHere>
 CONSUMER_SECRET=<YourConsumerSecretHere>
 SENTRY_DSN=https://0@o0.ingest.sentry.io/0
 ```
-4. Compile it using Android Studio's `Build->Flutter->Build XXX` feature
+4. Compile it using Android Studio's `Build -> Flutter -> Build XXX` feature
 
 If you want to compile the app for iOS, I can't really help you as I usually don't for iOS and have no Apple Developer account :/
+
+**Pull Requests for iOS fixes are welcome!**
 
 ## Features
 
