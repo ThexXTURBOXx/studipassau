@@ -13,15 +13,41 @@ Future<List<BasicEvent>> fetchSchedule(
   final schedule = _Schedule.fromJson(jsonSchedule);
   final eventsCache = <BasicEvent>[];
   for (final event in events) {
-    eventsCache.add(BasicEvent(
-      id: event.id,
-      title: event.title,
-      start: DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true),
-      end: DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true),
-      backgroundColor: const Color(0xffaaaa00),
-    ));
+    final start = DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
+    final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
+    final eventCourseId = event.course.split('/').last;
+    var found = false;
+    for (final course in schedule.events[start.weekday - 1]!) {
+      final courseId = course.id;
+      if (courseId == eventCourseId &&
+          equalsCourseEventTime(course.start, start) &&
+          equalsCourseEventTime(course.end, end)) {
+        eventsCache.add(BasicEvent(
+          id: event.id,
+          title: event.title,
+          start: start,
+          end: end,
+          backgroundColor: course.color,
+        ));
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      eventsCache.add(BasicEvent(
+        id: event.id,
+        title: event.title,
+        start: start,
+        end: end,
+        backgroundColor: const Color(0xffaaaa00),
+      ));
+    }
   }
   return eventsCache;
+}
+
+bool equalsCourseEventTime(int courseStart, DateTime eventStart) {
+  return courseStart == eventStart.hour * 100 + eventStart.minute;
 }
 
 List<_Event> _parseEvents(dynamic json) {
@@ -97,13 +123,12 @@ class _Schedule extends Equatable {
   });
 
   factory _Schedule.fromJson(dynamic json) {
-    final events = List<List<_ScheduleEvent>?>.generate(7, (index) => null);
+    final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
     for (var i = 0; i < 7; i++) {
       final dynamic day = json['$i'];
-      events[i] = [];
       if (day != null && day is Map) {
         for (final event in (day as Map<String, dynamic>).entries) {
-          events[i]!.add(_ScheduleEvent.fromJson(event.key, event.value));
+          events[i].add(_ScheduleEvent.fromJson(event.key, event.value));
         }
       }
     }
@@ -124,7 +149,7 @@ class _ScheduleEvent extends Equatable {
   final int end;
   final String content;
   final String title;
-  final int color;
+  final Color color;
   final String type;
 
   const _ScheduleEvent({
@@ -147,7 +172,7 @@ class _ScheduleEvent extends Equatable {
       end: int.parse(json['end'].toString()),
       content: json['content'].toString(),
       title: json['title'].toString(),
-      color: int.parse(json['color'].toString()),
+      color: COLOR_TABLE[int.parse(json['color'].toString())],
       type: json['type'].toString(),
     );
   }
