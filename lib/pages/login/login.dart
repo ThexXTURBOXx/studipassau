@@ -18,6 +18,13 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    _oAuthBloc.stream.listen((event) {
+      if (event is Authenticated) {
+        navigateTo(context, '/schedule');
+      } else {
+        setState(() {});
+      }
+    });
     login();
   }
 
@@ -46,13 +53,13 @@ class _LoginPageState extends State<LoginPage> {
         textAlign: TextAlign.center,
       );
     } else if (state is Loading) {
-      return Text(
-        S.of(context).loginLoading,
-        textAlign: TextAlign.center,
-      );
-    } else if (state is Authenticating) {
       return const Center(
         child: CircularProgressIndicator(),
+      );
+    } else if (state is Authenticating) {
+      return Text(
+        S.of(context).loginAuthenticating,
+        textAlign: TextAlign.center,
       );
     } else if (state is Authenticated) {
       return Text(S.of(context).loginAuthenticated);
@@ -66,12 +73,5 @@ class _LoginPageState extends State<LoginPage> {
 
   void login() {
     _oAuthBloc.add(Authenticate());
-    _oAuthBloc.stream.listen((event) {
-      if (event is Authenticated) {
-        navigateTo(context, '/schedule');
-      } else {
-        setState(() {});
-      }
-    });
   }
 }

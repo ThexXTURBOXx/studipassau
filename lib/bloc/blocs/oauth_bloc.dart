@@ -32,7 +32,7 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
             authenticated = true;
           } catch (e) {
             // Ignore exception, stop loading keys from storage and try to login
-            // normally instead
+            // normally instead, since the saved token is invalid.
           }
         }
 

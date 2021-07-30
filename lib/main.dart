@@ -12,9 +12,14 @@ import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:timetable/timetable.dart';
+import 'package:timezone/data/latest_10y.dart' as tz;
+import 'package:timezone/timezone.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  tz.initializeTimeZones();
+  setLocalLocation(location);
 
   await dotenv.load(fileName: ENV_FILE);
 

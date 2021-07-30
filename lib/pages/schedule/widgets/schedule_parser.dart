@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:studip/studip.dart';
+import 'package:studipassau/constants.dart';
 import 'package:timetable/timetable.dart';
 
 Future<List<BasicEvent>> fetchSchedule(
@@ -15,8 +16,8 @@ Future<List<BasicEvent>> fetchSchedule(
     eventsCache.add(BasicEvent(
       id: event.id,
       title: event.title,
-      start: DateTime.fromMillisecondsSinceEpoch(event.start),
-      end: DateTime.fromMillisecondsSinceEpoch(event.end),
+      start: DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true),
+      end: DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true),
       backgroundColor: const Color(0xffaaaa00),
     ));
   }
@@ -61,8 +62,8 @@ class _Event extends Equatable {
     return _Event(
       id: json['event_id'].toString(),
       course: json['course'].toString(),
-      start: int.parse(json['start'].toString()) * 1000,
-      end: int.parse(json['end'].toString()) * 1000,
+      start: location.translate(int.parse(json['start'].toString()) * 1000),
+      end: location.translate(int.parse(json['end'].toString()) * 1000),
       title: json['title'].toString(),
       description: json['description'].toString(),
       categories: json['categories'].toString(),

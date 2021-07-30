@@ -17,15 +17,16 @@ class _SchedulePagePageState extends State<SchedulePage>
   static final OAuthRepo oAuthRepo = OAuthRepo();
   static final DataRepo dataRepo = DataRepo(oAuthRepo.apiClient);
   final DataBloc _dataBloc = DataBloc(dataRepo);
-  List<BasicEvent>? events;
+
+  List<BasicEvent> get events => dataRepo.schedule ?? <BasicEvent>[];
 
   @override
   void initState() {
     super.initState();
-    _dataBloc.add(FetchSchedule(oAuthRepo.userId));
     _dataBloc.stream.listen((event) {
       setState(() {});
     });
+    _dataBloc.add(FetchSchedule(oAuthRepo.userId));
   }
 
   @override
@@ -49,7 +50,9 @@ class _SchedulePagePageState extends State<SchedulePage>
     );
   }
 
-  List<BasicEvent> getEvents(Interval visibleRange) {
-    return dataRepo.schedule ?? <BasicEvent>[];
+  List<BasicEvent> getEvents(Interval visible) {
+    return events
+        .where((e) => visible.includes(e.start) && visible.includes(e.end))
+        .toList(growable: false);
   }
 }

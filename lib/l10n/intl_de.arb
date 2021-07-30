@@ -5,6 +5,6 @@
   "loginTitle": "StudiPassau Login",
   "loginTryAgain": "Nochmal versuchen",
   "loginNotAuthenticated": "Starte Authentifikation...",
-  "loginLoading": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+  "loginAuthenticating": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
   "loginAuthenticated": "Erfolgreich eingeloggt"
 }

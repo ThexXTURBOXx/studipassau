@@ -20,9 +20,9 @@
   "@loginNotAuthenticated": {
     "description": "The text shown when authentication hasn't started yet"
   },
-  "loginLoading": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
-  "@loginLoading": {
-    "description": "The text shown when a browser window should be open"
+  "loginAuthenticating": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
+  "@loginAuthenticating": {
+    "description": "The text shown when a browser window should be open in the login process"
   },
   "loginAuthenticated": "Successfully authenticated",
   "@loginAuthenticated": {

@@ -31,6 +31,7 @@ dependencies:
   sprintf: ^6.0.0
   studip: ^2.0.0
   timetable: ^1.0.0-alpha.2
+  timezone: ^0.7.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.1
