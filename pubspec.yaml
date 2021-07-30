@@ -54,6 +54,8 @@ flutter:
   assets:
     # Load the environment file with consumer key and secret
     - .env
+    # env2 is only used for testing purposes
+    - .env2
   uses-material-design: true
 
 flutter_intl:

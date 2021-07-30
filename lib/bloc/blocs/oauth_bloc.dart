@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/events/oauth_event.dart';
 import 'package:studipassau/bloc/repository/oauth_repo.dart';
 import 'package:studipassau/bloc/states/oauth_state.dart';
+import 'package:studipassau/constants.dart';
 
 class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
   final OAuthRepo _repo;
@@ -23,12 +23,10 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
           // Read tokens from storage
           try {
             final client = StudIPClient(
-                'https://studip.uni-passau.de/studip/dispatch.php/api',
-                dotenv.env['CONSUMER_KEY']!,
-                dotenv.env['CONSUMER_SECRET']!,
+                OAUTH_BASE_URL, consumerKey, consumerSecret,
                 accessToken: tok['oauth_token'],
                 accessTokenSecret: tok['oauth_secret'],
-                apiBaseUrl: 'https://studip.uni-passau.de/studip/api.php/');
+                apiBaseUrl: API_BASE_URL);
             _repo.userData = await client.apiGetJson('user');
             _repo.apiClient = client;
             authenticated = true;
@@ -50,16 +48,12 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
   }
 
   Future<void> login() async {
-    final client = StudIPClient(
-        'https://studip.uni-passau.de/studip/dispatch.php/api',
-        dotenv.env['CONSUMER_KEY']!,
-        dotenv.env['CONSUMER_SECRET']!,
-        apiBaseUrl: 'https://studip.uni-passau.de/studip/api.php/');
-    final url =
-        await client.getAuthorizationUrl('studipassau://oauth_callback');
+    final client = StudIPClient(OAUTH_BASE_URL, consumerKey, consumerSecret,
+        apiBaseUrl: API_BASE_URL);
+    final url = await client.getAuthorizationUrl(CALLBACK_URL);
     final params = await FlutterWebAuth.authenticate(
       url: url,
-      callbackUrlScheme: 'studipassau',
+      callbackUrlScheme: CALLBACK_URL_SCHEME,
       preferEphemeral: true,
     );
     final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;

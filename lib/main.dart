@@ -7,6 +7,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
@@ -15,13 +16,11 @@ import 'package:timetable/timetable.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await dotenv.load(fileName: '.env');
+  await dotenv.load(fileName: ENV_FILE);
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
-  final releaseOptions = CatcherOptions(DialogReportMode(), [
-    SentryHandler(
-        SentryClient(SentryFlutterOptions()..dsn = dotenv.env['SENTRY_DSN']))
-  ]);
+  final releaseOptions = CatcherOptions(DialogReportMode(),
+      [SentryHandler(SentryClient(SentryFlutterOptions()..dsn = sentryDsn))]);
 
   Catcher(
     rootWidget: StudiPassauApp(),
