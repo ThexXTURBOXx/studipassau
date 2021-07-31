@@ -1,20 +1,20 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:studip/studip.dart';
-import 'package:studipassau/bloc/events/oauth_event.dart';
-import 'package:studipassau/bloc/repository/oauth_repo.dart';
-import 'package:studipassau/bloc/states/oauth_state.dart';
+import 'package:studipassau/bloc/events.dart';
+import 'package:studipassau/bloc/repo.dart';
+import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 
-class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
-  final OAuthRepo _repo;
+class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
+  static final StudiPassauRepo _repo = StudiPassauRepo();
 
-  OAuthBloc(this._repo) : super(NotAuthenticated());
+  LoginBloc() : super(StudiPassauState.NOT_AUTHENTICATED);
 
   @override
-  Stream<OAuthState> mapEventToState(OAuthEvent event) async* {
+  Stream<StudiPassauState> mapEventToState(LoginEvent event) async* {
     if (event is Authenticate) {
-      yield Loading();
+      yield StudiPassauState.LOADING;
       try {
         final tok = await _repo.storage.readAll();
         var authenticated = false;
@@ -37,12 +37,12 @@ class OAuthBloc extends Bloc<OAuthEvent, OAuthState> {
         }
 
         if (!authenticated) {
-          yield Authenticating();
+          yield StudiPassauState.AUTHENTICATING;
           await login();
         }
-        yield Authenticated();
+        yield StudiPassauState.AUTHENTICATED;
       } catch (e) {
-        yield AuthenticationError();
+        yield StudiPassauState.AUTHENTICATION_ERROR;
       }
     }
   }

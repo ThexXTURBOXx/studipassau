@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:studipassau/bloc/repository/oauth_repo.dart';
+import 'package:studipassau/bloc/repo.dart';
 
 class TestPage extends StatefulWidget {
   @override
@@ -7,7 +7,7 @@ class TestPage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<TestPage> {
-  final OAuthRepo repo = OAuthRepo();
+  final StudiPassauRepo _repo = StudiPassauRepo();
 
   @override
   Widget build(BuildContext context) {
@@ -21,11 +21,11 @@ class _MyHomePageState extends State<TestPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              repo.userData['username'].toString(),
+              _repo.userData['username'].toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
             Image.network(
-              repo.userData['avatar_original'].toString(),
+              _repo.userData['avatar_original'].toString(),
             )
           ],
         ),
@@ -33,17 +33,17 @@ class _MyHomePageState extends State<TestPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => print('lelsdd'),
         tooltip: 'Increment',
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
-            DrawerHeader(
-              child: const Text('Drawer Header'),
+            const DrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
+              child: Text('Drawer Header'),
             ),
             ListTile(
               title: const Text('Item 1'),

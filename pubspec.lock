@@ -238,8 +238,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "2337d4010c9bd4430415e5c184ac8e04e2621359"
-      url: "https://github.com/LinusU/flutter_web_auth.git"
+      resolved-ref: d2b963e77b00a3749d67ddb7a3f31fd3f4f8c8d8
+      url: "https://github.com/ThexXTURBOXx/flutter_web_auth.git"
     source: git
     version: "0.3.0"
   flutter_web_plugins:
@@ -331,13 +331,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  nil:
-    dependency: "direct main"
-    description:
-      name: nil
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.1"
   oauth1:
     dependency: transitive
     description:
@@ -345,6 +338,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.0"
+  openmensa:
+    dependency: "direct main"
+    description:
+      name: openmensa
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.1"
   package_info_plus:
     dependency: "direct main"
     description:

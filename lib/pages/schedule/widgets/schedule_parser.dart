@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/constants.dart';
 import 'package:timetable/timetable.dart';
@@ -16,39 +16,35 @@ Future<List<BasicEvent>> fetchSchedule(
     final start = DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
     final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
     final eventCourseId = event.course.split('/').last;
-    var found = false;
-    for (final course in schedule.events[start.weekday - 1]!) {
-      final courseId = course.id;
-      if (courseId == eventCourseId &&
-          equalsCourseEventTime(course.start, start) &&
-          equalsCourseEventTime(course.end, end)) {
-        eventsCache.add(BasicEvent(
-          id: event.id,
-          title: event.title,
-          start: start,
-          end: end,
-          backgroundColor: course.color,
-        ));
-        found = true;
-        break;
+
+    var color = NOT_FOUND_COLOR;
+    if (event.categories == REGULAR_LECTURE_CATEGORY) {
+      for (final course in schedule.events[start.weekday - 1]!) {
+        final courseId = course.id;
+        if (courseId == eventCourseId &&
+            equalsCourseEventTime(course.start, start) &&
+            equalsCourseEventTime(course.end, end)) {
+          color = course.color;
+          break;
+        }
       }
+    } else {
+      color = NON_LECTURE_COLOR;
     }
-    if (!found) {
-      eventsCache.add(BasicEvent(
-        id: event.id,
-        title: event.title,
-        start: start,
-        end: end,
-        backgroundColor: const Color(0xffaaaa00),
-      ));
-    }
+
+    eventsCache.add(BasicEvent(
+      id: event.id,
+      title: event.title,
+      start: start,
+      end: end,
+      backgroundColor: color,
+    ));
   }
   return eventsCache;
 }
 
-bool equalsCourseEventTime(int courseStart, DateTime eventStart) {
-  return courseStart == eventStart.hour * 100 + eventStart.minute;
-}
+bool equalsCourseEventTime(int courseStart, DateTime eventStart) =>
+    courseStart == eventStart.hour * 100 + eventStart.minute;
 
 List<_Event> _parseEvents(dynamic json) {
   final events = <_Event>[];
@@ -84,19 +80,17 @@ class _Event extends Equatable {
     required this.canceled,
   });
 
-  factory _Event.fromJson(dynamic json) {
-    return _Event(
-      id: json['event_id'].toString(),
-      course: json['course'].toString(),
-      start: location.translate(int.parse(json['start'].toString()) * 1000),
-      end: location.translate(int.parse(json['end'].toString()) * 1000),
-      title: json['title'].toString(),
-      description: json['description'].toString(),
-      categories: json['categories'].toString(),
-      room: json['room'].toString(),
-      canceled: json['canceled'].toString() == 'true',
-    );
-  }
+  factory _Event.fromJson(dynamic json) => _Event(
+        id: json['event_id'].toString(),
+        course: json['course'].toString(),
+        start: location.translate(int.parse(json['start'].toString()) * 1000),
+        end: location.translate(int.parse(json['end'].toString()) * 1000),
+        title: json['title'].toString(),
+        description: json['description'].toString(),
+        categories: json['categories'].toString(),
+        room: json['room'].toString(),
+        canceled: json['canceled'].toString() == 'true',
+      );
 
   @override
   List<Object> get props => [
@@ -167,12 +161,12 @@ class _ScheduleEvent extends Equatable {
     final splitId = courseId.split('-');
     return _ScheduleEvent(
       id: splitId[0],
-      internalId: splitId[1],
+      internalId: splitId.length < 2 ? '' : splitId[1],
       start: int.parse(json['start'].toString()),
       end: int.parse(json['end'].toString()),
       content: json['content'].toString(),
       title: json['title'].toString(),
-      color: COLOR_TABLE[int.parse(json['color'].toString())],
+      color: getColor(int.parse(json['color'].toString())),
       type: json['type'].toString(),
     );
   }

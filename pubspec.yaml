@@ -25,7 +25,7 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   flutter_web_auth: ^0.3.0
   intl: ^0.17.0
-  nil: ^1.1.1
+  openmensa: ^0.0.1
   package_info_plus: ^1.0.4
   sentry_flutter: ^5.1.0
   sprintf: ^6.0.0
@@ -39,10 +39,10 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
-  # Use ephemeral patch
+  # Use ephemeral patch and new Android dependency versions
   flutter_web_auth:
     git:
-      url: https://github.com/LinusU/flutter_web_auth.git
+      url: https://github.com/ThexXTURBOXx/flutter_web_auth.git
 
 flutter_icons:
   adaptive_icon_background: '#2898f1'
