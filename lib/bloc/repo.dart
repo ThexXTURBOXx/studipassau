@@ -1,6 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:studip/studip.dart';
-import 'package:timetable/timetable.dart';
+import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class StudiPassauRepo {
   static final StudiPassauRepo _singleton = StudiPassauRepo._internal();
@@ -9,7 +9,7 @@ class StudiPassauRepo {
 
   late StudIPClient apiClient;
   dynamic userData;
-  List<BasicEvent>? schedule;
+  List<StudiPassauEvent>? schedule;
 
   factory StudiPassauRepo() => _singleton;
 

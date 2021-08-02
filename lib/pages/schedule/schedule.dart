@@ -6,6 +6,7 @@ import 'package:studipassau/bloc/events.dart';
 import 'package:studipassau/bloc/repo.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
@@ -95,16 +96,16 @@ class _SchedulePagePageState extends State<SchedulePage>
               ),
             ),
             Expanded(
-              child: TimetableConfig<BasicEvent>(
+              child: TimetableConfig<StudiPassauEvent>(
                 dateController: dateControllerContent,
                 timeController: timeController,
                 eventProvider: getEvents,
-                eventBuilder: (context, event) => BasicEventWidget(
+                eventBuilder: (context, event) => StudiPassauEventWidget(
                   event,
                   onTap: () => onTap(event),
                 ),
                 allDayEventBuilder: (context, event, info) =>
-                    BasicAllDayEventWidget(
+                    StudiPassauAllDayEventWidget(
                   event,
                   info: info,
                   onTap: () => onTap(event),
@@ -114,7 +115,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                   context,
                   startOfWeek: DateTime.monday,
                 ),
-                child: MultiDateTimetableContent<BasicEvent>(),
+                child: MultiDateTimetableContent<StudiPassauEvent>(),
               ),
             ),
           ],
@@ -123,15 +124,15 @@ class _SchedulePagePageState extends State<SchedulePage>
     );
   }
 
-  List<BasicEvent> get events => _repo.schedule ?? <BasicEvent>[];
+  List<StudiPassauEvent> get events => _repo.schedule ?? <StudiPassauEvent>[];
 
-  List<BasicEvent> getEvents(Interval visible) {
+  List<StudiPassauEvent> getEvents(Interval visible) {
     return events
         .where((e) => visible.includes(e.start) && visible.includes(e.end))
         .toList(growable: false);
   }
 
-  void onTap(BasicEvent event) {
+  void onTap(StudiPassauEvent event) {
     print(event.start);
   }
 

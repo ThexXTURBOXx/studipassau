@@ -2,20 +2,22 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/constants.dart';
-import 'package:timetable/timetable.dart';
+import 'package:studipassau/pages/schedule/widgets/events.dart';
 
-Future<List<BasicEvent>> fetchSchedule(
+Future<List<StudiPassauEvent>> fetchSchedule(
     StudIPClient client, String userId) async {
   final dynamic jsonSchedule = await client.apiGetJson('user/$userId/schedule');
   final dynamic jsonEvents =
       await client.apiGetJson('user/$userId/events?limit=10000');
   final events = _parseEvents(jsonEvents);
   final schedule = _Schedule.fromJson(jsonSchedule);
-  final eventsCache = <BasicEvent>[];
+  final eventsCache = <StudiPassauEvent>[];
   for (final event in events) {
     final start = DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
     final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
     final eventCourseId = event.course.split('/').last;
+    final courseResp = await client.apiGetJson('course/$eventCourseId');
+    final courseName = '${courseResp['number']} ${courseResp['title']}';
 
     var color = NOT_FOUND_COLOR;
     if (event.categories == REGULAR_LECTURE_CATEGORY) {
@@ -32,9 +34,14 @@ Future<List<BasicEvent>> fetchSchedule(
       color = NON_LECTURE_COLOR;
     }
 
-    eventsCache.add(BasicEvent(
+    eventsCache.add(StudiPassauEvent(
       id: event.id,
       title: event.title,
+      course: courseName,
+      description: event.description,
+      categories: event.categories,
+      room: event.room,
+      canceled: event.canceled,
       start: start,
       end: end,
       backgroundColor: color,
