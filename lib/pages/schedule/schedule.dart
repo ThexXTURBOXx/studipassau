@@ -16,8 +16,19 @@ class _SchedulePagePageState extends State<SchedulePage>
     with TickerProviderStateMixin {
   static final StudiPassauRepo _repo = StudiPassauRepo();
   final ScheduleBloc _scheduleBloc = ScheduleBloc();
-  final dateController = DateController(
-    visibleRange: VisibleDateRange.days(1),
+  final dateControllerHeader = DateController(
+    visibleRange: VisibleDateRange.days(
+      7,
+      minDate: DateTimeTimetable.today(),
+      maxDate: DateTimeTimetable.today().add(9.days),
+    ),
+  );
+  final dateControllerContent = DateController(
+    visibleRange: VisibleDateRange.days(
+      1,
+      minDate: DateTimeTimetable.today(),
+      maxDate: DateTimeTimetable.today().add(15.days),
+    ),
   );
   final timeController = TimeController(
     initialRange: TimeRange(8.hours - 30.minutes, 20.hours + 30.minutes),
@@ -37,30 +48,48 @@ class _SchedulePagePageState extends State<SchedulePage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).scheduleTitle),
-      ),
-      body: TimetableConfig<BasicEvent>(
-        dateController: dateController,
-        timeController: timeController,
-        eventProvider: getEvents,
-        eventBuilder: (context, event) => BasicEventWidget(
-          event,
-          onTap: () => onTap(event),
+        appBar: AppBar(
+          title: Text(S.of(context).scheduleTitle),
         ),
-        allDayEventBuilder: (context, event, info) => BasicAllDayEventWidget(
-          event,
-          info: info,
-          onTap: () => onTap(event),
-        ),
-        callbacks: const TimetableCallbacks(),
-        theme: TimetableThemeData(
-          context,
-          startOfWeek: DateTime.monday,
-        ),
-        child: MultiDateTimetable<BasicEvent>(),
-      ),
-    );
+        body: Column(
+          children: [
+            DatePageView(
+              controller: dateControllerHeader,
+              shrinkWrapInCrossAxis: true,
+              builder: (context, date) => DateHeader(
+                date,
+                onTap: () => dateControllerContent.animateTo(date, vsync: this),
+                style: DateHeaderStyle(
+                  context,
+                  date,
+                ),
+              ),
+            ),
+            Expanded(
+              child: TimetableConfig<BasicEvent>(
+                dateController: dateControllerContent,
+                timeController: timeController,
+                eventProvider: getEvents,
+                eventBuilder: (context, event) => BasicEventWidget(
+                  event,
+                  onTap: () => onTap(event),
+                ),
+                allDayEventBuilder: (context, event, info) =>
+                    BasicAllDayEventWidget(
+                  event,
+                  info: info,
+                  onTap: () => onTap(event),
+                ),
+                callbacks: const TimetableCallbacks(),
+                theme: TimetableThemeData(
+                  context,
+                  startOfWeek: DateTime.monday,
+                ),
+                child: MultiDateTimetableContent<BasicEvent>(),
+              ),
+            ),
+          ],
+        ));
   }
 
   List<BasicEvent> getEvents(Interval visible) {
