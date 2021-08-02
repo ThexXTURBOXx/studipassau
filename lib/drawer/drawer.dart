@@ -1,8 +1,9 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:studipassau/bloc/repo.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/util/images.dart';
@@ -54,9 +55,9 @@ class StudiPassauDrawer extends StatelessWidget {
                     : ListTile(
                         leading: Icon(item.icon),
                         title: Text(item.name(context)),
-                        onTap: () => selected == item
+                        onTap: () async => selected == item
                             ? Scaffold.of(context).openEndDrawer()
-                            : navigateTo(context, item.route),
+                            : (item.onTap ?? navigateTo)(context, item.route),
                         selected: selected == item,
                         selectedTileColor: context.theme.primaryColorLight,
                       ),
@@ -142,6 +143,58 @@ extension DrawerItemExtension on DrawerItem {
       case DrawerItem.TELEGRAM_BOT:
         // TODO(HyperSpeeed): Add real Telegram icon? Licensing?
         return Icons.send;
+      default:
+        return null;
+    }
+  }
+
+  Future<void> Function(BuildContext context, String? route)? get onTap {
+    switch (this) {
+      case DrawerItem.BROWSER:
+        return (context, _) async {
+          Scaffold.of(context).openEndDrawer();
+          await launchUrl(STUDIP_PROVIDER_URL);
+        };
+      case DrawerItem.BUG_REPORT:
+        return (context, _) async {
+          Scaffold.of(context).openEndDrawer();
+          await launchUrl(BUG_REPORT_URL);
+        };
+      case DrawerItem.SHARE:
+        return (context, _) async {
+          Scaffold.of(context).openEndDrawer();
+          await Share.share(
+            S.of(context).shareBody,
+            subject: S.of(context).shareSubject,
+          );
+        };
+      case DrawerItem.TELEGRAM_BOT:
+        return (context, _) async {
+          Scaffold.of(context).openEndDrawer();
+          await showDialog<void>(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text(S.of(context).telegramBotTitle),
+                content: Text(S.of(context).telegramBotBody),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, 'Cancel'),
+                    child: Text(S.of(context).cancel),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Scaffold.of(context).openEndDrawer();
+                      Navigator.pop(context, 'Okay');
+                      launchUrl(TELEGRAM_BOT_URL);
+                    },
+                    child: Text(S.of(context).okay),
+                  ),
+                ],
+              );
+            },
+          );
+        };
       default:
         return null;
     }

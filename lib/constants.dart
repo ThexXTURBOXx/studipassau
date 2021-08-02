@@ -10,6 +10,10 @@ const CALLBACK_URL_SCHEME = 'studipassau';
 const CALLBACK_URL_PATH = 'oauth_callback';
 const CALLBACK_URL = '$CALLBACK_URL_SCHEME://$CALLBACK_URL_PATH';
 const STUDIP_TIME_ZONE = 'Europe/Berlin';
+const BUG_REPORT_EMAIL = 'info@femtopedia.de';
+const BUG_REPORT_SUBJECT = '[Bug] Bug in StudiPassau';
+const BUG_REPORT_URL = 'mailto:$BUG_REPORT_EMAIL?subject=$BUG_REPORT_SUBJECT';
+const TELEGRAM_BOT_URL = 'http://t.me/UniPassauBot';
 
 const NOT_FOUND_COLOR = Color(0xffea3838);
 const NON_LECTURE_COLOR = Color(0xff339966);

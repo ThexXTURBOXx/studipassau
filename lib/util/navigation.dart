@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void navigateTo(BuildContext context, String? name) {
   if (name != null) {
@@ -10,3 +11,6 @@ void navigateTo(BuildContext context, String? name) {
     }
   }
 }
+
+Future<void> launchUrl(String url) async =>
+    await canLaunch(url) ? await launch(url) : throw 'Can\'t launch $url';

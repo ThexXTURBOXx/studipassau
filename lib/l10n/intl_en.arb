@@ -71,5 +71,29 @@
   "drawerTelegramBot": "Telegram bot",
   "@drawerTelegramBot": {
     "description": "The title of the Telegram bot item in the drawer menu"
+  },
+  "shareSubject": "StudiPassau App",
+  "@shareSubject": {
+    "description": "The subject of the Share message"
+  },
+  "shareBody": "Hey, check this out! There is an app called \"StudiPassau\", which helps you manage your lectures easier:\nhttp://femtopedia.de/studip/index.php",
+  "@shareBody": {
+    "description": "The body of the Share message"
+  },
+  "okay": "Okay",
+  "@okay": {
+    "description": "String that just represents an 'Okay'. Mostly used in buttons of AlertDialogs."
+  },
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "String that just represents a 'Cancel'. Mostly used in buttons of AlertDialogs."
+  },
+  "telegramBotTitle": "Telegram Bot",
+  "@telegramBotTitle": {
+    "description": "The title of the AlertDialog for the Telegram Bot."
+  },
+  "telegramBotBody": "The bot is developed and maintained by another person. Please contact its developer for help on any issues!",
+  "@telegramBotBody": {
+    "description": "The body of the AlertDialog for the Telegram Bot."
   }
 }
