@@ -5,6 +5,8 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/util/navigation.dart';
 
+const ROUTE_LOGIN = '/login';
+
 class LoginPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _LoginPageState();

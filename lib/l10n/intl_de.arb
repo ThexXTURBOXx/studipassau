@@ -6,5 +6,7 @@
   "loginTryAgain": "Nochmal versuchen",
   "loginNotAuthenticated": "Starte Authentifikation...",
   "loginAuthenticating": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
-  "loginAuthenticated": "Erfolgreich eingeloggt"
+  "loginAuthenticated": "Erfolgreich eingeloggt",
+  "drawerMensaPlan": "Mensaplan",
+  "drawerSchedule": "Stundenplan"
 }

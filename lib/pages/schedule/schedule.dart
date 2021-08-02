@@ -10,6 +10,8 @@ import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
+const ROUTE_SCHEDULE = '/schedule';
+
 class SchedulePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SchedulePagePageState();
@@ -62,7 +64,7 @@ class _SchedulePagePageState extends State<SchedulePage>
       appBar: AppBar(
         title: Text(S.of(context).scheduleTitle),
       ),
-      drawer: StudiPassauDrawer(),
+      drawer: StudiPassauDrawer(DrawerItem.SCHEDULE),
       body: TimetableTheme(
         data: TimetableThemeData(context,
             dateIndicatorStyleProvider: (date) => DateIndicatorStyle(

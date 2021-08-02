@@ -60,10 +60,10 @@ class StudiPassauApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      initialRoute: '/login',
+      initialRoute: ROUTE_LOGIN,
       routes: {
-        '/login': (ctx) => LoginPage(),
-        '/schedule': (ctx) => SchedulePage(),
+        ROUTE_LOGIN: (ctx) => LoginPage(),
+        ROUTE_SCHEDULE: (ctx) => SchedulePage(),
       },
     );
   }

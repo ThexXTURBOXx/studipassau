@@ -27,5 +27,13 @@
   "loginAuthenticated": "Successfully authenticated",
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
+  },
+  "drawerMensaPlan": "Mensa plan",
+  "@drawerMensaPlan": {
+    "description": "The title of the Mensa plan in the drawer menu"
+  },
+  "drawerSchedule": "Schedule",
+  "@drawerSchedule": {
+    "description": "The title of the Schedule in the drawer menu"
   }
 }
