@@ -38,15 +38,28 @@ class StudiPassauDrawer extends StatelessWidget {
             ),
           ),
           for (DrawerItem item in DrawerItem.values)
-            ListTile(
-              leading: Icon(item.icon),
-              title: Text(item.name(context)),
-              onTap: () => selected == item
-                  ? Scaffold.of(context).openEndDrawer()
-                  : navigateTo(context, item.route),
-              selected: selected == item,
-              selectedTileColor: context.theme.primaryColorLight,
-            ),
+            item.isDivider
+                ? const Divider()
+                : item.isSubTitle
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 4.0,
+                          horizontal: 16.0,
+                        ),
+                        child: Text(
+                          item.name(context),
+                          style: TextStyle(color: context.theme.hintColor),
+                        ),
+                      )
+                    : ListTile(
+                        leading: Icon(item.icon),
+                        title: Text(item.name(context)),
+                        onTap: () => selected == item
+                            ? Scaffold.of(context).openEndDrawer()
+                            : navigateTo(context, item.route),
+                        selected: selected == item,
+                        selectedTileColor: context.theme.primaryColorLight,
+                      ),
         ],
       ),
     );
@@ -56,6 +69,17 @@ class StudiPassauDrawer extends StatelessWidget {
 enum DrawerItem {
   SCHEDULE,
   MENSA_PLAN,
+  FILES,
+  DIVIDER1,
+  MISC,
+  BROWSER,
+  SETTINGS,
+  BUG_REPORT,
+  SHARE,
+  ABOUT,
+  DIVIDER2,
+  TOOLS,
+  TELEGRAM_BOT,
 }
 
 extension DrawerItemExtension on DrawerItem {
@@ -65,6 +89,24 @@ extension DrawerItemExtension on DrawerItem {
         return S.of(context).drawerSchedule;
       case DrawerItem.MENSA_PLAN:
         return S.of(context).drawerMensaPlan;
+      case DrawerItem.FILES:
+        return S.of(context).drawerFiles;
+      case DrawerItem.MISC:
+        return S.of(context).drawerMisc;
+      case DrawerItem.BROWSER:
+        return S.of(context).drawerOpenInBrowser;
+      case DrawerItem.SETTINGS:
+        return S.of(context).drawerSettings;
+      case DrawerItem.BUG_REPORT:
+        return S.of(context).drawerBugs;
+      case DrawerItem.SHARE:
+        return S.of(context).drawerShare;
+      case DrawerItem.ABOUT:
+        return S.of(context).drawerAbout;
+      case DrawerItem.TOOLS:
+        return S.of(context).drawerTools;
+      case DrawerItem.TELEGRAM_BOT:
+        return S.of(context).drawerTelegramBot;
       default:
         return '';
     }
@@ -74,8 +116,6 @@ extension DrawerItemExtension on DrawerItem {
     switch (this) {
       case DrawerItem.SCHEDULE:
         return ROUTE_SCHEDULE;
-      case DrawerItem.MENSA_PLAN:
-      //return ROUTE_MENSA_PLAN;
       default:
         return null;
     }
@@ -87,8 +127,28 @@ extension DrawerItemExtension on DrawerItem {
         return Icons.event_note;
       case DrawerItem.MENSA_PLAN:
         return Icons.restaurant;
+      case DrawerItem.FILES:
+        return Icons.folder_open;
+      case DrawerItem.BROWSER:
+        return Icons.insert_link;
+      case DrawerItem.SETTINGS:
+        return Icons.build;
+      case DrawerItem.BUG_REPORT:
+        return Icons.bug_report;
+      case DrawerItem.SHARE:
+        return Icons.share;
+      case DrawerItem.ABOUT:
+        return Icons.info_outline;
+      case DrawerItem.TELEGRAM_BOT:
+        // TODO(HyperSpeeed): Add real Telegram icon? Licensing?
+        return Icons.send;
       default:
         return null;
     }
   }
+
+  bool get isDivider =>
+      this == DrawerItem.DIVIDER1 || this == DrawerItem.DIVIDER2;
+
+  bool get isSubTitle => this == DrawerItem.MISC || this == DrawerItem.TOOLS;
 }

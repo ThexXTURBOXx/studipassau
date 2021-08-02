@@ -7,6 +7,15 @@
   "loginNotAuthenticated": "Starte Authentifikation...",
   "loginAuthenticating": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
   "loginAuthenticated": "Erfolgreich eingeloggt",
+  "drawerSchedule": "Stundenplan",
   "drawerMensaPlan": "Mensaplan",
-  "drawerSchedule": "Stundenplan"
+  "drawerFiles": "Dateien",
+  "drawerMisc": "Verschiedenes",
+  "drawerOpenInBrowser": "Im Browser öffnen",
+  "drawerSettings": "Einstellungen",
+  "drawerBugs": "Einen Fehler melden",
+  "drawerShare": "Teilen...",
+  "drawerAbout": "Über diese App",
+  "drawerTools": "Andere nützliche Tools",
+  "drawerTelegramBot": "Telegram Bot"
 }

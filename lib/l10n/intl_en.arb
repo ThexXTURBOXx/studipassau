@@ -28,12 +28,48 @@
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
   },
-  "drawerMensaPlan": "Mensa plan",
-  "@drawerMensaPlan": {
-    "description": "The title of the Mensa plan in the drawer menu"
-  },
   "drawerSchedule": "Schedule",
   "@drawerSchedule": {
-    "description": "The title of the Schedule in the drawer menu"
+    "description": "The title of the Schedule item in the drawer menu"
+  },
+  "drawerMensaPlan": "Mensa plan",
+  "@drawerMensaPlan": {
+    "description": "The title of the Mensa plan item in the drawer menu"
+  },
+  "drawerFiles": "Files",
+  "@drawerFiles": {
+    "description": "The title of the Files item in the drawer menu"
+  },
+  "drawerMisc": "Miscellaneous",
+  "@drawerMisc": {
+    "description": "The subtitle for the Miscellaneous section in the drawer menu"
+  },
+  "drawerOpenInBrowser": "Open in Browser",
+  "@drawerOpenInBrowser": {
+    "description": "The title of the Open in Browser item in the drawer menu"
+  },
+  "drawerSettings": "Preferences",
+  "@drawerSettings": {
+    "description": "The title of the Preferences item in the drawer menu"
+  },
+  "drawerBugs": "Report a bug",
+  "@drawerBugs": {
+    "description": "The title of the Bug report item in the drawer menu"
+  },
+  "drawerShare": "Share...",
+  "@drawerShare": {
+    "description": "The title of the Share item in the drawer menu"
+  },
+  "drawerAbout": "About this app",
+  "@drawerAbout": {
+    "description": "The title of the About item in the drawer menu"
+  },
+  "drawerTools": "Other useful tools",
+  "@drawerTools": {
+    "description": "The subtitle for the tools section in the drawer menu"
+  },
+  "drawerTelegramBot": "Telegram bot",
+  "@drawerTelegramBot": {
+    "description": "The title of the Telegram bot item in the drawer menu"
   }
 }
