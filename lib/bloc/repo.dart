@@ -20,4 +20,8 @@ class StudiPassauRepo {
   String get userId => userData['user_id'].toString();
 
   String get username => userData['username'].toString();
+
+  String get formattedName => userData['name']['formatted'].toString();
+
+  String get avatarNormal => userData['avatar_normal'].toString();
 }

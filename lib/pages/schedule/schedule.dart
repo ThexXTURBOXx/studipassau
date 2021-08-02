@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' hide Interval;
 import 'package:studipassau/bloc/blocs/schedule_bloc.dart';
 import 'package:studipassau/bloc/events.dart';
 import 'package:studipassau/bloc/repo.dart';
+import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
@@ -51,6 +52,7 @@ class _SchedulePagePageState extends State<SchedulePage>
         appBar: AppBar(
           title: Text(S.of(context).scheduleTitle),
         ),
+        drawer: StudiPassauDrawer(),
         body: Column(
           children: [
             DatePageView(
