@@ -1,4 +1,5 @@
-import 'package:dart_date/dart_date.dart';
+import 'package:black_hole_flutter/black_hole_flutter.dart';
+import 'package:dart_date/dart_date.dart' hide Date;
 import 'package:flutter/material.dart' hide Interval;
 import 'package:studipassau/bloc/blocs/schedule_bloc.dart';
 import 'package:studipassau/bloc/events.dart';
@@ -21,21 +22,21 @@ class _SchedulePagePageState extends State<SchedulePage>
     visibleRange: VisibleDateRange.days(
       7,
       minDate: DateTimeTimetable.today(),
-      maxDate: DateTimeTimetable.today().add(9.days),
+      maxDate: DateTimeTimetable.today() + 9.days,
     ),
   );
   final dateControllerContent = DateController(
     visibleRange: VisibleDateRange.days(
       1,
       minDate: DateTimeTimetable.today(),
-      maxDate: DateTimeTimetable.today().add(15.days),
+      maxDate: DateTimeTimetable.today() + 15.days,
     ),
   );
   final timeController = TimeController(
     initialRange: TimeRange(8.hours - 30.minutes, 20.hours + 30.minutes),
   );
 
-  List<BasicEvent> get events => _repo.schedule ?? <BasicEvent>[];
+  DateTime selected = DateTimeTimetable.today();
 
   @override
   void initState() {
@@ -44,16 +45,42 @@ class _SchedulePagePageState extends State<SchedulePage>
       setState(() {});
     });
     _scheduleBloc.add(FetchSchedule(_repo.userId));
+    dateControllerContent.date.addListener(() {
+      setState(() {
+        final date = dateControllerContent.date.value;
+        animateHeaderTo(date);
+        selected = date;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final theme = context.theme;
     return Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).scheduleTitle),
-        ),
-        drawer: StudiPassauDrawer(),
-        body: Column(
+      appBar: AppBar(
+        title: Text(S.of(context).scheduleTitle),
+      ),
+      drawer: StudiPassauDrawer(),
+      body: TimetableTheme(
+        data: TimetableThemeData(context,
+            dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
+                  context,
+                  date,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: getColor(context, date, Colors.transparent),
+                  ),
+                ),
+            weekdayIndicatorStyleProvider: (date) => WeekdayIndicatorStyle(
+                  context,
+                  date,
+                  textStyle: theme.textTheme.caption!.copyWith(
+                    color: getColor(context, date,
+                        theme.colorScheme.background.mediumEmphasisOnColor),
+                  ),
+                )),
+        child: Column(
           children: [
             DatePageView(
               controller: dateControllerHeader,
@@ -91,8 +118,12 @@ class _SchedulePagePageState extends State<SchedulePage>
               ),
             ),
           ],
-        ));
+        ),
+      ),
+    );
   }
+
+  List<BasicEvent> get events => _repo.schedule ?? <BasicEvent>[];
 
   List<BasicEvent> getEvents(Interval visible) {
     return events
@@ -102,5 +133,29 @@ class _SchedulePagePageState extends State<SchedulePage>
 
   void onTap(BasicEvent event) {
     print(event.start);
+  }
+
+  Color getColor(BuildContext context, DateTime date, Color defaultColor) {
+    final theme = context.theme;
+    final isSelected = date == selected;
+    return date.isToday
+        ? isSelected
+            ? Colors.brown
+            : theme.colorScheme.primary
+        : isSelected
+            ? Colors.green
+            : defaultColor;
+  }
+
+  void animateHeaderTo(DateTime date) {
+    final range = dateControllerHeader.visibleRange as DaysVisibleDateRange;
+    final newDate = date - 3.days;
+    dateControllerHeader.animateTo(
+        range.minDate!.isAfter(newDate)
+            ? range.minDate!
+            : range.maxDate!.isBefore(newDate)
+                ? range.maxDate!
+                : newDate,
+        vsync: this);
   }
 }
