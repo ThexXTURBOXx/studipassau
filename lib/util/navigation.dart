@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 void navigateTo(BuildContext context, String? name) {
@@ -14,3 +14,5 @@ void navigateTo(BuildContext context, String? name) {
 
 Future<void> launchUrl(String url) async =>
     await canLaunch(url) ? await launch(url) : throw 'Can\'t launch $url';
+
+void closeDrawer(BuildContext context) => Scaffold.of(context).openEndDrawer();

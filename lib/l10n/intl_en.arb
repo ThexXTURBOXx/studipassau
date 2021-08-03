@@ -95,5 +95,9 @@
   "telegramBotBody": "The bot is developed and maintained by another person. Please contact its developer for help on any issues!",
   "@telegramBotBody": {
     "description": "The body of the AlertDialog for the Telegram Bot."
+  },
+  "wip": "WIP",
+  "@wip": {
+    "description": "Text shown when something is Work In Progress."
   }
 }

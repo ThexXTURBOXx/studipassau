@@ -56,8 +56,8 @@ class StudiPassauDrawer extends StatelessWidget {
                         leading: Icon(item.icon),
                         title: Text(item.name(context)),
                         onTap: () async => selected == item
-                            ? Scaffold.of(context).openEndDrawer()
-                            : (item.onTap ?? navigateTo)(context, item.route),
+                            ? closeDrawer(context)
+                            : item.onTap(context),
                         selected: selected == item,
                         selectedTileColor: context.theme.primaryColorLight,
                       ),
@@ -148,29 +148,29 @@ extension DrawerItemExtension on DrawerItem {
     }
   }
 
-  Future<void> Function(BuildContext context, String? route)? get onTap {
+  Future<void> Function(BuildContext context) get onTap {
     switch (this) {
       case DrawerItem.BROWSER:
-        return (context, _) async {
-          Scaffold.of(context).openEndDrawer();
+        return (context) async {
+          closeDrawer(context);
           await launchUrl(STUDIP_PROVIDER_URL);
         };
       case DrawerItem.BUG_REPORT:
-        return (context, _) async {
-          Scaffold.of(context).openEndDrawer();
+        return (context) async {
+          closeDrawer(context);
           await launchUrl(BUG_REPORT_URL);
         };
       case DrawerItem.SHARE:
-        return (context, _) async {
-          Scaffold.of(context).openEndDrawer();
+        return (context) async {
+          closeDrawer(context);
           await Share.share(
             S.of(context).shareBody,
             subject: S.of(context).shareSubject,
           );
         };
       case DrawerItem.TELEGRAM_BOT:
-        return (context, _) async {
-          Scaffold.of(context).openEndDrawer();
+        return (context) async {
+          closeDrawer(context);
           await showDialog<void>(
             context: context,
             builder: (BuildContext context) {
@@ -184,7 +184,7 @@ extension DrawerItemExtension on DrawerItem {
                   ),
                   TextButton(
                     onPressed: () {
-                      Scaffold.of(context).openEndDrawer();
+                      closeDrawer(context);
                       Navigator.pop(context, 'Okay');
                       launchUrl(TELEGRAM_BOT_URL);
                     },
@@ -196,7 +196,13 @@ extension DrawerItemExtension on DrawerItem {
           );
         };
       default:
-        return null;
+        return route == null
+            ? (context) async {
+                closeDrawer(context);
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(S.of(context).wip)));
+              }
+            : (context) async => navigateTo(context, route);
     }
   }
 

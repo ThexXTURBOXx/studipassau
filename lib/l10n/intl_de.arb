@@ -23,5 +23,6 @@
   "okay": "Okay",
   "cancel": "Abbrechen",
   "telegramBotTitle": "Telegram Bot",
-  "telegramBotBody": "Der Bot wird von einer anderen Person entwickelt und gewartet. Bitte kontaktieren Sie bei Problemen oder Fragen diese Person!"
+  "telegramBotBody": "Der Bot wird von einer anderen Person entwickelt und gewartet. Bitte kontaktieren Sie bei Problemen oder Fragen diese Person!",
+  "wip": "WIP"
 }
