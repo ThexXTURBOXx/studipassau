@@ -1,7 +1,6 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:timetable/timetable.dart';
 
 class StudiPassauEvent extends Event implements Equatable {

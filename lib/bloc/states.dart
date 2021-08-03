@@ -9,3 +9,11 @@ enum StudiPassauState {
   FETCHED,
   FETCH_ERROR,
 }
+
+extension StudiPassauStateExtension on StudiPassauState {
+  bool get finished =>
+      this == StudiPassauState.AUTHENTICATION_ERROR ||
+      this == StudiPassauState.AUTHENTICATED ||
+      this == StudiPassauState.FETCHED ||
+      this == StudiPassauState.FETCH_ERROR;
+}
