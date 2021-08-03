@@ -60,6 +60,10 @@ flutter:
     - .env
     # env2 is only used for testing purposes
     - .env2
+  fonts:
+    - family:  StudiPassauIcons
+      fonts:
+       - asset: fonts/StudiPassauIcons.ttf
   uses-material-design: true
 
 flutter_intl:
