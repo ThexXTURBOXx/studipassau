@@ -184,7 +184,6 @@ extension DrawerItemExtension on DrawerItem {
                   ),
                   TextButton(
                     onPressed: () {
-                      closeDrawer(context);
                       Navigator.pop(context, 'Okay');
                       launchUrl(TELEGRAM_BOT_URL);
                     },
