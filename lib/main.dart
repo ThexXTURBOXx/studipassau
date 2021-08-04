@@ -24,8 +24,10 @@ Future main() async {
   await dotenv.load(fileName: ENV_FILE);
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
-  final releaseOptions = CatcherOptions(DialogReportMode(),
-      [SentryHandler(SentryClient(SentryFlutterOptions()..dsn = sentryDsn))]);
+  final releaseOptions = CatcherOptions(DialogReportMode(), [
+    SentryHandler(SentryClient(SentryFlutterOptions()..dsn = sentryDsn)),
+    ConsoleHandler(),
+  ]);
 
   Catcher(
     rootWidget: StudiPassauApp(),
