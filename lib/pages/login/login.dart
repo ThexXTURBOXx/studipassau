@@ -63,13 +63,28 @@ class _LoginPageState extends State<LoginPage> {
         );
       case StudiPassauState.AUTHENTICATED:
         return Text(S.of(context).loginAuthenticated);
-      default:
-        return MaterialButton(
-          onPressed: () => login(),
-          child: Text(S.of(context).loginTryAgain.toUpperCase()),
+      case StudiPassauState.HTTP_ERROR:
+        return Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                S.of(context).httpError,
+                textAlign: TextAlign.center,
+              ),
+              retryButton(context),
+            ],
+          ),
         );
+      default:
+        return retryButton(context);
     }
   }
+
+  Widget retryButton(BuildContext context) => MaterialButton(
+        onPressed: () => login(),
+        child: Text(S.of(context).loginTryAgain.toUpperCase()),
+      );
 
   void login() {
     _loginBloc.add(Authenticate());

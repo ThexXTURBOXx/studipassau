@@ -99,5 +99,9 @@
   "wip": "WIP",
   "@wip": {
     "description": "Text shown when something is Work In Progress."
+  },
+  "httpError": "Sorry, the server is down at the moment. Please try again soon.",
+  "@httpError": {
+    "description": "Text shown on HTTP Errors."
   }
 }

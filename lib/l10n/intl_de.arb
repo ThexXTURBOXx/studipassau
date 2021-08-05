@@ -24,5 +24,6 @@
   "cancel": "Abbrechen",
   "telegramBotTitle": "Telegram Bot",
   "telegramBotBody": "Der Bot wird von einer anderen Person entwickelt und gewartet. Bitte kontaktieren Sie bei Problemen oder Fragen diese Person!",
-  "wip": "WIP"
+  "wip": "WIP",
+  "httpError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal."
 }

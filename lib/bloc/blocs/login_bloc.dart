@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:studip/studip.dart';
@@ -32,7 +34,9 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
             authenticated = true;
           } catch (e) {
             // Ignore exception, stop loading keys from storage and try to login
-            // normally instead, since the saved token is invalid.
+            // normally instead, since the saved token is invalid or a server
+            // error occurred. In the second case, just try logging in again
+            // as well... Doesn't hurt...
           }
         }
 
@@ -42,7 +46,11 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
         }
         yield StudiPassauState.AUTHENTICATED;
       } catch (e) {
-        yield StudiPassauState.AUTHENTICATION_ERROR;
+        if (e is StateError || e is SocketException) {
+          yield StudiPassauState.HTTP_ERROR;
+        } else {
+          yield StudiPassauState.AUTHENTICATION_ERROR;
+        }
       }
     }
   }

@@ -8,6 +8,7 @@ enum StudiPassauState {
   FETCHING,
   FETCHED,
   FETCH_ERROR,
+  HTTP_ERROR,
 }
 
 extension StudiPassauStateExtension on StudiPassauState {
@@ -15,5 +16,6 @@ extension StudiPassauStateExtension on StudiPassauState {
       this == StudiPassauState.AUTHENTICATION_ERROR ||
       this == StudiPassauState.AUTHENTICATED ||
       this == StudiPassauState.FETCHED ||
-      this == StudiPassauState.FETCH_ERROR;
+      this == StudiPassauState.FETCH_ERROR ||
+      this == StudiPassauState.HTTP_ERROR;
 }
