@@ -27,7 +27,7 @@ class _SchedulePagePageState extends State<SchedulePage>
     visibleRange: VisibleDateRange.days(
       7,
       minDate: DateTimeTimetable.today(),
-      maxDate: DateTimeTimetable.today() + 9.days,
+      maxDate: DateTimeTimetable.today() + 15.days,
     ),
   );
 
@@ -184,8 +184,8 @@ class _SchedulePagePageState extends State<SchedulePage>
     dateControllerHeader.animateTo(
         range.minDate!.isAfter(newDate)
             ? range.minDate!
-            : range.maxDate!.isBefore(newDate)
-                ? range.maxDate!
+            : range.maxDate!.isBefore(date + 3.days)
+                ? range.maxDate! - 6.days
                 : newDate,
         vsync: this);
   }
