@@ -4,41 +4,25 @@
   "@applicationTitle": {
     "description": "The application's name"
   },
-  "scheduleTitle": "StudiPassau Schedule",
-  "@scheduleTitle": {
-    "description": "The title for the schedule screen"
+  "cancel": "Cancel",
+  "@cancel": {
+    "description": "String that just represents a 'Cancel'. Mostly used in buttons of AlertDialogs."
   },
-  "loginTitle": "StudiPassau Login",
-  "@loginTitle": {
-    "description": "The title for the login screen"
+  "drawerAbout": "About this app",
+  "@drawerAbout": {
+    "description": "The title of the About item in the drawer menu"
   },
-  "loginTryAgain": "Try again",
-  "@loginTryAgain": {
-    "description": "The text for the retry button on failed authentication"
-  },
-  "loginNotAuthenticated": "Starting authentication...",
-  "@loginNotAuthenticated": {
-    "description": "The text shown when authentication hasn't started yet"
-  },
-  "loginAuthenticating": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
-  "@loginAuthenticating": {
-    "description": "The text shown when a browser window should be open in the login process"
-  },
-  "loginAuthenticated": "Successfully authenticated",
-  "@loginAuthenticated": {
-    "description": "The text shown after successful login (usually only visible for a fraction of a second)"
-  },
-  "drawerSchedule": "Schedule",
-  "@drawerSchedule": {
-    "description": "The title of the Schedule item in the drawer menu"
-  },
-  "drawerMensaPlan": "Mensa plan",
-  "@drawerMensaPlan": {
-    "description": "The title of the Mensa plan item in the drawer menu"
+  "drawerBugs": "Report a bug",
+  "@drawerBugs": {
+    "description": "The title of the Bug report item in the drawer menu"
   },
   "drawerFiles": "Files",
   "@drawerFiles": {
     "description": "The title of the Files item in the drawer menu"
+  },
+  "drawerMensaPlan": "Mensa plan",
+  "@drawerMensaPlan": {
+    "description": "The title of the Mensa plan item in the drawer menu"
   },
   "drawerMisc": "Miscellaneous",
   "@drawerMisc": {
@@ -48,60 +32,80 @@
   "@drawerOpenInBrowser": {
     "description": "The title of the Open in Browser item in the drawer menu"
   },
+  "drawerSchedule": "Schedule",
+  "@drawerSchedule": {
+    "description": "The title of the Schedule item in the drawer menu"
+  },
   "drawerSettings": "Preferences",
   "@drawerSettings": {
     "description": "The title of the Preferences item in the drawer menu"
-  },
-  "drawerBugs": "Report a bug",
-  "@drawerBugs": {
-    "description": "The title of the Bug report item in the drawer menu"
   },
   "drawerShare": "Share...",
   "@drawerShare": {
     "description": "The title of the Share item in the drawer menu"
   },
-  "drawerAbout": "About this app",
-  "@drawerAbout": {
-    "description": "The title of the About item in the drawer menu"
+  "drawerTelegramBot": "Telegram bot",
+  "@drawerTelegramBot": {
+    "description": "The title of the Telegram bot item in the drawer menu"
   },
   "drawerTools": "Other useful tools",
   "@drawerTools": {
     "description": "The subtitle for the tools section in the drawer menu"
   },
-  "drawerTelegramBot": "Telegram bot",
-  "@drawerTelegramBot": {
-    "description": "The title of the Telegram bot item in the drawer menu"
+  "httpError": "Sorry, the server is down at the moment. Please try again soon.",
+  "@httpError": {
+    "description": "Text shown on HTTP Errors."
   },
-  "shareSubject": "StudiPassau App",
-  "@shareSubject": {
-    "description": "The subject of the Share message"
+  "loginAuthenticated": "Successfully authenticated",
+  "@loginAuthenticated": {
+    "description": "The text shown after successful login (usually only visible for a fraction of a second)"
   },
-  "shareBody": "Hey, check this out! There is an app called \"StudiPassau\", which helps you manage your lectures easier:\nhttp://femtopedia.de/studip/index.php",
-  "@shareBody": {
-    "description": "The body of the Share message"
+  "loginAuthenticating": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
+  "@loginAuthenticating": {
+    "description": "The text shown when a browser window should be open in the login process"
+  },
+  "loginNotAuth": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
+  "@loginNotAuth": {
+    "description": "The text shown after login when a browser window should be open"
+  },
+  "loginNotAuthenticated": "Starting authentication...",
+  "@loginNotAuthenticated": {
+    "description": "The text shown when authentication hasn't started yet"
+  },
+  "loginTitle": "StudiPassau Login",
+  "@loginTitle": {
+    "description": "The title for the login screen"
+  },
+  "loginTryAgain": "Try again",
+  "@loginTryAgain": {
+    "description": "The text for the retry button on failed authentication"
   },
   "okay": "Okay",
   "@okay": {
     "description": "String that just represents an 'Okay'. Mostly used in buttons of AlertDialogs."
   },
-  "cancel": "Cancel",
-  "@cancel": {
-    "description": "String that just represents a 'Cancel'. Mostly used in buttons of AlertDialogs."
+  "scheduleTitle": "StudiPassau Schedule",
+  "@scheduleTitle": {
+    "description": "The title for the schedule screen"
   },
-  "telegramBotTitle": "Telegram Bot",
-  "@telegramBotTitle": {
-    "description": "The title of the AlertDialog for the Telegram Bot."
+  "shareBody": "Hey, check this out! There is an app called \"StudiPassau\", which helps you manage your lectures easier:\nhttp://femtopedia.de/studip/index.php",
+  "@shareBody": {
+    "description": "The body of the Share message"
+  },
+  "shareSubject": "StudiPassau App",
+  "@shareSubject": {
+    "description": "The subject of the Share message"
   },
   "telegramBotBody": "The bot is developed and maintained by another person. Please contact its developer for help on any issues!",
   "@telegramBotBody": {
     "description": "The body of the AlertDialog for the Telegram Bot."
   },
+  "telegramBotTitle": "Telegram Bot",
+  "@telegramBotTitle": {
+    "description": "The title of the AlertDialog for the Telegram Bot."
+  },
   "wip": "WIP",
   "@wip": {
     "description": "Text shown when something is Work In Progress."
-  },
-  "httpError": "Sorry, the server is down at the moment. Please try again soon.",
-  "@httpError": {
-    "description": "Text shown on HTTP Errors."
   }
 }

@@ -1,29 +1,111 @@
 {
   "@@locale": "de",
   "applicationTitle": "StudiPassau",
-  "scheduleTitle": "StudiPassau Stundenplan",
-  "loginTitle": "StudiPassau Login",
-  "loginTryAgain": "Nochmal versuchen",
-  "loginNotAuthenticated": "Starte Authentifikation...",
-  "loginAuthenticating": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
-  "loginAuthenticated": "Erfolgreich eingeloggt",
-  "drawerSchedule": "Stundenplan",
-  "drawerMensaPlan": "Mensaplan",
-  "drawerFiles": "Dateien",
-  "drawerMisc": "Verschiedenes",
-  "drawerOpenInBrowser": "Im Browser öffnen",
-  "drawerSettings": "Einstellungen",
-  "drawerBugs": "Einen Fehler melden",
-  "drawerShare": "Teilen...",
-  "drawerAbout": "Über diese App",
-  "drawerTools": "Andere nützliche Tools",
-  "drawerTelegramBot": "Telegram Bot",
-  "shareSubject": "StudiPassau App",
-  "shareBody": "Hey, schau dir das mal an! Es gibt eine App \"StudiPassau\", die dir hilft, deine Vorlesungen besser zu managen:\nhttp://femtopedia.de/studip/index.php",
-  "okay": "Okay",
+  "@applicationTitle": {
+    "description": "The application's name"
+  },
   "cancel": "Abbrechen",
-  "telegramBotTitle": "Telegram Bot",
+  "@cancel": {
+    "description": "String that just represents a 'Cancel'. Mostly used in buttons of AlertDialogs."
+  },
+  "drawerAbout": "Über diese App",
+  "@drawerAbout": {
+    "description": "The title of the About item in the drawer menu"
+  },
+  "drawerBugs": "Einen Fehler melden",
+  "@drawerBugs": {
+    "description": "The title of the Bug report item in the drawer menu"
+  },
+  "drawerFiles": "Dateien",
+  "@drawerFiles": {
+    "description": "The title of the Files item in the drawer menu"
+  },
+  "drawerMensaPlan": "Mensaplan",
+  "@drawerMensaPlan": {
+    "description": "The title of the Mensa plan item in the drawer menu"
+  },
+  "drawerMisc": "Verschiedenes",
+  "@drawerMisc": {
+    "description": "The subtitle for the Miscellaneous section in the drawer menu"
+  },
+  "drawerOpenInBrowser": "Im Browser öffnen",
+  "@drawerOpenInBrowser": {
+    "description": "The title of the Open in Browser item in the drawer menu"
+  },
+  "drawerSchedule": "Stundenplan",
+  "@drawerSchedule": {
+    "description": "The title of the Schedule item in the drawer menu"
+  },
+  "drawerSettings": "Einstellungen",
+  "@drawerSettings": {
+    "description": "The title of the Preferences item in the drawer menu"
+  },
+  "drawerShare": "Teilen...",
+  "@drawerShare": {
+    "description": "The title of the Share item in the drawer menu"
+  },
+  "drawerTelegramBot": "Telegram Bot",
+  "@drawerTelegramBot": {
+    "description": "The title of the Telegram bot item in the drawer menu"
+  },
+  "drawerTools": "Andere nützliche Tools",
+  "@drawerTools": {
+    "description": "The subtitle for the tools section in the drawer menu"
+  },
+  "httpError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal.",
+  "@httpError": {
+    "description": "Text shown on HTTP Errors."
+  },
+  "loginAuthenticated": "Erfolgreich authentifiziert",
+  "@loginAuthenticated": {
+    "description": "The text shown after successful login (usually only visible for a fraction of a second)"
+  },
+  "loginAuthenticating": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+  "@loginAuthenticating": {
+    "description": "The text shown when a browser window should be open in the login process"
+  },
+  "loginNotAuth": "Falls kein Browser angezeigt wird, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+  "@loginNotAuth": {
+    "description": "The text shown after login when a browser window should be open"
+  },
+  "loginNotAuthenticated": "Starte Authentifikation...",
+  "@loginNotAuthenticated": {
+    "description": "The text shown when authentication hasn't started yet"
+  },
+  "loginTitle": "StudiPassau Login",
+  "@loginTitle": {
+    "description": "The title for the login screen"
+  },
+  "loginTryAgain": "Nochmal versuchen",
+  "@loginTryAgain": {
+    "description": "The text for the retry button on failed authentication"
+  },
+  "okay": "Okay",
+  "@okay": {
+    "description": "String that just represents an 'Okay'. Mostly used in buttons of AlertDialogs."
+  },
+  "scheduleTitle": "StudiPassau Stundenplan",
+  "@scheduleTitle": {
+    "description": "The title for the schedule screen"
+  },
+  "shareBody": "Hey, schau dir das mal an! Es gibt eine App \"StudiPassau\", die dir hilft, deine Vorlesungen besser zu managen:\nhttp://femtopedia.de/studip/index.php",
+  "@shareBody": {
+    "description": "The body of the Share message"
+  },
+  "shareSubject": "StudiPassau App",
+  "@shareSubject": {
+    "description": "The subject of the Share message"
+  },
   "telegramBotBody": "Der Bot wird von einer anderen Person entwickelt und gewartet. Bitte kontaktieren Sie bei Problemen oder Fragen diese Person!",
+  "@telegramBotBody": {
+    "description": "The body of the AlertDialog for the Telegram Bot."
+  },
+  "telegramBotTitle": "Telegram Bot",
+  "@telegramBotTitle": {
+    "description": "The title of the AlertDialog for the Telegram Bot."
+  },
   "wip": "WIP",
-  "httpError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal."
+  "@wip": {
+    "description": "Text shown when something is Work In Progress."
+  }
 }
