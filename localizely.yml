@@ -1,0 +1,15 @@
+config_version: 1.0
+project_id: 32cea4c8-ff53-4e34-94d8-bcdc8643b236
+file_type: flutter_arb
+upload:
+  files:
+    - file: lib/l10n/intl_en.arb
+      locale_code: en
+    - file: lib/l10n/intl_de.arb
+      locale_code: de
+download:
+  files:
+    - file: lib/l10n/intl_en.arb
+      locale_code: en
+    - file: lib/l10n/intl_de.arb
+      locale_code: de

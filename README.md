@@ -4,6 +4,7 @@ StudiPassau Reimagined using Flutter
 
 <p align="center">
   <a href="https://travis-ci.com/ThexXTURBOXx/studipassau"><img src="https://travis-ci.com/ThexXTURBOXx/studipassau.svg?branch=master"></a>
+  <a href="https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/"><img src="https://img.shields.io/localizely/progress/32cea4c8-ff53-4e34-94d8-bcdc8643b236?token=f14c2f1c209f43aea381e31e9107ee7f2b4986ec270e4575b18a120dc035c459"></a>
 </p>
 
 The successor of the app [StudiPassau](https://play.google.com/store/apps/details?id=studip_uni_passau.femtopedia.de.unipassaustudip),
