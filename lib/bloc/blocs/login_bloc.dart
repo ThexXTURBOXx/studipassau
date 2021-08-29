@@ -41,11 +41,28 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
         }
 
         if (!authenticated) {
+          final client = StudIPClient(
+              OAUTH_BASE_URL, consumerKey, consumerSecret,
+              apiBaseUrl: API_BASE_URL);
+          final url = await client.getAuthorizationUrl(CALLBACK_URL);
           yield StudiPassauState.AUTHENTICATING;
-          await login();
+          final params = await FlutterWebAuth.authenticate(
+            url: url,
+            callbackUrlScheme: CALLBACK_URL_SCHEME,
+            preferEphemeral: true,
+          );
+          final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
+          await client.retrieveAccessToken(verifier);
+          await _repo.storage
+              .write(key: 'oauth_token', value: client.accessToken);
+          await _repo.storage
+              .write(key: 'oauth_secret', value: client.accessTokenSecret);
+          _repo.userData = await client.apiGetJson('user');
+          _repo.apiClient = client;
         }
         yield StudiPassauState.AUTHENTICATED;
       } catch (e) {
+        print('${e.runtimeType} ddd $e');
         if (e is StateError || e is SocketException) {
           yield StudiPassauState.HTTP_ERROR;
         } else {
@@ -53,23 +70,5 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
         }
       }
     }
-  }
-
-  Future<void> login() async {
-    final client = StudIPClient(OAUTH_BASE_URL, consumerKey, consumerSecret,
-        apiBaseUrl: API_BASE_URL);
-    final url = await client.getAuthorizationUrl(CALLBACK_URL);
-    final params = await FlutterWebAuth.authenticate(
-      url: url,
-      callbackUrlScheme: CALLBACK_URL_SCHEME,
-      preferEphemeral: true,
-    );
-    final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
-    await client.retrieveAccessToken(verifier);
-    await _repo.storage.write(key: 'oauth_token', value: client.accessToken);
-    await _repo.storage
-        .write(key: 'oauth_secret', value: client.accessTokenSecret);
-    _repo.userData = await client.apiGetJson('user');
-    _repo.apiClient = client;
   }
 }
