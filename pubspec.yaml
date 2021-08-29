@@ -39,6 +39,7 @@ dependencies:
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.1
+  flutter_native_splash: ^1.2.1
   flutter_test:
     sdk: flutter
 
@@ -71,3 +72,8 @@ flutter_intl:
   enabled: true
   localizely:
     project_id: 32cea4c8-ff53-4e34-94d8-bcdc8643b236
+
+flutter_native_splash:
+  android12: true
+  color: '#2898f1'
+  image: assets/icons/studipassau_icon.png
