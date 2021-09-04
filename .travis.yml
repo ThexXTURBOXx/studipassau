@@ -10,11 +10,15 @@ addons:
       - libstdc++6
       - fonts-droid-fallback
 install:
-  - git clone https://github.com/flutter/flutter.git
-  - ./flutter/bin/flutter doctor
+  - git clone https://github.com/flutter/flutter.git $HOME/flutter
+  - $HOME/flutter/bin/flutter doctor
+  - $HOME/flutter/bin/flutter pub global activate intl_utils
 script:
-  - ./flutter/bin/flutter pub get
-#  - ./flutter/bin/flutter analyze
+  - echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
+  - touch .env2
+  - $HOME/flutter/bin/flutter pub get
+  - $HOME/flutter/bin/flutter pub global run intl_utils:generate
+  - $HOME/flutter/bin/flutter analyze
 cache:
   directories:
     - $HOME/.pub-cache

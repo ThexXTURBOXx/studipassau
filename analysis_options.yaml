@@ -53,6 +53,9 @@ analyzer:
     # see https://github.com/dart-lang/sdk/issues/28463
     - "lib/i18n/messages_*.dart"
     - "lib/src/http/**"
+    # Ignore generated localizations
+    - "lib/generated/l10n.dart"
+    - "lib/generated/intl/messages_*.dart"
 
 linter:
   rules:
