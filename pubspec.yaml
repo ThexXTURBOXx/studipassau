@@ -29,8 +29,8 @@ dependencies:
   openmensa: ^0.0.1
   package_info_plus: ^1.0.4
   quick_actions: ^0.6.0+3
-  sentry_flutter: ^5.1.0
-  share_plus: ^2.1.4
+  sentry_flutter: ^6.0.1
+  share_plus: ^3.0.4
   sprintf: ^6.0.0
   studip: ^2.1.0
   timetable: ^1.0.0-alpha.4
@@ -44,6 +44,10 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
+  # Package updates
+  catcher:
+    git:
+      url: https://github.com/ThexXTURBOXx/catcher.git
   # Use ephemeral patch and new Android dependency versions
   flutter_web_auth:
     git:
