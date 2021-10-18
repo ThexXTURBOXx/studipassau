@@ -5,7 +5,9 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 Future<List<StudiPassauEvent>> fetchSchedule(
-    StudIPClient client, String userId) async {
+  StudIPClient client,
+  String userId,
+) async {
   final dynamic jsonSchedule = await client.apiGetJson('user/$userId/schedule');
   final dynamic jsonEvents =
       await client.apiGetJson('user/$userId/events?limit=10000');
@@ -19,8 +21,8 @@ Future<List<StudiPassauEvent>> fetchSchedule(
     final courseResp = await client.apiGetJson('course/$eventCourseId');
     final courseName = '${courseResp['number']} ${courseResp['title']}';
 
-    var color = NOT_FOUND_COLOR;
-    if (event.categories == REGULAR_LECTURE_CATEGORY) {
+    var color = notFoundColor;
+    if (event.categories == regularLectureCategory) {
       for (final course in schedule.events[start.weekday - 1]!) {
         final courseId = course.id;
         if (courseId == eventCourseId &&
@@ -31,21 +33,23 @@ Future<List<StudiPassauEvent>> fetchSchedule(
         }
       }
     } else {
-      color = NON_LECTURE_COLOR;
+      color = nonLectureColor;
     }
 
-    eventsCache.add(StudiPassauEvent(
-      id: event.id,
-      title: event.title,
-      course: courseName,
-      description: event.description,
-      categories: event.categories,
-      room: event.room,
-      canceled: event.canceled,
-      start: start,
-      end: end,
-      backgroundColor: color,
-    ));
+    eventsCache.add(
+      StudiPassauEvent(
+        id: event.id,
+        title: event.title,
+        course: courseName,
+        description: event.description,
+        categories: event.categories,
+        room: event.room,
+        canceled: event.canceled,
+        start: start,
+        end: end,
+        backgroundColor: color,
+      ),
+    );
   }
   return eventsCache;
 }
@@ -53,7 +57,7 @@ Future<List<StudiPassauEvent>> fetchSchedule(
 bool equalsCourseEventTime(int courseStart, DateTime eventStart) =>
     courseStart == eventStart.hour * 100 + eventStart.minute;
 
-List<_Event> _parseEvents(dynamic json) {
+List<_Event> _parseEvents(json) {
   final events = <_Event>[];
   final collection = json['collection'];
   if (collection != null && collection is List) {
@@ -87,7 +91,7 @@ class _Event extends Equatable {
     required this.canceled,
   });
 
-  factory _Event.fromJson(dynamic json) => _Event(
+  factory _Event.fromJson(json) => _Event(
         id: json['event_id'].toString(),
         course: json['course'].toString(),
         start: location.translate(int.parse(json['start'].toString()) * 1000),
@@ -123,7 +127,7 @@ class _Schedule extends Equatable {
     required this.events,
   });
 
-  factory _Schedule.fromJson(dynamic json) {
+  factory _Schedule.fromJson(json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
     for (var i = 0; i < 7; i++) {
       final dynamic day = json['$i'];
@@ -164,7 +168,7 @@ class _ScheduleEvent extends Equatable {
     required this.type,
   });
 
-  factory _ScheduleEvent.fromJson(String courseId, dynamic json) {
+  factory _ScheduleEvent.fromJson(String courseId, json) {
     final splitId = courseId.split('-');
     return _ScheduleEvent(
       id: splitId[0],

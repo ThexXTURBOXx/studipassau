@@ -21,7 +21,7 @@ Future main() async {
   tz.initializeTimeZones();
   setLocalLocation(location);
 
-  await dotenv.load(fileName: ENV_FILE);
+  await dotenv.load(fileName: envFile);
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
   final releaseOptions = CatcherOptions(DialogReportMode(), [
@@ -30,43 +30,43 @@ Future main() async {
   ]);
 
   Catcher(
-    rootWidget: StudiPassauApp(),
+    rootWidget: const StudiPassauApp(),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
 class StudiPassauApp extends StatelessWidget {
+  const StudiPassauApp({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      onGenerateTitle: (context) => S.of(context).applicationTitle,
-      debugShowCheckedModeBanner: false,
-      //themeMode: themeSettings.currentTheme,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      navigatorKey: Catcher.navigatorKey,
-      //locale: localeSettings.currentLocale,
-      localizationsDelegates: const [
-        S.delegate,
-        TimetableLocalizationsDelegate(),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: S.delegate.supportedLocales,
-      initialRoute: ROUTE_LOGIN,
-      routes: {
-        ROUTE_LOGIN: (ctx) => LoginPage(),
-        ROUTE_SCHEDULE: (ctx) => SchedulePage(),
-      },
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        onGenerateTitle: (context) => S.of(context).applicationTitle,
+        debugShowCheckedModeBanner: false,
+        //themeMode: themeSettings.currentTheme,
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        navigatorKey: Catcher.navigatorKey,
+        //locale: localeSettings.currentLocale,
+        localizationsDelegates: const [
+          S.delegate,
+          TimetableLocalizationsDelegate(),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        initialRoute: routeLogin,
+        routes: {
+          routeLogin: (ctx) => const LoginPage(),
+          routeSchedule: (ctx) => const SchedulePage(),
+        },
+      );
 }

@@ -8,20 +8,20 @@ import 'package:studipassau/pages/schedule/widgets/schedule_parser.dart';
 class ScheduleBloc extends Bloc<ScheduleEvent, StudiPassauState> {
   static final StudiPassauRepo _repo = StudiPassauRepo();
 
-  ScheduleBloc() : super(StudiPassauState.NOT_FETCHED);
+  ScheduleBloc() : super(StudiPassauState.notFetched);
 
   @override
   Stream<StudiPassauState> mapEventToState(ScheduleEvent event) async* {
     if (event is FetchSchedule) {
-      yield StudiPassauState.FETCHING;
+      yield StudiPassauState.fetching;
       // TODO(HyperSpeeed): Load from file
       try {
         _repo.schedule = await fetchSchedule(_repo.apiClient, event.userId);
-        yield StudiPassauState.FETCHED;
+        yield StudiPassauState.fetched;
       } on SessionInvalidException {
-        yield StudiPassauState.AUTHENTICATION_ERROR;
+        yield StudiPassauState.authenticationError;
       } catch (e) {
-        yield StudiPassauState.FETCH_ERROR;
+        yield StudiPassauState.fetchError;
       }
     }
   }

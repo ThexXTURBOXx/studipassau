@@ -11,12 +11,12 @@ import 'package:studipassau/constants.dart';
 class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
   static final StudiPassauRepo _repo = StudiPassauRepo();
 
-  LoginBloc() : super(StudiPassauState.NOT_AUTHENTICATED);
+  LoginBloc() : super(StudiPassauState.notAuthenticated);
 
   @override
   Stream<StudiPassauState> mapEventToState(LoginEvent event) async* {
     if (event is Authenticate) {
-      yield StudiPassauState.LOADING;
+      yield StudiPassauState.loading;
       try {
         final tok = await _repo.storage.readAll();
         var authenticated = false;
@@ -25,10 +25,13 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
           // Read tokens from storage
           try {
             final client = StudIPClient(
-                OAUTH_BASE_URL, consumerKey, consumerSecret,
-                accessToken: tok['oauth_token'],
-                accessTokenSecret: tok['oauth_secret'],
-                apiBaseUrl: API_BASE_URL);
+              oauthBaseUrl,
+              consumerKey,
+              consumerSecret,
+              accessToken: tok['oauth_token'],
+              accessTokenSecret: tok['oauth_secret'],
+              apiBaseUrl: apiBaseUrl,
+            );
             _repo.userData = await client.apiGetJson('user');
             _repo.apiClient = client;
             authenticated = true;
@@ -42,13 +45,16 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
 
         if (!authenticated) {
           final client = StudIPClient(
-              OAUTH_BASE_URL, consumerKey, consumerSecret,
-              apiBaseUrl: API_BASE_URL);
-          final url = await client.getAuthorizationUrl(CALLBACK_URL);
-          yield StudiPassauState.AUTHENTICATING;
+            oauthBaseUrl,
+            consumerKey,
+            consumerSecret,
+            apiBaseUrl: apiBaseUrl,
+          );
+          final url = await client.getAuthorizationUrl(callbackUrl);
+          yield StudiPassauState.authenticating;
           final params = await FlutterWebAuth.authenticate(
             url: url,
-            callbackUrlScheme: CALLBACK_URL_SCHEME,
+            callbackUrlScheme: callbackUrlScheme,
             preferEphemeral: true,
           );
           final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
@@ -60,13 +66,12 @@ class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
           _repo.userData = await client.apiGetJson('user');
           _repo.apiClient = client;
         }
-        yield StudiPassauState.AUTHENTICATED;
+        yield StudiPassauState.authenticated;
       } catch (e) {
-        print('${e.runtimeType} ddd $e');
         if (e is StateError || e is SocketException) {
-          yield StudiPassauState.HTTP_ERROR;
+          yield StudiPassauState.httpError;
         } else {
-          yield StudiPassauState.AUTHENTICATION_ERROR;
+          yield StudiPassauState.authenticationError;
         }
       }
     }

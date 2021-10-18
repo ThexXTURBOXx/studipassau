@@ -38,20 +38,19 @@ class StudiPassauEvent extends Event implements Equatable {
     bool? showOnTop,
     DateTime? start,
     DateTime? end,
-  }) {
-    return StudiPassauEvent(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      course: course ?? this.course,
-      description: description ?? this.description,
-      categories: categories ?? this.categories,
-      room: room ?? this.room,
-      canceled: canceled ?? this.canceled,
-      backgroundColor: backgroundColor ?? this.backgroundColor,
-      start: start ?? this.start,
-      end: end ?? this.end,
-    );
-  }
+  }) =>
+      StudiPassauEvent(
+        id: id ?? this.id,
+        title: title ?? this.title,
+        course: course ?? this.course,
+        description: description ?? this.description,
+        categories: categories ?? this.categories,
+        room: room ?? this.room,
+        canceled: canceled ?? this.canceled,
+        backgroundColor: backgroundColor ?? this.backgroundColor,
+        start: start ?? this.start,
+        end: end ?? this.end,
+      );
 
   @override
   List<Object> get props => [
@@ -86,40 +85,36 @@ class StudiPassauEventWidget extends StatelessWidget {
   final EdgeInsetsGeometry margin;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: margin,
-      child: Material(
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: context.theme.scaffoldBackgroundColor,
-            width: 0.75,
+  Widget build(BuildContext context) => Padding(
+        padding: margin,
+        child: Material(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(
+              color: context.theme.scaffoldBackgroundColor,
+              width: 0.75,
+            ),
+            borderRadius: BorderRadius.circular(4),
           ),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        clipBehavior: Clip.hardEdge,
-        color: event.backgroundColor,
-        child: InkWell(
-          onTap: onTap,
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(4, 2, 4, 0),
-            child: DefaultTextStyle(
-              style: context.textTheme.bodyText2!.copyWith(
-                fontSize: 12,
-                color: event.backgroundColor.highEmphasisOnColor,
+          clipBehavior: Clip.hardEdge,
+          color: event.backgroundColor,
+          child: InkWell(
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(4, 2, 4, 0),
+              child: DefaultTextStyle(
+                style: context.textTheme.bodyText2!.copyWith(
+                  fontSize: 12,
+                  color: event.backgroundColor.highEmphasisOnColor,
+                ),
+                child: Text(
+                  '${event.title}${event.course}${event.description}'
+                  '${event.categories}${event.room}${event.canceled}',
+                ),
               ),
-              child: Text(event.title +
-                  event.course +
-                  event.description +
-                  event.categories +
-                  event.room +
-                  '${event.canceled}'),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class StudiPassauAllDayEventWidget extends StatelessWidget {
@@ -138,49 +133,47 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
   final BasicAllDayEventWidgetStyle? style;
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(2),
-      child: CustomPaint(
-        painter: AllDayEventBackgroundPainter(
-          info: info,
-          color: event.backgroundColor,
-          radii: AllDayEventBorderRadii(
-            cornerRadius: BorderRadius.circular(4),
-            leftTipRadius: 4,
-            rightTipRadius: 4,
-          ),
-        ),
-        child: Material(
-          shape: AllDayEventBorder(
+  Widget build(BuildContext context) => Padding(
+        padding: const EdgeInsets.all(2),
+        child: CustomPaint(
+          painter: AllDayEventBackgroundPainter(
             info: info,
-            side: BorderSide.none,
+            color: event.backgroundColor,
             radii: AllDayEventBorderRadii(
               cornerRadius: BorderRadius.circular(4),
               leftTipRadius: 4,
               rightTipRadius: 4,
             ),
           ),
-          clipBehavior: Clip.antiAlias,
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(4, 2, 0, 2),
-              child: Text(
-                event.title,
-                style: context.theme.textTheme.bodyText2!.copyWith(
-                  fontSize: 14,
-                  color: event.backgroundColor.highEmphasisOnColor,
+          child: Material(
+            shape: AllDayEventBorder(
+              info: info,
+              side: BorderSide.none,
+              radii: AllDayEventBorderRadii(
+                cornerRadius: BorderRadius.circular(4),
+                leftTipRadius: 4,
+                rightTipRadius: 4,
+              ),
+            ),
+            clipBehavior: Clip.antiAlias,
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(4, 2, 0, 2),
+                child: Text(
+                  event.title,
+                  style: context.theme.textTheme.bodyText2!.copyWith(
+                    fontSize: 14,
+                    color: event.backgroundColor.highEmphasisOnColor,
+                  ),
+                  maxLines: 1,
+                  overflow: TextOverflow.visible,
+                  softWrap: false,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.visible,
-                softWrap: false,
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

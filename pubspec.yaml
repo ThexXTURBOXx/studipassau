@@ -13,32 +13,39 @@ environment:
   flutter: '>=2.0.0'
 
 dependencies:
+  black_hole_flutter: ^0.3.2
   cached_network_image: ^3.1.0
   catcher: ^0.6.7
   cupertino_icons: ^1.0.3
+  dart_date: ^1.1.0
   equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^7.1.0
+  flutter_cache_manager: ^3.1.2
   flutter_dotenv: ^5.0.0
   flutter_localizations:
     sdk: flutter
   flutter_secure_storage: ^4.2.1
   flutter_web_auth: ^0.3.1
+  http: ^0.13.4
   intl: ^0.17.0
   openmensa: ^0.0.1
   package_info_plus: ^1.0.4
   quick_actions: ^0.6.0+3
+  sentry: ^6.0.1
   sentry_flutter: ^6.0.1
   share_plus: ^3.0.4
   sprintf: ^6.0.0
   studip: ^2.1.0
+  supercharged: ^2.1.1
   timetable: ^1.0.0-alpha.4
   timezone: ^0.8.0
   url_launcher: ^6.0.9
 
 dev_dependencies:
   flutter_launcher_icons: ^0.9.1
+  flutter_lints: ^1.0.4
   flutter_native_splash: ^1.2.1
   flutter_test:
     sdk: flutter

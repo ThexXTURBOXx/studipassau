@@ -16,98 +16,98 @@ class StudiPassauDrawer extends StatelessWidget {
 
   final DrawerItem selected;
 
-  StudiPassauDrawer(this.selected);
+  StudiPassauDrawer(this.selected, {Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          UserAccountsDrawerHeader(
-            accountName: Text(_repo.formattedName),
-            accountEmail: Text(_repo.username),
-            currentAccountPicture: ClipRRect(
-              borderRadius: BorderRadius.circular(110),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: _repo.avatarNormal,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                cacheManager: _cacheManager,
+  Widget build(BuildContext context) => Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(_repo.formattedName),
+              accountEmail: Text(_repo.username),
+              currentAccountPicture: ClipRRect(
+                borderRadius: BorderRadius.circular(110),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: _repo.avatarNormal,
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      CircularProgressIndicator(
+                    value: downloadProgress.progress,
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  cacheManager: _cacheManager,
+                ),
               ),
             ),
-          ),
-          for (DrawerItem item in DrawerItem.values)
-            item.isDivider
-                ? const Divider()
-                : item.isSubTitle
-                    ? Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 4.0,
-                          horizontal: 16.0,
+            for (DrawerItem item in DrawerItem.values)
+              item.isDivider
+                  ? const Divider()
+                  : item.isSubTitle
+                      ? Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 4,
+                            horizontal: 16,
+                          ),
+                          child: Text(
+                            item.name(context),
+                            style: TextStyle(color: context.theme.hintColor),
+                          ),
+                        )
+                      : ListTile(
+                          leading: Icon(item.icon),
+                          title: Text(item.name(context)),
+                          onTap: () async => selected == item
+                              ? closeDrawer(context)
+                              : item.onTap(context),
+                          selected: selected == item,
+                          selectedTileColor: context.theme.primaryColorLight,
                         ),
-                        child: Text(
-                          item.name(context),
-                          style: TextStyle(color: context.theme.hintColor),
-                        ),
-                      )
-                    : ListTile(
-                        leading: Icon(item.icon),
-                        title: Text(item.name(context)),
-                        onTap: () async => selected == item
-                            ? closeDrawer(context)
-                            : item.onTap(context),
-                        selected: selected == item,
-                        selectedTileColor: context.theme.primaryColorLight,
-                      ),
-        ],
-      ),
-    );
-  }
+          ],
+        ),
+      );
 }
 
 enum DrawerItem {
-  SCHEDULE,
-  MENSA_PLAN,
-  FILES,
-  DIVIDER1,
-  MISC,
-  BROWSER,
-  SETTINGS,
-  BUG_REPORT,
-  SHARE,
-  ABOUT,
-  DIVIDER2,
-  TOOLS,
-  TELEGRAM_BOT,
+  schedule,
+  mensaPlan,
+  files,
+  divider1,
+  misc,
+  browser,
+  settings,
+  bugReport,
+  share,
+  about,
+  divider2,
+  tools,
+  telegramBot,
 }
 
 extension DrawerItemExtension on DrawerItem {
   String name(BuildContext context) {
     switch (this) {
-      case DrawerItem.SCHEDULE:
+      case DrawerItem.schedule:
         return S.of(context).drawerSchedule;
-      case DrawerItem.MENSA_PLAN:
+      case DrawerItem.mensaPlan:
         return S.of(context).drawerMensaPlan;
-      case DrawerItem.FILES:
+      case DrawerItem.files:
         return S.of(context).drawerFiles;
-      case DrawerItem.MISC:
+      case DrawerItem.misc:
         return S.of(context).drawerMisc;
-      case DrawerItem.BROWSER:
+      case DrawerItem.browser:
         return S.of(context).drawerOpenInBrowser;
-      case DrawerItem.SETTINGS:
+      case DrawerItem.settings:
         return S.of(context).drawerSettings;
-      case DrawerItem.BUG_REPORT:
+      case DrawerItem.bugReport:
         return S.of(context).drawerBugs;
-      case DrawerItem.SHARE:
+      case DrawerItem.share:
         return S.of(context).drawerShare;
-      case DrawerItem.ABOUT:
+      case DrawerItem.about:
         return S.of(context).drawerAbout;
-      case DrawerItem.TOOLS:
+      case DrawerItem.tools:
         return S.of(context).drawerTools;
-      case DrawerItem.TELEGRAM_BOT:
+      case DrawerItem.telegramBot:
         return S.of(context).drawerTelegramBot;
       default:
         return '';
@@ -116,8 +116,8 @@ extension DrawerItemExtension on DrawerItem {
 
   String? get route {
     switch (this) {
-      case DrawerItem.SCHEDULE:
-        return ROUTE_SCHEDULE;
+      case DrawerItem.schedule:
+        return routeSchedule;
       default:
         return null;
     }
@@ -125,24 +125,24 @@ extension DrawerItemExtension on DrawerItem {
 
   IconData? get icon {
     switch (this) {
-      case DrawerItem.SCHEDULE:
+      case DrawerItem.schedule:
         return Icons.event_note;
-      case DrawerItem.MENSA_PLAN:
+      case DrawerItem.mensaPlan:
         return Icons.restaurant;
-      case DrawerItem.FILES:
+      case DrawerItem.files:
         return Icons.folder_open;
-      case DrawerItem.BROWSER:
+      case DrawerItem.browser:
         return Icons.insert_link;
-      case DrawerItem.SETTINGS:
+      case DrawerItem.settings:
         return Icons.build;
-      case DrawerItem.BUG_REPORT:
+      case DrawerItem.bugReport:
         return Icons.bug_report;
-      case DrawerItem.SHARE:
+      case DrawerItem.share:
         return Icons.share;
-      case DrawerItem.ABOUT:
+      case DrawerItem.about:
         return Icons.info_outline;
-      case DrawerItem.TELEGRAM_BOT:
-        return StudiPassauIcons.telegram_plane;
+      case DrawerItem.telegramBot:
+        return StudiPassauIcons.telegramPlane;
       default:
         return null;
     }
@@ -150,17 +150,17 @@ extension DrawerItemExtension on DrawerItem {
 
   Future<void> Function(BuildContext context) get onTap {
     switch (this) {
-      case DrawerItem.BROWSER:
+      case DrawerItem.browser:
         return (context) async {
           closeDrawer(context);
-          await launchUrl(STUDIP_PROVIDER_URL);
+          await launchUrl(studIpProviderUrl);
         };
-      case DrawerItem.BUG_REPORT:
+      case DrawerItem.bugReport:
         return (context) async {
           closeDrawer(context);
-          await launchUrl(BUG_REPORT_URL);
+          await launchUrl(bugReportUrl);
         };
-      case DrawerItem.SHARE:
+      case DrawerItem.share:
         return (context) async {
           closeDrawer(context);
           await Share.share(
@@ -168,30 +168,28 @@ extension DrawerItemExtension on DrawerItem {
             subject: S.of(context).shareSubject,
           );
         };
-      case DrawerItem.TELEGRAM_BOT:
+      case DrawerItem.telegramBot:
         return (context) async {
           closeDrawer(context);
           await showDialog<void>(
             context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text(S.of(context).telegramBotTitle),
-                content: Text(S.of(context).telegramBotBody),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, 'Cancel'),
-                    child: Text(S.of(context).cancel),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context, 'Okay');
-                      launchUrl(TELEGRAM_BOT_URL);
-                    },
-                    child: Text(S.of(context).okay),
-                  ),
-                ],
-              );
-            },
+            builder: (context) => AlertDialog(
+              title: Text(S.of(context).telegramBotTitle),
+              content: Text(S.of(context).telegramBotBody),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () => Navigator.pop(context, 'Cancel'),
+                  child: Text(S.of(context).cancel),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, 'Okay');
+                    launchUrl(telegramBotUrl);
+                  },
+                  child: Text(S.of(context).okay),
+                ),
+              ],
+            ),
           );
         };
       default:
@@ -206,7 +204,7 @@ extension DrawerItemExtension on DrawerItem {
   }
 
   bool get isDivider =>
-      this == DrawerItem.DIVIDER1 || this == DrawerItem.DIVIDER2;
+      this == DrawerItem.divider1 || this == DrawerItem.divider2;
 
-  bool get isSubTitle => this == DrawerItem.MISC || this == DrawerItem.TOOLS;
+  bool get isSubTitle => this == DrawerItem.misc || this == DrawerItem.tools;
 }

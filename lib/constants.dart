@@ -2,23 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:timezone/timezone.dart';
 
-const ENV_FILE = '.env';
-const STUDIP_PROVIDER_URL = 'https://studip.uni-passau.de/studip/';
-const OAUTH_BASE_URL = '${STUDIP_PROVIDER_URL}dispatch.php/api';
-const API_BASE_URL = '${STUDIP_PROVIDER_URL}api.php/';
-const CALLBACK_URL_SCHEME = 'studipassau';
-const CALLBACK_URL_PATH = 'oauth_callback';
-const CALLBACK_URL = '$CALLBACK_URL_SCHEME://$CALLBACK_URL_PATH';
-const STUDIP_TIME_ZONE = 'Europe/Berlin';
-const BUG_REPORT_EMAIL = 'info@femtopedia.de';
-const BUG_REPORT_SUBJECT = '[Bug] Bug in StudiPassau';
-const BUG_REPORT_URL = 'mailto:$BUG_REPORT_EMAIL?subject=$BUG_REPORT_SUBJECT';
-const TELEGRAM_BOT_URL = 'http://t.me/UniPassauBot';
+const envFile = '.env';
+const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
+const oauthBaseUrl = '${studIpProviderUrl}dispatch.php/api';
+const apiBaseUrl = '${studIpProviderUrl}api.php/';
+const callbackUrlScheme = 'studipassau';
+const callbackUrlPath = 'oauth_callback';
+const callbackUrl = '$callbackUrlScheme://$callbackUrlPath';
+const studIpTimeZone = 'Europe/Berlin';
+const bugReportEmail = 'info@femtopedia.de';
+const bugReportSubject = '[Bug] Bug in StudiPassau';
+const bugReportUrl = 'mailto:$bugReportEmail?subject=$bugReportSubject';
+const telegramBotUrl = 'http://t.me/UniPassauBot';
 
-const NOT_FOUND_COLOR = Color(0xffea3838);
-const NON_LECTURE_COLOR = Color(0xff339966);
-const _COLOR_TABLE = [
-  NOT_FOUND_COLOR,
+const notFoundColor = Color(0xffea3838);
+const nonLectureColor = Color(0xff339966);
+const _colorTable = [
+  notFoundColor,
   Color(0xff008512),
   Color(0xff682c8b),
   Color(0xffb02e7c),
@@ -36,7 +36,7 @@ const _COLOR_TABLE = [
   Color(0xffcb9e8f),
 ];
 
-const REGULAR_LECTURE_CATEGORY = 'Sitzung';
+const regularLectureCategory = 'Sitzung';
 
 Location? _location;
 
@@ -46,8 +46,7 @@ String get consumerSecret => dotenv.env['CONSUMER_SECRET']!;
 
 String? get sentryDsn => dotenv.env['SENTRY_DSN'];
 
-Location get location =>
-    _location ?? (_location = getLocation(STUDIP_TIME_ZONE));
+Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
 Color getColor(int index) =>
-    _COLOR_TABLE[(0 <= index && index < _COLOR_TABLE.length) ? index : 0];
+    _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];

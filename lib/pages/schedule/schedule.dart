@@ -11,9 +11,11 @@ import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
-const ROUTE_SCHEDULE = '/schedule';
+const routeSchedule = '/schedule';
 
 class SchedulePage extends StatefulWidget {
+  const SchedulePage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _SchedulePagePageState();
 }
@@ -52,7 +54,8 @@ class _SchedulePagePageState extends State<SchedulePage>
   void initState() {
     super.initState();
     WidgetsBinding.instance?.addPostFrameCallback(
-        (_) => _refreshIndicatorKey.currentState?.show());
+      (_) => _refreshIndicatorKey.currentState?.show(),
+    );
     _scheduleBloc.stream.listen((event) {
       setState(() {});
     });
@@ -82,28 +85,33 @@ class _SchedulePagePageState extends State<SchedulePage>
           ),
         ],
       ),
-      drawer: StudiPassauDrawer(DrawerItem.SCHEDULE),
+      drawer: StudiPassauDrawer(DrawerItem.schedule),
       body: RefreshIndicator(
         key: _refreshIndicatorKey,
         onRefresh: refresh,
         child: TimetableTheme(
-          data: TimetableThemeData(context,
-              dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
-                    context,
-                    date,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: getColor(context, date, Colors.transparent),
-                    ),
-                  ),
-              weekdayIndicatorStyleProvider: (date) => WeekdayIndicatorStyle(
-                    context,
-                    date,
-                    textStyle: theme.textTheme.caption!.copyWith(
-                      color: getColor(context, date,
-                          theme.colorScheme.background.mediumEmphasisOnColor),
-                    ),
-                  )),
+          data: TimetableThemeData(
+            context,
+            dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
+              context,
+              date,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: getColor(context, date, Colors.transparent),
+              ),
+            ),
+            weekdayIndicatorStyleProvider: (date) => WeekdayIndicatorStyle(
+              context,
+              date,
+              textStyle: theme.textTheme.caption!.copyWith(
+                color: getColor(
+                  context,
+                  date,
+                  theme.colorScheme.background.mediumEmphasisOnColor,
+                ),
+              ),
+            ),
+          ),
           child: Column(
             children: [
               DatePageView(
@@ -151,11 +159,9 @@ class _SchedulePagePageState extends State<SchedulePage>
 
   List<StudiPassauEvent> get events => _repo.schedule ?? <StudiPassauEvent>[];
 
-  List<StudiPassauEvent> getEvents(Interval visible) {
-    return events
-        .where((e) => visible.includes(e.start) && visible.includes(e.end))
-        .toList(growable: false);
-  }
+  List<StudiPassauEvent> getEvents(Interval visible) => events
+      .where((e) => visible.includes(e.start) && visible.includes(e.end))
+      .toList(growable: false);
 
   Future<void> refresh() async {
     _scheduleBloc.add(FetchSchedule(_repo.userId));
@@ -163,7 +169,7 @@ class _SchedulePagePageState extends State<SchedulePage>
   }
 
   void onTap(StudiPassauEvent event) {
-    print(event.start);
+    //print(event.start);
   }
 
   Color getColor(BuildContext context, DateTime date, Color defaultColor) {
@@ -182,11 +188,12 @@ class _SchedulePagePageState extends State<SchedulePage>
     final range = dateControllerHeader.visibleRange as DaysVisibleDateRange;
     final newDate = date - 3.days;
     dateControllerHeader.animateTo(
-        range.minDate!.isAfter(newDate)
-            ? range.minDate!
-            : range.maxDate!.isBefore(date + 3.days)
-                ? range.maxDate! - 6.days
-                : newDate,
-        vsync: this);
+      range.minDate!.isAfter(newDate)
+          ? range.minDate!
+          : range.maxDate!.isBefore(date + 3.days)
+              ? range.maxDate! - 6.days
+              : newDate,
+      vsync: this,
+    );
   }
 }

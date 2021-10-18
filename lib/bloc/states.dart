@@ -1,21 +1,21 @@
 enum StudiPassauState {
-  NOT_AUTHENTICATED,
-  LOADING,
-  AUTHENTICATING,
-  AUTHENTICATED,
-  AUTHENTICATION_ERROR,
-  NOT_FETCHED,
-  FETCHING,
-  FETCHED,
-  FETCH_ERROR,
-  HTTP_ERROR,
+  notAuthenticated,
+  loading,
+  authenticating,
+  authenticated,
+  authenticationError,
+  notFetched,
+  fetching,
+  fetched,
+  fetchError,
+  httpError,
 }
 
 extension StudiPassauStateExtension on StudiPassauState {
   bool get finished =>
-      this == StudiPassauState.AUTHENTICATION_ERROR ||
-      this == StudiPassauState.AUTHENTICATED ||
-      this == StudiPassauState.FETCHED ||
-      this == StudiPassauState.FETCH_ERROR ||
-      this == StudiPassauState.HTTP_ERROR;
+      this == StudiPassauState.authenticationError ||
+      this == StudiPassauState.authenticated ||
+      this == StudiPassauState.fetched ||
+      this == StudiPassauState.fetchError ||
+      this == StudiPassauState.httpError;
 }

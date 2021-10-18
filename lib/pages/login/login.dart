@@ -5,9 +5,11 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/util/navigation.dart';
 
-const ROUTE_LOGIN = '/login';
+const routeLogin = '/login';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _LoginPageState();
 }
@@ -19,7 +21,7 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     _loginBloc.stream.listen((event) {
-      if (event == StudiPassauState.AUTHENTICATED) {
+      if (event == StudiPassauState.authenticated) {
         navigateTo(context, '/schedule');
       } else {
         setState(() {});
@@ -29,43 +31,41 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(S.of(context).loginTitle),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            getIndicator(),
-          ],
+  Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          title: Text(S.of(context).loginTitle),
         ),
-      ),
-    );
-  }
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              getIndicator(),
+            ],
+          ),
+        ),
+      );
 
   Widget getIndicator() {
     switch (_loginBloc.state) {
-      case StudiPassauState.NOT_AUTHENTICATED:
+      case StudiPassauState.notAuthenticated:
         return Text(
           S.of(context).loginNotAuthenticated,
           textAlign: TextAlign.center,
         );
-      case StudiPassauState.LOADING:
+      case StudiPassauState.loading:
         return const Center(
           child: CircularProgressIndicator(),
         );
-      case StudiPassauState.AUTHENTICATING:
+      case StudiPassauState.authenticating:
         return Text(
           S.of(context).loginAuthenticating,
           textAlign: TextAlign.center,
         );
-      case StudiPassauState.AUTHENTICATED:
+      case StudiPassauState.authenticated:
         return Text(S.of(context).loginAuthenticated);
-      case StudiPassauState.HTTP_ERROR:
+      case StudiPassauState.httpError:
         return Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Text(
@@ -82,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget retryButton(BuildContext context) => MaterialButton(
-        onPressed: () => login(),
+        onPressed: login,
         child: Text(S.of(context).loginTryAgain.toUpperCase()),
       );
 
