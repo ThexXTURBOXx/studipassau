@@ -11,68 +11,70 @@ import 'package:studipassau/constants.dart';
 class LoginBloc extends Bloc<LoginEvent, StudiPassauState> {
   static final StudiPassauRepo _repo = StudiPassauRepo();
 
-  LoginBloc() : super(StudiPassauState.notAuthenticated);
+  LoginBloc() : super(StudiPassauState.notAuthenticated) {
+    on<Authenticate>(_authenticate);
+  }
 
-  @override
-  Stream<StudiPassauState> mapEventToState(LoginEvent event) async* {
-    if (event is Authenticate) {
-      yield StudiPassauState.loading;
-      try {
-        final tok = await _repo.storage.readAll();
-        var authenticated = false;
+  Future<void> _authenticate(
+    Authenticate event,
+    Emitter<StudiPassauState> emit,
+  ) async {
+    emit(StudiPassauState.loading);
+    try {
+      final tok = await _repo.storage.readAll();
+      var authenticated = false;
 
-        if (tok.containsKey('oauth_token') && tok.containsKey('oauth_secret')) {
-          // Read tokens from storage
-          try {
-            final client = StudIPClient(
-              oauthBaseUrl,
-              consumerKey,
-              consumerSecret,
-              accessToken: tok['oauth_token'],
-              accessTokenSecret: tok['oauth_secret'],
-              apiBaseUrl: apiBaseUrl,
-            );
-            _repo.userData = await client.apiGetJson('user');
-            _repo.apiClient = client;
-            authenticated = true;
-          } catch (e) {
-            // Ignore exception, stop loading keys from storage and try to login
-            // normally instead, since the saved token is invalid or a server
-            // error occurred. In the second case, just try logging in again
-            // as well... Doesn't hurt...
-          }
-        }
-
-        if (!authenticated) {
+      if (tok.containsKey('oauth_token') && tok.containsKey('oauth_secret')) {
+        // Read tokens from storage
+        try {
           final client = StudIPClient(
             oauthBaseUrl,
             consumerKey,
             consumerSecret,
+            accessToken: tok['oauth_token'],
+            accessTokenSecret: tok['oauth_secret'],
             apiBaseUrl: apiBaseUrl,
           );
-          final url = await client.getAuthorizationUrl(callbackUrl);
-          yield StudiPassauState.authenticating;
-          final params = await FlutterWebAuth.authenticate(
-            url: url,
-            callbackUrlScheme: callbackUrlScheme,
-            preferEphemeral: true,
-          );
-          final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
-          await client.retrieveAccessToken(verifier);
-          await _repo.storage
-              .write(key: 'oauth_token', value: client.accessToken);
-          await _repo.storage
-              .write(key: 'oauth_secret', value: client.accessTokenSecret);
           _repo.userData = await client.apiGetJson('user');
           _repo.apiClient = client;
+          authenticated = true;
+        } catch (e) {
+          // Ignore exception, stop loading keys from storage and try to login
+          // normally instead, since the saved token is invalid or a server
+          // error occurred. In the second case, just try logging in again
+          // as well... Doesn't hurt...
         }
-        yield StudiPassauState.authenticated;
-      } catch (e) {
-        if (e is StateError || e is SocketException) {
-          yield StudiPassauState.httpError;
-        } else {
-          yield StudiPassauState.authenticationError;
-        }
+      }
+
+      if (!authenticated) {
+        final client = StudIPClient(
+          oauthBaseUrl,
+          consumerKey,
+          consumerSecret,
+          apiBaseUrl: apiBaseUrl,
+        );
+        final url = await client.getAuthorizationUrl(callbackUrl);
+        emit(StudiPassauState.authenticating);
+        final params = await FlutterWebAuth.authenticate(
+          url: url,
+          callbackUrlScheme: callbackUrlScheme,
+          preferEphemeral: true,
+        );
+        final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
+        await client.retrieveAccessToken(verifier);
+        await _repo.storage
+            .write(key: 'oauth_token', value: client.accessToken);
+        await _repo.storage
+            .write(key: 'oauth_secret', value: client.accessTokenSecret);
+        _repo.userData = await client.apiGetJson('user');
+        _repo.apiClient = client;
+      }
+      emit(StudiPassauState.authenticated);
+    } catch (e) {
+      if (e is StateError || e is SocketException) {
+        emit(StudiPassauState.httpError);
+      } else {
+        emit(StudiPassauState.authenticationError);
       }
     }
   }
