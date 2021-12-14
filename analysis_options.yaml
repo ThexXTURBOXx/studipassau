@@ -38,6 +38,8 @@ analyzer:
     # Ignore generated localizations
     - "lib/generated/l10n.dart"
     - "lib/generated/intl/messages_*.dart"
+    # Ignore generated plugin registrant
+    - "lib/generated_plugin_registrant.dart"
 
 linter:
   # The lint rules applied to this project can be customized in the
@@ -104,7 +106,7 @@ linter:
     - camel_case_extensions
     - camel_case_types
     - cancel_subscriptions
-    - cascade_invocations
+    # - cascade_invocations
     - cast_nullable_to_non_nullable
     - close_sinks
     - comment_references
