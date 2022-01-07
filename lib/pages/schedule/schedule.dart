@@ -147,6 +147,14 @@ class _SchedulePagePageState extends State<SchedulePage>
                     context,
                     startOfWeek: DateTime.monday,
                   ),
+                  timeOverlayProvider: (ctx, date) => <TimeOverlay>[
+                    TimeOverlay(
+                      start: 8.hours,
+                      end: 20.hours,
+                      widget: const ColoredBox(color: Colors.black12),
+                      position: TimeOverlayPosition.behindEvents,
+                    ),
+                  ],
                   child: MultiDateTimetableContent<StudiPassauEvent>(),
                 ),
               ),
@@ -169,7 +177,29 @@ class _SchedulePagePageState extends State<SchedulePage>
   }
 
   void onTap(StudiPassauEvent event) {
-    //print(event.start);
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(event.title),
+        content: Text(
+          '${event.course}\n'
+          '${event.room}\n'
+          'Start: ${event.start.timeOfDay}\n'
+          'Ende: ${event.end.timeOfDay}\n'
+          '${event.description}\n'
+          '${event.canceled}',
+        ),
+        backgroundColor: event.backgroundColor,
+        titleTextStyle: Theme.of(context)
+            .textTheme
+            .headline6!
+            .copyWith(color: event.backgroundColor.highEmphasisOnColor),
+        contentTextStyle: Theme.of(context)
+            .textTheme
+            .subtitle1!
+            .copyWith(color: event.backgroundColor.highEmphasisOnColor),
+      ),
+    );
   }
 
   Color getColor(BuildContext context, DateTime date, Color defaultColor) {

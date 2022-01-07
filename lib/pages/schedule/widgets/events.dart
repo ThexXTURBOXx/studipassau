@@ -106,9 +106,14 @@ class StudiPassauEventWidget extends StatelessWidget {
                   fontSize: 12,
                   color: event.backgroundColor.highEmphasisOnColor,
                 ),
-                child: Text(
-                  '${event.title}${event.course}${event.description}'
-                  '${event.categories}${event.room}${event.canceled}',
+                child: Column(
+                  children: [
+                    Text(event.room),
+                    Text(
+                      event.title,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
               ),
             ),
