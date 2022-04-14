@@ -1,9 +1,8 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:timetable/timetable.dart';
 
-class StudiPassauEvent extends Event implements Equatable {
+class StudiPassauEvent extends Event {
   final String id;
   final String title;
   final String course;
@@ -53,18 +52,7 @@ class StudiPassauEvent extends Event implements Equatable {
       );
 
   @override
-  List<Object> get props => [
-        id,
-        title,
-        course,
-        description,
-        categories,
-        room,
-        canceled,
-        backgroundColor,
-        start,
-        end,
-      ];
+  List<Object> get props => super.props..addAll([id]);
 
   @override
   bool get stringify => true;

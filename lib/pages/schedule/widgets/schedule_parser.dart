@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:studip/studip.dart';
@@ -18,8 +19,21 @@ Future<List<StudiPassauEvent>> fetchSchedule(
     final start = DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
     final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
     final eventCourseId = event.course.split('/').last;
-    final courseResp = await client.apiGetJson('course/$eventCourseId');
-    final courseName = '${courseResp['number']} ${courseResp['title']}';
+    final scheduleEvent = schedule.events
+        .expand((e) => e ?? <_ScheduleEvent>[])
+        .firstWhereOrNull((e) => e.id == eventCourseId);
+
+    String courseName;
+    if (scheduleEvent == null) {
+      try {
+        final courseResp = await client.apiGetJson('course/$eventCourseId');
+        courseName = '${courseResp['number']} ${courseResp['title']}';
+      } catch (e) {
+        courseName = '';
+      }
+    } else {
+      courseName = scheduleEvent.title;
+    }
 
     var color = notFoundColor;
     if (event.categories == regularLectureCategory) {
@@ -58,14 +72,11 @@ bool equalsCourseEventTime(int courseStart, DateTime eventStart) =>
     courseStart == eventStart.hour * 100 + eventStart.minute;
 
 List<_Event> _parseEvents(json) {
-  final events = <_Event>[];
   final collection = json['collection'];
   if (collection != null && collection is List) {
-    for (final event in collection) {
-      events.add(_Event.fromJson(event));
-    }
+    return collection.map(_Event.fromJson).toList(growable: false);
   }
-  return events;
+  return <_Event>[];
 }
 
 class _Event extends Equatable {
