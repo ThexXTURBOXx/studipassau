@@ -39,10 +39,10 @@ If you want to compile the app for iOS, I can't really help you as I usually don
 ### WIP
 
  - 🕒 Schedule
+ - 🕒 Mensa plan
 
 ### Planned
 
- - ❌ Mensa plan
  - ❌ Customization
  - ❌ Files
 
