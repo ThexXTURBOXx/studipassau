@@ -5,6 +5,7 @@ import 'package:studipassau/bloc/blocs/schedule_bloc.dart';
 import 'package:studipassau/bloc/events.dart';
 import 'package:studipassau/bloc/repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
@@ -134,13 +135,13 @@ class _SchedulePagePageState extends State<SchedulePage>
                   eventProvider: getEvents,
                   eventBuilder: (context, event) => StudiPassauEventWidget(
                     event,
-                    onTap: () => onTap(event),
+                    onTap: () => onTap(context, event),
                   ),
                   allDayEventBuilder: (context, event, info) =>
                       StudiPassauAllDayEventWidget(
                     event,
                     info: info,
-                    onTap: () => onTap(event),
+                    onTap: () => onTap(context, event),
                   ),
                   callbacks: const TimetableCallbacks(),
                   theme: TimetableThemeData(
@@ -176,18 +177,19 @@ class _SchedulePagePageState extends State<SchedulePage>
     await _scheduleBloc.stream.firstWhere((state) => state.finished);
   }
 
-  void onTap(StudiPassauEvent event) {
+  void onTap(BuildContext ctx, StudiPassauEvent event) {
+    final tf = hmTimeFormat(locale(ctx));
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(event.title),
         content: Text(
-          '${event.course}\n'
-          '${event.room}\n'
-          'Start: ${event.start.timeOfDay}\n'
-          'Ende: ${event.end.timeOfDay}\n'
-          '${event.description}\n'
-          '${event.canceled}',
+          'Kurs: ${event.course}\n'
+          'Raum: ${event.room}\n'
+          'Start: ${tf.format(event.start)}\n'
+          'Ende: ${tf.format(event.end)}\n'
+          'Beschreibung: ${event.description}\n'
+          'Abgesagt: ${event.canceled}',
         ),
         backgroundColor: event.backgroundColor,
         titleTextStyle: Theme.of(context)

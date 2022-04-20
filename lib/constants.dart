@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:intl/intl.dart';
 import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
@@ -47,6 +48,10 @@ String get consumerSecret => dotenv.env['CONSUMER_SECRET']!;
 String? get sentryDsn => dotenv.env['SENTRY_DSN'];
 
 Location get location => _location ?? (_location = getLocation(studIpTimeZone));
+
+Locale locale(BuildContext ctx) => Localizations.localeOf(ctx);
+
+DateFormat hmTimeFormat(Locale locale) => DateFormat.Hm(locale.languageCode);
 
 Color getColor(int index) =>
     _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];
