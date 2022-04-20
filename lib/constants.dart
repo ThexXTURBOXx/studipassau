@@ -43,7 +43,7 @@ const regularLectureCategory = 'Sitzung';
 final dateFormat = DateFormat.yMd();
 final hmTimeFormat = DateFormat.Hm();
 final weekdayFormat = DateFormat('EEEE');
-final decimalFormat = NumberFormat('###.00');
+final decimalFormat = NumberFormat('##0.00');
 
 Location? _location;
 
