@@ -79,7 +79,7 @@ class _SchedulePagePageState extends State<SchedulePage>
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.refresh),
-            tooltip: 'Refresh',
+            tooltip: S.of(context).refresh,
             onPressed: () {
               _refreshIndicatorKey.currentState?.show();
             },
@@ -178,18 +178,18 @@ class _SchedulePagePageState extends State<SchedulePage>
   }
 
   void onTap(BuildContext ctx, StudiPassauEvent event) {
-    final tf = hmTimeFormat(locale(ctx));
+    final s = S.of(ctx);
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(event.title),
         content: Text(
-          'Kurs: ${event.course}\n'
-          'Raum: ${event.room}\n'
-          'Start: ${tf.format(event.start)}\n'
-          'Ende: ${tf.format(event.end)}\n'
-          'Beschreibung: ${event.description}\n'
-          'Abgesagt: ${event.canceled}',
+          '${formatLine(s.course, event.course)}'
+          '${formatLine(s.room, event.room)}'
+          '${s.start}: ${formatHmTime(event.start)}\n'
+          '${s.end}: ${formatHmTime(event.end)}\n'
+          '${formatLine(s.description, event.description)}'
+          '${formatLine(s.canceled, event.canceled ? s.yes : null)}',
         ),
         backgroundColor: event.backgroundColor,
         titleTextStyle: Theme.of(context)
@@ -203,6 +203,9 @@ class _SchedulePagePageState extends State<SchedulePage>
       ),
     );
   }
+
+  String formatLine(String title, String? entry) =>
+      entry != null && entry.isNotEmpty ? '$title: $entry\n' : '';
 
   Color getColor(BuildContext context, DateTime date, Color defaultColor) {
     final theme = context.theme;

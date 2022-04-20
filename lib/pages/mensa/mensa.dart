@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart' hide Interval;
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:openmensa/openmensa.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/bloc/blocs/mensa_bloc.dart';
 import 'package:studipassau/bloc/events.dart';
 import 'package:studipassau/bloc/repo.dart';
@@ -48,7 +49,7 @@ class _MensaPagePageState extends State<MensaPage>
           actions: <Widget>[
             IconButton(
               icon: const Icon(Icons.refresh),
-              tooltip: 'Refresh',
+              tooltip: S.of(context).refresh,
               onPressed: () {
                 _refreshIndicatorKey.currentState?.show();
               },
@@ -75,8 +76,8 @@ class _MensaPagePageState extends State<MensaPage>
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '${weekday(dm.day.date)}, '
-                  '${dateFormat(locale(ctx)).format(dm.day.date)}',
+                  '${formatWeekday(dm.day.date)}, '
+                  '${formatDate(dm.day.date)}',
                   style: const TextStyle(color: Colors.white),
                 ),
               ),
@@ -103,21 +104,32 @@ class _MensaPagePageState extends State<MensaPage>
       [];
 
   void onTap(Meal m) {
+    final s = S.of(context);
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(m.name),
         content: Text(
-          'Kategorie: ${m.category}\n'
-          'Studenten: ${m.studentPrice}€\n'
-          'Beschäftigte: ${m.employeePrice}€\n'
-          'Gäste: ${m.othersPrice}€\n'
-          'Schüler: ${m.pupilPrice}€\n'
-          'Zusätze: ${m.notes}',
+          '${s.category}: ${m.category}\n'
+          '${formatPrice(s.students, s.priceFormat, m.studentPrice)}'
+          '${formatPrice(s.employees, s.priceFormat, m.employeePrice)}'
+          '${formatPrice(s.guests, s.priceFormat, m.othersPrice)}'
+          '${formatPrice(s.pupils, s.priceFormat, m.pupilPrice)}'
+          '${formatAdditives(s, m.notes)}',
         ),
       ),
     );
   }
+
+  String formatPrice(String category, String format, double? price) =>
+      price != null
+          ? '$category: ${sprintf(format, [formatDecimal(price)])}\n'
+          : '';
+
+  String formatAdditives(S s, List<String>? additives) =>
+      additives != null && additives.isNotEmpty
+          ? '${s.additives}: ${additives.join(", ")}'
+          : '${s.additives}: ${s.noAdditives}';
 
   Future<void> refresh() async {
     _mensaBloc.add(FetchMensaPlan());

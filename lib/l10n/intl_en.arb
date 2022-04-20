@@ -111,5 +111,73 @@
   "wip": "WIP",
   "@wip": {
     "description": "Text shown when something is Work In Progress."
+  },
+  "refresh": "Refresh",
+  "@refresh": {
+    "description": "Tooltip for refresh buttons."
+  },
+  "category": "Category",
+  "@category": {
+    "description": "Category information in the mensa plan."
+  },
+  "students": "Students",
+  "@students": {
+    "description": "Student price information in the mensa plan."
+  },
+  "employees": "Employees",
+  "@employees": {
+    "description": "Employee price information in the mensa plan."
+  },
+  "guests": "Guests",
+  "@guests": {
+    "description": "Guest price information in the mensa plan."
+  },
+  "pupils": "Pupils",
+  "@pupils": {
+    "description": "Pupil price information in the mensa plan."
+  },
+  "additives": "Notes",
+  "@additives": {
+    "description": "Additives information in the mensa plan."
+  },
+  "priceFormat": "%s €",
+  "@priceFormat": {
+    "description": "Format for prices."
+  },
+  "noAdditives": "none",
+  "@noAdditives": {
+    "description": "Shown when no additives are there."
+  },
+  "course": "Course",
+  "@course": {
+    "description": "Course entry in schedule."
+  },
+  "room": "Room",
+  "@room": {
+    "description": "Room entry in schedule."
+  },
+  "start": "Start",
+  "@start": {
+    "description": "Start time entry in schedule."
+  },
+  "end": "End",
+  "@end": {
+    "description": "End time entry in schedule."
+  },
+  "description": "Description",
+  "@description": {
+    "description": "Description entry in schedule."
+  },
+  "canceled": "Canceled",
+  "@canceled": {
+    "description": "Canceled entry in schedule."
+  },
+  "yes": "Yes",
+  "@yes": {
+    "description": "Just a normal 'Yes'."
+  },
+  "no": "No",
+  "@no": {
+    "description": "Just a normal 'No'."
   }
 }

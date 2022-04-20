@@ -40,7 +40,10 @@ const _colorTable = [
 
 const regularLectureCategory = 'Sitzung';
 
+final dateFormat = DateFormat.yMd();
+final hmTimeFormat = DateFormat.Hm();
 final weekdayFormat = DateFormat('EEEE');
+final decimalFormat = NumberFormat('###.00');
 
 Location? _location;
 
@@ -54,11 +57,13 @@ Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
 Locale locale(BuildContext ctx) => Localizations.localeOf(ctx);
 
-DateFormat dateFormat(Locale locale) => DateFormat.yMd(locale.languageCode);
+String formatDate(DateTime dateTime) => dateFormat.format(dateTime);
 
-DateFormat hmTimeFormat(Locale locale) => DateFormat.Hm(locale.languageCode);
+String formatHmTime(DateTime dateTime) => hmTimeFormat.format(dateTime);
 
-String weekday(DateTime dateTime) => weekdayFormat.format(dateTime);
+String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
+
+String formatDecimal(double value) => decimalFormat.format(value);
 
 Color getColor(int index) =>
     _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];
