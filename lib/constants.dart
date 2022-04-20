@@ -5,6 +5,7 @@ import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
 const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
+const openMensaMensaId = 196;
 const oauthBaseUrl = '${studIpProviderUrl}dispatch.php/api';
 const apiBaseUrl = '${studIpProviderUrl}api.php/';
 const callbackUrlScheme = 'studipassau';
@@ -39,6 +40,8 @@ const _colorTable = [
 
 const regularLectureCategory = 'Sitzung';
 
+final weekdayFormat = DateFormat('EEEE');
+
 Location? _location;
 
 String get consumerKey => dotenv.env['CONSUMER_KEY']!;
@@ -51,7 +54,11 @@ Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
 Locale locale(BuildContext ctx) => Localizations.localeOf(ctx);
 
+DateFormat dateFormat(Locale locale) => DateFormat.yMd(locale.languageCode);
+
 DateFormat hmTimeFormat(Locale locale) => DateFormat.Hm(locale.languageCode);
+
+String weekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 
 Color getColor(int index) =>
     _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];

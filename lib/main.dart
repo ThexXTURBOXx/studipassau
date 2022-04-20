@@ -10,6 +10,7 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
+import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:timetable/timetable.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
@@ -67,6 +68,7 @@ class StudiPassauApp extends StatelessWidget {
         routes: {
           routeLogin: (ctx) => const LoginPage(),
           routeSchedule: (ctx) => const SchedulePage(),
+          routeMensa: (ctx) => const MensaPage(),
         },
       );
 }

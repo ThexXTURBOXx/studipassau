@@ -88,6 +88,10 @@
   "@scheduleTitle": {
     "description": "The title for the schedule screen"
   },
+  "mensaPlanTitle": "StudiPassau Mensa Plan",
+  "@mensaPlanTitle": {
+    "description": "The title for the mensa plan screen"
+  },
   "shareBody": "Hey, check this out! There is an app called \"StudiPassau\", which helps you manage your lectures easier:\nhttp://femtopedia.de/studip/index.php",
   "@shareBody": {
     "description": "The body of the Share message"

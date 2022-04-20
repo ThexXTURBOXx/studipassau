@@ -6,6 +6,7 @@ import 'package:studipassau/bloc/repo.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
+import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/util/images.dart';
 import 'package:studipassau/util/navigation.dart';
@@ -118,6 +119,8 @@ extension DrawerItemExtension on DrawerItem {
     switch (this) {
       case DrawerItem.schedule:
         return routeSchedule;
+      case DrawerItem.mensaPlan:
+        return routeMensa;
       default:
         return null;
     }

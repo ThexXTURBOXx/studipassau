@@ -18,6 +18,15 @@ abstract class ScheduleEvent extends Equatable {
   List<Object> get props => _props as List<Object>;
 }
 
+abstract class MensaPlanEvent extends Equatable {
+  final List _props;
+
+  const MensaPlanEvent([this._props = const []]);
+
+  @override
+  List<Object> get props => _props as List<Object>;
+}
+
 class Authenticate extends LoginEvent {}
 
 class FetchSchedule extends ScheduleEvent {
@@ -27,3 +36,5 @@ class FetchSchedule extends ScheduleEvent {
 
   String get userId => _userId;
 }
+
+class FetchMensaPlan extends MensaPlanEvent {}
