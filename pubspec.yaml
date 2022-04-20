@@ -10,7 +10,7 @@ version: 0.9.0+090
 
 environment:
   sdk: '>=2.16.2 <3.0.0'
-  flutter: '>=2.10.4'
+  flutter: '>=2.10.5'
 
 dependencies:
   black_hole_flutter: ^0.3.2
