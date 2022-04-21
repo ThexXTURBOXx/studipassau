@@ -92,6 +92,10 @@
   "@mensaPlanTitle": {
     "description": "The title for the mensa plan screen"
   },
+  "aboutTitle": "About StudiPassau",
+  "@aboutTitle": {
+    "description": "The title for the about screen"
+  },
   "shareBody": "Hey, check this out! There is an app called \"StudiPassau\", which helps you manage your lectures easier:\nhttp://femtopedia.de/studip/index.php",
   "@shareBody": {
     "description": "The body of the Share message"
@@ -179,5 +183,25 @@
   "no": "No",
   "@no": {
     "description": "Just a normal 'No'."
+  },
+  "aboutText": "Hello, Student!\n\nI am Nico Mexis, a student at the University of Passau, and I am developing this app.\nIf you encounter any bugs, feel free to contact me via email or click the \"Report a bug\" option in the drawer menu.\n\nHave a great day and see you soon,\nNico\n\nI do not assume liability for any error!",
+  "@aboutText": {
+    "description": "Text shown in the about screen."
+  },
+  "email": "Email: nico.mexis@kabelmail.de",
+  "@email": {
+    "description": "Text for the button to send an email to me"
+  },
+  "translation": "Help with translation",
+  "@translation": {
+    "description": "Text for the button to help translating"
+  },
+  "viewSource": "View Source on GitHub",
+  "@viewSource": {
+    "description": "Text for the button to view the source code"
+  },
+  "showLicenses": "Show Licenses",
+  "@showLicenses": {
+    "description": "Text for the button to show the licenses"
   }
 }

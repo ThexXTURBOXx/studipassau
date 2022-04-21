@@ -11,6 +11,12 @@
       "css": "telegramPlane",
       "code": 62462,
       "src": "fontawesome5"
+    },
+    {
+      "uid": "1c84e3e6e855070297da0371c1e87ff1",
+      "css": "github",
+      "code": 61595,
+      "src": "fontawesome5"
     }
   ]
 }

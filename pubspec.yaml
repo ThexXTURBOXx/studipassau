@@ -67,6 +67,10 @@ flutter:
     - .env
     # env2 is only used for testing purposes
     - .env2
+    # We also want the icons in some places
+    - assets/icons/
+    # Custom images
+    - assets/img/
   fonts:
     - family: StudiPassauIcons
       fonts:

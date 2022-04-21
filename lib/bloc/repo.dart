@@ -10,6 +10,7 @@ class StudiPassauRepo {
 
   late StudIPClient apiClient;
   final mensaClient = OpenMensaAPI();
+
   dynamic userData;
   List<StudiPassauEvent>? schedule;
   List<DayMenu>? mensaPlan;

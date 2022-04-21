@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
@@ -15,7 +16,13 @@ const studIpTimeZone = 'Europe/Berlin';
 const bugReportEmail = 'info@femtopedia.de';
 const bugReportSubject = '[Bug] Bug in StudiPassau';
 const bugReportUrl = 'mailto:$bugReportEmail?subject=$bugReportSubject';
+const aboutEmail = 'nico.mexis@kabelmail.de';
+const aboutSubject = 'StudiPassau Feedback';
+const aboutEmailUrl = 'mailto:$aboutEmail?subject=$aboutSubject';
 const telegramBotUrl = 'http://t.me/UniPassauBot';
+const translationUrl = 'https://app.localizely.com/projects/'
+    '32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations';
+const githubUrl = 'https://github.com/ThexXTURBOXx/studipassau';
 
 const notFoundColor = Color(0xffea3838);
 const nonLectureColor = Color(0xff339966);
@@ -45,6 +52,8 @@ final hmTimeFormat = DateFormat.Hm();
 final weekdayFormat = DateFormat('EEEE');
 final decimalFormat = NumberFormat('##0.00');
 
+late PackageInfo packageInfo;
+
 Location? _location;
 
 String get consumerKey => dotenv.env['CONSUMER_KEY']!;
@@ -67,3 +76,8 @@ String formatDecimal(double value) => decimalFormat.format(value);
 
 Color getColor(int index) =>
     _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];
+
+String get appName => packageInfo.appName;
+
+String get appVersion => '${packageInfo.version} '
+    '(${packageInfo.buildNumber})';

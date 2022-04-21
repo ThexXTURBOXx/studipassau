@@ -5,10 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
@@ -24,9 +26,13 @@ Future main() async {
 
   await dotenv.load(fileName: envFile);
 
+  packageInfo = await PackageInfo.fromPlatform();
+
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
   final releaseOptions = CatcherOptions(DialogReportMode(), [
-    SentryHandler(SentryClient(SentryFlutterOptions()..dsn = sentryDsn)),
+    SentryHandler(
+      SentryClient(SentryFlutterOptions()..dsn = sentryDsn),
+    ),
     ConsoleHandler(),
   ]);
 
@@ -69,6 +75,7 @@ class StudiPassauApp extends StatelessWidget {
           routeLogin: (ctx) => const LoginPage(),
           routeSchedule: (ctx) => const SchedulePage(),
           routeMensa: (ctx) => const MensaPage(),
+          routeAbout: (ctx) => const AboutPage(),
         },
       );
 }
