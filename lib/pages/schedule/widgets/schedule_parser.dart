@@ -21,7 +21,7 @@ Future<List<StudiPassauEvent>> fetchSchedule(
 
     String? courseName;
     var color = notFoundColor;
-    if (event.categories == regularLectureCategory) {
+    if (regularLectureCategories.contains(event.categories)) {
       for (final course in schedule.events[start.weekday - 1]!) {
         final courseId = course.id;
         if (courseId == eventCourseId &&

@@ -45,7 +45,7 @@ const _colorTable = [
   Color(0xffcb9e8f),
 ];
 
-const regularLectureCategory = 'Sitzung';
+const regularLectureCategories = ['Sitzung', 'Vorlesung'];
 
 final dateFormat = DateFormat.yMd();
 final hmTimeFormat = DateFormat.Hm();
