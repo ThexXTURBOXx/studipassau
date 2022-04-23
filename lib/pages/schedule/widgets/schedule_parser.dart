@@ -3,11 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 
 Future<List<StudiPassauEvent>> fetchSchedule(
   StudIPClient client,
   String userId,
 ) async {
+  final notFoundColor = Color(getPref(notFoundColorPref));
+  final nonRegularColor = Color(getPref(nonRegularColorPref));
+
   final dynamic jsonSchedule = await client.apiGetJson('user/$userId/schedule');
   final dynamic jsonEvents =
       await client.apiGetJson('user/$userId/events?limit=10000');
@@ -33,7 +37,7 @@ Future<List<StudiPassauEvent>> fetchSchedule(
         }
       }
     } else {
-      color = nonLectureColor;
+      color = nonRegularColor;
     }
 
     if (courseName == null) {

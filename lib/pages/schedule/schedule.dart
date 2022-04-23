@@ -9,6 +9,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
@@ -54,9 +55,11 @@ class _SchedulePagePageState extends State<SchedulePage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
-    );
+    if (getPref(scheduleAutoSyncPref)) {
+      WidgetsBinding.instance?.addPostFrameCallback(
+        (_) => _refreshIndicatorKey.currentState?.show(),
+      );
+    }
     _scheduleBloc.stream.listen((event) {
       setState(() {});
     });
@@ -67,7 +70,6 @@ class _SchedulePagePageState extends State<SchedulePage>
         selected = date;
       });
     });
-    refresh();
   }
 
   @override

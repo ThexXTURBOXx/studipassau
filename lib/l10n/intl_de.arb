@@ -203,5 +203,133 @@
   "showLicenses": "Lizenzen anzeigen",
   "@showLicenses": {
     "description": "Text for the button to show the licenses"
+  },
+  "colorPickerTitle": "Wähle eine Farbe...",
+  "@colorPickerTitle": {
+    "description": "Title for color pickers"
+  },
+  "generalPrefCatLongTitle": "Allgemeine Einstellungen",
+  "@generalPrefCatLongTitle": {
+    "description": "General preferences category long title"
+  },
+  "generalPrefCatShortTitle": "Allgemein",
+  "@generalPrefCatShortTitle": {
+    "description": "General preferences category short title"
+  },
+  "generalPrefCatDesc": "Allgemeines Verhalten der App",
+  "@generalPrefCatDesc": {
+    "description": "General preferences category description"
+  },
+  "themePref": "Thema",
+  "@themePref": {
+    "description": "Title for a group of theme-related preferences"
+  },
+  "uiThemePrefTitle": "App-Thema",
+  "@uiThemePrefTitle": {
+    "description": "Title for app theme preference"
+  },
+  "uiThemePrefDesc": "Zwischen dunklem und hellem Modus wechseln",
+  "@uiThemePrefDesc": {
+    "description": "Description for app theme preference"
+  },
+  "uiThemePrefDefault": "System-Standard",
+  "@uiThemePrefDefault": {
+    "description": "Title for default app theme"
+  },
+  "uiThemePrefLight": "Heller Modus",
+  "@uiThemePrefLight": {
+    "description": "Title for light app theme"
+  },
+  "uiThemePrefDark": "Dunkler Modus",
+  "@uiThemePrefDark": {
+    "description": "Title for dark app theme"
+  },
+  "schedulePrefCatLongTitle": "Stundenplan-Einstellungen",
+  "@schedulePrefCatLongTitle": {
+    "description": "Schedule preferences category long title"
+  },
+  "schedulePrefCatShortTitle": "Stundenplan",
+  "@schedulePrefCatShortTitle": {
+    "description": "Schedule preferences category short title"
+  },
+  "schedulePrefCatDesc": "Anpassung des Stundenplans",
+  "@schedulePrefCatDesc": {
+    "description": "Schedule preferences category description"
+  },
+  "syncPref": "Synchronisation",
+  "@syncPref": {
+    "description": "Title for a group of synchronization-related preferences"
+  },
+  "autoSyncPrefTitle": "Auto Sync",
+  "@autoSyncPrefTitle": {
+    "description": "Title for auto synchronization preference"
+  },
+  "autoSyncPrefDesc": "Beim Starten automatisch synchronisieren",
+  "@autoSyncPrefDesc": {
+    "description": "Description for auto synchronization preference"
+  },
+  "colorsPref": "Farben",
+  "@colorsPref": {
+    "description": "Title for a group of color-related preferences"
+  },
+  "nonRegularColorPrefTitle": "Unregulär-Farbe",
+  "@nonRegularColorPrefTitle": {
+    "description": "Title for non-regular session color preference"
+  },
+  "nonRegularColorPrefDesc": "Farbe der unregulären Sitzungen (Klausuren etc.)",
+  "@nonRegularColorPrefDesc": {
+    "description": "Description for non-regular session color preference"
+  },
+  "lectureNotFoundColorPrefTitle": "Nicht gefundene Sitzungs-Farbe",
+  "@lectureNotFoundColorPrefTitle": {
+    "description": "Title for not-found lecture color preference"
+  },
+  "lectureNotFoundColorPrefDesc": "Farbe der Sitzungen, die keiner Vorlesung zugeordnet werden konnten",
+  "@lectureNotFoundColorPrefDesc": {
+    "description": "Description for not-found lecture color preference"
+  },
+  "mensaPrefCatLongTitle": "Mensaplan-Einstellungen",
+  "@mensaPrefCatLongTitle": {
+    "description": "Mensa plan preferences category long title"
+  },
+  "mensaPrefCatShortTitle": "Mensaplan",
+  "@mensaPrefCatShortTitle": {
+    "description": "Mensa plan preferences category short title"
+  },
+  "mensaPrefCatDesc": "Anpassung des Mensaplans",
+  "@mensaPrefCatDesc": {
+    "description": "Mensa plan preferences category description"
+  },
+  "soupColorPrefTitle": "Suppen-Farbe",
+  "@soupColorPrefTitle": {
+    "description": "Title for soup color preference"
+  },
+  "soupColorPrefDesc": "Farbe der Suppen im Mensaplan",
+  "@soupColorPrefDesc": {
+    "description": "Description for soup color preference"
+  },
+  "mainDishColorPrefTitle": "Hauptgericht-Farbe",
+  "@mainDishColorPrefTitle": {
+    "description": "Title for main dish color preference"
+  },
+  "mainDishColorPrefDesc": "Farbe der Hauptgericht im Mensaplan",
+  "@mainDishColorPrefDesc": {
+    "description": "Description for main dish color preference"
+  },
+  "garnishColorPrefTitle": "Beilagen-Farbe",
+  "@garnishColorPrefTitle": {
+    "description": "Title for garnish color preference"
+  },
+  "garnishColorPrefDesc": "Farbe der Beilagen im Mensaplan",
+  "@garnishColorPrefDesc": {
+    "description": "Description for garnish color preference"
+  },
+  "dessertColorPrefTitle": "Nachspeisen-Farbe",
+  "@dessertColorPrefTitle": {
+    "description": "Title for dessert color preference"
+  },
+  "dessertColorPrefDesc": "Farbe der Nachspeisen im Mensaplan",
+  "@dessertColorPrefDesc": {
+    "description": "Description for dessert color preference"
   }
 }

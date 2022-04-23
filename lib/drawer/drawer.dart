@@ -9,6 +9,7 @@ import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:studipassau/util/images.dart';
 import 'package:studipassau/util/navigation.dart';
 
@@ -124,6 +125,8 @@ extension DrawerItemExtension on DrawerItem {
         return routeMensa;
       case DrawerItem.about:
         return routeAbout;
+      case DrawerItem.settings:
+        return routeSettings;
       default:
         return null;
     }

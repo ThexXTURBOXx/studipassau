@@ -24,6 +24,7 @@ dependencies:
     sdk: flutter
   flutter_bloc: ^8.0.0
   flutter_cache_manager: ^3.1.2
+  flutter_colorpicker: ^1.0.3
   flutter_dotenv: ^5.0.0
   flutter_localizations:
     sdk: flutter
@@ -35,6 +36,7 @@ dependencies:
   intl: ^0.17.0
   openmensa: ^0.0.1
   package_info_plus: ^1.0.4
+  pref: ^2.5.0
   quick_actions: ^0.6.0+3
   sentry: ^6.0.1
   sentry_flutter: ^6.0.1
@@ -53,6 +55,10 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
+  pref:
+    git:
+      url: https://github.com/DavBfr/flutter_pref.git
+      path: pref
   timetable:
     git:
       url: https://github.com/ThexXTURBOXx/timetable.git

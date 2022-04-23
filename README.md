@@ -35,6 +35,7 @@ If you want to compile the app for iOS, I can't really help you as I usually don
 ### Fully ported from old app
 
  - ✔ Authentication using OAuth 1.0
+ - ✔ Customization
 
 ### WIP
 
@@ -43,7 +44,6 @@ If you want to compile the app for iOS, I can't really help you as I usually don
 
 ### Planned
 
- - ❌ Customization
  - ❌ Files
 
 ## Changelog

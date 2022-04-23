@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pref/pref.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
@@ -24,10 +26,8 @@ const translationUrl = 'https://app.localizely.com/projects/'
     '32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations';
 const githubUrl = 'https://github.com/ThexXTURBOXx/studipassau';
 
-const notFoundColor = Color(0xffea3838);
-const nonLectureColor = Color(0xff339966);
 const _colorTable = [
-  notFoundColor,
+  null,
   Color(0xff008512),
   Color(0xff682c8b),
   Color(0xffb02e7c),
@@ -54,6 +54,8 @@ final decimalFormat = NumberFormat('##0.00');
 
 late PackageInfo packageInfo;
 
+late BasePrefService prefService;
+
 Location? _location;
 
 String get consumerKey => dotenv.env['CONSUMER_KEY']!;
@@ -75,7 +77,8 @@ String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 String formatDecimal(double value) => decimalFormat.format(value);
 
 Color getColor(int index) =>
-    _colorTable[(0 <= index && index < _colorTable.length) ? index : 0];
+    (1 <= index && index < _colorTable.length ? _colorTable[index] : null) ??
+    getPref(notFoundColorPref)!;
 
 String get appName => packageInfo.appName;
 

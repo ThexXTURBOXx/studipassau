@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pref/pref.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/constants.dart';
@@ -14,6 +15,7 @@ import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timetable/timetable.dart';
 import 'package:timezone/data/latest_10y.dart' as tz;
 import 'package:timezone/timezone.dart';
@@ -36,21 +38,41 @@ Future main() async {
     ConsoleHandler(),
   ]);
 
+  // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue
+  //             at some point, i.e. remove the global reference...
+  prefService = await PrefServiceShared.init(defaults: defaults);
+
   Catcher(
-    rootWidget: const StudiPassauApp(),
+    rootWidget: PrefService(
+      service: prefService,
+      child: const StudiPassauApp(),
+    ),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
   );
 }
 
-class StudiPassauApp extends StatelessWidget {
+class StudiPassauApp extends StatefulWidget {
   const StudiPassauApp({Key? key}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _StudiPassauAppState();
+}
+
+class _StudiPassauAppState extends State<StudiPassauApp> {
+  @override
+  void initState() {
+    super.initState();
+    prefService.addKeyListener(uiThemePref, () {
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) => MaterialApp(
         onGenerateTitle: (context) => S.of(context).applicationTitle,
         debugShowCheckedModeBanner: false,
-        //themeMode: themeSettings.currentTheme,
+        themeMode: getThemeMode(),
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -61,7 +83,6 @@ class StudiPassauApp extends StatelessWidget {
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         navigatorKey: Catcher.navigatorKey,
-        //locale: localeSettings.currentLocale,
         localizationsDelegates: const [
           S.delegate,
           TimetableLocalizationsDelegate(),
@@ -76,6 +97,18 @@ class StudiPassauApp extends StatelessWidget {
           routeSchedule: (ctx) => const SchedulePage(),
           routeMensa: (ctx) => const MensaPage(),
           routeAbout: (ctx) => const AboutPage(),
+          routeSettings: (ctx) => const SettingsPage(),
         },
       );
+
+  ThemeMode getThemeMode() {
+    switch (getPref(uiThemePref)) {
+      case uiThemePrefLight:
+        return ThemeMode.light;
+      case uiThemePrefDark:
+        return ThemeMode.dark;
+      default:
+        return ThemeMode.system;
+    }
+  }
 }

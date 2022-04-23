@@ -9,6 +9,7 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timetable/timetable.dart';
 
 const routeMensa = '/mensa';
@@ -33,13 +34,14 @@ class _MensaPagePageState extends State<MensaPage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
-    );
+    if (getPref(mensaAutoSyncPref)) {
+      WidgetsBinding.instance?.addPostFrameCallback(
+        (_) => _refreshIndicatorKey.currentState?.show(),
+      );
+    }
     _mensaBloc.stream.listen((event) {
       setState(() {});
     });
-    refresh();
   }
 
   @override
@@ -87,6 +89,8 @@ class _MensaPagePageState extends State<MensaPage>
                       .map(
                         (m) => ListTile(
                           leading: CircleAvatar(
+                            backgroundColor:
+                                getFoodColor(m.category.characters.first),
                             child: Text(m.category.characters.first),
                           ),
                           title: Text(
@@ -130,6 +134,25 @@ class _MensaPagePageState extends State<MensaPage>
       additives != null && additives.isNotEmpty
           ? '${s.additives}: ${additives.join(", ")}'
           : '${s.additives}: ${s.noAdditives}';
+
+  Color? getFoodColor(String category) {
+    switch (category) {
+      case 's':
+      case 'S':
+        return Color(getPref(soupColorPref));
+      case 'h':
+      case 'H':
+        return Color(getPref(mainDishColorPref));
+      case 'b':
+      case 'B':
+        return Color(getPref(garnishColorPref));
+      case 'n':
+      case 'N':
+        return Color(getPref(dessertColorPref));
+      default:
+        return null;
+    }
+  }
 
   Future<void> refresh() async {
     _mensaBloc.add(FetchMensaPlan());
