@@ -11,7 +11,6 @@ import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
-import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
@@ -96,7 +95,6 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
           routeLogin: (ctx) => const LoginPage(),
           routeSchedule: (ctx) => const SchedulePage(),
           routeMensa: (ctx) => const MensaPage(),
-          routeAbout: (ctx) => const AboutPage(),
           routeSettings: (ctx) => const SettingsPage(),
         },
       );

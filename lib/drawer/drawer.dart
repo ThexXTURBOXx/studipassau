@@ -123,8 +123,6 @@ extension DrawerItemExtension on DrawerItem {
         return routeSchedule;
       case DrawerItem.mensaPlan:
         return routeMensa;
-      case DrawerItem.about:
-        return routeAbout;
       case DrawerItem.settings:
         return routeSettings;
       default:
@@ -159,6 +157,8 @@ extension DrawerItemExtension on DrawerItem {
 
   Future<void> Function(BuildContext context) get onTap {
     switch (this) {
+      case DrawerItem.about:
+        return showStudiPassauAbout;
       case DrawerItem.browser:
         return (context) async {
           closeDrawer(context);

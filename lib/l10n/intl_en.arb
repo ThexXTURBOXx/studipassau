@@ -4,6 +4,10 @@
   "@applicationTitle": {
     "description": "The application's name"
   },
+  "copyright": "© 2022 Nico Mexis",
+  "@copyright": {
+    "description": "The application's copyright"
+  },
   "cancel": "Cancel",
   "@cancel": {
     "description": "String that just represents a 'Cancel'. Mostly used in buttons of AlertDialogs."

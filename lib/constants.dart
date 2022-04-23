@@ -66,8 +66,6 @@ String? get sentryDsn => dotenv.env['SENTRY_DSN'];
 
 Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
-Locale locale(BuildContext ctx) => Localizations.localeOf(ctx);
-
 String formatDate(DateTime dateTime) => dateFormat.format(dateTime);
 
 String formatHmTime(DateTime dateTime) => hmTimeFormat.format(dateTime);
@@ -79,8 +77,6 @@ String formatDecimal(double value) => decimalFormat.format(value);
 Color getColor(int index) =>
     (1 <= index && index < _colorTable.length ? _colorTable[index] : null) ??
     getPref(notFoundColorPref)!;
-
-String get appName => packageInfo.appName;
 
 String get appVersion => '${packageInfo.version} '
     '(${packageInfo.buildNumber})';

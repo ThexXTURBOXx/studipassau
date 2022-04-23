@@ -78,8 +78,6 @@ flutter:
     - .env2
     # We also want the icons in some places
     - assets/icons/
-    # Custom images
-    - assets/img/
   fonts:
     - family: StudiPassauIcons
       fonts:
