@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 void navigateTo(BuildContext context, String? name) {
   if (name != null) {
@@ -13,8 +13,8 @@ void navigateTo(BuildContext context, String? name) {
   }
 }
 
-Future<void> launchUrl(String url) async => await canLaunch(url)
-    ? await launch(url)
+Future<void> launchUrl(String url) async => await canLaunchUrlString(url)
+    ? await launchUrlString(url)
     : throw PlatformException(
         code: 'CANT_LAUNCH_URL',
         message: "Can't launch URL $url",
