@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:openmensa/openmensa.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:studipassau/bloc/blocs/mensa_bloc.dart';
-import 'package:studipassau/bloc/events.dart';
-import 'package:studipassau/bloc/repo.dart';
+import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
-import 'package:timetable/timetable.dart';
 
 const routeMensa = '/mensa';
 
@@ -23,13 +21,8 @@ class MensaPage extends StatefulWidget {
 
 class _MensaPagePageState extends State<MensaPage>
     with TickerProviderStateMixin {
-  static final StudiPassauRepo _repo = StudiPassauRepo();
-  final MensaBloc _mensaBloc = MensaBloc();
-
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-
-  DateTime selected = DateTimeTimetable.today();
 
   @override
   void initState() {
@@ -39,9 +32,6 @@ class _MensaPagePageState extends State<MensaPage>
         (_) => _refreshIndicatorKey.currentState?.show(),
       );
     }
-    _mensaBloc.stream.listen((event) {
-      setState(() {});
-    });
   }
 
   @override
@@ -58,54 +48,54 @@ class _MensaPagePageState extends State<MensaPage>
             ),
           ],
         ),
-        drawer: StudiPassauDrawer(DrawerItem.mensaPlan),
-        body: RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: refresh,
-          child: CustomScrollView(
-            slivers: slivers(context),
+        drawer: const StudiPassauDrawer(DrawerItem.mensaPlan),
+        body: BlocBuilder<MensaCubit, MensaState>(
+          builder: (context, state) => RefreshIndicator(
+            key: _refreshIndicatorKey,
+            onRefresh: () => refresh(context),
+            child: CustomScrollView(
+              slivers: slivers(state, state.menu),
+            ),
           ),
         ),
       );
 
-  List<Widget> slivers(BuildContext ctx) =>
-      _repo.mensaPlan
-          ?.map(
-            (dm) => SliverStickyHeader(
-              header: Container(
-                height: 60,
-                color: Colors.lightBlue,
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  '${formatWeekday(dm.day.date)}, '
-                  '${formatDate(dm.day.date)}',
-                  style: const TextStyle(color: Colors.white),
-                ),
-              ),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate.fixed(
-                  dm.meals
-                      .map(
-                        (m) => ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor:
-                                getFoodColor(m.category.characters.first),
-                            child: Text(m.category.characters.first),
-                          ),
-                          title: Text(
-                            m.name,
-                          ),
-                          onTap: () => onTap(m),
-                        ),
-                      )
-                      .toList(growable: false),
-                ),
-              ),
+  List<Widget> slivers(MensaState state, List<DayMenu> menu) => menu
+      .map(
+        (dm) => SliverStickyHeader(
+          header: Container(
+            height: 60,
+            color: Colors.lightBlue,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              '${formatWeekday(dm.day.date)}, '
+              '${formatDate(dm.day.date)}',
+              style: const TextStyle(color: Colors.white),
             ),
-          )
-          .toList(growable: false) ??
-      [];
+          ),
+          sliver: SliverList(
+            delegate: SliverChildListDelegate.fixed(
+              dm.meals
+                  .map(
+                    (m) => ListTile(
+                      leading: CircleAvatar(
+                        backgroundColor:
+                            getFoodColor(m.category.characters.first),
+                        child: Text(m.category.characters.first),
+                      ),
+                      title: Text(
+                        m.name,
+                      ),
+                      onTap: () => onTap(m),
+                    ),
+                  )
+                  .toList(growable: false),
+            ),
+          ),
+        ),
+      )
+      .toList(growable: false);
 
   void onTap(Meal m) {
     final s = S.of(context);
@@ -154,8 +144,7 @@ class _MensaPagePageState extends State<MensaPage>
     }
   }
 
-  Future<void> refresh() async {
-    _mensaBloc.add(FetchMensaPlan());
-    await _mensaBloc.stream.firstWhere((state) => state.finished);
+  Future<void> refresh(BuildContext context) async {
+    await context.read<MensaCubit>().fetchMensaPlan();
   }
 }

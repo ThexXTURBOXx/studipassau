@@ -3,12 +3,19 @@ import 'dart:async';
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:studipassau/bloc/cubits/login_cubit.dart';
+import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
+import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
+import 'package:studipassau/bloc/repos/mensa_repo.dart';
+import 'package:studipassau/bloc/repos/storage_repo.dart';
+import 'package:studipassau/bloc/repos/studip_repo.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
@@ -68,35 +75,61 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        onGenerateTitle: (context) => S.of(context).applicationTitle,
-        debugShowCheckedModeBanner: false,
-        themeMode: getThemeMode(),
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: Colors.blue,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        navigatorKey: Catcher.navigatorKey,
-        localizationsDelegates: const [
-          S.delegate,
-          TimetableLocalizationsDelegate(),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+  Widget build(BuildContext context) => MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<StorageRepo>(
+            create: (context) => StorageRepo(),
+          ),
+          RepositoryProvider<StudIPRepo>(
+            create: (context) => StudIPRepo(),
+          ),
+          RepositoryProvider<OpenMensaRepo>(
+            create: (context) => OpenMensaRepo(),
+          ),
         ],
-        supportedLocales: S.delegate.supportedLocales,
-        initialRoute: routeLogin,
-        routes: {
-          routeLogin: (ctx) => const LoginPage(),
-          routeSchedule: (ctx) => const SchedulePage(),
-          routeMensa: (ctx) => const MensaPage(),
-          routeSettings: (ctx) => const SettingsPage(),
-        },
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<LoginCubit>(
+              create: (context) => LoginCubit(context.read<StorageRepo>()),
+            ),
+            BlocProvider<ScheduleCubit>(
+              create: (context) => ScheduleCubit(context.read<StudIPRepo>()),
+            ),
+            BlocProvider<MensaCubit>(
+              create: (context) => MensaCubit(context.read<OpenMensaRepo>()),
+            ),
+          ],
+          child: MaterialApp(
+            onGenerateTitle: (context) => S.of(context).applicationTitle,
+            debugShowCheckedModeBanner: false,
+            themeMode: getThemeMode(),
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            darkTheme: ThemeData(
+              brightness: Brightness.dark,
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
+            navigatorKey: Catcher.navigatorKey,
+            localizationsDelegates: const [
+              S.delegate,
+              TimetableLocalizationsDelegate(),
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: S.delegate.supportedLocales,
+            initialRoute: routeLogin,
+            routes: {
+              routeLogin: (ctx) => const LoginPage(),
+              routeSchedule: (ctx) => const SchedulePage(),
+              routeMensa: (ctx) => const MensaPage(),
+              routeSettings: (ctx) => const SettingsPage(),
+            },
+          ),
+        ),
       );
 
   ThemeMode getThemeMode() {

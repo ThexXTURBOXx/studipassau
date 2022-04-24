@@ -43,7 +43,7 @@ class SettingsPage extends StatelessWidget {
         appBar: AppBar(
           title: Text(S.of(context).aboutTitle),
         ),
-        drawer: StudiPassauDrawer(DrawerItem.settings),
+        drawer: const StudiPassauDrawer(DrawerItem.settings),
         body: PrefPage(
           children: [
             PrefPageButton(

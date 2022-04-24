@@ -1,8 +1,10 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:studipassau/bloc/repo.dart';
+import 'package:studipassau/bloc/cubits/login_cubit.dart';
+import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
@@ -14,32 +16,33 @@ import 'package:studipassau/util/images.dart';
 import 'package:studipassau/util/navigation.dart';
 
 class StudiPassauDrawer extends StatelessWidget {
-  final StudiPassauRepo _repo = StudiPassauRepo();
-  final StudIPCacheManager _cacheManager = StudIPCacheManager();
-
   final DrawerItem selected;
 
-  StudiPassauDrawer(this.selected, {Key? key}) : super(key: key);
+  const StudiPassauDrawer(this.selected, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
-            UserAccountsDrawerHeader(
-              accountName: Text(_repo.formattedName),
-              accountEmail: Text(_repo.username),
-              currentAccountPicture: ClipRRect(
-                borderRadius: BorderRadius.circular(110),
-                child: CachedNetworkImage(
-                  fit: BoxFit.cover,
-                  imageUrl: _repo.avatarNormal,
-                  progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      CircularProgressIndicator(
-                    value: downloadProgress.progress,
+            BlocBuilder<LoginCubit, LoginState>(
+              builder: (context, state) => UserAccountsDrawerHeader(
+                accountName: Text(state.formattedName),
+                accountEmail: Text(state.username),
+                currentAccountPicture: ClipRRect(
+                  borderRadius: BorderRadius.circular(110),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.cover,
+                    imageUrl: state.avatarNormal,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) =>
+                            CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                    ),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                    cacheManager: StudIPCacheManager.instance,
                   ),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
-                  cacheManager: _cacheManager,
                 ),
               ),
             ),

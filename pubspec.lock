@@ -475,7 +475,7 @@ packages:
       name: openmensa
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.2"
+    version: "1.0.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -839,7 +839,7 @@ packages:
       name: studip
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   supercharged:
     dependency: "direct main"
     description:

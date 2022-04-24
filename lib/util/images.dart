@@ -1,20 +1,24 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:http/http.dart' as http;
-import 'package:studipassau/bloc/repo.dart';
+import 'package:studip/studip.dart';
 
 class StudIPCacheManager extends CacheManager {
   static const key = 'StudIPCache';
 
-  static final StudIPCacheManager _singleton = StudIPCacheManager._internal();
+  static late final StudIPCacheManager instance;
 
-  factory StudIPCacheManager() => _singleton;
-
-  StudIPCacheManager._internal()
+  StudIPCacheManager._()
       : super(Config(key, fileService: StudIPHttpFileService()));
+
+  factory StudIPCacheManager.construct() => instance = StudIPCacheManager._();
 }
 
 class StudIPHttpFileService extends HttpFileService {
-  StudiPassauRepo repo = StudiPassauRepo();
+  static late StudIPClient _apiClient;
+
+  // This should not have a getter... However, a setter alone is pretty evil?!
+  // ignore: avoid_setters_without_getters
+  static set apiClient(StudIPClient newClient) => _apiClient = newClient;
 
   @override
   Future<FileServiceResponse> get(
@@ -25,6 +29,6 @@ class StudIPHttpFileService extends HttpFileService {
     if (headers != null) {
       req.headers.addAll(headers);
     }
-    return HttpGetResponse(await repo.apiClient.send(req));
+    return HttpGetResponse(await _apiClient.send(req));
   }
 }

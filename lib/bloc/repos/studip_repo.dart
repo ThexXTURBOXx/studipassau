@@ -1,81 +1,85 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
-import 'package:studip/studip.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
-Future<List<StudiPassauEvent>> fetchSchedule(
-  StudIPClient client,
-  String userId,
-) async {
-  final notFoundColor = Color(getPref(notFoundColorPref));
-  final nonRegularColor = Color(getPref(nonRegularColorPref));
+class StudIPRepo {
+  final _studIPProvider = StudIPDataProvider();
 
-  final dynamic jsonSchedule = await client.apiGetJson('user/$userId/schedule');
-  final dynamic jsonEvents =
-      await client.apiGetJson('user/$userId/events?limit=10000');
-  final events = _parseEvents(jsonEvents);
-  final schedule = _Schedule.fromJson(jsonSchedule);
-  final eventsCache = <StudiPassauEvent>[];
-  for (final event in events) {
-    final start = DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
-    final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
-    final eventCourseId = event.course.split('/').last;
+  Future<List<StudiPassauEvent>> parseSchedule(String userId) async {
+    final notFoundColor = Color(getPref(notFoundColorPref));
+    final nonRegularColor = Color(getPref(nonRegularColorPref));
 
-    String? courseName;
-    var color = notFoundColor;
-    if (regularLectureCategories.contains(event.categories)) {
-      for (final course in schedule.events[start.weekday - 1]!) {
-        final courseId = course.id;
-        if (courseId == eventCourseId &&
-            equalsCourseEventTime(course.start, start) &&
-            equalsCourseEventTime(course.end, end)) {
-          color = course.color;
-          courseName = course.content;
-          break;
+    final dynamic jsonSchedule =
+        await _studIPProvider.apiGetJson('user/$userId/schedule');
+    final dynamic jsonEvents =
+        await _studIPProvider.apiGetJson('user/$userId/events?limit=10000');
+    final events = _parseEvents(jsonEvents);
+    final schedule = _Schedule.fromJson(jsonSchedule);
+    final eventsCache = <StudiPassauEvent>[];
+    for (final event in events) {
+      final start =
+          DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
+      final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
+      final eventCourseId = event.course.split('/').last;
+
+      String? courseName;
+      var color = notFoundColor;
+      if (regularLectureCategories.contains(event.categories)) {
+        for (final course in schedule.events[start.weekday - 1]!) {
+          final courseId = course.id;
+          if (courseId == eventCourseId &&
+              _equalsCourseEventTime(course.start, start) &&
+              _equalsCourseEventTime(course.end, end)) {
+            color = course.color;
+            courseName = course.content;
+            break;
+          }
+        }
+      } else {
+        color = nonRegularColor;
+      }
+
+      if (courseName == null) {
+        try {
+          final courseResp =
+              await _studIPProvider.apiGetJson('course/$eventCourseId');
+          courseName = '${courseResp['number']} ${courseResp['title']}';
+        } catch (e) {
+          courseName = '';
         }
       }
-    } else {
-      color = nonRegularColor;
+
+      eventsCache.add(
+        StudiPassauEvent(
+          id: event.id,
+          title: event.title,
+          course: courseName,
+          description: event.description,
+          categories: event.categories,
+          room: event.room,
+          canceled: event.canceled,
+          start: start,
+          end: end,
+          backgroundColor: color,
+        ),
+      );
     }
+    return eventsCache;
+  }
 
-    if (courseName == null) {
-      try {
-        final courseResp = await client.apiGetJson('course/$eventCourseId');
-        courseName = '${courseResp['number']} ${courseResp['title']}';
-      } catch (e) {
-        courseName = '';
-      }
+  bool _equalsCourseEventTime(int courseStart, DateTime eventStart) =>
+      courseStart == eventStart.hour * 100 + eventStart.minute;
+
+  List<_Event> _parseEvents(json) {
+    final collection = json['collection'];
+    if (collection != null && collection is List) {
+      return collection.map(_Event.fromJson).toList(growable: false);
     }
-
-    eventsCache.add(
-      StudiPassauEvent(
-        id: event.id,
-        title: event.title,
-        course: courseName,
-        description: event.description,
-        categories: event.categories,
-        room: event.room,
-        canceled: event.canceled,
-        start: start,
-        end: end,
-        backgroundColor: color,
-      ),
-    );
+    return <_Event>[];
   }
-  return eventsCache;
-}
-
-bool equalsCourseEventTime(int courseStart, DateTime eventStart) =>
-    courseStart == eventStart.hour * 100 + eventStart.minute;
-
-List<_Event> _parseEvents(json) {
-  final collection = json['collection'];
-  if (collection != null && collection is List) {
-    return collection.map(_Event.fromJson).toList(growable: false);
-  }
-  return <_Event>[];
 }
 
 class _Event extends Equatable {
