@@ -55,10 +55,6 @@ dev_dependencies:
     sdk: flutter
 
 dependency_overrides:
-  pref:
-    git:
-      url: https://github.com/DavBfr/flutter_pref.git
-      path: pref
   timetable:
     git:
       url: https://github.com/ThexXTURBOXx/timetable.git
