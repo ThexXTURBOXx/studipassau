@@ -57,7 +57,7 @@ dev_dependencies:
 dependency_overrides:
   timetable:
     git:
-      url: https://github.com/ThexXTURBOXx/timetable.git
+      url: https://github.com/JonasWanke/timetable.git
 
 flutter_icons:
   adaptive_icon_background: '#2898f1'

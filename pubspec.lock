@@ -892,8 +892,8 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: f1297e0a90a9639132d67786e7a826d72f60e600
-      url: "https://github.com/ThexXTURBOXx/timetable.git"
+      resolved-ref: "14e433e5e75604dacee2fecfccbcc078c4c14cf7"
+      url: "https://github.com/JonasWanke/timetable.git"
     source: git
     version: "1.0.0-alpha.7"
   timezone:

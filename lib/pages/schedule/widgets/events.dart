@@ -50,12 +50,6 @@ class StudiPassauEvent extends Event {
         start: start ?? this.start,
         end: end ?? this.end,
       );
-
-  @override
-  List<Object> get props => super.props..addAll([id]);
-
-  @override
-  bool get stringify => true;
 }
 
 class StudiPassauEventWidget extends StatelessWidget {
