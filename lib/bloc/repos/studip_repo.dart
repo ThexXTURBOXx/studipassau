@@ -17,8 +17,9 @@ class StudIPRepo {
     final dynamic jsonEvents =
         await _studIPProvider.apiGetJson('user/$userId/events?limit=10000');
     final events = _parseEvents(jsonEvents);
-    final schedule = _Schedule.fromJson(jsonSchedule);
+    final schedule = _Schedule.fromJson(jsonSchedule).events;
     final eventsCache = <StudiPassauEvent>[];
+
     for (final event in events) {
       final start =
           DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
@@ -28,9 +29,9 @@ class StudIPRepo {
       String? courseName;
       var color = notFoundColor;
       if (regularLectureCategories.contains(event.categories)) {
-        for (final course in schedule.events[start.weekday - 1]!) {
-          final courseId = course.id;
-          if (courseId == eventCourseId &&
+        for (final course
+            in schedule[start.weekday - 1] ?? <_ScheduleEvent>[]) {
+          if (course.id == eventCourseId &&
               _equalsCourseEventTime(course.start, start) &&
               _equalsCourseEventTime(course.end, end)) {
             color = course.color;
@@ -67,6 +68,7 @@ class StudIPRepo {
         ),
       );
     }
+
     return eventsCache;
   }
 
