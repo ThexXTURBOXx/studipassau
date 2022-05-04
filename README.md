@@ -3,7 +3,6 @@
 StudiPassau Reimagined using Flutter
 
 <p align="center">
-  <a href="https://travis-ci.com/ThexXTURBOXx/studipassau"><img src="https://travis-ci.com/ThexXTURBOXx/studipassau.svg?branch=master"></a>
   <a href="https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc"><img src="https://img.shields.io/localizely/progress/32cea4c8-ff53-4e34-94d8-bcdc8643b236?token=f14c2f1c209f43aea381e31e9107ee7f2b4986ec270e4575b18a120dc035c459"></a>
 </p>
 
@@ -16,17 +15,29 @@ The app is made for use with Android (and later Fuchsia as well), even though it
 
 The compilation from source should be straight forward (only Android):
 
-1. Fully install the [Flutter SDK](https://flutter.dev/docs/get-started/install)
-2. Clone this repo using `git clone https://github.com/ThexXTURBOXx/studipassau.git`
-3. Create a file called `.env` in the project's root and add the following lines, replacing your OAuth credentials:
-```
-CONSUMER_KEY=<YourConsumerKeyHere>
-CONSUMER_SECRET=<YourConsumerSecretHere>
-SENTRY_DSN=https://0@o0.ingest.sentry.io/0
-```
-4. Compile it using Android Studio's `Build -> Flutter -> Build XXX` feature
+1. Fully install the [Flutter SDK](https://docs.flutter.dev/get-started/install)
+1. Clone this repo using `git clone https://github.com/ThexXTURBOXx/studipassau.git`
+1. Create a file called `.env` in the project's root and add the following lines, replacing your OAuth credentials:
+    ```env
+    CONSUMER_KEY=<YourConsumerKeyHere>
+    CONSUMER_SECRET=<YourConsumerSecretHere>
+    SENTRY_DSN=https://0@o0.ingest.sentry.io/0
+    ```
+1. Activate my custom version of `intl_utils` which fixes language overrides:
+    ```shell
+    flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
+    ```
+1. Generate the language files:
+    ```shell
+    flutter pub global run intl_utils:generate
+    ```
+1. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
+    ```shell
+    flutter build apk
+    ```
 
-If you want to compile the app for iOS, I can't really help you as I usually don't for iOS and have no Apple Developer account :/
+If you want to compile the app for iOS, go ahead and try!
+However, I cannot really help you as I neither have any device running iOS nor an Apple Developer account :/
 
 **Pull Requests for iOS fixes are welcome!**
 
