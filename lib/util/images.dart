@@ -5,7 +5,7 @@ import 'package:studip/studip.dart';
 class StudIPCacheManager extends CacheManager {
   static const key = 'StudIPCache';
 
-  static late final StudIPCacheManager instance;
+  static late StudIPCacheManager instance;
 
   StudIPCacheManager._()
       : super(Config(key, fileService: StudIPHttpFileService()));
