@@ -18,7 +18,7 @@ import 'package:studipassau/util/navigation.dart';
 class StudiPassauDrawer extends StatelessWidget {
   final DrawerItem selected;
 
-  const StudiPassauDrawer(this.selected, {Key? key}) : super(key: key);
+  const StudiPassauDrawer(this.selected, {super.key});
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -56,13 +56,13 @@ class StudiPassauDrawer extends StatelessWidget {
                             horizontal: 16,
                           ),
                           child: Text(
-                            item.name(context),
+                            item.title(context),
                             style: TextStyle(color: context.theme.hintColor),
                           ),
                         )
                       : ListTile(
                           leading: Icon(item.icon),
-                          title: Text(item.name(context)),
+                          title: Text(item.title(context)),
                           onTap: () async => selected == item
                               ? closeDrawer(context)
                               : item.onTap(context),
@@ -75,23 +75,33 @@ class StudiPassauDrawer extends StatelessWidget {
 }
 
 enum DrawerItem {
-  schedule,
-  mensaPlan,
-  files,
-  divider1,
-  misc,
-  browser,
-  settings,
-  bugReport,
-  share,
-  about,
-  divider2,
-  tools,
-  telegramBot,
-}
+  schedule(icon: Icons.event_note, route: routeSchedule),
+  mensaPlan(icon: Icons.restaurant, route: routeMensa),
+  files(icon: Icons.folder_open),
+  divider1(isDivider: true),
+  misc(isSubTitle: true),
+  browser(icon: Icons.insert_link),
+  settings(icon: Icons.build, route: routeSettings),
+  bugReport(icon: Icons.bug_report),
+  share(icon: Icons.share),
+  about(icon: Icons.info_outline),
+  divider2(isDivider: true),
+  tools(isSubTitle: true),
+  telegramBot(icon: StudiPassauIcons.telegramPlane);
 
-extension DrawerItemExtension on DrawerItem {
-  String name(BuildContext context) {
+  final IconData? icon;
+  final String? route;
+  final bool isDivider;
+  final bool isSubTitle;
+
+  const DrawerItem({
+    this.icon,
+    this.route,
+    this.isDivider = false,
+    this.isSubTitle = false,
+  });
+
+  String title(BuildContext context) {
     switch (this) {
       case DrawerItem.schedule:
         return S.of(context).drawerSchedule;
@@ -117,44 +127,6 @@ extension DrawerItemExtension on DrawerItem {
         return S.of(context).drawerTelegramBot;
       default:
         return '';
-    }
-  }
-
-  String? get route {
-    switch (this) {
-      case DrawerItem.schedule:
-        return routeSchedule;
-      case DrawerItem.mensaPlan:
-        return routeMensa;
-      case DrawerItem.settings:
-        return routeSettings;
-      default:
-        return null;
-    }
-  }
-
-  IconData? get icon {
-    switch (this) {
-      case DrawerItem.schedule:
-        return Icons.event_note;
-      case DrawerItem.mensaPlan:
-        return Icons.restaurant;
-      case DrawerItem.files:
-        return Icons.folder_open;
-      case DrawerItem.browser:
-        return Icons.insert_link;
-      case DrawerItem.settings:
-        return Icons.build;
-      case DrawerItem.bugReport:
-        return Icons.bug_report;
-      case DrawerItem.share:
-        return Icons.share;
-      case DrawerItem.about:
-        return Icons.info_outline;
-      case DrawerItem.telegramBot:
-        return StudiPassauIcons.telegramPlane;
-      default:
-        return null;
     }
   }
 
@@ -214,9 +186,4 @@ extension DrawerItemExtension on DrawerItem {
             : (context) async => navigateTo(context, route);
     }
   }
-
-  bool get isDivider =>
-      this == DrawerItem.divider1 || this == DrawerItem.divider2;
-
-  bool get isSubTitle => this == DrawerItem.misc || this == DrawerItem.tools;
 }

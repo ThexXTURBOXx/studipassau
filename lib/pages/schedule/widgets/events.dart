@@ -21,9 +21,9 @@ class StudiPassauEvent extends Event {
     required this.room,
     required this.canceled,
     required this.backgroundColor,
-    required DateTime start,
-    required DateTime end,
-  }) : super(start: start, end: end);
+    required super.start,
+    required super.end,
+  });
 
   StudiPassauEvent copyWith({
     String? id,
@@ -55,10 +55,10 @@ class StudiPassauEvent extends Event {
 class StudiPassauEventWidget extends StatelessWidget {
   const StudiPassauEventWidget(
     this.event, {
-    Key? key,
+    super.key,
     this.onTap,
     this.margin = const EdgeInsets.only(right: 1),
-  }) : super(key: key);
+  });
 
   final StudiPassauEvent event;
 
@@ -107,11 +107,11 @@ class StudiPassauEventWidget extends StatelessWidget {
 class StudiPassauAllDayEventWidget extends StatelessWidget {
   const StudiPassauAllDayEventWidget(
     this.event, {
-    Key? key,
+    super.key,
     required this.info,
     this.onTap,
     this.style,
-  }) : super(key: key);
+  });
 
   final StudiPassauEvent event;
   final AllDayEventLayoutInfo info;

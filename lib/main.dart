@@ -59,7 +59,7 @@ Future main() async {
 }
 
 class StudiPassauApp extends StatefulWidget {
-  const StudiPassauApp({Key? key}) : super(key: key);
+  const StudiPassauApp({super.key});
 
   @override
   State<StatefulWidget> createState() => _StudiPassauAppState();
@@ -104,6 +104,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
             debugShowCheckedModeBanner: false,
             themeMode: getThemeMode(),
             theme: ThemeData(
+              brightness: Brightness.light,
               primarySwatch: Colors.blue,
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),

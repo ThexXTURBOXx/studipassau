@@ -13,7 +13,7 @@ import 'package:studipassau/pages/settings/settings.dart';
 const routeMensa = '/mensa';
 
 class MensaPage extends StatefulWidget {
-  const MensaPage({Key? key}) : super(key: key);
+  const MensaPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _MensaPagePageState();
@@ -28,7 +28,7 @@ class _MensaPagePageState extends State<MensaPage>
   void initState() {
     super.initState();
     if (getPref(mensaAutoSyncPref)) {
-      WidgetsBinding.instance?.addPostFrameCallback(
+      WidgetsBinding.instance.addPostFrameCallback(
         (_) => _refreshIndicatorKey.currentState?.show(),
       );
     }

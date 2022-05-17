@@ -12,7 +12,7 @@ class BlocState {
 class LoginState extends BlocState {
   final dynamic userData;
 
-  const LoginState(StudiPassauState state, {this.userData}) : super(state);
+  const LoginState(super.state, {this.userData});
 
   LoginState copyWith({StudiPassauState? state, dynamic userData}) =>
       LoginState(state ?? this.state, userData: userData ?? this.userData);
@@ -29,7 +29,7 @@ class LoginState extends BlocState {
 class ScheduleState extends BlocState {
   final List<StudiPassauEvent>? schedule;
 
-  const ScheduleState(StudiPassauState state, {this.schedule}) : super(state);
+  const ScheduleState(super.state, {this.schedule});
 
   ScheduleState copyWith({
     StudiPassauState? state,
@@ -43,7 +43,7 @@ class ScheduleState extends BlocState {
 class MensaState extends BlocState {
   final List<DayMenu>? mensaPlan;
 
-  const MensaState(StudiPassauState state, {this.mensaPlan}) : super(state);
+  const MensaState(super.state, {this.mensaPlan});
 
   MensaState copyWith({StudiPassauState? state, List<DayMenu>? mensaPlan}) =>
       MensaState(state ?? this.state, mensaPlan: mensaPlan ?? this.mensaPlan);
@@ -55,20 +55,17 @@ enum StudiPassauState {
   notAuthenticated,
   loading,
   authenticating,
-  authenticated,
-  authenticationError,
+  authenticated(finished: true),
+  authenticationError(finished: true),
   notFetched,
   fetching,
-  fetched,
-  fetchError,
-  httpError,
-}
+  fetched(finished: true),
+  fetchError(finished: true),
+  httpError(finished: true);
 
-extension StudiPassauStateExtension on StudiPassauState {
-  bool get finished =>
-      this == StudiPassauState.authenticationError ||
-      this == StudiPassauState.authenticated ||
-      this == StudiPassauState.fetched ||
-      this == StudiPassauState.fetchError ||
-      this == StudiPassauState.httpError;
+  final bool finished;
+
+  const StudiPassauState({
+    this.finished = false,
+  });
 }

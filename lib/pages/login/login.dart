@@ -9,7 +9,7 @@ import 'package:studipassau/util/navigation.dart';
 const routeLogin = '/login';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key}) : super(key: key);
+  const LoginPage({super.key});
 
   @override
   State<StatefulWidget> createState() => _LoginPageState();

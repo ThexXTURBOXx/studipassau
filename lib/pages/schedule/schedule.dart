@@ -16,7 +16,7 @@ import 'package:timetable/timetable.dart';
 const routeSchedule = '/schedule';
 
 class SchedulePage extends StatefulWidget {
-  const SchedulePage({Key? key}) : super(key: key);
+  const SchedulePage({super.key});
 
   @override
   State<StatefulWidget> createState() => _SchedulePagePageState();
@@ -53,7 +53,7 @@ class _SchedulePagePageState extends State<SchedulePage>
   void initState() {
     super.initState();
     if (getPref(scheduleAutoSyncPref)) {
-      WidgetsBinding.instance?.addPostFrameCallback(
+      WidgetsBinding.instance.addPostFrameCallback(
         (_) => _refreshIndicatorKey.currentState?.show(),
       );
     }

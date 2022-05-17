@@ -6,14 +6,14 @@ import 'package:studipassau/pages/settings/settings.dart';
 
 class PrefColor extends StatelessWidget {
   const PrefColor({
-    Key? key,
+    super.key,
     required this.pref,
     this.title,
     this.subtitle,
     this.onChange,
     this.enableAlpha = false,
     this.disabled,
-  }) : super(key: key);
+  });
 
   final String pref;
 

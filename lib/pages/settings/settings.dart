@@ -36,7 +36,7 @@ const Map<String, dynamic> defaults = {
 T getPref<T>(String key) => prefService.get(key) ?? defaults[key] as T;
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) => Scaffold(
