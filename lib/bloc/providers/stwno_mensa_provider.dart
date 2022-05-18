@@ -4,6 +4,7 @@ import 'package:studipassau/constants.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
+// TODO(Nico): Overhaul this whole mess that I just ported from Java to Dart...
 class StwnoDataProvider {
   static final http.Client _client = http.Client();
 
