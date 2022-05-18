@@ -8,6 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
@@ -42,6 +43,23 @@ Future main() async {
       SentryClient(SentryFlutterOptions()..dsn = sentryDsn),
     ),
     ConsoleHandler(),
+  ]);
+
+  const quickActions = QuickActions();
+  await quickActions.initialize((shortcutType) => targetRoute = shortcutType);
+  await quickActions.setShortcutItems(<ShortcutItem>[
+    const ShortcutItem(
+      type: routeSchedule,
+      // TODO(Nico): Localize!
+      localizedTitle: 'Stundenplan',
+      // TODO(Nico): icon: 'IconResource',
+    ),
+    const ShortcutItem(
+      type: routeMensa,
+      // TODO(Nico): Localize!
+      localizedTitle: 'Mensaplan',
+      // TODO(Nico): icon: 'IconResource',
+    )
   ]);
 
   // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue

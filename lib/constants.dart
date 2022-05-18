@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
+import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timezone/timezone.dart';
 
@@ -65,6 +66,8 @@ final stwnoDecimalFormat = NumberFormat('##0.00', 'de');
 late PackageInfo packageInfo;
 
 late BasePrefService prefService;
+
+String targetRoute = routeSchedule;
 
 Location? _location;
 
