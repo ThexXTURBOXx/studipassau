@@ -1,5 +1,6 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:studipassau/constants.dart';
 import 'package:timetable/timetable.dart';
 
 class StudiPassauEvent extends Event {
@@ -50,6 +51,32 @@ class StudiPassauEvent extends Event {
         start: start ?? this.start,
         end: end ?? this.end,
       );
+
+  factory StudiPassauEvent.fromJson(dynamic json) => StudiPassauEvent(
+        id: json['id'].toString(),
+        title: json['title'].toString(),
+        course: json['course'].toString(),
+        description: json['description'].toString(),
+        categories: json['categories'].toString(),
+        room: json['room'].toString(),
+        canceled: json['canceled'].toString().toLowerCase() == 'true',
+        backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
+        start: dateTimeSaveFormat.parse(json['start'].toString(), true),
+        end: dateTimeSaveFormat.parse(json['end'].toString(), true),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'title': title,
+        'course': course,
+        'description': description,
+        'categories': categories,
+        'room': room,
+        'canceled': canceled,
+        'backgroundColor': backgroundColor.value,
+        'start': dateTimeSaveFormat.format(start),
+        'end': dateTimeSaveFormat.format(end),
+      };
 }
 
 class StudiPassauEventWidget extends StatelessWidget {

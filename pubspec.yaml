@@ -41,6 +41,7 @@ dependencies:
   sentry: ^6.0.1
   sentry_flutter: ^6.0.1
   share_plus: ^4.0.3
+  shared_preferences: ^2.0.15
   sprintf: ^6.0.0
   studip: ^2.1.0
   supercharged: ^2.1.1

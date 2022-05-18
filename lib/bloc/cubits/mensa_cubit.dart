@@ -1,25 +1,55 @@
+import 'dart:convert';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
+import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
 class MensaCubit extends Cubit<MensaState> {
+  final StorageRepo _storageRepo;
+
   final MensaRepo _mensaRepo;
 
-  MensaCubit(this._mensaRepo)
+  MensaCubit(this._storageRepo, this._mensaRepo)
       : super(const MensaState(StudiPassauState.notFetched));
 
-  Future<void> fetchMensaPlan() async {
-    emit(state.copyWith(state: StudiPassauState.fetching));
-    // TODO(HyperSpeeed): Load from file
-    try {
+  Future<void> loadMensaPlan() async {
+    final mensaCache = _storageRepo.getStringList(mensaPlanKey);
+    if (mensaCache != null) {
       emit(
         state.copyWith(
           state: StudiPassauState.fetched,
-          mensaPlan: getPref(mensaSourcePref) == mensaSourcePrefOM
-              ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
-              : await _mensaRepo.getStwnoMeals(stwnoMensaId),
+          mensaPlan: mensaCache
+              .map((e) => DayMenu.fromJson(jsonDecode(e)))
+              .toList(growable: false),
+        ),
+      );
+    }
+  }
+
+  Future<void> fetchMensaPlan() async {
+    if (state.mensaPlan == null) {
+      emit(state.copyWith(state: StudiPassauState.loading));
+      await loadMensaPlan();
+    }
+
+    emit(state.copyWith(state: StudiPassauState.fetching));
+
+    try {
+      final mensaPlan = getPref(mensaSourcePref) == mensaSourcePrefOM
+          ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
+          : await _mensaRepo.getStwnoMeals(stwnoMensaId);
+      await _storageRepo.writeStringList(
+        key: mensaPlanKey,
+        value: mensaPlan.map(jsonEncode).toList(growable: false),
+      );
+      emit(
+        state.copyWith(
+          state: StudiPassauState.fetched,
+          mensaPlan: mensaPlan,
         ),
       );
     } catch (e) {

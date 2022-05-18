@@ -1,13 +1,34 @@
 import 'package:studipassau/bloc/providers/secure_storage_provider.dart';
+import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
 
+const userDataKey = 'user_data';
+const scheduleKey = 'schedule';
+const mensaPlanKey = 'mensa_plan';
 const oAuthTokenKey = 'oauth_token';
 const oAuthSecretKey = 'oauth_secret';
 
 class StorageRepo {
+  final _sharedStorageProvider = SharedStorageDataProvider();
+
   final _secureStorageProvider = SecureStorageDataProvider();
 
-  Future<Map<String, String>> readAll() => _secureStorageProvider.readAll();
+  String? getString(String key) => _sharedStorageProvider.getString(key);
 
-  Future<void> write({required String key, required String? value}) =>
+  List<String>? getStringList(String key) =>
+      _sharedStorageProvider.getStringList(key);
+
+  Future<bool> writeString({required String key, required String value}) =>
+      _sharedStorageProvider.writeString(key, value);
+
+  Future<bool> writeStringList({
+    required String key,
+    required List<String> value,
+  }) =>
+      _sharedStorageProvider.writeStringList(key, value);
+
+  Future<Map<String, String>> readAllSecure() =>
+      _secureStorageProvider.readAll();
+
+  Future<void> writeSecure({required String key, required String? value}) =>
       _secureStorageProvider.write(key: key, value: value);
 }

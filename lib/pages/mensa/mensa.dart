@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -47,18 +48,18 @@ class _MensaPagePageState extends State<MensaPage>
           ],
         ),
         drawer: const StudiPassauDrawer(DrawerItem.mensaPlan),
-        body: BlocBuilder<MensaCubit, MensaState>(
+        body: BlocConsumer<MensaCubit, MensaState>(
+          listener: (context, state) {
+            if (state.errored) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(S.of(context).httpError)),
+              );
+            }
+          },
           builder: (context, state) => RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: () => refresh(context),
-            child: state.errored
-                ? Center(
-                    child: Text(
-                      S.of(context).mensaError,
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                : CustomScrollView(slivers: slivers(state.menu)),
+            child: CustomScrollView(slivers: slivers(state.menu)),
           ),
         ),
       );

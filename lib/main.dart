@@ -11,9 +11,11 @@ import 'package:pref/pref.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
 import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
+import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/repos/studip_repo.dart';
@@ -61,6 +63,8 @@ Future main() async {
       // TODO(Nico): icon: 'IconResource',
     )
   ]);
+
+  SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
 
   // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue
   //             at some point, i.e. remove the global reference...
@@ -111,10 +115,16 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
               create: (context) => LoginCubit(context.read<StorageRepo>()),
             ),
             BlocProvider<ScheduleCubit>(
-              create: (context) => ScheduleCubit(context.read<StudIPRepo>()),
+              create: (context) => ScheduleCubit(
+                context.read<StorageRepo>(),
+                context.read<StudIPRepo>(),
+              ),
             ),
             BlocProvider<MensaCubit>(
-              create: (context) => MensaCubit(context.read<MensaRepo>()),
+              create: (context) => MensaCubit(
+                context.read<StorageRepo>(),
+                context.read<MensaRepo>(),
+              ),
             ),
           ],
           child: MaterialApp(

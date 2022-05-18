@@ -56,6 +56,7 @@ const stwnoEncoding = latin1;
 
 final RegExp stwnoAdditivesPattern = RegExp(r'\s*\(([^)]+)\)\s*');
 
+final dateTimeSaveFormat = DateFormat('yyyy-MM-ddTHH:mm:ss', 'en_US');
 final dateFormat = DateFormat.yMd();
 final stwnoDateFormat = DateFormat('dd.MM.yyyy', 'de');
 final hmTimeFormat = DateFormat.Hm();

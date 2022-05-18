@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,8 +19,15 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> authenticate() async {
     emit(state.copyWith(state: StudiPassauState.loading));
     try {
-      final tok = await _storageRepo.readAll();
+      final tok = await _storageRepo.readAllSecure();
+      final cfgJson = _storageRepo.getString(userDataKey);
       dynamic userData;
+      var fetched = false;
+
+      if (cfgJson != null) {
+        userData = jsonDecode(cfgJson);
+        emit(state.copyWith(userData: userData));
+      }
 
       if (tok.containsKey(oAuthTokenKey) && tok.containsKey(oAuthSecretKey)) {
         // Read tokens from storage
@@ -34,6 +42,7 @@ class LoginCubit extends Cubit<LoginState> {
           );
           _setApiClient(client);
           userData = await client.apiGetJson('user');
+          fetched = true;
         } catch (e) {
           // Ignore exception, stop loading keys from storage and try to login
           // normally instead, since the saved token is invalid or a server
@@ -42,7 +51,7 @@ class LoginCubit extends Cubit<LoginState> {
         }
       }
 
-      if (userData == null) {
+      if (!fetched) {
         final client = StudIPClient(
           oauthBaseUrl,
           consumerKey,
@@ -58,22 +67,27 @@ class LoginCubit extends Cubit<LoginState> {
         );
         final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
         await client.retrieveAccessToken(verifier);
-        await _storageRepo.write(
+        await _storageRepo.writeSecure(
           key: oAuthTokenKey,
           value: client.accessToken,
         );
-        await _storageRepo.write(
+        await _storageRepo.writeSecure(
           key: oAuthSecretKey,
           value: client.accessTokenSecret,
         );
         _setApiClient(client);
         userData = await client.apiGetJson('user');
+        fetched = true;
       }
       emit(
         state.copyWith(
           state: StudiPassauState.authenticated,
           userData: userData,
         ),
+      );
+      await _storageRepo.writeString(
+        key: userDataKey,
+        value: jsonEncode(userData),
       );
     } catch (e) {
       if (e is StateError || e is SocketException) {
