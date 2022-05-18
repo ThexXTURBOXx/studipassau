@@ -43,23 +43,31 @@ However, I cannot really help you as I neither have any device running iOS nor a
 
 ## Features
 
-### Fully ported from old app
+### Implemented
 
  - ✔ Authentication using OAuth 1.0
- - ✔ Customization
-
-### WIP
-
- - 🕒 Schedule
- - 🕒 Mensa plan
+ - ✔ Schedule (might change at some point)
+ - ✔ Mensa Plan (might change at some point)
+ - ✔ Multiple Mensa Plan Providers (STWNO and OpenMensa)
+ - ✔ Offline Mode
+ - ✔ Dark Mode
+ - ✔ Customization / Preferences
+ - ✔ [Translations](https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc)
+ - ✔ About Page
+ - ✔ Home Screen shortcuts
 
 ### Planned
 
  - ❌ Files
+ - ❌ Material 3
 
 ## Changelog
 
 See [here](https://github.com/ThexXTURBOXx/studipassau/releases).
+
+## Translations
+
+If you want to help translating, drop me an email or file a feature request at the [issue tracker](https://github.com/ThexXTURBOXx/studipassau/issues) to let me know!
 
 ## Feature Requests and Bugs
 
