@@ -2,11 +2,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 
 class MensaCubit extends Cubit<MensaState> {
-  final OpenMensaRepo _openMensaRepo;
+  final MensaRepo _mensaRepo;
 
-  MensaCubit(this._openMensaRepo)
+  MensaCubit(this._mensaRepo)
       : super(const MensaState(StudiPassauState.notFetched));
 
   Future<void> fetchMensaPlan() async {
@@ -16,7 +17,9 @@ class MensaCubit extends Cubit<MensaState> {
       emit(
         state.copyWith(
           state: StudiPassauState.fetched,
-          mensaPlan: await _openMensaRepo.getMealsOfCanteen(openMensaMensaId),
+          mensaPlan: getPref(mensaSourcePref) == mensaSourcePrefOM
+              ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
+              : await _mensaRepo.getStwnoMeals(stwnoMensaId),
         ),
       );
     } catch (e) {

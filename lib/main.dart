@@ -83,8 +83,8 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
           RepositoryProvider<StudIPRepo>(
             create: (context) => StudIPRepo(),
           ),
-          RepositoryProvider<OpenMensaRepo>(
-            create: (context) => OpenMensaRepo(),
+          RepositoryProvider<MensaRepo>(
+            create: (context) => MensaRepo(),
           ),
         ],
         child: MultiBlocProvider(
@@ -96,7 +96,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
               create: (context) => ScheduleCubit(context.read<StudIPRepo>()),
             ),
             BlocProvider<MensaCubit>(
-              create: (context) => MensaCubit(context.read<OpenMensaRepo>()),
+              create: (context) => MensaCubit(context.read<MensaRepo>()),
             ),
           ],
           child: MaterialApp(

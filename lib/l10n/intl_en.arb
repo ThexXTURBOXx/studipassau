@@ -60,6 +60,10 @@
   "@httpError": {
     "description": "Text shown on HTTP Errors."
   },
+  "mensaError": "Sorry, the server is down at the moment. Please try again soon or change the mensa plan source in the settings.",
+  "@mensaError": {
+    "description": "Text shown on HTTP Errors in the mensa plan."
+  },
   "loginAuthenticated": "Successfully authenticated",
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
@@ -291,6 +295,22 @@
   "lectureNotFoundColorPrefDesc": "Color of sessions that could not be connected to a specific lecture",
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
+  },
+  "mensaSourcePrefTitle": "Mensa Plan Source",
+  "@mensaSourcePrefTitle": {
+    "description": "Title for mensa source preference"
+  },
+  "mensaSourcePrefDesc": "Change the mensa plan source",
+  "@mensaSourcePrefDesc": {
+    "description": "Description for mensa source preference"
+  },
+  "mensaSourcePrefStwno": "STWNO",
+  "@mensaSourcePrefStwno": {
+    "description": "Title for STWNO mensa source"
+  },
+  "mensaSourcePrefOM": "OpenMensa",
+  "@mensaSourcePrefOM": {
+    "description": "Title for OpenMensa mensa source"
   },
   "mensaPrefCatLongTitle": "Mensa plan settings",
   "@mensaPrefCatLongTitle": {

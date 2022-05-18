@@ -42,9 +42,7 @@ class _MensaPagePageState extends State<MensaPage>
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: S.of(context).refresh,
-              onPressed: () {
-                _refreshIndicatorKey.currentState?.show();
-              },
+              onPressed: () => _refreshIndicatorKey.currentState?.show(),
             ),
           ],
         ),
@@ -53,14 +51,19 @@ class _MensaPagePageState extends State<MensaPage>
           builder: (context, state) => RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: () => refresh(context),
-            child: CustomScrollView(
-              slivers: slivers(state, state.menu),
-            ),
+            child: state.errored
+                ? Center(
+                    child: Text(
+                      S.of(context).mensaError,
+                      textAlign: TextAlign.center,
+                    ),
+                  )
+                : CustomScrollView(slivers: slivers(state.menu)),
           ),
         ),
       );
 
-  List<Widget> slivers(MensaState state, List<DayMenu> menu) => menu
+  List<Widget> slivers(List<DayMenu> menu) => menu
       .map(
         (dm) => SliverStickyHeader(
           header: Container(

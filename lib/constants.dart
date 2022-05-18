@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +11,8 @@ import 'package:timezone/timezone.dart';
 const envFile = '.env';
 const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
 const openMensaMensaId = 196;
+const stwnoMensaId = 'UNI-P';
+const stwnoMensaUrl = 'https://www.stwno.de/infomax/daten-extern/csv/';
 const oauthBaseUrl = '${studIpProviderUrl}dispatch.php/api';
 const apiBaseUrl = '${studIpProviderUrl}api.php/';
 const callbackUrlScheme = 'studipassau';
@@ -47,10 +51,16 @@ const _colorTable = [
 
 const regularLectureCategories = ['Sitzung', 'Vorlesung'];
 
+const stwnoEncoding = latin1;
+
+final RegExp stwnoAdditivesPattern = RegExp(r'\s*\(([^)]+)\)\s*');
+
 final dateFormat = DateFormat.yMd();
+final stwnoDateFormat = DateFormat('dd.MM.yyyy', 'de');
 final hmTimeFormat = DateFormat.Hm();
 final weekdayFormat = DateFormat('EEEE');
 final decimalFormat = NumberFormat('##0.00');
+final stwnoDecimalFormat = NumberFormat('##0.00', 'de');
 
 late PackageInfo packageInfo;
 

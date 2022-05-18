@@ -12,6 +12,7 @@ const scheduleAutoSyncPref = 'schedule_auto_sync';
 const nonRegularColorPref = 'non_regular_color';
 const notFoundColorPref = 'not_found_color';
 const mensaAutoSyncPref = 'mensa_auto_sync';
+const mensaSourcePref = 'mensa_source';
 const soupColorPref = 'soup_color';
 const mainDishColorPref = 'main_dish_color';
 const garnishColorPref = 'garnish_color';
@@ -21,12 +22,16 @@ const uiThemePrefDefault = 'default';
 const uiThemePrefLight = 'light';
 const uiThemePrefDark = 'dark';
 
+const mensaSourcePrefStwno = 'STWNO';
+const mensaSourcePrefOM = 'OpenMensa';
+
 const Map<String, dynamic> defaults = {
   uiThemePref: uiThemePrefDefault,
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
   notFoundColorPref: 0xffea3838,
   mensaAutoSyncPref: true,
+  mensaSourcePref: mensaSourcePrefStwno,
   soupColorPref: 0xff7bad41,
   mainDishColorPref: 0xffea3838,
   garnishColorPref: 0xff61dfed,
@@ -120,6 +125,25 @@ class SettingsPage extends StatelessWidget {
                     title: Text(S.of(context).autoSyncPrefTitle),
                     subtitle: Text(S.of(context).autoSyncPrefDesc),
                     pref: mensaAutoSyncPref,
+                  ),
+                  PrefDialogButton(
+                    title: Text(S.of(context).mensaSourcePrefTitle),
+                    subtitle: Text(S.of(context).mensaSourcePrefDesc),
+                    dialog: PrefDialog(
+                      title: Text(S.of(context).mensaSourcePrefTitle),
+                      children: [
+                        PrefRadio(
+                          title: Text(S.of(context).mensaSourcePrefStwno),
+                          value: mensaSourcePrefStwno,
+                          pref: mensaSourcePref,
+                        ),
+                        PrefRadio(
+                          title: Text(S.of(context).mensaSourcePrefOM),
+                          value: mensaSourcePrefOM,
+                          pref: mensaSourcePref,
+                        ),
+                      ],
+                    ),
                   ),
                   PrefTitle(title: Text(S.of(context).colorsPref)),
                   PrefColor(

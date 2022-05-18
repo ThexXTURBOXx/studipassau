@@ -1,9 +1,15 @@
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/bloc/providers/openmensa_provider.dart';
+import 'package:studipassau/bloc/providers/stwno_mensa_provider.dart';
 
-class OpenMensaRepo {
+class MensaRepo {
   final _openMensaProvider = OpenMensaDataProvider();
 
-  Future<List<DayMenu>> getMealsOfCanteen(int canteenId) async =>
+  final _stwnoMensaProvider = StwnoDataProvider();
+
+  Future<List<DayMenu>> getOpenMensaMeals(int canteenId) async =>
       _openMensaProvider.getMealsOfCanteen(canteenId);
+
+  Future<List<DayMenu>> getStwnoMeals(String canteenId) async =>
+      _stwnoMensaProvider.getMealsOfCanteen(canteenId);
 }

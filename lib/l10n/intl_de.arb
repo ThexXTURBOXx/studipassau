@@ -60,6 +60,10 @@
   "@httpError": {
     "description": "Text shown on HTTP Errors."
   },
+  "mensaError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal oder ändere die Mensaplan-Quelle in den Einstellungen.",
+  "@mensaError": {
+    "description": "Text shown on HTTP Errors in the mensa plan."
+  },
   "loginAuthenticated": "Erfolgreich authentifiziert",
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
@@ -291,6 +295,22 @@
   "lectureNotFoundColorPrefDesc": "Farbe der Sitzungen, die keiner Vorlesung zugeordnet werden konnten",
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
+  },
+  "mensaSourcePrefTitle": "Mensaplan-Quelle",
+  "@mensaSourcePrefTitle": {
+    "description": "Title for mensa source preference"
+  },
+  "mensaSourcePrefDesc": "Die Mensaplan-Quelle ändern",
+  "@mensaSourcePrefDesc": {
+    "description": "Description for mensa source preference"
+  },
+  "mensaSourcePrefStwno": "STWNO",
+  "@mensaSourcePrefStwno": {
+    "description": "Title for STWNO mensa source"
+  },
+  "mensaSourcePrefOM": "OpenMensa",
+  "@mensaSourcePrefOM": {
+    "description": "Title for OpenMensa mensa source"
   },
   "mensaPrefCatLongTitle": "Mensaplan-Einstellungen",
   "@mensaPrefCatLongTitle": {

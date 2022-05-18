@@ -7,6 +7,8 @@ class BlocState {
   const BlocState(this.state);
 
   bool get finished => state.finished;
+
+  bool get errored => state.errored;
 }
 
 class LoginState extends BlocState {
@@ -56,16 +58,18 @@ enum StudiPassauState {
   loading,
   authenticating,
   authenticated(finished: true),
-  authenticationError(finished: true),
+  authenticationError(finished: true, errored: true),
   notFetched,
   fetching,
   fetched(finished: true),
-  fetchError(finished: true),
-  httpError(finished: true);
+  fetchError(finished: true, errored: true),
+  httpError(finished: true, errored: true);
 
   final bool finished;
+  final bool errored;
 
   const StudiPassauState({
     this.finished = false,
+    this.errored = false,
   });
 }
