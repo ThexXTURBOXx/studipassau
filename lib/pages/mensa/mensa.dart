@@ -64,6 +64,7 @@ class _MensaPagePageState extends State<MensaPage>
       );
 
   List<Widget> slivers(List<DayMenu> menu) => menu
+      .sortedBy((e) => e.day.date)
       .map(
         (dm) => SliverStickyHeader(
           header: Container(
