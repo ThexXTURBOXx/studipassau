@@ -4,7 +4,7 @@
   "@applicationTitle": {
     "description": "The application's name"
   },
-  "copyright": "© 2022 Nico Mexis",
+  "copyright": "© %s Nico Mexis",
   "@copyright": {
     "description": "The application's copyright"
   },

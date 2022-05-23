@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
@@ -9,7 +10,8 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
     context: context,
     applicationName: S.of(context).applicationTitle,
     applicationVersion: appVersion,
-    applicationLegalese: S.of(context).copyright,
+    applicationLegalese:
+        sprintf(S.of(context).copyright, [DateTime.now().year]),
     applicationIcon: const CircleAvatar(
       foregroundImage: AssetImage(
         'assets/icons/studipassau_icon_with_bg.png',
