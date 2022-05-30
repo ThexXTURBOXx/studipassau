@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -10,6 +11,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:supercharged/supercharged.dart';
 
 const routeMensa = '/mensa';
 
@@ -64,43 +66,47 @@ class _MensaPagePageState extends State<MensaPage>
         ),
       );
 
-  List<Widget> slivers(List<DayMenu> menu) => menu
-      .sortedBy((e) => e.day.date)
-      .map(
-        (dm) => SliverStickyHeader(
-          header: Container(
-            height: 60,
-            color: Colors.lightBlue,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            alignment: Alignment.centerLeft,
-            child: Text(
-              '${formatWeekday(dm.day.date)}, '
-              '${formatDate(dm.day.date)}',
-              style: const TextStyle(color: Colors.white),
+  List<Widget> slivers(List<DayMenu> menu) {
+    final today = DateTime.now().startOfDay;
+    return menu
+        .filter((e) => e.day.date.startOfDay >= today)
+        .sortedBy((e) => e.day.date)
+        .map(
+          (dm) => SliverStickyHeader(
+            header: Container(
+              height: 60,
+              color: Colors.lightBlue,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              alignment: Alignment.centerLeft,
+              child: Text(
+                '${formatWeekday(dm.day.date)}, '
+                '${formatDate(dm.day.date)}',
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate.fixed(
+                dm.meals
+                    .map(
+                      (m) => ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor:
+                              getFoodColor(m.category.characters.first),
+                          child: Text(m.category.characters.first),
+                        ),
+                        title: Text(
+                          m.name,
+                        ),
+                        onTap: () => onTap(m),
+                      ),
+                    )
+                    .toList(growable: false),
+              ),
             ),
           ),
-          sliver: SliverList(
-            delegate: SliverChildListDelegate.fixed(
-              dm.meals
-                  .map(
-                    (m) => ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor:
-                            getFoodColor(m.category.characters.first),
-                        child: Text(m.category.characters.first),
-                      ),
-                      title: Text(
-                        m.name,
-                      ),
-                      onTap: () => onTap(m),
-                    ),
-                  )
-                  .toList(growable: false),
-            ),
-          ),
-        ),
-      )
-      .toList(growable: false);
+        )
+        .toList(growable: false);
+  }
 
   void onTap(Meal m) {
     final s = S.of(context);
