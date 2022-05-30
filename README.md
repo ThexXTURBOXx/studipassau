@@ -55,11 +55,11 @@ However, I cannot really help you as I neither have any device running iOS nor a
  - ✔ [Translations](https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc)
  - ✔ About Page
  - ✔ Home Screen shortcuts
+ - ✔ Material 3 (Not tested thoroughly yet)
 
 ### Planned
 
  - ❌ Files
- - ❌ Material 3
 
 ## Changelog
 
