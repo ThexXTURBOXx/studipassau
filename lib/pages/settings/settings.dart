@@ -8,6 +8,7 @@ import 'package:studipassau/pages/settings/widgets/color_pref.dart';
 const routeSettings = '/settings';
 
 const uiThemePref = 'ui_theme';
+const material3Pref = 'material3';
 const scheduleAutoSyncPref = 'schedule_auto_sync';
 const nonRegularColorPref = 'non_regular_color';
 const notFoundColorPref = 'not_found_color';
@@ -27,6 +28,7 @@ const mensaSourcePrefOM = 'OpenMensa';
 
 const Map<String, dynamic> defaults = {
   uiThemePref: uiThemePrefDefault,
+  material3Pref: false,
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
   notFoundColorPref: 0xffea3838,
@@ -82,6 +84,11 @@ class SettingsPage extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  PrefSwitch(
+                    title: Text(S.of(context).material3PrefTitle),
+                    subtitle: Text(S.of(context).material3PrefDesc),
+                    pref: material3Pref,
                   ),
                 ],
               ),

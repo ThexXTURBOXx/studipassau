@@ -94,6 +94,9 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
     prefService.addKeyListener(uiThemePref, () {
       setState(() {});
     });
+    prefService.addKeyListener(material3Pref, () {
+      setState(() {});
+    });
   }
 
   @override
@@ -134,11 +137,13 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
             theme: ThemeData(
               brightness: Brightness.light,
               primarySwatch: Colors.blue,
+              useMaterial3: getPref(material3Pref),
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             darkTheme: ThemeData(
               brightness: Brightness.dark,
               primarySwatch: Colors.blue,
+              useMaterial3: getPref(material3Pref),
               visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
             navigatorKey: Catcher.navigatorKey,

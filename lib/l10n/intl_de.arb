@@ -256,6 +256,14 @@
   "@uiThemePrefDark": {
     "description": "Title for dark app theme"
   },
+  "material3PrefTitle": "Material 3 Design",
+  "@material3PrefTitle": {
+    "description": "Title for Material 3 preference"
+  },
+  "material3PrefDesc": "Zu Material 3 Design wechseln",
+  "@material3PrefDesc": {
+    "description": "Description for Material 3 preference"
+  },
   "schedulePrefCatLongTitle": "Stundenplan-Einstellungen",
   "@schedulePrefCatLongTitle": {
     "description": "Schedule preferences category long title"
