@@ -46,7 +46,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(
-          title: Text(S.of(context).aboutTitle),
+          title: Text(S.of(context).settingsTitle),
         ),
         drawer: const StudiPassauDrawer(DrawerItem.settings),
         body: PrefPage(

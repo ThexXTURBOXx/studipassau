@@ -216,6 +216,10 @@
   "@colorPickerTitle": {
     "description": "Title for color pickers"
   },
+  "settingsTitle": "StudiPassau Einstellungen",
+  "@settingsTitle": {
+    "description": "The title for the about screen"
+  },
   "generalPrefCatLongTitle": "General settings",
   "@generalPrefCatLongTitle": {
     "description": "General preferences category long title"
