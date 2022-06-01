@@ -12,10 +12,9 @@ addons:
 install:
   - git clone https://github.com/flutter/flutter.git $HOME/flutter
   - $HOME/flutter/bin/flutter doctor
-  - $HOME/flutter/bin/flutter pub global activate intl_utils
+  - $HOME/flutter/bin/flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
 script:
   - echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
-  - touch .env2
   - $HOME/flutter/bin/flutter pub get
   - $HOME/flutter/bin/flutter pub global run intl_utils:generate
   - flutter pub run build_runner build

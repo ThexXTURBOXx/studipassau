@@ -30,15 +30,19 @@ The compilation from source should be straight forward (only Android):
     ```shell
     flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
     ```
-5. Generate the language files:
+5. Download the dependencies:
+   ```shell
+   flutter pub get
+   ```
+6. Generate the language files:
     ```shell
     flutter pub global run intl_utils:generate
     ```
-6. Generate the environment variable class:
+7. Generate the environment variable class:
     ```shell
     flutter pub run build_runner build
     ```
-7. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
+8. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
     ```shell
     flutter build apk
     ```
@@ -60,8 +64,7 @@ account :/
 - ✔ Offline Mode
 - ✔ Dark Mode
 - ✔ Customization / Preferences
--
-✔ [Translations](https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc)
+- ✔ [Translations](https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc)
 - ✔ About Page
 - ✔ Home Screen shortcuts
 - ✔ Material 3 (Not tested thoroughly yet)
