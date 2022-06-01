@@ -3,7 +3,8 @@
 StudiPassau Reimagined using Flutter
 
 <p align="center">
-  <a href="https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc"><img src="https://img.shields.io/localizely/progress/32cea4c8-ff53-4e34-94d8-bcdc8643b236?token=f14c2f1c209f43aea381e31e9107ee7f2b4986ec270e4575b18a120dc035c459"></a>
+  <a href="https://github.com/ThexXTURBOXx/studipassau/actions/workflows/analyze.yml"><img src="https://github.com/ThexXTURBOXx/studipassau/actions/workflows/analyze.yml/badge.svg" alt="Lint status"></a>
+  <a href="https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc"><img src="https://img.shields.io/localizely/progress/32cea4c8-ff53-4e34-94d8-bcdc8643b236?token=f14c2f1c209f43aea381e31e9107ee7f2b4986ec270e4575b18a120dc035c459" alt="Translation status"></a>
 </p>
 
 The successor of the
