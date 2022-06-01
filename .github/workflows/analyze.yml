@@ -1,0 +1,36 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Create .env file
+        run: echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
+
+      - name: Activate own intl_utils
+        run: flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Generate language files
+        run: flutter pub global run intl_utils:generate
+
+      - name: Generate env class
+        run: flutter pub run build_runner build
+
+      - name: Analyze
+        run: flutter analyze
