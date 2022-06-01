@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
@@ -71,12 +70,6 @@ late BasePrefService prefService;
 String targetRoute = routeSchedule;
 
 Location? _location;
-
-String get consumerKey => dotenv.env['CONSUMER_KEY']!;
-
-String get consumerSecret => dotenv.env['CONSUMER_SECRET']!;
-
-String? get sentryDsn => dotenv.env['SENTRY_DSN'];
 
 Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 

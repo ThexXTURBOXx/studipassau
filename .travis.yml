@@ -18,6 +18,7 @@ script:
   - touch .env2
   - $HOME/flutter/bin/flutter pub get
   - $HOME/flutter/bin/flutter pub global run intl_utils:generate
+  - flutter pub run build_runner build
   - $HOME/flutter/bin/flutter analyze
 cache:
   directories:

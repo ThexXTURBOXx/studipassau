@@ -52,8 +52,9 @@ app.*.map.json
 *.js.deps
 *.js.map
 
-# Environment files for flutter_dotenv
+# Environment files for envify
 .env*
+lib/env/env.g.dart
 
 # Gradle
 local.properties

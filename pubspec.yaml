@@ -18,13 +18,13 @@ dependencies:
   catcher: ^0.6.7
   collection: ^1.15.0
   dart_date: ^1.1.0
+  envify: ^2.0.2
   equatable: ^2.0.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.0
   flutter_cache_manager: ^3.1.2
   flutter_colorpicker: ^1.0.3
-  flutter_dotenv: ^5.0.0
   flutter_localizations:
     sdk: flutter
   flutter_native_splash: ^2.0.1+1
@@ -49,6 +49,12 @@ dependencies:
   url_launcher: ^6.0.9
 
 dev_dependencies:
+  build_runner: ^2.1.11
+  envify_generator:
+    git:
+      url: https://github.com/techouse/envify.git
+      ref: main
+      path: envify_generator
   flutter_launcher_icons: ^0.9.1
   flutter_lints: ^2.0.1
 
@@ -56,6 +62,11 @@ dependency_overrides:
   catcher:
     git:
       url: https://github.com/ThexXTURBOXx/catcher.git
+  envify:
+    git:
+      url: https://github.com/techouse/envify.git
+      ref: main
+      path: envify
   flutter_web_auth:
     git:
       url: https://github.com/noga-dev/flutter_web_auth.git
@@ -72,10 +83,6 @@ flutter_icons:
 
 flutter:
   assets:
-    # Load the environment file with consumer key and secret
-    - .env
-    # env2 is only used for testing purposes
-    - .env2
     # We also want the icons in some places
     - assets/icons/
   fonts:

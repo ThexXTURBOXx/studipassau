@@ -8,6 +8,7 @@ import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
+import 'package:studipassau/env/env.dart';
 import 'package:studipassau/util/images.dart';
 
 class LoginCubit extends Cubit<LoginState> {
@@ -34,8 +35,8 @@ class LoginCubit extends Cubit<LoginState> {
         try {
           final client = StudIPClient(
             oauthBaseUrl,
-            consumerKey,
-            consumerSecret,
+            Env.consumerKey,
+            Env.consumerSecret,
             accessToken: tok[oAuthTokenKey],
             accessTokenSecret: tok[oAuthSecretKey],
             apiBaseUrl: apiBaseUrl,
@@ -54,8 +55,8 @@ class LoginCubit extends Cubit<LoginState> {
       if (!fetched) {
         final client = StudIPClient(
           oauthBaseUrl,
-          consumerKey,
-          consumerSecret,
+          Env.consumerKey,
+          Env.consumerSecret,
           apiBaseUrl: apiBaseUrl,
         );
         final url = await client.getAuthorizationUrl(callbackUrl);

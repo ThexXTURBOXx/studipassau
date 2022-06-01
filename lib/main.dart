@@ -4,7 +4,6 @@ import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
@@ -20,6 +19,7 @@ import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/repos/studip_repo.dart';
 import 'package:studipassau/constants.dart';
+import 'package:studipassau/env/env.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
@@ -35,14 +35,12 @@ Future main() async {
   tz.initializeTimeZones();
   setLocalLocation(location);
 
-  await dotenv.load(fileName: envFile);
-
   packageInfo = await PackageInfo.fromPlatform();
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
   final releaseOptions = CatcherOptions(DialogReportMode(), [
     SentryHandler(
-      SentryClient(SentryFlutterOptions()..dsn = sentryDsn),
+      SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn),
     ),
     ConsoleHandler(),
   ]);
