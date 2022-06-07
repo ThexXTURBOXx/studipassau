@@ -44,7 +44,7 @@ dependencies:
   sprintf: ^6.0.0
   studip: ^2.1.0
   supercharged: ^2.1.1
-  timetable: ^1.0.0-alpha.7
+  timetable: ^1.0.0-alpha.8
   timezone: ^0.8.0
   url_launcher: ^6.0.9
 
@@ -70,9 +70,6 @@ dependency_overrides:
   flutter_web_auth:
     git:
       url: https://github.com/noga-dev/flutter_web_auth.git
-  timetable:
-    git:
-      url: https://github.com/ThexXTURBOXx/timetable.git
 
 flutter_icons:
   adaptive_icon_background: '#2898f1'

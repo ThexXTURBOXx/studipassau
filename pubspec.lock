@@ -212,7 +212,7 @@ packages:
       name: device_info_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.3"
+    version: "3.2.4"
   device_info_plus_linux:
     dependency: transitive
     description:
@@ -347,7 +347,7 @@ packages:
       name: flutter_launcher_icons
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.9.2"
+    version: "0.9.3"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -380,7 +380,7 @@ packages:
       name: flutter_native_splash
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.3+1"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -435,7 +435,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ee3c26a530a625c3cab7e0c45cc30316c8b4b64c
+      resolved-ref: a49488592f9eeeec3c75ae9335ed51ae84f2a2b0
       url: "https://github.com/noga-dev/flutter_web_auth.git"
     source: git
     version: "0.4.1"
@@ -674,7 +674,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.10"
+    version: "2.0.11"
   path_provider_android:
     dependency: transitive
     description:
@@ -688,7 +688,7 @@ packages:
       name: path_provider_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.9"
+    version: "2.0.10"
   path_provider_linux:
     dependency: transitive
     description:
@@ -800,14 +800,14 @@ packages:
       name: quick_actions_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+10"
+    version: "0.6.0+11"
   quick_actions_ios:
     dependency: transitive
     description:
       name: quick_actions_ios
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.0+10"
+    version: "0.6.0+11"
   quick_actions_platform_interface:
     dependency: transitive
     description:
@@ -849,7 +849,7 @@ packages:
       name: share_plus
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.5"
+    version: "4.0.8"
   share_plus_linux:
     dependency: transitive
     description:
@@ -1064,7 +1064,7 @@ packages:
       name: time
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.0"
+    version: "2.1.1"
   timeago:
     dependency: transitive
     description:
@@ -1075,12 +1075,10 @@ packages:
   timetable:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "9d17622c5e13294232e6e17255caf734330f0937"
-      url: "https://github.com/ThexXTURBOXx/timetable.git"
-    source: git
-    version: "1.0.0-alpha.7"
+      name: timetable
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0-alpha.8"
   timezone:
     dependency: "direct main"
     description:
@@ -1122,7 +1120,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.2"
+    version: "6.1.3"
   url_launcher_android:
     dependency: transitive
     description:
