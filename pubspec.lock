@@ -266,18 +266,18 @@ packages:
     dependency: "direct main"
     description:
       path: envify
-      ref: main
-      resolved-ref: "5d739438ddedf1c4a5b5aaefbeaf8cd40a1b1f61"
-      url: "https://github.com/techouse/envify.git"
+      ref: dev
+      resolved-ref: c7f967e42c077fa30a8980ab583c5d784d5f2581
+      url: "https://github.com/ThexXTURBOXx/envify.git"
     source: git
     version: "2.0.2"
   envify_generator:
     dependency: "direct dev"
     description:
       path: envify_generator
-      ref: main
-      resolved-ref: "5d739438ddedf1c4a5b5aaefbeaf8cd40a1b1f61"
-      url: "https://github.com/techouse/envify.git"
+      ref: dev
+      resolved-ref: c7f967e42c077fa30a8980ab583c5d784d5f2581
+      url: "https://github.com/ThexXTURBOXx/envify.git"
     source: git
     version: "2.0.2"
   equatable:

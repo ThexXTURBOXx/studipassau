@@ -52,8 +52,8 @@ dev_dependencies:
   build_runner: ^2.1.11
   envify_generator:
     git:
-      url: https://github.com/techouse/envify.git
-      ref: main
+      url: https://github.com/ThexXTURBOXx/envify.git
+      ref: dev
       path: envify_generator
   flutter_launcher_icons: ^0.9.1
   flutter_lints: ^2.0.1
@@ -64,8 +64,8 @@ dependency_overrides:
       url: https://github.com/ThexXTURBOXx/catcher.git
   envify:
     git:
-      url: https://github.com/techouse/envify.git
-      ref: main
+      url: https://github.com/ThexXTURBOXx/envify.git
+      ref: dev
       path: envify
   flutter_web_auth:
     git:
