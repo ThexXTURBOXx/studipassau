@@ -264,6 +264,18 @@
   "@material3PrefDesc": {
     "description": "Description for Material 3 preference"
   },
+  "othersPref": "Others",
+  "@othersPref": {
+    "description": "Title for a group of other miscellaneous preferences"
+  },
+  "startRoutePrefTitle": "Home screen",
+  "@startRoutePrefTitle": {
+    "description": "Title for starting page preference"
+  },
+  "startRoutePrefDesc": "Change home screen",
+  "@startRoutePrefDesc": {
+    "description": "Description for app theme preference"
+  },
   "schedulePrefCatLongTitle": "Schedule settings",
   "@schedulePrefCatLongTitle": {
     "description": "Schedule preferences category long title"

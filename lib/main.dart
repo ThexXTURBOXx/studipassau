@@ -45,6 +45,13 @@ Future main() async {
     ConsoleHandler(),
   ]);
 
+  SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
+
+  // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue
+  //             at some point, i.e. remove the global reference...
+  prefService = await PrefServiceShared.init(defaults: defaults);
+  targetRoute = getPref(startRoutePref);
+
   const quickActions = QuickActions();
   await quickActions.initialize((shortcutType) => targetRoute = shortcutType);
   await quickActions.setShortcutItems(<ShortcutItem>[
@@ -61,12 +68,6 @@ Future main() async {
       // TODO(Nico): icon: 'IconResource',
     )
   ]);
-
-  SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
-
-  // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue
-  //             at some point, i.e. remove the global reference...
-  prefService = await PrefServiceShared.init(defaults: defaults);
 
   Catcher(
     rootWidget: PrefService(

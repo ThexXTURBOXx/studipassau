@@ -264,6 +264,18 @@
   "@material3PrefDesc": {
     "description": "Description for Material 3 preference"
   },
+  "othersPref": "Anderes",
+  "@othersPref": {
+    "description": "Title for a group of other miscellaneous preferences"
+  },
+  "startRoutePrefTitle": "Startbildschirm",
+  "@startRoutePrefTitle": {
+    "description": "Title for starting page preference"
+  },
+  "startRoutePrefDesc": "Startbildschirm ändern",
+  "@startRoutePrefDesc": {
+    "description": "Description for app theme preference"
+  },
   "schedulePrefCatLongTitle": "Stundenplan-Einstellungen",
   "@schedulePrefCatLongTitle": {
     "description": "Schedule preferences category long title"

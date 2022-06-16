@@ -267,7 +267,7 @@ packages:
     description:
       path: envify
       ref: dev
-      resolved-ref: c7f967e42c077fa30a8980ab583c5d784d5f2581
+      resolved-ref: "56de9db75048e44bbbde1c41567b68000a7c934a"
       url: "https://github.com/ThexXTURBOXx/envify.git"
     source: git
     version: "2.0.2"
@@ -276,7 +276,7 @@ packages:
     description:
       path: envify_generator
       ref: dev
-      resolved-ref: c7f967e42c077fa30a8980ab583c5d784d5f2581
+      resolved-ref: "56de9db75048e44bbbde1c41567b68000a7c934a"
       url: "https://github.com/ThexXTURBOXx/envify.git"
     source: git
     version: "2.0.2"
@@ -464,7 +464,7 @@ packages:
       name: glob
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   graphs:
     dependency: transitive
     description:
@@ -485,7 +485,7 @@ packages:
       name: http_multi_server
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "3.2.1"
   http_parser:
     dependency: transitive
     description:
@@ -562,7 +562,7 @@ packages:
       name: matcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.12.11"
+    version: "0.12.12"
   material_color_utilities:
     dependency: transitive
     description:
@@ -618,7 +618,7 @@ packages:
       name: package_config
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -681,7 +681,7 @@ packages:
       name: path_provider_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.14"
+    version: "2.0.15"
   path_provider_ios:
     dependency: transitive
     description:
@@ -751,7 +751,7 @@ packages:
       name: pool
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.5.0"
+    version: "1.5.1"
   pref:
     dependency: "direct main"
     description:
@@ -947,14 +947,14 @@ packages:
       name: shelf
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.0"
+    version: "1.3.1"
   shelf_web_socket:
     dependency: transitive
     description:
       name: shelf_web_socket
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1057,7 +1057,7 @@ packages:
       name: term_glyph
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "1.2.1"
   time:
     dependency: transitive
     description:
@@ -1162,7 +1162,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.11"
+    version: "2.0.12"
   url_launcher_windows:
     dependency: transitive
     description:
