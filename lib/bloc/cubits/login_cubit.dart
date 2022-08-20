@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:flutter_web_auth_2/flutter_web_auth_2.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
@@ -61,7 +61,7 @@ class LoginCubit extends Cubit<LoginState> {
         );
         final url = await client.getAuthorizationUrl(callbackUrl);
         emit(state.copyWith(state: StudiPassauState.authenticating));
-        final params = await FlutterWebAuth.authenticate(
+        final params = await FlutterWebAuth2.authenticate(
           url: url,
           callbackUrlScheme: callbackUrlScheme,
           preferEphemeral: true,
