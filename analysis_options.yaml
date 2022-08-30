@@ -40,8 +40,8 @@ analyzer:
     - "lib/generated/intl/messages_*.dart"
     # Ignore generated plugin registrant
     - "lib/generated_plugin_registrant.dart"
-    # Ignore ugly env classes
-    - "lib/env/**"
+    # Ignore ugly generated env class
+    - "lib/env/env.g.dart"
 
 linter:
   # The lint rules applied to this project can be customized in the
