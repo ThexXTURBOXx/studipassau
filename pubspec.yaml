@@ -6,7 +6,7 @@ issue_tracker: https://github.com/ThexXTURBOXx/studipassau/issues
 
 publish_to: 'none'
 
-version: 0.9.4+094
+version: 0.9.5+095
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
