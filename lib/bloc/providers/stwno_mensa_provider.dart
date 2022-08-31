@@ -54,9 +54,9 @@ class StwnoDataProvider {
 
     return Meal(
       id: 0,
-      name: '${parseName(entries[3])} '
-          '(${parseAllergensAndAdditives(entries[3]).join(", ")})',
-      notes: parseFoodProperties(entries[4]),
+      name: parseName(entries[3]),
+      notes: parseFoodProperties(entries[4]) +
+          parseAllergensAndAdditives(entries[3]),
       category: entries[2],
       studentPrice: parsePrice(entries[6]),
       employeePrice: parsePrice(entries[7]),
@@ -86,17 +86,20 @@ class StwnoDataProvider {
       .split(',')
       .map((e) => e.trim())
       .filter((e) => e.isNotEmpty)
-      .map((e) => stwnoProperties[e] ?? e)
+      .map((e) => stwnoProperties[e] ?? stwnoAdditives[e] ?? e)
       .toList(growable: false);
 
-  Set<String> parseAllergensAndAdditives(String name) => stwnoAdditivesPattern
+  List<String> parseAllergensAndAdditives(String name) => stwnoAdditivesPattern
       .allMatches(name)
       .map((e) => e.group(1) ?? '')
-      .filter((e) => e != '')
-      .map((e) => e.split(r',\s*'))
+      .map((e) => e.trim())
+      .filter((e) => e.isNotEmpty)
+      .map((e) => e.split(','))
       .expand((e) => e)
-      .map((e) => stwnoAdditives[e] ?? e)
-      .toSet();
+      .map((e) => e.trim())
+      .filter((e) => e.isNotEmpty)
+      .map((e) => stwnoAdditives[e] ?? stwnoProperties[e] ?? e)
+      .toList(growable: false);
 
   double parsePrice(String number) =>
       stwnoDecimalFormat.parse(number).toDouble();
