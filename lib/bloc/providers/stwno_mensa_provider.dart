@@ -82,7 +82,12 @@ class StwnoDataProvider {
     }
   }
 
-  List<String> parseFoodProperties(String tags) => tags.split(r',\s*');
+  List<String> parseFoodProperties(String tags) => tags
+      .split(',')
+      .map((e) => e.trim())
+      .filter((e) => e.isNotEmpty)
+      .map((e) => stwnoProperties[e] ?? e)
+      .toList(growable: false);
 
   Set<String> parseAllergensAndAdditives(String name) => stwnoAdditivesPattern
       .allMatches(name)
@@ -90,6 +95,7 @@ class StwnoDataProvider {
       .filter((e) => e != '')
       .map((e) => e.split(r',\s*'))
       .expand((e) => e)
+      .map((e) => stwnoAdditives[e] ?? e)
       .toSet();
 
   double parsePrice(String number) =>
