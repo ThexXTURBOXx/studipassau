@@ -36,7 +36,7 @@ dependencies:
   openmensa: ^2.1.0
   package_info_plus: ^1.0.4
   pref: ^2.5.0
-  quick_actions: ^0.6.0+3
+  quick_actions: ^1.0.0
   sentry: ^6.0.1
   sentry_flutter: ^6.0.1
   share_plus: ^4.0.3
