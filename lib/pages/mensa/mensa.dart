@@ -91,11 +91,11 @@ class _MensaPagePageState extends State<MensaPage>
                       (m) => ListTile(
                         leading: CircleAvatar(
                           backgroundColor:
-                              getFoodColor(m.category.characters.first),
-                          child: Text(m.category.characters.first),
+                              getFoodColor(m.category.trim().characters.first),
+                          child: Text(m.category.trim().characters.first),
                         ),
                         title: Text(
-                          m.name,
+                          m.name.trim(),
                         ),
                         onTap: () => onTap(m),
                       ),
@@ -113,9 +113,9 @@ class _MensaPagePageState extends State<MensaPage>
     showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(m.name),
+        title: Text(m.name.trim()),
         content: Text(
-          '${s.category}: ${m.category}\n'
+          '${s.category}: ${m.category.trim()}\n'
           '${formatPrice(s.students, s.priceFormat, m.studentPrice)}'
           '${formatPrice(s.employees, s.priceFormat, m.employeePrice)}'
           '${formatPrice(s.guests, s.priceFormat, m.othersPrice)}'
