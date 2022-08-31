@@ -52,7 +52,7 @@ app.*.map.json
 *.js.deps
 *.js.map
 
-# Environment files for envify
+# Environment files
 .env*
 lib/env/env.g.dart
 
