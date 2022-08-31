@@ -53,14 +53,16 @@ class StwnoDataProvider {
     }
 
     return Meal(
+      // Unused anyway
       id: 0,
       name: parseName(entries[3]),
       notes: parseFoodProperties(entries[4]) +
           parseAllergensAndAdditives(entries[3]),
-      category: entries[2],
+      category: parseCategory(entries[2]),
       studentPrice: parsePrice(entries[6]),
       employeePrice: parsePrice(entries[7]),
       othersPrice: parsePrice(entries[8]),
+      // Not given in "API"
       pupilPrice: null,
     );
   }
@@ -100,6 +102,21 @@ class StwnoDataProvider {
       .filter((e) => e.isNotEmpty)
       .map((e) => stwnoAdditives[e] ?? stwnoProperties[e] ?? e)
       .toList(growable: false);
+
+  // TODO(Nico): I18n!
+  String parseCategory(String cat) {
+    if (cat.startsWith('HG')) {
+      return 'Hauptgericht';
+    } else if (cat.startsWith('B')) {
+      return 'Beilage';
+    } else if (cat.startsWith('N')) {
+      return 'Nachtisch';
+    } else if (cat.startsWith('Suppe')) {
+      return 'Suppe';
+    } else {
+      return 'Sonstiges';
+    }
+  }
 
   double parsePrice(String number) =>
       stwnoDecimalFormat.parse(number).toDouble();

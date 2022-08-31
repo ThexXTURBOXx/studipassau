@@ -55,6 +55,7 @@ const stwnoEncoding = latin1;
 
 final RegExp stwnoAdditivesPattern = RegExp(r'\s*\(([^)]+)\)\s*');
 
+// TODO(Nico): I18n!
 /// From https://stwno.de/de/gastronomie/speiseplan/uni-passau/uni-passau-mensa
 const Map<String, String> stwnoProperties = {
   'G': 'Geflügel',
@@ -72,6 +73,7 @@ const Map<String, String> stwnoProperties = {
   'BL': 'Bioland',
 };
 
+// TODO(Nico): I18n!
 /// From https://stwno.de/de/gastronomie/speiseplan/uni-passau/uni-passau-mensa
 const Map<String, String> stwnoAdditives = {
   '1': 'mit Farbstoff',
