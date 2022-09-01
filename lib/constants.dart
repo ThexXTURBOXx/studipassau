@@ -129,8 +129,8 @@ final dateFormat = DateFormat.yMd();
 final stwnoDateFormat = DateFormat('dd.MM.yyyy', 'de');
 final hmTimeFormat = DateFormat.Hm();
 final weekdayFormat = DateFormat('EEEE');
-final decimalFormat = NumberFormat('##0.00');
-final stwnoDecimalFormat = NumberFormat('##0.00', 'de');
+final euroFormat = NumberFormat.simpleCurrency(name: 'EUR');
+final stwnoPriceFormat = NumberFormat('##0.00', 'de');
 
 late PackageInfo packageInfo;
 
@@ -148,7 +148,7 @@ String formatHmTime(DateTime dateTime) => hmTimeFormat.format(dateTime);
 
 String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 
-String formatDecimal(double value) => decimalFormat.format(value);
+String formatEuroPrice(double value) => euroFormat.format(value);
 
 Color getColor(int index) =>
     (1 <= index && index < _colorTable.length ? _colorTable[index] : null) ??

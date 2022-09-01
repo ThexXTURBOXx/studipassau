@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:openmensa/openmensa.dart';
-import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
@@ -116,20 +115,18 @@ class _MensaPagePageState extends State<MensaPage>
         title: Text(m.name.trim()),
         content: Text(
           '${s.category}: ${m.category.trim()}\n'
-          '${formatPrice(s.students, s.priceFormat, m.studentPrice)}'
-          '${formatPrice(s.employees, s.priceFormat, m.employeePrice)}'
-          '${formatPrice(s.guests, s.priceFormat, m.othersPrice)}'
-          '${formatPrice(s.pupils, s.priceFormat, m.pupilPrice)}'
+          '${formatPrice(s.students, m.studentPrice)}'
+          '${formatPrice(s.employees, m.employeePrice)}'
+          '${formatPrice(s.guests, m.othersPrice)}'
+          '${formatPrice(s.pupils, m.pupilPrice)}'
           '${formatAdditives(s, m.notes)}',
         ),
       ),
     );
   }
 
-  String formatPrice(String category, String format, double? price) =>
-      price != null
-          ? '$category: ${sprintf(format, [formatDecimal(price)])}\n'
-          : '';
+  String formatPrice(String category, double? price) =>
+      price != null ? '$category: ${formatEuroPrice(price)}\n' : '';
 
   String formatAdditives(S s, List<String>? additives) =>
       additives != null && additives.isNotEmpty

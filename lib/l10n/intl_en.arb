@@ -152,10 +152,6 @@
   "@additives": {
     "description": "Additives information in the mensa plan."
   },
-  "priceFormat": "%s €",
-  "@priceFormat": {
-    "description": "Format for prices."
-  },
   "noAdditives": "none",
   "@noAdditives": {
     "description": "Shown when no additives are there."

@@ -118,6 +118,5 @@ class StwnoDataProvider {
     }
   }
 
-  double parsePrice(String number) =>
-      stwnoDecimalFormat.parse(number).toDouble();
+  double parsePrice(String number) => stwnoPriceFormat.parse(number).toDouble();
 }
