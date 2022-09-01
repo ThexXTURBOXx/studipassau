@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -31,6 +33,8 @@ import 'package:timezone/timezone.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  Intl.defaultLocale = await findSystemLocale();
 
   tz.initializeTimeZones();
   setLocalLocation(location);
@@ -148,7 +152,10 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
             navigatorKey: Catcher.navigatorKey,
             localizationsDelegates: const [
               S.delegate,
-              TimetableLocalizationsDelegate(),
+              TimetableLocalizationsDelegate(
+                setIntlLocale: false,
+                fallbackLocale: Locale('en', 'US'),
+              ),
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
