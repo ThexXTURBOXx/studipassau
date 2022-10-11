@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:catcher/catcher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
@@ -13,16 +12,12 @@ import 'package:quick_actions/quick_actions.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:studipassau/bloc/cubits/login_cubit.dart';
-import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
-import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
+import 'package:studipassau/bloc/bloc_provider.dart';
 import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
-import 'package:studipassau/bloc/repos/mensa_repo.dart';
-import 'package:studipassau/bloc/repos/storage_repo.dart';
-import 'package:studipassau/bloc/repos/studip_repo.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/env/env.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
@@ -103,72 +98,43 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   }
 
   @override
-  Widget build(BuildContext context) => MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider<StorageRepo>(
-            create: (context) => StorageRepo(),
+  Widget build(BuildContext context) => StudiPassauBlocProvider(
+        child: MaterialApp(
+          onGenerateTitle: (context) => S.of(context).applicationTitle,
+          debugShowCheckedModeBanner: false,
+          themeMode: getThemeMode(),
+          theme: ThemeData(
+            brightness: Brightness.light,
+            primarySwatch: Colors.blue,
+            useMaterial3: getPref(material3Pref),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          RepositoryProvider<StudIPRepo>(
-            create: (context) => StudIPRepo(),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            primarySwatch: Colors.blue,
+            useMaterial3: getPref(material3Pref),
+            visualDensity: VisualDensity.adaptivePlatformDensity,
           ),
-          RepositoryProvider<MensaRepo>(
-            create: (context) => MensaRepo(),
-          ),
-        ],
-        child: MultiBlocProvider(
-          providers: [
-            BlocProvider<LoginCubit>(
-              create: (context) => LoginCubit(context.read<StorageRepo>()),
+          navigatorKey: Catcher.navigatorKey,
+          localizationsDelegates: const [
+            S.delegate,
+            TimetableLocalizationsDelegate(
+              setIntlLocale: false,
+              fallbackLocale: Locale('en', 'US'),
             ),
-            BlocProvider<ScheduleCubit>(
-              create: (context) => ScheduleCubit(
-                context.read<StorageRepo>(),
-                context.read<StudIPRepo>(),
-              ),
-            ),
-            BlocProvider<MensaCubit>(
-              create: (context) => MensaCubit(
-                context.read<StorageRepo>(),
-                context.read<MensaRepo>(),
-              ),
-            ),
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
           ],
-          child: MaterialApp(
-            onGenerateTitle: (context) => S.of(context).applicationTitle,
-            debugShowCheckedModeBanner: false,
-            themeMode: getThemeMode(),
-            theme: ThemeData(
-              brightness: Brightness.light,
-              primarySwatch: Colors.blue,
-              useMaterial3: getPref(material3Pref),
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              primarySwatch: Colors.blue,
-              useMaterial3: getPref(material3Pref),
-              visualDensity: VisualDensity.adaptivePlatformDensity,
-            ),
-            navigatorKey: Catcher.navigatorKey,
-            localizationsDelegates: const [
-              S.delegate,
-              TimetableLocalizationsDelegate(
-                setIntlLocale: false,
-                fallbackLocale: Locale('en', 'US'),
-              ),
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: S.delegate.supportedLocales,
-            initialRoute: routeLogin,
-            routes: {
-              routeLogin: (ctx) => const LoginPage(),
-              routeSchedule: (ctx) => const SchedulePage(),
-              routeMensa: (ctx) => const MensaPage(),
-              routeSettings: (ctx) => const SettingsPage(),
-            },
-          ),
+          supportedLocales: S.delegate.supportedLocales,
+          initialRoute: routeLogin,
+          routes: {
+            routeLogin: (ctx) => const LoginPage(),
+            routeSchedule: (ctx) => const SchedulePage(),
+            routeMensa: (ctx) => const MensaPage(),
+            routeFiles: (ctx) => const FilesPage(),
+            routeSettings: (ctx) => const SettingsPage(),
+          },
         ),
       );
 

@@ -9,6 +9,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/pages/about/about.dart';
+import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -77,7 +78,7 @@ class StudiPassauDrawer extends StatelessWidget {
 enum DrawerItem {
   schedule(icon: Icons.event_note, route: routeSchedule),
   mensaPlan(icon: Icons.restaurant, route: routeMensa),
-  files(icon: Icons.folder_open),
+  files(icon: Icons.folder_open, route: routeFiles),
   divider1(isDivider: true),
   misc(isSubTitle: true),
   browser(icon: Icons.insert_link),

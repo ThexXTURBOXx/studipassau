@@ -1,4 +1,10 @@
+import 'dart:collection';
+
+import 'package:collection/collection.dart';
 import 'package:openmensa/openmensa.dart';
+import 'package:studipassau/pages/files/widgets/course.dart';
+import 'package:studipassau/pages/files/widgets/file.dart';
+import 'package:studipassau/pages/files/widgets/folder.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class BlocState {
@@ -52,6 +58,64 @@ class MensaState extends BlocState {
 
   List<DayMenu> get menu => mensaPlan ?? <DayMenu>[];
 }
+
+class FilesState extends BlocState {
+  Course? currentCourse;
+  final List<Course> courses;
+  final List<File> files;
+  final List<Folder> folders;
+  final Queue<Folder> currentFolders;
+
+  FilesState(
+    super.state, {
+    this.currentCourse,
+    this.courses = const [],
+    this.files = const [],
+    this.folders = const [],
+    required this.currentFolders,
+  });
+
+  FolderState get folderState => currentFolder != null
+      ? FolderState.folder
+      : currentCourse != null
+          ? FolderState.courseHome
+          : FolderState.home;
+
+  Folder? get currentFolder => currentFolders.firstOrNull;
+
+  bool goUp() {
+    switch (folderState) {
+      case FolderState.home:
+        return true;
+      case FolderState.courseHome:
+        currentCourse = null;
+        break;
+      case FolderState.folder:
+        currentFolders.removeFirst();
+        break;
+    }
+    return false;
+  }
+
+  FilesState copyWith({
+    StudiPassauState? state,
+    Course? currentCourse,
+    List<Course>? courses,
+    List<File>? files,
+    List<Folder>? folders,
+    Queue<Folder>? currentFolders,
+  }) =>
+      FilesState(
+        state ?? this.state,
+        currentCourse: currentCourse ?? this.currentCourse,
+        courses: courses ?? this.courses,
+        files: files ?? this.files,
+        folders: folders ?? this.folders,
+        currentFolders: currentFolders ?? this.currentFolders,
+      );
+}
+
+enum FolderState { home, courseHome, folder }
 
 enum StudiPassauState {
   notAuthenticated,

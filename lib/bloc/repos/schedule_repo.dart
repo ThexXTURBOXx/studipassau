@@ -5,7 +5,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
-class StudIPRepo {
+class ScheduleRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<StudiPassauEvent>> parseSchedule(String userId) async {
@@ -131,9 +131,6 @@ class _Event extends Equatable {
         room,
         canceled,
       ];
-
-  @override
-  bool get stringify => true;
 }
 
 class _Schedule extends Equatable {
@@ -158,9 +155,6 @@ class _Schedule extends Equatable {
 
   @override
   List<Object> get props => [events];
-
-  @override
-  bool get stringify => true;
 }
 
 class _ScheduleEvent extends Equatable {
@@ -209,7 +203,4 @@ class _ScheduleEvent extends Equatable {
         color,
         type,
       ];
-
-  @override
-  bool get stringify => true;
 }

@@ -83,7 +83,14 @@ class _SchedulePagePageState extends State<SchedulePage>
         drawer: const StudiPassauDrawer(DrawerItem.schedule),
         body: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, stateL) =>
-              BlocBuilder<ScheduleCubit, ScheduleState>(
+              BlocConsumer<ScheduleCubit, ScheduleState>(
+            listener: (context, state) {
+              if (state.errored) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(S.of(context).httpError)),
+                );
+              }
+            },
             builder: (context, stateS) => RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: () => refresh(context, stateL.userId),

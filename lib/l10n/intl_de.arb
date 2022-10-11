@@ -100,6 +100,10 @@
   "@mensaPlanTitle": {
     "description": "The title for the mensa plan screen"
   },
+  "filesTitle": "StudiPassau Dateien",
+  "@filesTitle": {
+    "description": "The title for the files screen"
+  },
   "aboutTitle": "Über StudiPassau",
   "@aboutTitle": {
     "description": "The title for the about screen"
@@ -375,5 +379,29 @@
   "dessertColorPrefDesc": "Farbe der Nachspeisen im Mensaplan",
   "@dessertColorPrefDesc": {
     "description": "Description for dessert color preference"
+  },
+  "mainDish": "Hauptgericht",
+  "@mainDish": {
+    "description": "Category name for main dishes in the mensa plan"
+  },
+  "garnish": "Beilage",
+  "@garnish": {
+    "description": "Category name for garnishes in the mensa plan"
+  },
+  "dessert": "Nachspeise",
+  "@dessert": {
+    "description": "Category name for desserts in the mensa plan"
+  },
+  "soup": "Suppe",
+  "@soup": {
+    "description": "Category name for soups in the mensa plan"
+  },
+  "unknownDish": "Sonstiges",
+  "@unknownDish": {
+    "description": "Category name for unknown dishes in the mensa plan"
+  },
+  "downloading": "Herunterladen...",
+  "@downloading": {
+    "description": "Text indicating that a file is being downloaded"
   }
 }
