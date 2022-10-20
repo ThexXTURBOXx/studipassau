@@ -96,11 +96,14 @@ class _FilesPagePageState extends State<FilesPage>
                                   (f) => FileWidget(
                                     file: f,
                                     onTap: () async {
+                                      final theme = Theme.of(context);
                                       final pd =
                                           ProgressDialog(context: context);
                                       pd.show(
                                         max: 100,
                                         msg: S.of(context).downloading,
+                                        backgroundColor:
+                                            theme.dialogBackgroundColor,
                                       );
                                       await downloadFile(
                                         f,
