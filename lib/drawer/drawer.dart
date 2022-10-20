@@ -30,6 +30,14 @@ class StudiPassauDrawer extends StatelessWidget {
               builder: (context, state) => UserAccountsDrawerHeader(
                 accountName: Text(state.formattedName),
                 accountEmail: Text(state.username),
+                decoration: const BoxDecoration(
+                  color: iconBgColor,
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/icons/studipassau_icon.png',
+                    ),
+                  ),
+                ),
                 currentAccountPicture: ClipRRect(
                   borderRadius: BorderRadius.circular(110),
                   child: CachedNetworkImage(
@@ -68,7 +76,7 @@ class StudiPassauDrawer extends StatelessWidget {
                               ? closeDrawer(context)
                               : item.onTap(context),
                           selected: selected == item,
-                          selectedTileColor: context.theme.primaryColorLight,
+                          selectedTileColor: context.theme.highlightColor,
                         ),
           ],
         ),

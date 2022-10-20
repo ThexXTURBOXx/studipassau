@@ -32,6 +32,8 @@ const translationUrl = 'https://app.localizely.com/projects/'
     '32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations';
 const githubUrl = 'https://github.com/ThexXTURBOXx/studipassau';
 
+const iconBgColor = Color(0xFF2898F1);
+
 const _colorTable = [
   null,
   Color(0xff008512),
