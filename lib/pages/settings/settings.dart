@@ -15,6 +15,7 @@ const startRoutePref = 'start_route';
 const scheduleAutoSyncPref = 'schedule_auto_sync';
 const nonRegularColorPref = 'non_regular_color';
 const notFoundColorPref = 'not_found_color';
+const showScheduleOnlyPref = 'show_schedule_only';
 const mensaAutoSyncPref = 'mensa_auto_sync';
 const mensaSourcePref = 'mensa_source';
 const soupColorPref = 'soup_color';
@@ -36,6 +37,7 @@ const Map<String, dynamic> defaults = {
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
   notFoundColorPref: 0xffea3838,
+  showScheduleOnlyPref: true,
   mensaAutoSyncPref: true,
   mensaSourcePref: mensaSourcePrefStwno,
   soupColorPref: 0xff7bad41,
@@ -138,6 +140,12 @@ class SettingsPage extends StatelessWidget {
                     title: Text(S.of(context).lectureNotFoundColorPrefTitle),
                     subtitle: Text(S.of(context).lectureNotFoundColorPrefDesc),
                     pref: notFoundColorPref,
+                  ),
+                  PrefTitle(title: Text(S.of(context).categoriesPref)),
+                  PrefSwitch(
+                    title: Text(S.of(context).showScheduleOnlyPrefTitle),
+                    subtitle: Text(S.of(context).showScheduleOnlyPrefDesc),
+                    pref: showScheduleOnlyPref,
                   ),
                 ],
               ),

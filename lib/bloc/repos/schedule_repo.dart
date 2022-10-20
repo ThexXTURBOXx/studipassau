@@ -4,6 +4,8 @@ import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:supercharged/supercharged.dart';
+import 'package:timetable/timetable.dart';
 
 class ScheduleRepo {
   final _studIPProvider = StudIPDataProvider();
@@ -67,6 +69,50 @@ class ScheduleRepo {
           backgroundColor: color,
         ),
       );
+    }
+
+    if (getPref(showScheduleOnlyPref)) {
+      final today = DateTime.now().copyWith(
+        second: 0,
+        millisecond: 0,
+        isUtc: true,
+      );
+      for (var i = 0; i < 7; i++) {
+        final day = schedule[i];
+        for (final event in day ?? <_ScheduleEvent>[]) {
+          if (event.type == 'null') {
+            final first = (i - (today.weekday - 1) + 14) % 7;
+            final hourStart = (event.start / 100).floor();
+            final minuteStart = event.start % 100;
+            final hourEnd = (event.end / 100).floor();
+            final minuteEnd = event.end % 100;
+            final start = (today + first.days).copyWith(
+              hour: hourStart,
+              minute: minuteStart,
+            );
+            final end = (today + first.days).copyWith(
+              hour: hourEnd,
+              minute: minuteEnd,
+            );
+            for (var j = 0; j <= eventDaysInFuture - first; j += 7) {
+              eventsCache.add(
+                StudiPassauEvent(
+                  id: event.id,
+                  title: event.title,
+                  course: '',
+                  description: event.content,
+                  categories: '',
+                  room: '',
+                  canceled: false,
+                  start: start + j.days,
+                  end: end + j.days,
+                  backgroundColor: event.color,
+                ),
+              );
+            }
+          }
+        }
+      }
     }
 
     return eventsCache;

@@ -320,6 +320,18 @@
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
   },
+  "categoriesPref": "Categories",
+  "@categoriesPref": {
+    "description": "Title for a group of category-related preferences"
+  },
+  "showScheduleOnlyPrefTitle": "Show schedule-specific lectures",
+  "@showScheduleOnlyPrefTitle": {
+    "description": "Title for schedule-only lecture show preference"
+  },
+  "showScheduleOnlyPrefDesc": "Show lectures that are only shown in the schedule. These are mostly custom added lectures",
+  "@showScheduleOnlyPrefDesc": {
+    "description": "Description for schedule-only lecture show preference"
+  },
   "mensaSourcePrefTitle": "Mensa Plan Source",
   "@mensaSourcePrefTitle": {
     "description": "Title for mensa source preference"

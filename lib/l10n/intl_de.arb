@@ -320,6 +320,18 @@
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
   },
+  "categoriesPref": "Kategorien",
+  "@categoriesPref": {
+    "description": "Title for a group of category-related preferences"
+  },
+  "showScheduleOnlyPrefTitle": "Zeige Stundenplan-exklusive Sitzungen",
+  "@showScheduleOnlyPrefTitle": {
+    "description": "Title for schedule-only lecture show preference"
+  },
+  "showScheduleOnlyPrefDesc": "Sitzungen, welche nur im Stundenplan stehen, anzeigen. Meistens sind dies selbst hinzugefügte Sitzungen",
+  "@showScheduleOnlyPrefDesc": {
+    "description": "Description for schedule-only lecture show preference"
+  },
   "mensaSourcePrefTitle": "Mensaplan-Quelle",
   "@mensaSourcePrefTitle": {
     "description": "Title for mensa source preference"

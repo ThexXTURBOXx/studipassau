@@ -28,7 +28,7 @@ class _SchedulePagePageState extends State<SchedulePage>
     visibleRange: VisibleDateRange.days(
       7,
       minDate: DateTimeTimetable.today(),
-      maxDate: DateTimeTimetable.today() + 15.days,
+      maxDate: DateTimeTimetable.today() + eventDaysInFuture.days,
     ),
   );
 
@@ -36,7 +36,7 @@ class _SchedulePagePageState extends State<SchedulePage>
     visibleRange: VisibleDateRange.days(
       1,
       minDate: DateTimeTimetable.today(),
-      maxDate: DateTimeTimetable.today() + 15.days,
+      maxDate: DateTimeTimetable.today() + eventDaysInFuture.days,
     ),
   );
 

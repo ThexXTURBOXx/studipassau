@@ -49,6 +49,8 @@ const _colorTable = [
   Color(0xffcb9e8f),
 ];
 
+const int eventDaysInFuture = 15;
+
 const regularLectureCategories = ['Sitzung', 'Vorlesung'];
 
 const stwnoEncoding = latin1;
