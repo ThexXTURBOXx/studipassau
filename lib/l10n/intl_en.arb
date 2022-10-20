@@ -56,9 +56,21 @@
   "@drawerTools": {
     "description": "The subtitle for the tools section in the drawer menu"
   },
+  "authError": "Authentication error. Please try restarting the app.",
+  "@authError": {
+    "description": "Text shown on authentication Errors."
+  },
+  "fetchError": "Unknown error. Please try again soon or send me a message (in the menu under \"About this app\").",
+  "@fetchError": {
+    "description": "Text shown on general fetch Errors."
+  },
   "httpError": "Sorry, the server is down at the moment. Please try again soon.",
   "@httpError": {
     "description": "Text shown on HTTP Errors."
+  },
+  "miscError": "Unregistered error. Please try again soon or send me a message (in the menu under \"About this app\").",
+  "@miscError": {
+    "description": "Text shown on unknown Errors."
   },
   "mensaError": "Sorry, the server is down at the moment. Please try again soon or change the mensa plan source in the settings.",
   "@mensaError": {

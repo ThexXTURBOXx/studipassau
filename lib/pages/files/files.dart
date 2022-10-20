@@ -6,6 +6,7 @@ import 'package:studipassau/bloc/cubits/files_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
@@ -49,13 +50,7 @@ class _FilesPagePageState extends State<FilesPage>
         drawer: const StudiPassauDrawer(DrawerItem.files),
         body: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, stateL) => BlocConsumer<FilesCubit, FilesState>(
-            listener: (context, state) {
-              if (state.errored) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(S.of(context).httpError)),
-                );
-              }
-            },
+            listener: showErrorMessage,
             builder: (context, state) => WillPopScope(
               onWillPop: () async {
                 final ret = state.goUp();

@@ -51,10 +51,10 @@ class _MensaPagePageState extends State<MensaPage>
         drawer: const StudiPassauDrawer(DrawerItem.mensaPlan),
         body: BlocConsumer<MensaCubit, MensaState>(
           listener: (context, state) {
-            if (state.errored) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text(S.of(context).httpError)),
-              );
+            if (state.state == StudiPassauState.fetchError) {
+              showSnackBar(context, S.of(context).mensaError);
+            } else {
+              showErrorMessage(context, state);
             }
           },
           builder: (context, state) => RefreshIndicator(

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
+import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timezone/timezone.dart';
@@ -161,6 +163,29 @@ String get appVersion => '${packageInfo.version} '
 
 extension BoolParsing on String {
   bool parseBool() => toLowerCase() == 'true';
+}
+
+void showErrorMessage(BuildContext context, BlocState state) {
+  if (state.errored) {
+    switch (state.state) {
+      case StudiPassauState.authenticationError:
+        showSnackBar(context, S.of(context).authError);
+        break;
+      case StudiPassauState.fetchError:
+        showSnackBar(context, S.of(context).fetchError);
+        break;
+      case StudiPassauState.httpError:
+        showSnackBar(context, S.of(context).httpError);
+        break;
+      default:
+        showSnackBar(context, S.of(context).miscError);
+        break;
+    }
+  }
+}
+
+void showSnackBar(BuildContext context, String msg) {
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
 }
 
 /// Debug method as described in https://github.com/flutter/flutter/issues/22665

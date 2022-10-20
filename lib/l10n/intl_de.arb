@@ -56,9 +56,21 @@
   "@drawerTools": {
     "description": "The subtitle for the tools section in the drawer menu"
   },
+  "authError": "Authentifikation fehlgeschlagen. Versuche bitte, die App neu zu starten.",
+  "@authError": {
+    "description": "Text shown on authentication Errors."
+  },
+  "fetchError": "Unbekannter Fehler. Probiere es demnächst doch noch einmal oder sende mir eine Nachricht (im Menü unter \"Über diese App\").",
+  "@fetchError": {
+    "description": "Text shown on general fetch Errors."
+  },
   "httpError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal.",
   "@httpError": {
     "description": "Text shown on HTTP Errors."
+  },
+  "miscError": "Nicht eingetragener Fehler. Probiere es demnächst doch noch einmal oder sende mir eine Nachricht (im Menü unter \"Über diese App\").",
+  "@miscError": {
+    "description": "Text shown on unknown Errors."
   },
   "mensaError": "Der Server ist gerade leider nicht erreichbar. Probiere es demnächst doch noch einmal oder ändere die Mensaplan-Quelle in den Einstellungen.",
   "@mensaError": {

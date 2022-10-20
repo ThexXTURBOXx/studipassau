@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openmensa/openmensa.dart';
@@ -52,6 +53,8 @@ class MensaCubit extends Cubit<MensaState> {
           mensaPlan: mensaPlan,
         ),
       );
+    } on SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }

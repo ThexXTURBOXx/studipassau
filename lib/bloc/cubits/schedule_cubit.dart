@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studip/studip.dart';
@@ -51,6 +52,8 @@ class ScheduleCubit extends Cubit<ScheduleState> {
       );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
+    } on SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }

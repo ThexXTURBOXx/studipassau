@@ -84,13 +84,7 @@ class _SchedulePagePageState extends State<SchedulePage>
         body: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, stateL) =>
               BlocConsumer<ScheduleCubit, ScheduleState>(
-            listener: (context, state) {
-              if (state.errored) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(S.of(context).httpError)),
-                );
-              }
-            },
+            listener: showErrorMessage,
             builder: (context, stateS) => RefreshIndicator(
               key: _refreshIndicatorKey,
               onRefresh: () => refresh(context, stateL.userId),

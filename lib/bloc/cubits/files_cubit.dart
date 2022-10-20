@@ -45,6 +45,8 @@ class FilesCubit extends Cubit<FilesState> {
       );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
+    } on io.SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }
@@ -84,6 +86,8 @@ class FilesCubit extends Cubit<FilesState> {
       );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
+    } on io.SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }
@@ -125,6 +129,8 @@ class FilesCubit extends Cubit<FilesState> {
       );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
+    } on io.SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }
