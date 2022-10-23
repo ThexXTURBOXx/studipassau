@@ -69,10 +69,11 @@ account :/
 - ✔ About Page
 - ✔ Home Screen shortcuts
 - ✔ Material 3 (Not tested thoroughly yet)
+- ✔ Files
 
 ### Planned
 
-- ❌ Files
+- ❌ Forums
 
 ## Changelog
 
