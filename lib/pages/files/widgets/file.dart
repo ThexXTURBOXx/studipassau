@@ -1,19 +1,72 @@
 import 'package:equatable/equatable.dart';
+import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
+import 'package:studipassau/generated/l10n.dart';
 
 class FileWidget extends StatelessWidget {
   final File file;
   final void Function()? onTap;
+  final bool showDownloads;
 
-  const FileWidget({super.key, required this.file, this.onTap});
+  const FileWidget({
+    super.key,
+    required this.file,
+    this.onTap,
+    this.showDownloads = false,
+  });
+
+  String formatDesc(String cat, String desc) =>
+      desc.isNotEmpty ? '\n${sprintf(cat, [file.description])}' : '';
 
   @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.insert_drive_file_outlined),
         title: Text(file.name),
+        subtitle: file.description.isNotEmpty ? Text(file.description) : null,
+        trailing: showDownloads
+            ? Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    '${file.downloads}',
+                    style: const TextStyle(color: Colors.grey),
+                  ),
+                  const Icon(Icons.download, color: Colors.grey),
+                ],
+              )
+            : null,
         onTap: onTap,
+        onLongPress: () {
+          final s = S.of(context);
+          showDialog<void>(
+            context: context,
+            builder: (context) => AlertDialog(
+              title: Text(file.name),
+              content: Text(
+                '${sprintf(s.downloads, [file.downloads])}\n'
+                '${sprintf(s.changeDate, [
+                      formatDateTime(
+                        DateTime.fromMillisecondsSinceEpoch(
+                          file.changeDate * 1000,
+                        ),
+                      )
+                    ])}\n'
+                '${sprintf(s.createDate, [
+                      formatDateTime(
+                        DateTime.fromMillisecondsSinceEpoch(
+                          file.makeDate * 1000,
+                        ),
+                      )
+                    ])}\n'
+                '${sprintf(s.fileSize, [filesize(file.size)])}'
+                '${formatDesc(s.fileDescription, file.description)}',
+              ),
+            ),
+          );
+        },
       );
 }
 

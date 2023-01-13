@@ -152,6 +152,9 @@ Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
 String formatDate(DateTime dateTime) => dateFormat.format(dateTime);
 
+String formatDateTime(DateTime dateTime) =>
+    '${dateFormat.format(dateTime)} ${hmTimeFormat.format(dateTime)}';
+
 String formatHmTime(DateTime dateTime) => hmTimeFormat.format(dateTime);
 
 String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);

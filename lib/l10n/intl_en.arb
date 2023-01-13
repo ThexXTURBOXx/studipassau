@@ -451,5 +451,25 @@
   "downloading": "Downloading...",
   "@downloading": {
     "description": "Text indicating that a file is being downloaded"
+  },
+  "downloads": "%d downloads",
+  "@downloads": {
+    "description": "Text indicating how many times a file has already been downloaded"
+  },
+  "changeDate": "Modification date: %s",
+  "@changeDate": {
+    "description": "Text indicating when a file or folder has last been modified"
+  },
+  "createDate": "Creation date: %s",
+  "@createDate": {
+    "description": "Text indicating when a file or folder has been created"
+  },
+  "fileSize": "Size: %s",
+  "@fileSize": {
+    "description": "Text indicating the size of a file"
+  },
+  "fileDescription": "Description: %s",
+  "@fileDescription": {
+    "description": "Text indicating the description of a file or folder"
   }
 }

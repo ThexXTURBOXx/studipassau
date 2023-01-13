@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:studipassau/generated/l10n.dart';
 
 class CourseWidget extends StatelessWidget {
   final Course course;
@@ -16,7 +17,18 @@ class CourseWidget extends StatelessWidget {
     return ListTile(
       leading: const Icon(Icons.folder_open),
       title: Text(title),
+      subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
       onTap: onTap,
+      onLongPress: () => showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${course.subtitle}\n'
+            '${course.description}',
+          ),
+        ),
+      ),
     );
   }
 }

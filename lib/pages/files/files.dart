@@ -27,6 +27,8 @@ class _FilesPagePageState extends State<FilesPage>
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
+  bool isWideScreen = false;
+
   @override
   void initState() {
     super.initState();
@@ -51,73 +53,78 @@ class _FilesPagePageState extends State<FilesPage>
         body: BlocBuilder<LoginCubit, LoginState>(
           builder: (context, stateL) => BlocConsumer<FilesCubit, FilesState>(
             listener: showErrorMessage,
-            builder: (context, state) => WillPopScope(
-              onWillPop: () async {
-                final ret = state.goUp();
-                if (!ret) {
-                  await refresh(
+            builder: (context, state) {
+              isWideScreen =
+                  MediaQuery.of(context).size.width > wideScreenWidth;
+              return WillPopScope(
+                onWillPop: () async {
+                  final ret = state.goUp();
+                  if (!ret) {
+                    await refresh(
+                      context,
+                      stateL: stateL,
+                      state: state,
+                    );
+                  }
+                  return ret;
+                },
+                child: RefreshIndicator(
+                  key: _refreshIndicatorKey,
+                  onRefresh: () => refresh(
                     context,
                     stateL: stateL,
                     state: state,
-                  );
-                }
-                return ret;
-              },
-              child: RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: () => refresh(
-                  context,
-                  stateL: stateL,
-                  state: state,
+                  ),
+                  child: state.folderState == FolderState.home
+                      ? ListView(
+                          children: state.courses
+                              .map(
+                                (c) => CourseWidget(
+                                  course: c,
+                                  onTap: () => loadCourse(c),
+                                ),
+                              )
+                              .toList(growable: false),
+                        )
+                      : ListView(
+                          children: <StatelessWidget>[] +
+                              state.folders
+                                  .map(
+                                    (f) => FolderWidget(
+                                      folder: f,
+                                      onTap: () => loadFolder(f),
+                                    ),
+                                  )
+                                  .toList(growable: false) +
+                              state.files
+                                  .map(
+                                    (f) => FileWidget(
+                                      file: f,
+                                      onTap: () async {
+                                        final theme = Theme.of(context);
+                                        final pd =
+                                            ProgressDialog(context: context);
+                                        pd.show(
+                                          max: 100,
+                                          msg: S.of(context).downloading,
+                                          backgroundColor:
+                                              theme.dialogBackgroundColor,
+                                        );
+                                        await downloadFile(
+                                          f,
+                                          onProgress: (perc) =>
+                                              pd.update(value: perc.round()),
+                                          onDone: OpenFilex.open,
+                                        );
+                                      },
+                                      showDownloads: isWideScreen,
+                                    ),
+                                  )
+                                  .toList(growable: false),
+                        ),
                 ),
-                child: state.folderState == FolderState.home
-                    ? ListView(
-                        children: state.courses
-                            .map(
-                              (c) => CourseWidget(
-                                course: c,
-                                onTap: () => loadCourse(c),
-                              ),
-                            )
-                            .toList(growable: false),
-                      )
-                    : ListView(
-                        children: <StatelessWidget>[] +
-                            state.folders
-                                .map(
-                                  (f) => FolderWidget(
-                                    folder: f,
-                                    onTap: () => loadFolder(f),
-                                  ),
-                                )
-                                .toList(growable: false) +
-                            state.files
-                                .map(
-                                  (f) => FileWidget(
-                                    file: f,
-                                    onTap: () async {
-                                      final theme = Theme.of(context);
-                                      final pd =
-                                          ProgressDialog(context: context);
-                                      pd.show(
-                                        max: 100,
-                                        msg: S.of(context).downloading,
-                                        backgroundColor:
-                                            theme.dialogBackgroundColor,
-                                      );
-                                      await downloadFile(
-                                        f,
-                                        onProgress: (perc) =>
-                                            pd.update(value: perc.round()),
-                                        onDone: OpenFilex.open,
-                                      );
-                                    },
-                                  ),
-                                )
-                                .toList(growable: false),
-                      ),
-              ),
-            ),
+              );
+            },
           ),
         ),
       );
