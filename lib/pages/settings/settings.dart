@@ -38,7 +38,7 @@ const mensaTypePrefPupil = 'pupil';
 
 const Map<String, dynamic> defaults = {
   uiThemePref: uiThemePrefDefault,
-  material3Pref: false,
+  material3Pref: true,
   startRoutePref: routeSchedule,
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
