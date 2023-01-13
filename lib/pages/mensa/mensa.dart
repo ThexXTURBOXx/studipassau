@@ -26,6 +26,8 @@ class _MensaPagePageState extends State<MensaPage>
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
+  bool isWideScreen = false;
+
   @override
   void initState() {
     super.initState();
@@ -57,11 +59,14 @@ class _MensaPagePageState extends State<MensaPage>
               showErrorMessage(context, state);
             }
           },
-          builder: (context, state) => RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: () => refresh(context),
-            child: CustomScrollView(slivers: slivers(state.menu)),
-          ),
+          builder: (context, state) {
+            isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
+            return RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: () => refresh(context),
+              child: CustomScrollView(slivers: slivers(state.menu)),
+            );
+          },
         ),
       );
 
@@ -93,6 +98,14 @@ class _MensaPagePageState extends State<MensaPage>
                               getFoodColor(m.category.trim().characters.first),
                           child: Text(m.category.trim().characters.first),
                         ),
+                        trailing: isWideScreen
+                            ? Text(
+                                getQuickPrice(m),
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                ),
+                              )
+                            : null,
                         title: Text(
                           m.name.trim(),
                         ),
@@ -105,6 +118,21 @@ class _MensaPagePageState extends State<MensaPage>
           ),
         )
         .toList(growable: false);
+  }
+
+  String getQuickPrice(Meal m) {
+    switch (getPref(mensaTypePref)) {
+      case mensaTypePrefStudent:
+        return formatEuroPrice(m.studentPrice ?? 0);
+      case mensaTypePrefEmployee:
+        return formatEuroPrice(m.employeePrice ?? 0);
+      case mensaTypePrefGuest:
+        return formatEuroPrice(m.othersPrice ?? 0);
+      case mensaTypePrefPupil:
+        return formatEuroPrice(m.pupilPrice ?? 0);
+      default:
+        return '';
+    }
   }
 
   void onTap(Meal m) {

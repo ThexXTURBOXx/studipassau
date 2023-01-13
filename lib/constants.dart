@@ -138,6 +138,8 @@ final weekdayFormat = DateFormat('EEEE');
 final euroFormat = NumberFormat.simpleCurrency(name: 'EUR');
 final stwnoPriceFormat = NumberFormat('##0.00', 'de');
 
+const wideScreenWidth = 600;
+
 late PackageInfo packageInfo;
 
 late BasePrefService prefService;

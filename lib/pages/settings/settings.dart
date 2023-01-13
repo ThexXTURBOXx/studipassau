@@ -18,6 +18,7 @@ const notFoundColorPref = 'not_found_color';
 const showScheduleOnlyPref = 'show_schedule_only';
 const mensaAutoSyncPref = 'mensa_auto_sync';
 const mensaSourcePref = 'mensa_source';
+const mensaTypePref = 'mensa_type';
 const soupColorPref = 'soup_color';
 const mainDishColorPref = 'main_dish_color';
 const garnishColorPref = 'garnish_color';
@@ -30,6 +31,11 @@ const uiThemePrefDark = 'dark';
 const mensaSourcePrefStwno = 'STWNO';
 const mensaSourcePrefOM = 'OpenMensa';
 
+const mensaTypePrefStudent = 'student';
+const mensaTypePrefEmployee = 'employee';
+const mensaTypePrefGuest = 'guest';
+const mensaTypePrefPupil = 'pupil';
+
 const Map<String, dynamic> defaults = {
   uiThemePref: uiThemePrefDefault,
   material3Pref: false,
@@ -40,6 +46,7 @@ const Map<String, dynamic> defaults = {
   showScheduleOnlyPref: true,
   mensaAutoSyncPref: true,
   mensaSourcePref: mensaSourcePrefStwno,
+  mensaTypePref: mensaTypePrefStudent,
   soupColorPref: 0xff7bad41,
   mainDishColorPref: 0xffea3838,
   garnishColorPref: 0xff61dfed,
@@ -178,6 +185,36 @@ class SettingsPage extends StatelessWidget {
                           title: Text(S.of(context).mensaSourcePrefOM),
                           value: mensaSourcePrefOM,
                           pref: mensaSourcePref,
+                        ),
+                      ],
+                    ),
+                  ),
+                  PrefTitle(title: Text(S.of(context).miscPref)),
+                  PrefDialogButton(
+                    title: Text(S.of(context).mensaTypePrefTitle),
+                    subtitle: Text(S.of(context).mensaTypePrefDesc),
+                    dialog: PrefDialog(
+                      title: Text(S.of(context).mensaTypePrefTitle),
+                      children: [
+                        PrefRadio(
+                          title: Text(S.of(context).mensaTypePrefStudent),
+                          value: mensaTypePrefStudent,
+                          pref: mensaTypePref,
+                        ),
+                        PrefRadio(
+                          title: Text(S.of(context).mensaTypePrefEmployee),
+                          value: mensaTypePrefEmployee,
+                          pref: mensaTypePref,
+                        ),
+                        PrefRadio(
+                          title: Text(S.of(context).mensaTypePrefGuest),
+                          value: mensaTypePrefGuest,
+                          pref: mensaTypePref,
+                        ),
+                        PrefRadio(
+                          title: Text(S.of(context).mensaTypePrefPupil),
+                          value: mensaTypePrefPupil,
+                          pref: mensaTypePref,
                         ),
                       ],
                     ),

@@ -360,6 +360,34 @@
   "@mensaSourcePrefOM": {
     "description": "Title for OpenMensa mensa source"
   },
+  "miscPref": "Miscellaneous",
+  "@miscPref": {
+    "description": "Title for a group of miscellaneous"
+  },
+  "mensaTypePrefTitle": "Status",
+  "@mensaTypePrefTitle": {
+    "description": "Title for mensa status preference"
+  },
+  "mensaTypePrefDesc": "Changes the price in the quick view (only on wide screens)",
+  "@mensaTypePrefDesc": {
+    "description": "Description for mensa status preference"
+  },
+  "mensaTypePrefStudent": "Student",
+  "@mensaTypePrefStudent": {
+    "description": "Title for student mensa status"
+  },
+  "mensaTypePrefEmployee": "Employee",
+  "@mensaTypePrefEmployee": {
+    "description": "Title for employee mensa status"
+  },
+  "mensaTypePrefGuest": "Guest",
+  "@mensaTypePrefGuest": {
+    "description": "Title for guest mensa status"
+  },
+  "mensaTypePrefPupil": "Pupil",
+  "@mensaTypePrefPupil": {
+    "description": "Title for pupil mensa status"
+  },
   "mensaPrefCatLongTitle": "Mensa plan settings",
   "@mensaPrefCatLongTitle": {
     "description": "Mensa plan preferences category long title"
