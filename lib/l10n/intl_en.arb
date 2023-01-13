@@ -80,13 +80,9 @@
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
   },
-  "loginAuthenticating": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
+  "loginAuthenticating": "A browser should be open right now. If not, please install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
   "@loginAuthenticating": {
     "description": "The text shown when a browser window should be open in the login process"
-  },
-  "loginNotAuth": "If no browser is shown, install a compatible one (recommended: Google Chrome) or, if one is already installed, report this please as a bug!",
-  "@loginNotAuth": {
-    "description": "The text shown after login when a browser window should be open"
   },
   "loginNotAuthenticated": "Starting authentication...",
   "@loginNotAuthenticated": {
