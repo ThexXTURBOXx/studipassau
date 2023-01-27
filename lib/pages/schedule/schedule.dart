@@ -103,7 +103,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                       WeekdayIndicatorStyle(
                     context,
                     date,
-                    textStyle: context.theme.textTheme.caption!.copyWith(
+                    textStyle: context.theme.textTheme.bodySmall!.copyWith(
                       color: getColor(
                         context,
                         date,
@@ -200,11 +200,11 @@ class _SchedulePagePageState extends State<SchedulePage>
         backgroundColor: event.backgroundColor,
         titleTextStyle: Theme.of(context)
             .textTheme
-            .headline6!
+            .titleLarge!
             .copyWith(color: event.backgroundColor.highEmphasisOnColor),
         contentTextStyle: Theme.of(context)
             .textTheme
-            .subtitle1!
+            .titleMedium!
             .copyWith(color: event.backgroundColor.highEmphasisOnColor),
       ),
     );

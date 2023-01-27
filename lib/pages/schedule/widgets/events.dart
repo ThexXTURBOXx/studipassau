@@ -111,7 +111,7 @@ class StudiPassauEventWidget extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.fromLTRB(4, 2, 4, 0),
               child: DefaultTextStyle(
-                style: context.textTheme.bodyText2!.copyWith(
+                style: context.textTheme.bodyMedium!.copyWith(
                   fontSize: 12,
                   color: event.backgroundColor.highEmphasisOnColor,
                 ),
@@ -177,7 +177,7 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(4, 2, 0, 2),
                 child: Text(
                   event.title,
-                  style: context.theme.textTheme.bodyText2!.copyWith(
+                  style: context.theme.textTheme.bodyMedium!.copyWith(
                     fontSize: 14,
                     color: event.backgroundColor.highEmphasisOnColor,
                   ),

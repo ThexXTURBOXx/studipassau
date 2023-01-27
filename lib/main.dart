@@ -98,45 +98,50 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   }
 
   @override
-  Widget build(BuildContext context) => StudiPassauBlocProvider(
-        child: MaterialApp(
-          onGenerateTitle: (context) => S.of(context).applicationTitle,
-          debugShowCheckedModeBanner: false,
-          themeMode: getThemeMode(),
-          theme: ThemeData(
-            brightness: Brightness.light,
-            primarySwatch: Colors.blue,
-            useMaterial3: getPref(material3Pref),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          darkTheme: ThemeData(
-            brightness: Brightness.dark,
-            primarySwatch: Colors.blue,
-            useMaterial3: getPref(material3Pref),
-            visualDensity: VisualDensity.adaptivePlatformDensity,
-          ),
-          navigatorKey: Catcher.navigatorKey,
-          localizationsDelegates: const [
-            S.delegate,
-            TimetableLocalizationsDelegate(
-              setIntlLocale: false,
-              fallbackLocale: Locale('en', 'US'),
-            ),
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-          ],
-          supportedLocales: S.delegate.supportedLocales,
-          initialRoute: routeLogin,
-          routes: {
-            routeLogin: (ctx) => const LoginPage(),
-            routeSchedule: (ctx) => const SchedulePage(),
-            routeMensa: (ctx) => const MensaPage(),
-            routeFiles: (ctx) => const FilesPage(),
-            routeSettings: (ctx) => const SettingsPage(),
-          },
+  Widget build(BuildContext context) {
+    final bool m3 = getPref(material3Pref);
+    return StudiPassauBlocProvider(
+      child: MaterialApp(
+        onGenerateTitle: (context) => S.of(context).applicationTitle,
+        debugShowCheckedModeBanner: false,
+        themeMode: getThemeMode(),
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primarySwatch: m3 ? null : Colors.blue,
+          colorSchemeSeed: m3 ? Colors.blue : null,
+          useMaterial3: m3,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-      );
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          primarySwatch: m3 ? null : Colors.blue,
+          colorSchemeSeed: m3 ? Colors.blue : null,
+          useMaterial3: getPref(material3Pref),
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
+        navigatorKey: Catcher.navigatorKey,
+        localizationsDelegates: const [
+          S.delegate,
+          TimetableLocalizationsDelegate(
+            setIntlLocale: false,
+            fallbackLocale: Locale('en', 'US'),
+          ),
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: S.delegate.supportedLocales,
+        initialRoute: routeLogin,
+        routes: {
+          routeLogin: (ctx) => const LoginPage(),
+          routeSchedule: (ctx) => const SchedulePage(),
+          routeMensa: (ctx) => const MensaPage(),
+          routeFiles: (ctx) => const FilesPage(),
+          routeSettings: (ctx) => const SettingsPage(),
+        },
+      ),
+    );
+  }
 
   ThemeMode getThemeMode() {
     switch (getPref(uiThemePref)) {

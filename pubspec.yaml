@@ -9,11 +9,11 @@ publish_to: 'none'
 version: 1.0.1+101
 
 environment:
-  sdk: '>=2.18.6 <3.0.0'
-  flutter: '>=3.3.10'
+  sdk: '>=2.19.0 <3.0.0'
+  flutter: '>=3.7.0'
 
 dependencies:
-  black_hole_flutter: ^0.3.2
+  black_hole_flutter: ^1.0.1
   cached_network_image: ^3.1.0
   catcher: ^0.7.0
   collection: ^1.15.0
@@ -65,7 +65,7 @@ flutter_icons:
   android: true
   image_path: 'assets/icons/studipassau_icon.png'
   ios: true
-  min_sdk_android: 18
+  min_sdk_android: 21
 
 flutter:
   assets:
