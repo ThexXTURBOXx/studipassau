@@ -56,8 +56,16 @@ dependencies:
 dev_dependencies:
   build_runner: ^2.1.11
   envied_generator: ^0.3.0
-  flutter_launcher_icons: ^0.11.0
+  flutter_launcher_icons: # ^0.11.0
+    git:
+      url: https://github.com/carloshpb/flutter_launcher_icons.git
+      ref: upgrade-image-4.0.10
   flutter_lints: ^2.0.1
+
+dependency_overrides:
+  catcher:
+    git:
+      url: https://github.com/ThexXTURBOXx/catcher.git
 
 flutter_icons:
   adaptive_icon_background: '#2898f1'

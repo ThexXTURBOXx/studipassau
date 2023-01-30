@@ -148,11 +148,12 @@ packages:
   catcher:
     dependency: "direct main"
     description:
-      name: catcher
-      sha256: c65c2fe4045196a0e0b02afc1b423c562fab4db8fa37428eae23d135a6106de2
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
+      path: "."
+      ref: HEAD
+      resolved-ref: "5ccf7c0d8bbb07329667cff561aede1a9bee4934"
+      url: "https://github.com/ThexXTURBOXx/catcher.git"
+    source: git
+    version: "0.7.1"
   characters:
     dependency: transitive
     description:
@@ -261,18 +262,18 @@ packages:
     dependency: transitive
     description:
       name: device_info_plus
-      sha256: "8d99246809e63d93e4e68fade79495d81f445ad735bde2b129b19c0adddcaf1a"
+      sha256: "7ff671ed0a6356fa8f2e1ae7d3558d3fb7b6a41e24455e4f8df75b811fb8e4ab"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "8.0.0"
   device_info_plus_platform_interface:
     dependency: transitive
     description:
       name: device_info_plus_platform_interface
-      sha256: "8b8b65e598b84fdb82c26cf9b3f05a6c4978636e99b0c070bae5905a24728199"
+      sha256: d3b01d5868b50ae571cd1dc6e502fc94d956b665756180f7b16ead09e836fd64
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "7.0.0"
   dio:
     dependency: transitive
     description:
@@ -377,11 +378,12 @@ packages:
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
-      name: flutter_launcher_icons
-      sha256: ce0e501cfc258907842238e4ca605e74b7fd1cdf04b3b43e86c43f3e40a1592c
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.11.0"
+      path: "."
+      ref: "upgrade-image-4.0.10"
+      resolved-ref: d11c8ec1ac0956d9cb0bfb7adb351ff78f6c9b89
+      url: "https://github.com/carloshpb/flutter_launcher_icons.git"
+    source: git
+    version: "0.11.0+1"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -415,10 +417,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_native_splash
-      sha256: "6777a3abb974021a39b5fdd2d46a03ca390e03903b6351f21d10e7ecc969f12d"
+      sha256: "048bd1f1dc0e5ea25899f702815934d9a9e916fe23451c320e7dd94d5e3ad933"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.16"
+    version: "2.2.17"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -564,10 +566,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "8e9d133755c3e84c73288363e6343157c383a0c6c56fc51afcc5d4d7180306d6"
+      sha256: "1f9ecf99b08c92dedb699de1d28549f5d79b4423b48cf3f95d6968156db5dd67"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.0"
+    version: "4.0.12"
   intl:
     dependency: "direct main"
     description:
@@ -620,10 +622,10 @@ packages:
     dependency: transitive
     description:
       name: mailer
-      sha256: "2db255771a1b33aea3ea75181a8fe306d5fad4b40414b1a24088b1f3415a3031"
+      sha256: dae17f4c6a360de380fe6c3981f806fa8df69c94533bd6f347075e4f14417bf2
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.0"
+    version: "6.0.0"
   matcher:
     dependency: transitive
     description:
