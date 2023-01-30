@@ -1,6 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
@@ -193,6 +196,18 @@ void showErrorMessage(BuildContext context, BlocState state) {
 
 void showSnackBar(BuildContext context, String msg) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+}
+
+Future<void> installRootCertificates() async {
+  if (Platform.isAndroid) {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    // API 26 is Oreo (8.0), older versions have outdated root certificates!
+    if (androidInfo.version.sdkInt < 26) {
+      final data = await PlatformAssetBundle().load('assets/ca/root-certs.pem');
+      SecurityContext.defaultContext
+          .setTrustedCertificatesBytes(data.buffer.asUint8List());
+    }
+  }
 }
 
 /// Debug method as described in https://github.com/flutter/flutter/issues/22665

@@ -36,6 +36,8 @@ Future main() async {
 
   packageInfo = await PackageInfo.fromPlatform();
 
+  await installRootCertificates();
+
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
   final releaseOptions = CatcherOptions(DialogReportMode(), [
     SentryHandler(

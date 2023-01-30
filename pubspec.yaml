@@ -18,6 +18,7 @@ dependencies:
   catcher: ^0.7.0
   collection: ^1.15.0
   dart_date: ^1.1.0
+  device_info_plus: ^8.0.0
   envied: ^0.3.0
   equatable: ^2.0.3
   filesize: ^2.0.1
@@ -79,6 +80,8 @@ flutter:
   assets:
     # We also want the icons in some places
     - assets/icons/
+    # Trusted root certificates (workaround for old Android)
+    - assets/ca/
   fonts:
     - family: StudiPassauIcons
       fonts:
