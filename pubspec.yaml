@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.0.2+102
 
 environment:
-  sdk: '>=2.19.6 <3.0.0'
-  flutter: '>=3.7.11'
+  sdk: '>=3.0.0-417.1.beta <4.0.0'
+  flutter: '>=3.10.0-1.1.pre'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -35,7 +35,7 @@ dependencies:
   flutter_sticky_header: ^0.6.1
   flutter_web_auth_2: ^2.0.0
   http: ^0.13.4
-  intl: ^0.17.0
+  intl: ^0.18.0
   latlong2: ^0.8.1
   open_filex: ^4.1.1
   openmensa: ^2.1.0
@@ -63,9 +63,20 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 dependency_overrides:
+  black_hole_flutter:
+    git:
+      url: https://github.com/ThexXTURBOXx/black_hole_flutter.git
   catcher:
     git:
       url: https://github.com/ThexXTURBOXx/catcher.git
+  dart_date:
+    git:
+      url: https://github.com/ThexXTURBOXx/dart_date.git
+      ref: patch-1
+  timetable:
+    git:
+      url: https://github.com/TatsuUkraine/timetable.git
+      ref: intl-version-resolve
 
 flutter_icons:
   adaptive_icon_background: '#2898f1'
