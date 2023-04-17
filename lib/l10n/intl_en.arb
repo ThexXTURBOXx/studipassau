@@ -28,6 +28,10 @@
   "@drawerMensaPlan": {
     "description": "The title of the Mensa plan item in the drawer menu"
   },
+  "drawerRoomFinder": "Room finder",
+  "@drawerRoomFinder": {
+    "description": "The title of the Room finder item in the drawer menu"
+  },
   "drawerMisc": "Miscellaneous",
   "@drawerMisc": {
     "description": "The subtitle for the Miscellaneous section in the drawer menu"
@@ -111,6 +115,10 @@
   "filesTitle": "StudiPassau Files",
   "@filesTitle": {
     "description": "The title for the files screen"
+  },
+  "roomFinderTitle": "StudiPassau Room finder",
+  "@roomFinderTitle": {
+    "description": "The title for the room finder screen"
   },
   "aboutTitle": "About StudiPassau",
   "@aboutTitle": {
