@@ -52,6 +52,10 @@
   "@drawerShare": {
     "description": "The title of the Share item in the drawer menu"
   },
+  "drawerCampusPortal": "Campus Portal",
+  "@drawerCampusPortal": {
+    "description": "The title of the Campus Portal item in the drawer menu"
+  },
   "drawerTelegramBot": "Telegram Bot",
   "@drawerTelegramBot": {
     "description": "The title of the Telegram bot item in the drawer menu"

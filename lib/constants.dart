@@ -15,6 +15,7 @@ import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
 const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
+const campusPortalUrl = 'https://campus.uni-passau.de/';
 const openMensaMensaId = 196;
 const stwnoMensaId = 'UNI-P';
 const stwnoMensaUrl = 'https://www.stwno.de/infomax/daten-extern/csv/';

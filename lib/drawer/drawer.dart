@@ -98,6 +98,7 @@ enum DrawerItem {
   about(icon: Icons.info_outline),
   divider2(isDivider: true),
   tools(isSubTitle: true),
+  campusPortal(icon: Icons.dataset_outlined), // TODO: Better icon?
   telegramBot(icon: StudiPassauIcons.telegramPlane);
 
   final IconData? icon;
@@ -136,6 +137,8 @@ enum DrawerItem {
         return S.of(context).drawerAbout;
       case DrawerItem.tools:
         return S.of(context).drawerTools;
+      case DrawerItem.campusPortal:
+        return S.of(context).drawerCampusPortal;
       case DrawerItem.telegramBot:
         return S.of(context).drawerTelegramBot;
       default:
@@ -164,6 +167,11 @@ enum DrawerItem {
             S.of(context).shareBody,
             subject: S.of(context).shareSubject,
           );
+        };
+      case DrawerItem.campusPortal:
+        return (context) async {
+          closeDrawer(context);
+          await launchUrl(campusPortalUrl);
         };
       case DrawerItem.telegramBot:
         return (context) async {
