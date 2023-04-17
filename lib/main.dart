@@ -40,12 +40,19 @@ Future main() async {
   await installRootCertificates();
 
   final debugOptions = CatcherOptions.getDefaultDebugOptions();
-  final releaseOptions = CatcherOptions(DialogReportMode(), [
-    SentryHandler(
-      SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn),
-    ),
-    ConsoleHandler(),
-  ]);
+  final releaseOptions = CatcherOptions(
+    DialogReportMode(),
+    [
+      SentryHandler(
+        SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn),
+      ),
+      ConsoleHandler(),
+    ],
+    localizationOptions: [
+      LocalizationOptions.buildDefaultEnglishOptions(),
+      LocalizationOptions.buildDefaultGermanOptions(),
+    ],
+  );
 
   SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
 
