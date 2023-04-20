@@ -24,7 +24,7 @@ List<Building> get buildings => [
         name: '',
         abbrev: 'NK',
         address: '',
-        labelPlacement: PolygonLabelPlacement.centroid,
+        labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.570434, 13.455940),
           LatLng(48.570559, 13.456262),
@@ -36,6 +36,14 @@ List<Building> get buildings => [
           LatLng(48.569870, 13.456268),
           LatLng(48.569909, 13.456246),
           LatLng(48.569909, 13.455973),
+        ],
+        holePoints: [
+          [
+            LatLng(48.570405, 13.456193),
+            LatLng(48.570274, 13.456322),
+            LatLng(48.570228, 13.456134),
+            LatLng(48.570377, 13.456129),
+          ]
         ],
         color: Colors.black.withAlpha(128),
         isFilled: true,
@@ -438,7 +446,7 @@ List<Building> get buildings => [
         name: '',
         abbrev: 'HK14b',
         address: '',
-        labelPlacement: PolygonLabelPlacement.centroid,
+        labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.572820, 13.454531),
           LatLng(48.572738, 13.455062),
@@ -488,6 +496,13 @@ List<Building> get buildings => [
           LatLng(48.572465, 13.455522),
           LatLng(48.572380, 13.455490),
           LatLng(48.572444, 13.455066),
+        ],
+        holePoints: [
+          [
+            LatLng(48.572576, 13.455229),
+            LatLng(48.572473, 13.455374),
+            LatLng(48.572495, 13.455208),
+          ]
         ],
         color: Colors.red.withAlpha(128),
         isFilled: true,
@@ -720,11 +735,13 @@ class Building {
     required this.abbrev,
     required this.address,
     required final List<LatLng> points,
+    final List<List<LatLng>>? holePoints,
     final Color color = const Color(0xFF00FF00),
     final bool isFilled = false,
     final PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
-  }) : polygon = Polygon(
+  })  : polygon = Polygon(
           points: points,
+          holePointsList: holePoints,
           color: color,
           isFilled: isFilled,
           label: abbrev,
