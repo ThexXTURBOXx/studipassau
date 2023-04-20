@@ -98,7 +98,7 @@ enum DrawerItem {
   about(icon: Icons.info_outline),
   divider2(isDivider: true),
   tools(isSubTitle: true),
-  campusPortal(icon: Icons.dataset_outlined), // TODO: Better icon?
+  campusPortal(icon: Icons.dataset_outlined), // TODO(Nico): Better icon?
   telegramBot(icon: StudiPassauIcons.telegramPlane);
 
   final IconData? icon;
