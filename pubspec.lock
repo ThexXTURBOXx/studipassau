@@ -159,7 +159,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: e65b3ff9020a7be537d7a29da94985a108bd11bb
+      resolved-ref: f94d5b92b267ddcb53ab0a73846123bd88674715
       url: "https://github.com/ThexXTURBOXx/catcher.git"
     source: git
     version: "0.8.0"
@@ -389,10 +389,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_launcher_icons
-      sha256: "8546a9b9510e1a260b8d55fb2d07096e8a8552c6a2c2bf529100344894b2b41a"
+      sha256: "526faf84284b86a4cb36d20a5e45147747b7563d921373d4ee0559c54fcdbcea"
       url: "https://pub.dev"
     source: hosted
-    version: "0.13.0"
+    version: "0.13.1"
   flutter_layout_grid:
     dependency: transitive
     description:
@@ -425,11 +425,12 @@ packages:
   flutter_map:
     dependency: "direct main"
     description:
-      name: flutter_map
-      sha256: "50a6af52a6382c5d771dd11355d2f29993cbecdafe13b0407042c4b310ffd952"
-      url: "https://pub.dev"
-    source: hosted
-    version: "4.0.0-dev.1"
+      path: "."
+      ref: optimise-tile-loading
+      resolved-ref: "8d0b44779ae604dca60edf866a4908bcbc447d71"
+      url: "https://github.com/rorystephenson/flutter_map.git"
+    source: git
+    version: "4.0.0"
   flutter_native_splash:
     dependency: "direct main"
     description:
@@ -655,10 +656,10 @@ packages:
     dependency: transitive
     description:
       name: mailer
-      sha256: dae17f4c6a360de380fe6c3981f806fa8df69c94533bd6f347075e4f14417bf2
+      sha256: "57f6dd1496699999a7bfd0aa6be0645384f477f4823e16d4321c40a434346382"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "6.0.1"
   matcher:
     dependency: transitive
     description:
@@ -1116,18 +1117,18 @@ packages:
     dependency: transitive
     description:
       name: sqflite
-      sha256: "500d6fec583d2c021f2d25a056d96654f910662c64f836cd2063167b8f1fa758"
+      sha256: e7dfb6482d5d02b661d0b2399efa72b98909e5aa7b8336e1fb37e226264ade00
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.6"
+    version: "2.2.7"
   sqflite_common:
     dependency: transitive
     description:
       name: sqflite_common
-      sha256: "963dad8c4aa2f814ce7d2d5b1da2f36f31bd1a439d8f27e3dc189bb9d26bc684"
+      sha256: "220831bf0bd5333ff2445eee35ec131553b804e6b5d47a4a37ca6f5eb66e282c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.3"
+    version: "2.4.4"
   stack_trace:
     dependency: transitive
     description:
@@ -1188,10 +1189,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: "33b31b6beb98100bf9add464a36a8dd03eb10c7a8cf15aeec535e9b054aaf04b"
+      sha256: "5fcbd27688af6082f5abd611af56ee575342c30e87541d0245f7ff99faa02c60"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
@@ -1204,10 +1205,10 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: eb6ac1540b26de412b3403a163d919ba86f6a973fe6cc50ae3541b80092fdcfb
+      sha256: daadc9baabec998b062c9091525aa95786508b1c48e9c30f1f891b8bf6ff2e64
       url: "https://pub.dev"
     source: hosted
-    version: "0.5.1"
+    version: "0.5.2"
   time:
     dependency: transitive
     description:
@@ -1237,10 +1238,10 @@ packages:
     dependency: "direct main"
     description:
       name: timezone
-      sha256: "24c8fcdd49a805d95777a39064862133ff816ebfffe0ceff110fb5960e557964"
+      sha256: "1cfd8ddc2d1cfd836bc93e67b9be88c3adaeca6f40a00ca999104c30693cdca0"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.1"
+    version: "0.9.2"
   timing:
     dependency: transitive
     description:

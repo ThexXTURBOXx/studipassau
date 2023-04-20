@@ -73,12 +73,16 @@ dependency_overrides:
     git:
       url: https://github.com/ThexXTURBOXx/dart_date.git
       ref: patch-1
+  flutter_map:
+    git:
+      url: https://github.com/rorystephenson/flutter_map.git
+      ref: optimise-tile-loading
   timetable:
     git:
       url: https://github.com/TatsuUkraine/timetable.git
       ref: intl-version-resolve
 
-flutter_icons:
+flutter_launcher_icons:
   adaptive_icon_background: '#2898f1'
   adaptive_icon_foreground: 'assets/icons/studipassau_icon.png'
   android: true
