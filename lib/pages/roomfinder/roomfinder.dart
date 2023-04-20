@@ -37,7 +37,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
               for (final building in buildings) {
                 if (LatLngBounds.fromPoints(building.polygon.points)
                     .contains(point)) {
-                  debugPrint(building.name);
+                  showDialog<void>(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: Text(building.name),
+                      content: Text(building.abbrev),
+                    ),
+                  );
                   break;
                 }
               }
