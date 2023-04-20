@@ -58,6 +58,9 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
               polygonCulling: false,
               polygons: polygons,
             ),
+            MarkerLayer(
+              markers: markers,
+            )
           ],
         ),
       );

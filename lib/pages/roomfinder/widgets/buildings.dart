@@ -705,11 +705,15 @@ List<Building> get buildings => [
 List<Polygon> get polygons =>
     buildings.map((e) => e.polygon).toList(growable: false);
 
+List<Marker> get markers =>
+    buildings.map((e) => e.marker).toList(growable: false);
+
 class Building {
   final String name;
   final String abbrev;
   final String address;
   final Polygon polygon;
+  final Marker marker;
 
   Building({
     required this.name,
@@ -725,5 +729,16 @@ class Building {
           isFilled: isFilled,
           label: abbrev,
           labelPlacement: labelPlacement,
+        ),
+        marker = Marker(
+          point: LatLngBounds.fromPoints(points).center,
+          builder: (context) => const Center(
+            child: Icon(
+              Icons.circle,
+              color: Colors.red,
+              size: 20,
+            ),
+          ),
+          rotate: true,
         );
 }
