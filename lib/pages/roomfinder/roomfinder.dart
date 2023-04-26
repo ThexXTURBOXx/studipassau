@@ -33,7 +33,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
           onSearch: (value) {},
           searchHintText: S.of(context).searchBuildings,
           asyncSuggestions: (searchValue) async => searchBuildings(searchValue),
-          suggestionToString: (value) => value.name,
+          suggestionToString: (value) => '${value.name} (${value.abbrev})',
           onSuggestionTap: (value) =>
               controller.move(value.polygon.boundingBox.center, 18),
         ),
