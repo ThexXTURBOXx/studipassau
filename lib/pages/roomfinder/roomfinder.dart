@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
@@ -43,7 +44,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                     builder: (context) => AlertDialog(
                       title: Text('${building.name} (${building.abbrev})'),
                       content: Text(
-                        '${formatEntry('Address', building.address)}',
+                        formatEntry(S.of(context).address, building.address),
                       ),
                     ),
                   );
@@ -79,5 +80,5 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
       );
 
   String formatEntry(String category, String? detail) =>
-      detail != null ? '$category: $detail\n' : '';
+      detail != null ? '${sprintf(category, [detail])}\n' : '';
 }

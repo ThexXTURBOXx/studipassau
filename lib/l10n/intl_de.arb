@@ -483,5 +483,9 @@
   "fileDescription": "Beschreibung: %s",
   "@fileDescription": {
     "description": "Text indicating the description of a file or folder"
+  },
+  "address": "Adresse: %s",
+  "@address": {
+    "description": "Text indicating the address of a building"
   }
 }
