@@ -6,11 +6,11 @@ issue_tracker: https://github.com/ThexXTURBOXx/studipassau/issues
 
 publish_to: 'none'
 
-version: 1.0.2+102
+version: 1.1.0+110
 
 environment:
-  sdk: '>=3.0.0-417.1.beta <4.0.0'
-  flutter: '>=3.10.0-1.1.pre'
+  sdk: '>=3.0.0-417.3.beta <4.0.0'
+  flutter: '>=3.10.0-1.4.pre'
 
 dependencies:
   black_hole_flutter: ^1.0.1
