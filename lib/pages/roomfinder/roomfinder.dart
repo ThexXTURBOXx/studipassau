@@ -6,6 +6,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
+import 'package:studipassau/util/geo.dart';
 import 'package:studipassau/util/navigation.dart';
 
 const routeRoomFinder = '/roomfinder';
@@ -36,8 +37,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
             maxZoom: 18,
             onTap: (pos, point) {
               for (final building in buildings) {
-                if (LatLngBounds.fromPoints(building.polygon.points)
-                    .contains(point)) {
+                if (isPointInPolygon(point, building.polygon)) {
                   showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
