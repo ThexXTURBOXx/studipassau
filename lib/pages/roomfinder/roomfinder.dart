@@ -32,7 +32,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
         body: FlutterMap(
           mapController: controller,
           options: MapOptions(
-            center: LatLng(48.567952, 13.457591),
+            center: LatLng(48.567369, 13.451903),
             zoom: 15.5,
             maxZoom: 18,
             onTap: (pos, point) {
