@@ -19,6 +19,7 @@ dependencies:
   collection: ^1.15.0
   dart_date: ^1.1.0
   device_info_plus: ^8.0.0
+  easy_search_bar: ^2.5.0
   envied: ^0.3.0
   equatable: ^2.0.3
   filesize: ^2.0.1
@@ -49,6 +50,7 @@ dependencies:
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
   sprintf: ^7.0.0
+  string_similarity: ^2.0.0
   studip: ^2.1.0
   supercharged: ^2.1.1
   timetable: ^1.0.0-alpha.8

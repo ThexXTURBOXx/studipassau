@@ -487,5 +487,9 @@
   "address": "Adresse: %s",
   "@address": {
     "description": "Text indicating the address of a building"
+  },
+  "searchBuildings": "Suche Gebäude...",
+  "@searchBuildings": {
+    "description": "Text hint for searching buildings"
   }
 }

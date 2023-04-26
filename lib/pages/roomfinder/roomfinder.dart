@@ -1,3 +1,4 @@
+import 'package:easy_search_bar/easy_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -9,6 +10,7 @@ import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
 import 'package:studipassau/util/geo.dart';
 import 'package:studipassau/util/navigation.dart';
+import 'package:supercharged/supercharged.dart';
 
 const routeRoomFinder = '/roomfinder';
 
@@ -26,8 +28,23 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
   //print(ModalRoute.of(context)!.settings.arguments);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
+        appBar: EasySearchBar(
           title: Text(S.of(context).roomFinderTitle),
+          onSearch: (value) {},
+          searchHintText: S.of(context).searchBuildings,
+          asyncSuggestions: (searchValue) async => searchBuildings(searchValue)
+              .map((e) => e.name)
+              .toList(growable: false),
+          onSuggestionTap: (value) {
+            final building =
+                buildings.filter((e) => value == e.name).firstOrNull;
+            if (building != null) {
+              controller.move(
+                building.polygon.boundingBox.center,
+                18,
+              );
+            }
+          },
         ),
         drawer: const StudiPassauDrawer(DrawerItem.roomFinder),
         body: FlutterMap(

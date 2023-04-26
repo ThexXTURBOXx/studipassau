@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:string_similarity/string_similarity.dart';
+import 'package:supercharged/supercharged.dart';
 
 /*
 Useful for constructing Polygons:
@@ -731,6 +734,48 @@ List<Polygon> get polygons =>
 
 List<Marker> get markers =>
     buildings.map((e) => e.marker).toList(growable: false);
+
+List<Building> searchBuildings(String search) {
+  final searchLC = search.toLowerCase();
+  return buildings
+      .filter(
+        (e) =>
+            e.name.toLowerCase().contains(searchLC) ||
+            e.abbrev.toLowerCase().contains(searchLC) ||
+            e.address.toLowerCase().contains(searchLC),
+      )
+      .sorted((e1, e2) => searchCompare(searchLC, e1, e2))
+      .toList(growable: false);
+}
+
+int searchCompare(String search, Building e1, Building e2) {
+  var ret = _compareProps(search, e1.abbrev, e2.abbrev);
+  if (ret != 0) {
+    return ret;
+  }
+  ret = _compareProps(search, e1.name, e2.name);
+  if (ret != 0) {
+    return ret;
+  }
+  return _compareProps(search, e1.address, e2.address);
+}
+
+int _compareProps(String search, String e1, String e2) {
+  final e1LC = e1.toLowerCase();
+  final e2LC = e2.toLowerCase();
+  final e1Match = e1LC.contains(search);
+  final e2Match = e2LC.contains(search);
+  if (e1Match && e2Match) {
+    final e1Sim = search.similarityTo(e1LC);
+    final e2Sim = search.similarityTo(e2LC);
+    return (e1Sim - e2Sim).sign.toInt();
+  } else if (e1Match && !e2Match) {
+    return -1;
+  } else if (!e1Match && e2Match) {
+    return 1;
+  }
+  return 0;
+}
 
 class Building {
   final String name;
