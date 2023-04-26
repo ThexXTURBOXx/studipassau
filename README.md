@@ -68,12 +68,14 @@ account :/
 - ✔ [Translations](https://app.localizely.com/projects/32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations?sort=key_asc)
 - ✔ About Page
 - ✔ Home Screen shortcuts
-- ✔ Material 3 (Not tested thoroughly yet)
+- ✔ Material 3
 - ✔ Files
+- ✔ Room finder
 
 ### Planned
 
 - ❌ Forums
+- ❌ Notifications
 
 ## Changelog
 
