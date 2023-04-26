@@ -569,9 +569,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: 'Gebäude Dr.-Hans-Kapfinger-Str. 16',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 16',
         abbrev: 'HK16',
-        address: 'Dr.-Hans-Kapfinger-Str. 16, 94032 Passau',
+        address: 'Dr.-Hans-Kapfinger-Straße 16, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572408, 13.454477),
