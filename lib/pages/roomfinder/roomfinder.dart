@@ -6,6 +6,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
+import 'package:studipassau/util/navigation.dart';
 
 const routeRoomFinder = '/roomfinder';
 
@@ -50,9 +51,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
             },
           ),
           nonRotatedChildren: [
-            AttributionWidget.defaultWidget(
-              source: 'OpenStreetMap contributors',
-              onSourceTapped: null,
+            RichAttributionWidget(
+              attributions: [
+                TextSourceAttribution(
+                  'OpenStreetMap contributors',
+                  onTap: () => launchUrl('https://openstreetmap.org/copyright'),
+                ),
+              ],
             ),
           ],
           children: [
