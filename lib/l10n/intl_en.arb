@@ -491,5 +491,9 @@
   "searchBuildings": "Search buildings...",
   "@searchBuildings": {
     "description": "Text hint for searching buildings"
+  },
+  "openInMaps": "Open in Google Maps",
+  "@openInMaps": {
+    "description": "Button text for opening in Google Maps"
   }
 }

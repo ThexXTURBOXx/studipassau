@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
@@ -60,8 +61,31 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text('${building.name} (${building.abbrev})'),
-                      content: Text(
-                        formatEntry(S.of(context).address, building.address),
+                      content: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            formatEntry(
+                              S.of(context).address,
+                              building.address,
+                            ),
+                          ),
+                          ElevatedButton.icon(
+                            icon: const Icon(Icons.map),
+                            label: Text(
+                              S.of(context).openInMaps,
+                            ),
+                            style: ButtonStyle(
+                              minimumSize: MaterialStateProperty.all(
+                                const Size.fromHeight(35),
+                              ),
+                            ),
+                            onPressed: () async {
+                              await MapsLauncher.launchQuery(building.address);
+                            },
+                          ),
+                        ],
                       ),
                     ),
                   );
