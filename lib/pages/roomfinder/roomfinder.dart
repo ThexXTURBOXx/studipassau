@@ -41,8 +41,10 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                   showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
-                      title: Text(building.name),
-                      content: Text(building.abbrev),
+                      title: Text('${building.name} (${building.abbrev})'),
+                      content: Text(
+                        '${formatEntry('Address', building.address)}',
+                      ),
                     ),
                   );
                   break;
@@ -75,4 +77,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
           ],
         ),
       );
+
+  String formatEntry(String category, String? detail) =>
+      detail != null ? '$category: $detail\n' : '';
 }

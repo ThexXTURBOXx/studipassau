@@ -21,9 +21,9 @@ https://ampel.zim.uni-passau.de/v2
 // TODO(Nico): Make final field when finished (right now allows hot reload)
 List<Building> get buildings => [
       Building(
-        name: '',
+        name: 'Nikolakloster',
         abbrev: 'NK',
-        address: '',
+        address: 'Innstraße 40, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.570434, 13.455940),
@@ -45,13 +45,14 @@ List<Building> get buildings => [
             LatLng(48.570377, 13.456129),
           ]
         ],
+        markerPos: LatLng(48.570117, 13.456325),
         color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Innsteg-Aula',
         abbrev: 'ISA',
-        address: '',
+        address: 'Innstraße 23, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.570005, 13.457416),
@@ -59,13 +60,13 @@ List<Building> get buildings => [
           LatLng(48.570175, 13.458301),
           LatLng(48.569884, 13.457523),
         ],
-        color: Colors.black.withAlpha(128),
+        color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Philosophicum',
         abbrev: 'PHIL',
-        address: '',
+        address: 'Innstraße 25, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.569627, 13.455806),
@@ -77,13 +78,13 @@ List<Building> get buildings => [
           LatLng(48.569464, 13.455747),
           LatLng(48.569510, 13.455801),
         ],
-        color: Colors.black.withAlpha(128),
+        color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Wirtschaftswissenschaften',
         abbrev: 'WIWI',
-        address: '',
+        address: 'Innstraße 27, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.569230, 13.454933),
@@ -107,13 +108,13 @@ List<Building> get buildings => [
           LatLng(48.568963, 13.454458),
           LatLng(48.568981, 13.454442),
         ],
-        color: Colors.black.withAlpha(128),
+        color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Zentralbibliothek',
         abbrev: 'ZB',
-        address: '',
+        address: 'Innstraße 29, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.568509, 13.453440),
@@ -139,9 +140,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Mensa',
         abbrev: 'M',
-        address: '',
+        address: 'Innstraße 29, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567848, 13.453349),
@@ -159,13 +160,14 @@ List<Building> get buildings => [
           LatLng(48.567650, 13.452898),
           LatLng(48.567596, 13.452973),
         ],
-        color: Colors.black.withAlpha(128),
+        markerPos: LatLng(48.567470, 13.452929),
+        color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Zentrum für Medien und Kommunikation',
         abbrev: 'ZMK',
-        address: '',
+        address: 'Innstraße 33a, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567120, 13.452162),
@@ -177,9 +179,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Audimax',
         abbrev: 'AM',
-        address: '',
+        address: 'Innstraße 31, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567871, 13.452242),
@@ -199,13 +201,13 @@ List<Building> get buildings => [
           LatLng(48.567818, 13.452076),
           LatLng(48.567846, 13.452076),
         ],
-        color: Colors.black.withAlpha(128),
+        color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Fakultät für Informatik und Mathematik',
         abbrev: 'FIM',
-        address: '',
+        address: 'Innstraße 33, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567185, 13.451642),
@@ -227,13 +229,14 @@ List<Building> get buildings => [
           LatLng(48.566805, 13.451330),
           LatLng(48.566936, 13.451245),
         ],
+        markerPos: LatLng(48.566912, 13.451594),
         color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Zentrum für Informationstechnologie und Medienmanagement',
         abbrev: 'ZIM',
-        address: '',
+        address: 'Innstraße 33, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.566805, 13.451330),
@@ -241,13 +244,13 @@ List<Building> get buildings => [
           LatLng(48.566883, 13.450950),
           LatLng(48.566748, 13.450976),
         ],
-        color: Colors.green.withAlpha(128),
+        color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Kunsterziehung',
         abbrev: 'KE',
-        address: '',
+        address: 'Innstraße 35, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567555, 13.450938),
@@ -257,13 +260,14 @@ List<Building> get buildings => [
           LatLng(48.567519, 13.451191),
           LatLng(48.567470, 13.450992),
         ],
-        color: Colors.blue.withAlpha(128),
+        markerPos: LatLng(48.567573, 13.451177),
+        color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Juridicum',
         abbrev: 'JUR',
-        address: '',
+        address: 'Innstraße 39, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567237, 13.450332),
@@ -279,13 +283,14 @@ List<Building> get buildings => [
           LatLng(48.567175, 13.450120),
           LatLng(48.567143, 13.450163),
         ],
+        markerPos: LatLng(48.567039, 13.450238),
         color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Verwaltung',
         abbrev: 'VW',
-        address: '',
+        address: 'Innstraße 41, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.566760, 13.449718),
@@ -302,9 +307,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'IT-Zentrum/International House',
         abbrev: 'ITZ/IH',
-        address: '',
+        address: 'Innstraße 43, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.566092, 13.450673),
@@ -329,13 +334,14 @@ List<Building> get buildings => [
           LatLng(48.566010, 13.450657),
           LatLng(48.566067, 13.450614),
         ],
+        markerPos: LatLng(48.565659, 13.450200),
         color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Sportzentrum',
         abbrev: 'SP',
-        address: '',
+        address: 'Innstraße 45, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.566781, 13.449131),
@@ -353,13 +359,14 @@ List<Building> get buildings => [
           LatLng(48.565865, 13.447988),
           LatLng(48.565936, 13.447870),
         ],
+        markerPos: LatLng(48.566309, 13.448831),
         color: Colors.red.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Rudolf-Guby-Straße 3',
         abbrev: 'RG3',
-        address: '',
+        address: 'Rudolf-Guby-Straße 3, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.567514, 13.448448),
@@ -371,13 +378,13 @@ List<Building> get buildings => [
           LatLng(48.567123, 13.448255),
           LatLng(48.567244, 13.448062),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Krabbelstube',
         abbrev: 'KS',
-        address: '',
+        address: 'Innstraße 47, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.565395, 13.447319),
@@ -389,13 +396,13 @@ List<Building> get buildings => [
           LatLng(48.564994, 13.447217),
           LatLng(48.565129, 13.446986),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Innstraße 71',
         abbrev: 'IS71',
-        address: '',
+        address: 'Innstraße 71, 94036 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.562347, 13.444038),
@@ -415,9 +422,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Leopoldstraße 4',
         abbrev: 'LS',
-        address: '',
+        address: 'Leopoldstraße 4, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572601, 13.450795),
@@ -425,13 +432,13 @@ List<Building> get buildings => [
           LatLng(48.572512, 13.451170),
           LatLng(48.572516, 13.450789),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14',
         abbrev: 'HK14',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 14, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572603, 13.454767),
@@ -443,9 +450,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14b',
         abbrev: 'HK14b',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 14b, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.572820, 13.454531),
@@ -455,13 +462,14 @@ List<Building> get buildings => [
           LatLng(48.572536, 13.454595),
           LatLng(48.572557, 13.454440),
         ],
-        color: Colors.red.withAlpha(128),
+        markerPos: LatLng(48.572731, 13.454757),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14c',
         abbrev: 'HK14c',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 14c, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572858, 13.454248),
@@ -469,13 +477,13 @@ List<Building> get buildings => [
           LatLng(48.572432, 13.454270),
           LatLng(48.572454, 13.454118),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14d',
         abbrev: 'HK14d',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 14d, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572454, 13.454118),
@@ -487,9 +495,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 12',
         abbrev: 'HK12',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 12, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572703, 13.455173),
@@ -504,13 +512,13 @@ List<Building> get buildings => [
             LatLng(48.572495, 13.455208),
           ]
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Nikolastraße 12',
         abbrev: 'N12',
-        address: '',
+        address: 'Nikolastraße 12, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572256, 13.459827),
@@ -522,9 +530,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Institutsgebäude',
         abbrev: 'IG',
-        address: '',
+        address: 'Gottfried-Schäffer-Straße 20, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.572519, 13.461292),
@@ -536,13 +544,13 @@ List<Building> get buildings => [
           LatLng(48.572380, 13.461271),
           LatLng(48.572448, 13.461191),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Department für Katholische Theologie',
         abbrev: 'KT',
-        address: '',
+        address: 'Michaeligasse 13, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.574101, 13.470351),
@@ -558,9 +566,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Str. 16',
         abbrev: 'HK16',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Str. 16, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.572408, 13.454477),
@@ -568,13 +576,13 @@ List<Building> get buildings => [
           LatLng(48.572181, 13.454831),
           LatLng(48.572234, 13.454424),
         ],
-        color: Colors.red.withAlpha(128),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Betriebstechnik',
         abbrev: 'BT',
-        address: '',
+        address: 'Innstraße 37, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.567361, 13.450440),
@@ -584,14 +592,15 @@ List<Building> get buildings => [
           LatLng(48.567265, 13.450740),
           LatLng(48.567215, 13.450660),
         ],
-        color: Colors.red.withAlpha(128),
+        markerPos: LatLng(48.567370, 13.450576),
+        color: Colors.black.withAlpha(128),
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Bahnhofstraße 10',
         // TODO(Nico): BH10? According to https://www.uni-passau.de/fileadmin/dokumente/Lageplan/Stadtplan_Universitaet.pdf
         abbrev: 'BA10',
-        address: '',
+        address: 'Bahnhofstraße 10, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.574436, 13.455271),
@@ -603,9 +612,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 28',
         abbrev: 'HK28',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 28, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           LatLng(48.571982, 13.454272),
@@ -622,9 +631,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Dr.-Hans-Kapfinger-Straße 30',
         abbrev: 'HK30',
-        address: '',
+        address: 'Dr.-Hans-Kapfinger-Straße 30, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.571893, 13.454267),
@@ -654,9 +663,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Ruder- und Kanuanlage Sportzentrum',
         abbrev: 'RUKA',
-        address: '',
+        address: 'Innstraße 125, 94036 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.548466, 13.436836),
@@ -668,9 +677,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Gebäude Karlsbader Straße',
         abbrev: 'KB',
-        address: '',
+        address: 'Karlsbader Straße 11a, 94036 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.559856, 13.420208),
@@ -682,9 +691,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Franz Stockbauer Weg 3',
         abbrev: 'FSW3',
-        address: '',
+        address: 'Franz Stockbauer Weg 3, 94032 Passau',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.571031, 13.455681),
@@ -698,9 +707,9 @@ List<Building> get buildings => [
         isFilled: true,
       ),
       Building(
-        name: '',
+        name: 'Schloss Neuburg',
         abbrev: 'SN',
-        address: '',
+        address: 'Am Burgberg 8, 94127 Neuburg am Inn',
         labelPlacement: PolygonLabelPlacement.polylabel,
         points: [
           LatLng(48.506523, 13.450616),
@@ -736,6 +745,7 @@ class Building {
     required this.address,
     required final List<LatLng> points,
     final List<List<LatLng>>? holePoints,
+    final LatLng? markerPos,
     final Color color = const Color(0xFF00FF00),
     final bool isFilled = false,
     final PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
@@ -748,7 +758,7 @@ class Building {
           labelPlacement: labelPlacement,
         ),
         marker = Marker(
-          point: LatLngBounds.fromPoints(points).center,
+          point: markerPos ?? LatLngBounds.fromPoints(points).center,
           builder: (context) => const Center(
             child: Icon(
               Icons.circle,
