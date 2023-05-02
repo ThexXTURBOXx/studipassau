@@ -55,13 +55,13 @@ class StwnoDataProvider {
     return Meal(
       // Unused anyway
       id: 0,
-      name: parseName(entries[3]),
-      notes: parseFoodProperties(entries[4]) +
-          parseAllergensAndAdditives(entries[3]),
-      category: parseCategory(entries[2]),
-      studentPrice: parsePrice(entries[6]),
-      employeePrice: parsePrice(entries[7]),
-      othersPrice: parsePrice(entries[8]),
+      name: parseName(entries[3].trim()),
+      notes: parseFoodProperties(entries[4].trim()) +
+          parseAllergensAndAdditives(entries[3].trim()),
+      category: parseCategory(entries[2].trim()),
+      studentPrice: parsePrice(entries[6].trim()),
+      employeePrice: parsePrice(entries[7].trim()),
+      othersPrice: parsePrice(entries[8].trim()),
       // Not given in "API"
       pupilPrice: null,
     );
