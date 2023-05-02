@@ -78,7 +78,7 @@ dependency_overrides:
       ref: patch-1
   easy_search_bar:
     git:
-      url: https://github.com/ThexXTURBOXx/flutter_easy_search_bar.git
+      url: https://github.com/4inka/flutter_easy_search_bar.git
   timetable:
     git:
       url: https://github.com/TatsuUkraine/timetable.git
