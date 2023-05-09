@@ -727,6 +727,20 @@ List<Building> get buildings => [
         color: Colors.blue.withAlpha(128),
         isFilled: true,
       ),
+      Building(
+        name: 'Ludwigstraße 8',
+        abbrev: 'LU8',
+        address: 'Ludwigstraße 8, 94032 Passau',
+        labelPlacement: PolygonLabelPlacement.polylabel,
+        points: [
+          LatLng(48.574641, 13.459200),
+          LatLng(48.574804, 13.459522),
+          LatLng(48.574644, 13.459715),
+          LatLng(48.574471, 13.459377),
+        ],
+        color: Colors.blue.withAlpha(128),
+        isFilled: true,
+      ),
     ];
 
 List<Polygon> get polygons =>
