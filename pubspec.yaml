@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.1.1+111
 
 environment:
-  sdk: '>=3.0.0-417.3.beta <4.0.0'
-  flutter: '>=3.10.0-1.4.pre'
+  sdk: '>=3.0.3 <4.0.0'
+  flutter: '>=3.10.4'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -18,7 +18,7 @@ dependencies:
   catcher: ^0.7.0
   collection: ^1.15.0
   dart_date: ^1.1.0
-  device_info_plus: ^8.0.0
+  device_info_plus: ^9.0.0
   easy_search_bar: ^2.5.0
   envied: ^0.3.0
   equatable: ^2.0.3
@@ -30,24 +30,24 @@ dependencies:
   flutter_colorpicker: ^1.0.3
   flutter_localizations:
     sdk: flutter
-  flutter_map: ^4.0.0-dev.2
+  flutter_map: ^5.0.0
   flutter_native_splash: ^2.0.1+1
   flutter_secure_storage: ^8.0.0
   flutter_sticky_header: ^0.6.1
   flutter_web_auth_2: ^2.0.0
-  http: ^0.13.4
+  http: ^1.0.0
   intl: ^0.18.0
-  latlong2: ^0.8.1
+  latlong2: ^0.9.0
   maps_launcher: ^2.2.0
   open_filex: ^4.1.1
   openmensa: ^2.1.0
-  package_info_plus: ^3.0.0
+  package_info_plus: ^4.0.0
   path_provider: ^2.0.11
   pref: ^2.5.0
   quick_actions: ^1.0.0
   sentry: ^7.2.0
   sentry_flutter: ^7.2.0
-  share_plus: ^6.0.0
+  share_plus: ^7.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
   sprintf: ^7.0.0
@@ -66,23 +66,20 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 dependency_overrides:
-  black_hole_flutter:
-    git:
-      url: https://github.com/ThexXTURBOXx/black_hole_flutter.git
   catcher:
     git:
       url: https://github.com/ThexXTURBOXx/catcher.git
-  dart_date:
-    git:
-      url: https://github.com/ThexXTURBOXx/dart_date.git
-      ref: patch-1
   easy_search_bar:
     git:
       url: https://github.com/4inka/flutter_easy_search_bar.git
-  timetable:
+  flutter_cache_manager:
     git:
-      url: https://github.com/TatsuUkraine/timetable.git
-      ref: intl-version-resolve
+      url: https://github.com/Carapacik/flutter_cache_manager.git
+      path: flutter_cache_manager/
+      ref: develop
+  oauth1:
+    git:
+      url: https://github.com/ThexXTURBOXx/dart-oauth1.git
 
 flutter_launcher_icons:
   adaptive_icon_background: '#2898f1'

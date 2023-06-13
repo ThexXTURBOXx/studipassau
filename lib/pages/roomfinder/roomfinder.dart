@@ -23,7 +23,7 @@ class RoomFinderPage extends StatefulWidget {
 
 class _RoomFinderPagePageState extends State<RoomFinderPage>
     with TickerProviderStateMixin {
-  MapController controller = MapControllerImpl();
+  MapController controller = MapController();
 
   //print(ModalRoute.of(context)!.settings.arguments);
   @override
@@ -41,7 +41,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
         body: FlutterMap(
           mapController: controller,
           options: MapOptions(
-            center: LatLng(48.567369, 13.451903),
+            center: const LatLng(48.567369, 13.451903),
             zoom: 15.5,
             maxZoom: 18,
             onTap: (pos, point) {
