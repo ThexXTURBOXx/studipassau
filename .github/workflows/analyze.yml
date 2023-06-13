@@ -15,7 +15,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: 'beta'
+          channel: 'stable'
 
       - name: Create .env file
         run: echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
