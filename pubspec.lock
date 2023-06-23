@@ -381,10 +381,10 @@ packages:
     description:
       path: flutter_cache_manager
       ref: develop
-      resolved-ref: dd0821ee0ff297f578783102373bed64d05bf178
+      resolved-ref: "8f5e260049bfd5b08b2d8496dc5d3bb0e43b643f"
       url: "https://github.com/Carapacik/flutter_cache_manager.git"
     source: git
-    version: "3.4.0"
+    version: "3.3.1"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -984,18 +984,18 @@ packages:
     dependency: "direct main"
     description:
       name: sentry
-      sha256: "0316390446c6497664379b3d72d1bc1b6e4c5385cf6c1f6a02c5ab5a3ce179ce"
+      sha256: "8f4f1d3ef3ca1801aa3138392bbf0851b39eff703008111765b265f76c8f0190"
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "7.8.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: cca6f3bcfa00d327d85424a42e4cc3b3abe25e6a2d68c4ff64b0e2a606684666
+      sha256: bbc1048558cf8ae65c1e27b1249357298cfca50e5843ad0367387f5c873b8e42
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.0"
+    version: "7.8.0"
   share_plus:
     dependency: "direct main"
     description:
@@ -1149,10 +1149,10 @@ packages:
     dependency: transitive
     description:
       name: stream_channel
-      sha256: "83615bee9045c1d322bbbd1ba209b7a749c2cbcdcb3fdd1df8eb488b3279c1c8"
+      sha256: ba2aa5d8cc609d96bbb2899c28934f9e1af5cddbd60a827822ea467161eb54e7
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   stream_transform:
     dependency: transitive
     description:
@@ -1309,10 +1309,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_android
-      sha256: eed4e6a1164aa9794409325c3b707ff424d4d1c2a785e7db67f8bbda00e36e51
+      sha256: "15f5acbf0dce90146a0f5a2c4a002b1814a6303c4c5c075aa2623b2d16156f03"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.35"
+    version: "6.0.36"
   url_launcher_ios:
     dependency: transitive
     description:
@@ -1341,10 +1341,10 @@ packages:
     dependency: transitive
     description:
       name: url_launcher_platform_interface
-      sha256: "6c9ca697a5ae218ce56cece69d46128169a58aa8653c1b01d26fcd4aad8c4370"
+      sha256: bfdfa402f1f3298637d71ca8ecfe840b4696698213d5346e9d12d4ab647ee2ea
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   url_launcher_web:
     dependency: transitive
     description:
@@ -1405,10 +1405,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "7dacfda1edcca378031db9905ad7d7bd56b29fd1a90b0908b71a52a12c41e36b"
+      sha256: "1414f27dd781737e51afa9711f2ac2ace6ab4498ee98e20863fa5505aa00c58c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.3"
+    version: "5.0.4"
   win32_registry:
     dependency: transitive
     description:
