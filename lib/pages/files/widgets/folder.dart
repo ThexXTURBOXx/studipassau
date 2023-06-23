@@ -11,13 +11,17 @@ class FolderWidget extends StatelessWidget {
 
   const FolderWidget({super.key, required this.folder, this.onTap});
 
+  String get sortKey => title;
+
+  String get title => folder.name;
+
   String formatDesc(String cat, String desc) =>
       desc.isNotEmpty ? '\n${sprintf(cat, [folder.description])}' : '';
 
   @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.folder_open),
-        title: Text(folder.name),
+        title: Text(title),
         subtitle:
             folder.description.isNotEmpty ? Text(folder.description) : null,
         onTap: onTap,
@@ -26,7 +30,7 @@ class FolderWidget extends StatelessWidget {
           showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(folder.name),
+              title: Text(title),
               content: Text(
                 '${sprintf(s.changeDate, [
                       formatDateTime(

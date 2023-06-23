@@ -8,28 +8,29 @@ class CourseWidget extends StatelessWidget {
 
   const CourseWidget({super.key, required this.course, this.onTap});
 
+  String get sortKey => course.title.trim();
+
+  String get title => course.number.isEmpty || course.number == 'null'
+      ? course.title.trim()
+      : '${course.number.trim()} ${course.title.trim()}';
+
   @override
-  Widget build(BuildContext context) {
-    final title = course.number.isEmpty || course.number == 'null'
-        ? course.title.trim()
-        : '${course.number.trim()} ${course.title.trim()}';
-    return ListTile(
-      leading: const Icon(Icons.folder_open),
-      title: Text(title),
-      subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
-      onTap: onTap,
-      onLongPress: () => showDialog<void>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(title),
-          content: Text(
-            '${course.subtitle}\n'
-            '${course.description}',
+  Widget build(BuildContext context) => ListTile(
+        leading: const Icon(Icons.folder_open),
+        title: Text(title),
+        subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
+        onTap: onTap,
+        onLongPress: () => showDialog<void>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(title),
+            content: Text(
+              '${course.subtitle}\n'
+              '${course.description}',
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 class Course extends Equatable {

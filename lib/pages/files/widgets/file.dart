@@ -18,13 +18,17 @@ class FileWidget extends StatelessWidget {
     this.showDownloads = false,
   });
 
+  String get sortKey => title;
+
+  String get title => file.name;
+
   String formatDesc(String cat, String desc) =>
       desc.isNotEmpty ? '\n${sprintf(cat, [file.description])}' : '';
 
   @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.insert_drive_file_outlined),
-        title: Text(file.name),
+        title: Text(title),
         subtitle: file.description.isNotEmpty ? Text(file.description) : null,
         trailing: showDownloads
             ? Row(
@@ -44,7 +48,7 @@ class FileWidget extends StatelessWidget {
           showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(file.name),
+              title: Text(title),
               content: Text(
                 '${sprintf(s.downloads, [file.downloads])}\n'
                 '${sprintf(s.changeDate, [

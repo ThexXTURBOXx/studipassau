@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_filex/open_filex.dart';
@@ -84,6 +85,10 @@ class _FilesPagePageState extends State<FilesPage>
                                   onTap: () => loadCourse(c),
                                 ),
                               )
+                              .sortedByCompare(
+                                (f) => f.sortKey,
+                                compareNatural,
+                              )
                               .toList(growable: false),
                         )
                       : ListView(
@@ -94,6 +99,10 @@ class _FilesPagePageState extends State<FilesPage>
                                       folder: f,
                                       onTap: () => loadFolder(f),
                                     ),
+                                  )
+                                  .sortedByCompare(
+                                    (f) => f.sortKey,
+                                    compareNatural,
                                   )
                                   .toList(growable: false) +
                               state.files
@@ -119,6 +128,10 @@ class _FilesPagePageState extends State<FilesPage>
                                       },
                                       showDownloads: isWideScreen,
                                     ),
+                                  )
+                                  .sortedByCompare(
+                                    (f) => f.sortKey,
+                                    compareNatural,
                                   )
                                   .toList(growable: false),
                         ),
