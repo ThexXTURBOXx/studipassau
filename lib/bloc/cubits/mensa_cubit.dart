@@ -31,10 +31,15 @@ class MensaCubit extends Cubit<MensaState> {
     }
   }
 
-  Future<void> fetchMensaPlan() async {
+  Future<void> fetchMensaPlan({required bool onlineSync}) async {
     if (state.mensaPlan == null) {
       emit(state.copyWith(state: StudiPassauState.loading));
       await loadMensaPlan();
+    }
+
+    if (!onlineSync) {
+      emit(state.copyWith(state: StudiPassauState.fetched));
+      return;
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));

@@ -30,10 +30,15 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     }
   }
 
-  Future<void> fetchSchedule(String userId) async {
+  Future<void> fetchSchedule(String userId, {required bool onlineSync}) async {
     if (state.schedule == null) {
       emit(state.copyWith(state: StudiPassauState.loading));
       await loadSchedule();
+    }
+
+    if (!onlineSync) {
+      emit(state.copyWith(state: StudiPassauState.fetched));
+      return;
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));

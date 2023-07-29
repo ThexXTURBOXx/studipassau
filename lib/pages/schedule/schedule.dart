@@ -49,14 +49,16 @@ class _SchedulePagePageState extends State<SchedulePage>
 
   DateTime selected = DateTimeTimetable.today();
 
+  bool onlineSync = getPref(scheduleAutoSyncPref);
+
   @override
   void initState() {
     super.initState();
-    if (getPref(scheduleAutoSyncPref)) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _refreshIndicatorKey.currentState?.show(),
-      );
-    }
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _refreshIndicatorKey.currentState?.show(),
+    );
+
     dateControllerContent.date.addListener(() {
       setState(() {
         final date = dateControllerContent.date.value;
@@ -180,7 +182,11 @@ class _SchedulePagePageState extends State<SchedulePage>
           .toList(growable: false);
 
   Future<void> refresh(BuildContext context, String userId) async {
-    await context.read<ScheduleCubit>().fetchSchedule(userId);
+    await context.read<ScheduleCubit>().fetchSchedule(
+          userId,
+          onlineSync: onlineSync,
+        );
+    onlineSync = true;
   }
 
   void onTap(BuildContext ctx, StudiPassauEvent event) {

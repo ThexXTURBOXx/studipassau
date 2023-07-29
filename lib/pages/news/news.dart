@@ -21,14 +21,15 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
+  bool onlineSync = getPref(newsAutoSyncPref);
+
   @override
   void initState() {
     super.initState();
-    if (getPref(newsAutoSyncPref)) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _refreshIndicatorKey.currentState?.show(),
-      );
-    }
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _refreshIndicatorKey.currentState?.show(),
+    );
   }
 
   @override
@@ -65,6 +66,9 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
       );
 
   Future<void> refresh(BuildContext context) async {
-    await context.read<NewsCubit>().fetchNews();
+    await context.read<NewsCubit>().fetchNews(
+          onlineSync: onlineSync,
+        );
+    onlineSync = true;
   }
 }

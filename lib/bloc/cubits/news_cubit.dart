@@ -29,10 +29,15 @@ class NewsCubit extends Cubit<NewsState> {
     }
   }
 
-  Future<void> fetchNews() async {
+  Future<void> fetchNews({required bool onlineSync}) async {
     if (state.news == null) {
       emit(state.copyWith(state: StudiPassauState.loading));
       await loadNews();
+    }
+
+    if (!onlineSync) {
+      emit(state.copyWith(state: StudiPassauState.fetched));
+      return;
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));

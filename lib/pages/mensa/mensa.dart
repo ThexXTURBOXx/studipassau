@@ -28,14 +28,15 @@ class _MensaPagePageState extends State<MensaPage>
 
   bool isWideScreen = false;
 
+  bool onlineSync = getPref(mensaAutoSyncPref);
+
   @override
   void initState() {
     super.initState();
-    if (getPref(mensaAutoSyncPref)) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => _refreshIndicatorKey.currentState?.show(),
-      );
-    }
+
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _refreshIndicatorKey.currentState?.show(),
+    );
   }
 
   @override
@@ -181,6 +182,9 @@ class _MensaPagePageState extends State<MensaPage>
   }
 
   Future<void> refresh(BuildContext context) async {
-    await context.read<MensaCubit>().fetchMensaPlan();
+    await context.read<MensaCubit>().fetchMensaPlan(
+          onlineSync: onlineSync,
+        );
+    onlineSync = true;
   }
 }
