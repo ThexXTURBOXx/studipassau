@@ -6,6 +6,7 @@ const scheduleKey = 'schedule';
 const mensaPlanKey = 'mensa_plan';
 const oAuthTokenKey = 'oauth_token';
 const oAuthSecretKey = 'oauth_secret';
+const newsKey = 'news';
 
 class StorageRepo {
   final _sharedStorageProvider = SharedStorageDataProvider();

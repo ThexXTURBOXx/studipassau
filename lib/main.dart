@@ -20,6 +20,7 @@ import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
+import 'package:studipassau/pages/news/news.dart';
 import 'package:studipassau/pages/roomfinder/roomfinder.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -148,6 +149,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
           routeMensa: (ctx) => const MensaPage(),
           routeFiles: (ctx) => const FilesPage(),
           routeRoomFinder: (ctx) => const RoomFinderPage(),
+          routeNews: (ctx) => const NewsPage(),
           routeSettings: (ctx) => const SettingsPage(),
         },
       ),

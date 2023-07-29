@@ -11,6 +11,7 @@ import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
+import 'package:studipassau/pages/news/news.dart';
 import 'package:studipassau/pages/roomfinder/roomfinder.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -89,6 +90,7 @@ enum DrawerItem {
   mensaPlan(icon: Icons.restaurant, route: routeMensa),
   files(icon: Icons.folder_open, route: routeFiles),
   roomFinder(icon: Icons.explore_outlined, route: routeRoomFinder),
+  news(icon: Icons.newspaper, route: routeNews),
   divider1(isDivider: true),
   misc(isSubTitle: true),
   browser(icon: Icons.insert_link),
@@ -123,6 +125,8 @@ enum DrawerItem {
         return S.of(context).drawerFiles;
       case DrawerItem.roomFinder:
         return S.of(context).drawerRoomFinder;
+      case DrawerItem.news:
+        return S.of(context).drawerNews;
       case DrawerItem.misc:
         return S.of(context).drawerMisc;
       case DrawerItem.browser:

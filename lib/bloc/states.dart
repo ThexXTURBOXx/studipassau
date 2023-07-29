@@ -5,6 +5,7 @@ import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
+import 'package:studipassau/pages/news/widgets/news_item.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class BlocState {
@@ -116,6 +117,17 @@ class FilesState extends BlocState {
 }
 
 enum FolderState { home, courseHome, folder }
+
+class NewsState extends BlocState {
+  final List<News>? news;
+
+  const NewsState(super.state, {this.news});
+
+  NewsState copyWith({StudiPassauState? state, List<News>? news}) =>
+      NewsState(state ?? this.state, news: news ?? this.news);
+
+  List<News> get newsOrEmpty => news ?? <News>[];
+}
 
 enum StudiPassauState {
   notAuthenticated,

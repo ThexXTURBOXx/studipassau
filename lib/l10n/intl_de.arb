@@ -32,6 +32,10 @@
   "@drawerRoomFinder": {
     "description": "The title of the Room finder item in the drawer menu"
   },
+  "drawerNews": "Neuigkeiten",
+  "@drawerNews": {
+    "description": "The title of the News item in the drawer menu"
+  },
   "drawerMisc": "Verschiedenes",
   "@drawerMisc": {
     "description": "The subtitle for the Miscellaneous section in the drawer menu"
@@ -123,6 +127,10 @@
   "roomFinderTitle": "StudiPassau Raumfinder",
   "@roomFinderTitle": {
     "description": "The title for the room finder screen"
+  },
+  "newsTitle": "StudiPassau Neuigkeiten",
+  "@newsTitle": {
+    "description": "The title for the news screen"
   },
   "aboutTitle": "Über StudiPassau",
   "@aboutTitle": {
@@ -460,6 +468,18 @@
   "@unknownDish": {
     "description": "Category name for unknown dishes in the mensa plan"
   },
+  "newsPrefCatLongTitle": "Neuigkeiten-Einstellungen",
+  "@newsPrefCatLongTitle": {
+    "description": "News preferences category long title"
+  },
+  "newsPrefCatShortTitle": "Neuigkeiten",
+  "@newsPrefCatShortTitle": {
+    "description": "News preferences category short title"
+  },
+  "newsPrefCatDesc": "Anpassung der Neuigkeiten",
+  "@newsPrefCatDesc": {
+    "description": "News preferences category description"
+  },
   "downloading": "Herunterladen...",
   "@downloading": {
     "description": "Text indicating that a file is being downloaded"
@@ -495,5 +515,9 @@
   "openInMaps": "In Google Maps öffnen",
   "@openInMaps": {
     "description": "Button text for opening in Google Maps"
+  },
+  "edited": "bearbeitet",
+  "@edited": {
+    "description": "Text indicating that something has been edited"
   }
 }

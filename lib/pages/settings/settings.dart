@@ -23,6 +23,7 @@ const soupColorPref = 'soup_color';
 const mainDishColorPref = 'main_dish_color';
 const garnishColorPref = 'garnish_color';
 const dessertColorPref = 'dessert_color';
+const newsAutoSyncPref = 'news_auto_sync';
 
 const uiThemePrefDefault = 'default';
 const uiThemePrefLight = 'light';
@@ -51,6 +52,7 @@ const Map<String, dynamic> defaults = {
   mainDishColorPref: 0xffea3838,
   garnishColorPref: 0xff61dfed,
   dessertColorPref: 0xffbaac18,
+  newsAutoSyncPref: true,
 };
 
 T getPref<T>(String key) => prefService.get(key) ?? defaults[key] as T;
@@ -239,6 +241,22 @@ class SettingsPage extends StatelessWidget {
                     title: Text(S.of(context).dessertColorPrefTitle),
                     subtitle: Text(S.of(context).dessertColorPrefDesc),
                     pref: dessertColorPref,
+                  ),
+                ],
+              ),
+            ),
+            PrefPageButton(
+              leading: const Icon(Icons.newspaper),
+              pageTitle: Text(S.of(context).newsPrefCatLongTitle),
+              title: Text(S.of(context).newsPrefCatShortTitle),
+              subtitle: Text(S.of(context).newsPrefCatDesc),
+              page: PrefPage(
+                children: [
+                  PrefTitle(title: Text(S.of(context).syncPref)),
+                  PrefSwitch(
+                    title: Text(S.of(context).autoSyncPrefTitle),
+                    subtitle: Text(S.of(context).autoSyncPrefDesc),
+                    pref: newsAutoSyncPref,
                   ),
                 ],
               ),

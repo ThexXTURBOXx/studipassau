@@ -32,6 +32,10 @@
   "@drawerRoomFinder": {
     "description": "The title of the Room finder item in the drawer menu"
   },
+  "drawerNews": "News",
+  "@drawerNews": {
+    "description": "The title of the News item in the drawer menu"
+  },
   "drawerMisc": "Miscellaneous",
   "@drawerMisc": {
     "description": "The subtitle for the Miscellaneous section in the drawer menu"
@@ -123,6 +127,10 @@
   "roomFinderTitle": "StudiPassau Room finder",
   "@roomFinderTitle": {
     "description": "The title for the room finder screen"
+  },
+  "newsTitle": "StudiPassau News",
+  "@newsTitle": {
+    "description": "The title for the news screen"
   },
   "aboutTitle": "About StudiPassau",
   "@aboutTitle": {
@@ -460,6 +468,18 @@
   "@unknownDish": {
     "description": "Category name for unknown dishes in the mensa plan"
   },
+  "newsPrefCatLongTitle": "News settings",
+  "@newsPrefCatLongTitle": {
+    "description": "News preferences category long title"
+  },
+  "newsPrefCatShortTitle": "News",
+  "@newsPrefCatShortTitle": {
+    "description": "News preferences category short title"
+  },
+  "newsPrefCatDesc": "Customization of the news section",
+  "@newsPrefCatDesc": {
+    "description": "News preferences category description"
+  },
   "downloading": "Downloading...",
   "@downloading": {
     "description": "Text indicating that a file is being downloaded"
@@ -495,5 +515,9 @@
   "openInMaps": "Open in Google Maps",
   "@openInMaps": {
     "description": "Button text for opening in Google Maps"
+  },
+  "edited": "edited",
+  "@edited": {
+    "description": "Text indicating that something has been edited"
   }
 }
