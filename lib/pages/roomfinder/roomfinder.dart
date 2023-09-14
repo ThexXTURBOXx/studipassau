@@ -105,7 +105,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
             ),
             MarkerLayer(
               markers: markers,
-            )
+            ),
           ],
         ),
       );

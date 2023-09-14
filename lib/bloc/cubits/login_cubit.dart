@@ -64,7 +64,9 @@ class LoginCubit extends Cubit<LoginState> {
         final params = await FlutterWebAuth2.authenticate(
           url: url,
           callbackUrlScheme: callbackUrlScheme,
-          preferEphemeral: true,
+          options: const FlutterWebAuth2Options(
+            intentFlags: ephemeralIntentFlags,
+          ),
         );
         final verifier = Uri.parse(params).queryParameters['oauth_verifier']!;
         await client.retrieveAccessToken(verifier);

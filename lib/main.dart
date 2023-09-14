@@ -76,7 +76,7 @@ Future main() async {
       // TODO(Nico): Localize!
       localizedTitle: 'Mensaplan',
       // TODO(Nico): icon: 'IconResource',
-    )
+    ),
   ]);
 
   Catcher(

@@ -56,14 +56,14 @@ class FileWidget extends StatelessWidget {
                         DateTime.fromMillisecondsSinceEpoch(
                           file.changeDate * 1000,
                         ),
-                      )
+                      ),
                     ])}\n'
                 '${sprintf(s.createDate, [
                       formatDateTime(
                         DateTime.fromMillisecondsSinceEpoch(
                           file.makeDate * 1000,
                         ),
-                      )
+                      ),
                     ])}\n'
                 '${sprintf(s.fileSize, [filesize(file.size)])}'
                 '${formatDesc(s.fileDescription, file.description)}',

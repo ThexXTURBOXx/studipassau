@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.1.2+112
 
 environment:
-  sdk: '>=3.0.6 <4.0.0'
-  flutter: '>=3.10.6'
+  sdk: '>=3.1.1 <4.0.0'
+  flutter: '>=3.13.3'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -32,9 +32,9 @@ dependencies:
     sdk: flutter
   flutter_map: ^5.0.0
   flutter_native_splash: ^2.0.1+1
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.0.0
   flutter_sticky_header: ^0.6.1
-  flutter_web_auth_2: ^2.0.0
+  flutter_web_auth_2: ^3.0.0-alpha.0
   flutter_widget_from_html_core: ^0.13.0-alpha.1
   fwfh_url_launcher: ^0.13.0-alpha.1
   http: ^1.0.0

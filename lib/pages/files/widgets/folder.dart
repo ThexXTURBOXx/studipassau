@@ -37,14 +37,14 @@ class FolderWidget extends StatelessWidget {
                         DateTime.fromMillisecondsSinceEpoch(
                           folder.changeDate * 1000,
                         ),
-                      )
+                      ),
                     ])}\n'
                 '${sprintf(s.createDate, [
                       formatDateTime(
                         DateTime.fromMillisecondsSinceEpoch(
                           folder.makeDate * 1000,
                         ),
-                      )
+                      ),
                     ])}'
                 '${formatDesc(s.fileDescription, folder.description)}',
               ),

@@ -57,7 +57,7 @@ class StudiPassauDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            for (DrawerItem item in DrawerItem.values)
+            for (final DrawerItem item in DrawerItem.values)
               item.isDivider
                   ? const Divider()
                   : item.isSubTitle

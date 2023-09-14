@@ -161,7 +161,7 @@ class FilesCubit extends Cubit<FilesState> {
         )) ??
         [
           await getExternalStorageDirectory() ??
-              await getApplicationDocumentsDirectory()
+              await getApplicationDocumentsDirectory(),
         ];
     final toFile = io.File('${dirs[0].path}/${file.name}');
 
