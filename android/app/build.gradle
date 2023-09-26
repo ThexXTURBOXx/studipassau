@@ -31,7 +31,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "studip_uni_passau.femtopedia.de.unipassaustudip.studipassau"
+    namespace "studip_uni_passau.femtopedia.de.unipassaustudip"
     compileSdkVersion 34 // flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 

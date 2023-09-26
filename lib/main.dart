@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:catcher/catcher.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -40,8 +40,8 @@ Future main() async {
 
   await installRootCertificates();
 
-  final debugOptions = CatcherOptions.getDefaultDebugOptions();
-  final releaseOptions = CatcherOptions(
+  final debugOptions = Catcher2Options.getDefaultDebugOptions();
+  final releaseOptions = Catcher2Options(
     DialogReportMode(),
     [
       SentryHandler(
@@ -79,7 +79,7 @@ Future main() async {
     ),
   ]);
 
-  Catcher(
+  Catcher2(
     rootWidget: PrefService(
       service: prefService,
       child: const StudiPassauApp(),
@@ -130,7 +130,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
           useMaterial3: getPref(material3Pref),
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        navigatorKey: Catcher.navigatorKey,
+        navigatorKey: Catcher2.navigatorKey,
         localizationsDelegates: const [
           S.delegate,
           TimetableLocalizationsDelegate(

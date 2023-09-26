@@ -9,13 +9,13 @@ publish_to: 'none'
 version: 1.1.2+112
 
 environment:
-  sdk: '>=3.1.1 <4.0.0'
-  flutter: '>=3.13.3'
+  sdk: '>=3.1.2 <4.0.0'
+  flutter: '>=3.13.5'
 
 dependencies:
   black_hole_flutter: ^1.0.1
   cached_network_image: ^3.1.0
-  catcher: ^0.7.0
+  catcher_2: ^1.0.0-alpha.0
   collection: ^1.15.0
   dart_date: ^1.1.0
   device_info_plus: ^9.0.0
@@ -68,9 +68,6 @@ dev_dependencies:
   flutter_lints: ^2.0.1
 
 dependency_overrides:
-  catcher:
-    git:
-      url: https://github.com/ThexXTURBOXx/catcher.git
   easy_search_bar:
     git:
       url: https://github.com/4inka/flutter_easy_search_bar.git
