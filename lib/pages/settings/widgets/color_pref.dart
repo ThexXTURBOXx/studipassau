@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pref/pref.dart';
@@ -6,8 +7,8 @@ import 'package:studipassau/pages/settings/settings.dart';
 
 class PrefColor extends StatelessWidget {
   const PrefColor({
-    super.key,
     required this.pref,
+    super.key,
     this.title,
     this.subtitle,
     this.onChange,
@@ -28,6 +29,19 @@ class PrefColor extends StatelessWidget {
   final bool? disabled;
 
   int get defaultValue => defaults[pref] as int;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('pref', pref))
+      ..add(
+        ObjectFlagProperty<ValueChanged<Color>?>.has('onChange', onChange),
+      )
+      ..add(DiagnosticsProperty<bool>('enableAlpha', enableAlpha))
+      ..add(DiagnosticsProperty<bool?>('disabled', disabled))
+      ..add(IntProperty('defaultValue', defaultValue));
+  }
 
   @override
   Widget build(BuildContext context) => PrefCustom<int>(

@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 
 class NewsWidget extends StatelessWidget {
-  final News news;
-
   const NewsWidget({
-    super.key,
     required this.news,
+    super.key,
   });
+
+  final News news;
 
   String get title => news.topic;
 
@@ -28,12 +28,22 @@ class NewsWidget extends StatelessWidget {
       DateTime.fromMillisecondsSinceEpoch(news.changeDate * 1000, isUtc: true);
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<News>('news', news))
+      ..add(StringProperty('title', title))
+      ..add(DiagnosticsProperty<DateTime>('makeDate', makeDate))
+      ..add(DiagnosticsProperty<DateTime>('changeDate', changeDate));
+  }
+
+  @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.newspaper),
         title: Text(title),
         subtitle: Text(subtitle(context)),
-        onTap: () {
-          showDialog<void>(
+        onTap: () async {
+          await showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(title),
@@ -52,18 +62,6 @@ class NewsWidget extends StatelessWidget {
 class NewsWidgetFactory extends WidgetFactory with UrlLauncherFactory {}
 
 class News extends Equatable {
-  final String newsId;
-  final String topic;
-  final String body;
-  final int date;
-  final String userId;
-  final int expire;
-  final int allowComments;
-  final int changeDate;
-  final String changeDateUid;
-  final int makeDate;
-  final String bodyHtml;
-
   const News({
     required this.newsId,
     required this.topic,
@@ -91,6 +89,18 @@ class News extends Equatable {
         makeDate: int.parse(json['mkdate'].toString()),
         bodyHtml: json['body_html'].toString(),
       );
+
+  final String newsId;
+  final String topic;
+  final String body;
+  final int date;
+  final String userId;
+  final int expire;
+  final int allowComments;
+  final int changeDate;
+  final String changeDateUid;
+  final int makeDate;
+  final String bodyHtml;
 
   Map<String, dynamic> toJson() => {
         'news_id': newsId,

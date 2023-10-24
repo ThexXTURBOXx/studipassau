@@ -17,9 +17,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  void initState() {
+  Future<void> initState() async {
     super.initState();
-    login(context);
+    await login(context);
   }
 
   @override
@@ -86,11 +86,11 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget retryButton(BuildContext context) => MaterialButton(
-        onPressed: () => login(context),
+        onPressed: () async => login(context),
         child: Text(S.of(context).loginTryAgain.toUpperCase()),
       );
 
-  void login(BuildContext context) {
-    context.read<LoginCubit>().authenticate();
+  Future<void> login(BuildContext context) async {
+    await context.read<LoginCubit>().authenticate();
   }
 }

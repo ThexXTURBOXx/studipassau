@@ -10,12 +10,12 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
 class MensaCubit extends Cubit<MensaState> {
+  MensaCubit(this._storageRepo, this._mensaRepo)
+      : super(const MensaState(StudiPassauState.notFetched));
+
   final StorageRepo _storageRepo;
 
   final MensaRepo _mensaRepo;
-
-  MensaCubit(this._storageRepo, this._mensaRepo)
-      : super(const MensaState(StudiPassauState.notFetched));
 
   Future<void> loadMensaPlan() async {
     final mensaCache = _storageRepo.getStringList(mensaPlanKey);

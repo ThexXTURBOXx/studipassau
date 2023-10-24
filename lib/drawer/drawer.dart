@@ -1,5 +1,6 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:share_plus/share_plus.dart';
@@ -19,9 +20,15 @@ import 'package:studipassau/util/images.dart';
 import 'package:studipassau/util/navigation.dart';
 
 class StudiPassauDrawer extends StatelessWidget {
+  const StudiPassauDrawer(this.selected, {super.key});
+
   final DrawerItem selected;
 
-  const StudiPassauDrawer(this.selected, {super.key});
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(EnumProperty<DrawerItem>('selected', selected));
+  }
 
   @override
   Widget build(BuildContext context) => Drawer(
@@ -103,17 +110,17 @@ enum DrawerItem {
   campusPortal(icon: Icons.dataset_outlined), // TODO(Nico): Better icon?
   telegramBot(icon: StudiPassauIcons.telegramPlane);
 
-  final IconData? icon;
-  final String? route;
-  final bool isDivider;
-  final bool isSubTitle;
-
   const DrawerItem({
     this.icon,
     this.route,
     this.isDivider = false,
     this.isSubTitle = false,
   });
+
+  final IconData? icon;
+  final String? route;
+  final bool isDivider;
+  final bool isSubTitle;
 
   String title(BuildContext context) {
     switch (this) {

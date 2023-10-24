@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';
@@ -28,8 +29,14 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
+      (_) async => await _refreshIndicatorKey.currentState?.show(),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('onlineSync', onlineSync));
   }
 
   @override
@@ -40,7 +47,8 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: S.of(context).refresh,
-              onPressed: () => _refreshIndicatorKey.currentState?.show(),
+              onPressed: () async =>
+                  await _refreshIndicatorKey.currentState?.show(),
             ),
           ],
         ),
@@ -55,7 +63,7 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
           },
           builder: (context, state) => RefreshIndicator(
             key: _refreshIndicatorKey,
-            onRefresh: () => refresh(context),
+            onRefresh: () async => refresh(context),
             child: ListView(
               children: state.newsOrEmpty
                   .map((e) => NewsWidget(news: e))

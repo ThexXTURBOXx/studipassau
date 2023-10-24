@@ -12,12 +12,12 @@ import 'package:studipassau/bloc/repos/schedule_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 
 class StudiPassauBlocProvider extends StatelessWidget {
-  final Widget child;
-
   const StudiPassauBlocProvider({
-    super.key,
     required this.child,
+    super.key,
   });
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) => MultiRepositoryProvider(

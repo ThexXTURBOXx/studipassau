@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:dart_date/dart_date.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
@@ -35,8 +36,16 @@ class _MensaPagePageState extends State<MensaPage>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
+      (_) async => await _refreshIndicatorKey.currentState?.show(),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<bool>('isWideScreen', isWideScreen))
+      ..add(DiagnosticsProperty<bool>('onlineSync', onlineSync));
   }
 
   @override
@@ -47,7 +56,8 @@ class _MensaPagePageState extends State<MensaPage>
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: S.of(context).refresh,
-              onPressed: () => _refreshIndicatorKey.currentState?.show(),
+              onPressed: () async =>
+                  await _refreshIndicatorKey.currentState?.show(),
             ),
           ],
         ),
@@ -64,7 +74,7 @@ class _MensaPagePageState extends State<MensaPage>
             isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
             return RefreshIndicator(
               key: _refreshIndicatorKey,
-              onRefresh: () => refresh(context),
+              onRefresh: () async => refresh(context),
               child: CustomScrollView(slivers: slivers(state.menu)),
             );
           },
@@ -110,7 +120,7 @@ class _MensaPagePageState extends State<MensaPage>
                         title: Text(
                           m.name.trim(),
                         ),
-                        onTap: () => onTap(m),
+                        onTap: () async => onTap(m),
                       ),
                     )
                     .toList(growable: false),
@@ -136,9 +146,9 @@ class _MensaPagePageState extends State<MensaPage>
     }
   }
 
-  void onTap(Meal m) {
+  Future<void> onTap(Meal m) async {
     final s = S.of(context);
-    showDialog<void>(
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(m.name.trim()),

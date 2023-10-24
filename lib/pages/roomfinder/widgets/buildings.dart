@@ -56,7 +56,6 @@ List<Building> get buildings => [
         name: 'Innsteg-Aula',
         abbrev: 'ISA',
         address: 'Innstraße 23, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.570005, 13.457416),
           const LatLng(48.570303, 13.458194),
@@ -294,7 +293,6 @@ List<Building> get buildings => [
         name: 'Verwaltung',
         abbrev: 'VW',
         address: 'Innstraße 41, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.566760, 13.449718),
           const LatLng(48.566234, 13.449686),
@@ -345,7 +343,6 @@ List<Building> get buildings => [
         name: 'Sportzentrum',
         abbrev: 'SP',
         address: 'Innstraße 45, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.566781, 13.449131),
           const LatLng(48.566714, 13.449233),
@@ -370,7 +367,6 @@ List<Building> get buildings => [
         name: 'Rudolf-Guby-Straße 3',
         abbrev: 'RG3',
         address: 'Rudolf-Guby-Straße 3, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.567514, 13.448448),
           const LatLng(48.567397, 13.448642),
@@ -388,7 +384,6 @@ List<Building> get buildings => [
         name: 'Krabbelstube',
         abbrev: 'KS',
         address: 'Innstraße 47, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.565395, 13.447319),
           const LatLng(48.565299, 13.447351),
@@ -406,7 +401,6 @@ List<Building> get buildings => [
         name: 'Gebäude Innstraße 71',
         abbrev: 'IS71',
         address: 'Innstraße 71, 94036 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.562347, 13.444038),
           const LatLng(48.562127, 13.444344),
@@ -428,7 +422,6 @@ List<Building> get buildings => [
         name: 'Gebäude Leopoldstraße 4',
         abbrev: 'LS',
         address: 'Leopoldstraße 4, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572601, 13.450795),
           const LatLng(48.572598, 13.451175),
@@ -442,7 +435,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14',
         abbrev: 'HK14',
         address: 'Dr.-Hans-Kapfinger-Straße 14, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572603, 13.454767),
           const LatLng(48.572585, 13.454869),
@@ -473,7 +465,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14c',
         abbrev: 'HK14c',
         address: 'Dr.-Hans-Kapfinger-Straße 14c, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572858, 13.454248),
           const LatLng(48.572830, 13.454409),
@@ -487,7 +478,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14d',
         abbrev: 'HK14d',
         address: 'Dr.-Hans-Kapfinger-Straße 14d, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572454, 13.454118),
           const LatLng(48.572408, 13.454392),
@@ -501,7 +491,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 12',
         abbrev: 'HK12',
         address: 'Dr.-Hans-Kapfinger-Straße 12, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572703, 13.455173),
           const LatLng(48.572465, 13.455522),
@@ -522,7 +511,6 @@ List<Building> get buildings => [
         name: 'Gebäude Nikolastraße 12',
         abbrev: 'N12',
         address: 'Nikolastraße 12, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572256, 13.459827),
           const LatLng(48.572161, 13.460036),
@@ -554,7 +542,6 @@ List<Building> get buildings => [
         name: 'Department für Katholische Theologie',
         abbrev: 'KT',
         address: 'Michaeligasse 13, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.574101, 13.470351),
           const LatLng(48.574130, 13.471060),
@@ -572,7 +559,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 16',
         abbrev: 'HK16',
         address: 'Dr.-Hans-Kapfinger-Straße 16, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.572408, 13.454477),
           const LatLng(48.572344, 13.454890),
@@ -618,7 +604,6 @@ List<Building> get buildings => [
         name: 'Gebäude Dr.-Hans-Kapfinger-Straße 28',
         abbrev: 'HK28',
         address: 'Dr.-Hans-Kapfinger-Straße 28, 94032 Passau',
-        labelPlacement: PolygonLabelPlacement.centroid,
         points: [
           const LatLng(48.571982, 13.454272),
           const LatLng(48.571879, 13.454883),
@@ -792,22 +777,16 @@ int _compareProps(String search, String e1, String e2) {
 }
 
 class Building {
-  final String name;
-  final String abbrev;
-  final String address;
-  final Polygon polygon;
-  final Marker marker;
-
   Building({
     required this.name,
     required this.abbrev,
     required this.address,
-    required final List<LatLng> points,
-    final List<List<LatLng>>? holePoints,
-    final LatLng? markerPos,
-    final Color color = const Color(0xFF00FF00),
-    final bool isFilled = false,
-    final PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
+    required List<LatLng> points,
+    List<List<LatLng>>? holePoints,
+    LatLng? markerPos,
+    Color color = const Color(0xFF00FF00),
+    bool isFilled = false,
+    PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
   })  : polygon = Polygon(
           points: points,
           holePointsList: holePoints,
@@ -818,13 +797,17 @@ class Building {
         ),
         marker = Marker(
           point: markerPos ?? LatLngBounds.fromPoints(points).center,
-          builder: (context) => const Center(
-            child: Icon(
-              Icons.circle,
-              color: Colors.red,
-              size: 20,
-            ),
-          ),
           rotate: true,
+          child: const Icon(
+            Icons.circle,
+            color: Colors.red,
+            size: 20,
+          ),
         );
+
+  final String name;
+  final String abbrev;
+  final String address;
+  final Polygon polygon;
+  final Marker marker;
 }

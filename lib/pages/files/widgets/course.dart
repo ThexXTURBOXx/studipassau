@@ -1,12 +1,12 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CourseWidget extends StatelessWidget {
+  const CourseWidget({required this.course, super.key, this.onTap});
+
   final Course course;
   final void Function()? onTap;
-
-  const CourseWidget({super.key, required this.course, this.onTap});
 
   String get sortKey => course.title.trim();
 
@@ -15,12 +15,22 @@ class CourseWidget extends StatelessWidget {
       : '${course.number.trim()} ${course.title.trim()}';
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<Course>('course', course))
+      ..add(ObjectFlagProperty<void Function()?>.has('onTap', onTap))
+      ..add(StringProperty('sortKey', sortKey))
+      ..add(StringProperty('title', title));
+  }
+
+  @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.folder_open),
         title: Text(title),
         subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
         onTap: onTap,
-        onLongPress: () => showDialog<void>(
+        onLongPress: () async => showDialog<void>(
           context: context,
           builder: (context) => AlertDialog(
             title: Text(title),
@@ -34,14 +44,6 @@ class CourseWidget extends StatelessWidget {
 }
 
 class Course extends Equatable {
-  final String id;
-  final String number;
-  final String title;
-  final String subtitle;
-  final String type;
-  final String description;
-  final Map<String, String> modules;
-
   const Course({
     required this.id,
     required this.number,
@@ -64,6 +66,14 @@ class Course extends Equatable {
                 .map((key, value) => MapEntry(key, value.toString()))
             : <String, String>{},
       );
+
+  final String id;
+  final String number;
+  final String title;
+  final String subtitle;
+  final String type;
+  final String description;
+  final Map<String, String> modules;
 
   @override
   List<Object> get props => [

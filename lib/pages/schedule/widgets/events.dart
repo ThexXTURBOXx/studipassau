@@ -1,18 +1,10 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:studipassau/constants.dart';
 import 'package:timetable/timetable.dart';
 
 class StudiPassauEvent extends Event {
-  final String id;
-  final String title;
-  final String course;
-  final String description;
-  final String categories;
-  final String room;
-  final bool canceled;
-  final Color backgroundColor;
-
   const StudiPassauEvent({
     required this.id,
     required this.title,
@@ -25,6 +17,28 @@ class StudiPassauEvent extends Event {
     required super.start,
     required super.end,
   });
+
+  factory StudiPassauEvent.fromJson(json) => StudiPassauEvent(
+        id: json['id'].toString(),
+        title: json['title'].toString(),
+        course: json['course'].toString(),
+        description: json['description'].toString(),
+        categories: json['categories'].toString(),
+        room: json['room'].toString(),
+        canceled: json['canceled'].toString().toLowerCase() == 'true',
+        backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
+        start: dateTimeSaveFormat.parse(json['start'].toString(), true),
+        end: dateTimeSaveFormat.parse(json['end'].toString(), true),
+      );
+
+  final String id;
+  final String title;
+  final String course;
+  final String description;
+  final String categories;
+  final String room;
+  final bool canceled;
+  final Color backgroundColor;
 
   StudiPassauEvent copyWith({
     String? id,
@@ -52,18 +66,19 @@ class StudiPassauEvent extends Event {
         end: end ?? this.end,
       );
 
-  factory StudiPassauEvent.fromJson(dynamic json) => StudiPassauEvent(
-        id: json['id'].toString(),
-        title: json['title'].toString(),
-        course: json['course'].toString(),
-        description: json['description'].toString(),
-        categories: json['categories'].toString(),
-        room: json['room'].toString(),
-        canceled: json['canceled'].toString().toLowerCase() == 'true',
-        backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
-        start: dateTimeSaveFormat.parse(json['start'].toString(), true),
-        end: dateTimeSaveFormat.parse(json['end'].toString(), true),
-      );
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(StringProperty('id', id))
+      ..add(StringProperty('title', title))
+      ..add(StringProperty('course', course))
+      ..add(StringProperty('description', description))
+      ..add(StringProperty('categories', categories))
+      ..add(StringProperty('room', room))
+      ..add(DiagnosticsProperty<bool>('canceled', canceled))
+      ..add(ColorProperty('backgroundColor', backgroundColor));
+  }
 
   Map<String, dynamic> toJson() => {
         'id': id,
@@ -92,6 +107,15 @@ class StudiPassauEventWidget extends StatelessWidget {
   final VoidCallback? onTap;
 
   final EdgeInsetsGeometry margin;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<StudiPassauEvent>('event', event))
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<EdgeInsetsGeometry>('margin', margin));
+  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -134,8 +158,8 @@ class StudiPassauEventWidget extends StatelessWidget {
 class StudiPassauAllDayEventWidget extends StatelessWidget {
   const StudiPassauAllDayEventWidget(
     this.event, {
-    super.key,
     required this.info,
+    super.key,
     this.onTap,
     this.style,
   });
@@ -145,6 +169,16 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
 
   final VoidCallback? onTap;
   final BasicAllDayEventWidgetStyle? style;
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<StudiPassauEvent>('event', event))
+      ..add(DiagnosticsProperty<AllDayEventLayoutInfo>('info', info))
+      ..add(ObjectFlagProperty<VoidCallback?>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<BasicAllDayEventWidgetStyle?>('style', style));
+  }
 
   @override
   Widget build(BuildContext context) => Padding(
@@ -162,7 +196,6 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
           child: Material(
             shape: AllDayEventBorder(
               info: info,
-              side: BorderSide.none,
               radii: AllDayEventBorderRadii(
                 cornerRadius: BorderRadius.circular(4),
                 leftTipRadius: 4,

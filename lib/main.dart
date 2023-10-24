@@ -2,14 +2,12 @@ import 'dart:async';
 
 import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:sentry/sentry.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studipassau/bloc/bloc_provider.dart';
@@ -100,12 +98,13 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   @override
   void initState() {
     super.initState();
-    prefService.addKeyListener(uiThemePref, () {
-      setState(() {});
-    });
-    prefService.addKeyListener(material3Pref, () {
-      setState(() {});
-    });
+    prefService
+      ..addKeyListener(uiThemePref, () {
+        setState(() {});
+      })
+      ..addKeyListener(material3Pref, () {
+        setState(() {});
+      });
   }
 
   @override

@@ -1,5 +1,6 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:dart_date/dart_date.dart' hide Date;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Interval;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
@@ -56,16 +57,39 @@ class _SchedulePagePageState extends State<SchedulePage>
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
+      (_) async => await _refreshIndicatorKey.currentState?.show(),
     );
 
     dateControllerContent.date.addListener(() {
-      setState(() {
+      setState(() async {
         final date = dateControllerContent.date.value;
-        animateHeaderTo(date);
+        await animateHeaderTo(date);
         selected = date;
       });
     });
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(
+        DiagnosticsProperty<DateController>(
+          'dateControllerHeader',
+          dateControllerHeader,
+        ),
+      )
+      ..add(
+        DiagnosticsProperty<DateController>(
+          'dateControllerContent',
+          dateControllerContent,
+        ),
+      )
+      ..add(
+        DiagnosticsProperty<TimeController>('timeController', timeController),
+      )
+      ..add(DiagnosticsProperty<DateTime>('selected', selected))
+      ..add(DiagnosticsProperty<bool>('onlineSync', onlineSync));
   }
 
   @override
@@ -76,8 +100,8 @@ class _SchedulePagePageState extends State<SchedulePage>
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: S.of(context).refresh,
-              onPressed: () {
-                _refreshIndicatorKey.currentState?.show();
+              onPressed: () async {
+                await _refreshIndicatorKey.currentState?.show();
               },
             ),
           ],
@@ -89,7 +113,7 @@ class _SchedulePagePageState extends State<SchedulePage>
             listener: showErrorMessage,
             builder: (context, stateS) => RefreshIndicator(
               key: _refreshIndicatorKey,
-              onRefresh: () => refresh(context, stateL.userId),
+              onRefresh: () async => refresh(context, stateL.userId),
               child: TimetableTheme(
                 data: TimetableThemeData(
                   context,
@@ -122,7 +146,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                       shrinkWrapInCrossAxis: true,
                       builder: (context, date) => DateHeader(
                         date,
-                        onTap: () => dateControllerContent.animateTo(
+                        onTap: () async => dateControllerContent.animateTo(
                           date,
                           vsync: this,
                         ),
@@ -141,13 +165,13 @@ class _SchedulePagePageState extends State<SchedulePage>
                         eventBuilder: (context, event) =>
                             StudiPassauEventWidget(
                           event,
-                          onTap: () => onTap(context, event),
+                          onTap: () async => onTap(context, event),
                         ),
                         allDayEventBuilder: (context, event, info) =>
                             StudiPassauAllDayEventWidget(
                           event,
                           info: info,
-                          onTap: () => onTap(context, event),
+                          onTap: () async => onTap(context, event),
                         ),
                         callbacks: const TimetableCallbacks(),
                         theme: TimetableThemeData(
@@ -159,7 +183,6 @@ class _SchedulePagePageState extends State<SchedulePage>
                             start: 8.hours,
                             end: 20.hours,
                             widget: const ColoredBox(color: Colors.black12),
-                            position: TimeOverlayPosition.behindEvents,
                           ),
                         ],
                         child: MultiDateTimetableContent<StudiPassauEvent>(),
@@ -189,9 +212,9 @@ class _SchedulePagePageState extends State<SchedulePage>
     onlineSync = true;
   }
 
-  void onTap(BuildContext ctx, StudiPassauEvent event) {
+  Future<void> onTap(BuildContext ctx, StudiPassauEvent event) async {
     final s = S.of(ctx);
-    showDialog<void>(
+    await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
         title: Text(event.title),
@@ -231,10 +254,10 @@ class _SchedulePagePageState extends State<SchedulePage>
             : defaultColor;
   }
 
-  void animateHeaderTo(DateTime date) {
+  Future<void> animateHeaderTo(DateTime date) async {
     final range = dateControllerHeader.visibleRange as DaysVisibleDateRange;
     final newDate = date - 3.days;
-    dateControllerHeader.animateTo(
+    await dateControllerHeader.animateTo(
       range.minDate!.isAfter(newDate)
           ? range.minDate!
           : range.maxDate!.isBefore(date + 3.days)

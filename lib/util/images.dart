@@ -3,14 +3,14 @@ import 'package:http/http.dart' as http;
 import 'package:studip/studip.dart';
 
 class StudIPCacheManager extends CacheManager {
-  static const key = 'StudIPCache';
-
-  static late StudIPCacheManager instance;
-
   StudIPCacheManager._()
       : super(Config(key, fileService: StudIPHttpFileService()));
 
   factory StudIPCacheManager.construct() => instance = StudIPCacheManager._();
+
+  static const key = 'StudIPCache';
+
+  static late StudIPCacheManager instance;
 }
 
 class StudIPHttpFileService extends HttpFileService {

@@ -1,7 +1,7 @@
 import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
@@ -25,6 +25,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
     with TickerProviderStateMixin {
   MapController controller = MapController();
 
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+        .add(DiagnosticsProperty<MapController>('controller', controller));
+  }
+
   //print(ModalRoute.of(context)!.settings.arguments);
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -41,13 +48,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
         body: FlutterMap(
           mapController: controller,
           options: MapOptions(
-            center: const LatLng(48.567369, 13.451903),
-            zoom: 15.5,
+            initialCenter: const LatLng(48.567369, 13.451903),
+            initialZoom: 15.5,
             maxZoom: 18,
-            onTap: (pos, point) {
+            onTap: (pos, point) async {
               for (final building in buildings) {
                 if (isPointInPolygon(point, building.polygon)) {
-                  showDialog<void>(
+                  await showDialog<void>(
                     context: context,
                     builder: (context) => AlertDialog(
                       title: Text('${building.name} (${building.abbrev})'),
@@ -84,27 +91,25 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
               }
             },
           ),
-          nonRotatedChildren: [
-            RichAttributionWidget(
-              attributions: [
-                TextSourceAttribution(
-                  'OpenStreetMap contributors',
-                  onTap: () => launchUrl('https://openstreetmap.org/copyright'),
-                ),
-              ],
-            ),
-          ],
           children: [
             TileLayer(
               urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
               userAgentPackageName: packageInfo.packageName,
             ),
             PolygonLayer(
-              polygonCulling: false,
               polygons: polygons,
             ),
             MarkerLayer(
               markers: markers,
+            ),
+            RichAttributionWidget(
+              attributions: [
+                TextSourceAttribution(
+                  'OpenStreetMap contributors',
+                  onTap: () async =>
+                      launchUrl('https://openstreetmap.org/copyright'),
+                ),
+              ],
             ),
           ],
         ),

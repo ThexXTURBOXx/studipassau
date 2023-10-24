@@ -9,9 +9,9 @@ import 'package:studipassau/pages/news/widgets/news_item.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class BlocState {
-  final StudiPassauState state;
-
   const BlocState(this.state);
+
+  final StudiPassauState state;
 
   bool get finished => state.finished;
 
@@ -19,11 +19,11 @@ class BlocState {
 }
 
 class LoginState extends BlocState {
-  final dynamic userData;
-
   const LoginState(super.state, {this.userData});
 
-  LoginState copyWith({StudiPassauState? state, dynamic userData}) =>
+  final dynamic userData;
+
+  LoginState copyWith({StudiPassauState? state, userData}) =>
       LoginState(state ?? this.state, userData: userData ?? this.userData);
 
   String get userId => userData['user_id'].toString();
@@ -36,9 +36,9 @@ class LoginState extends BlocState {
 }
 
 class ScheduleState extends BlocState {
-  final List<StudiPassauEvent>? schedule;
-
   const ScheduleState(super.state, {this.schedule});
+
+  final List<StudiPassauEvent>? schedule;
 
   ScheduleState copyWith({
     StudiPassauState? state,
@@ -50,9 +50,9 @@ class ScheduleState extends BlocState {
 }
 
 class MensaState extends BlocState {
-  final List<DayMenu>? mensaPlan;
-
   const MensaState(super.state, {this.mensaPlan});
+
+  final List<DayMenu>? mensaPlan;
 
   MensaState copyWith({StudiPassauState? state, List<DayMenu>? mensaPlan}) =>
       MensaState(state ?? this.state, mensaPlan: mensaPlan ?? this.mensaPlan);
@@ -61,20 +61,20 @@ class MensaState extends BlocState {
 }
 
 class FilesState extends BlocState {
+  FilesState(
+    super.state, {
+    required this.currentFolders,
+    this.currentCourse,
+    this.courses = const [],
+    this.files = const [],
+    this.folders = const [],
+  });
+
   Course? currentCourse;
   final List<Course> courses;
   final List<File> files;
   final List<Folder> folders;
   final Queue<Folder> currentFolders;
-
-  FilesState(
-    super.state, {
-    this.currentCourse,
-    this.courses = const [],
-    this.files = const [],
-    this.folders = const [],
-    required this.currentFolders,
-  });
 
   FolderState get folderState => currentFolder != null
       ? FolderState.folder
@@ -90,10 +90,8 @@ class FilesState extends BlocState {
         return true;
       case FolderState.courseHome:
         currentCourse = null;
-        break;
       case FolderState.folder:
         currentFolders.removeFirst();
-        break;
     }
     return false;
   }
@@ -119,9 +117,9 @@ class FilesState extends BlocState {
 enum FolderState { home, courseHome, folder }
 
 class NewsState extends BlocState {
-  final List<News>? news;
-
   const NewsState(super.state, {this.news});
+
+  final List<News>? news;
 
   NewsState copyWith({StudiPassauState? state, List<News>? news}) =>
       NewsState(state ?? this.state, news: news ?? this.news);
@@ -141,11 +139,11 @@ enum StudiPassauState {
   fetchError(finished: true, errored: true),
   httpError(finished: true, errored: true);
 
-  final bool finished;
-  final bool errored;
-
   const StudiPassauState({
     this.finished = false,
     this.errored = false,
   });
+
+  final bool finished;
+  final bool errored;
 }

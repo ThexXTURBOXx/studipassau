@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_filex/open_filex.dart';
@@ -34,8 +35,14 @@ class _FilesPagePageState extends State<FilesPage>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _refreshIndicatorKey.currentState?.show(),
+      (_) async => await _refreshIndicatorKey.currentState?.show(),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('isWideScreen', isWideScreen));
   }
 
   @override
@@ -46,7 +53,8 @@ class _FilesPagePageState extends State<FilesPage>
             IconButton(
               icon: const Icon(Icons.refresh),
               tooltip: S.of(context).refresh,
-              onPressed: () => _refreshIndicatorKey.currentState?.show(),
+              onPressed: () async =>
+                  await _refreshIndicatorKey.currentState?.show(),
             ),
           ],
         ),
@@ -71,7 +79,7 @@ class _FilesPagePageState extends State<FilesPage>
                 },
                 child: RefreshIndicator(
                   key: _refreshIndicatorKey,
-                  onRefresh: () => refresh(
+                  onRefresh: () async => refresh(
                     context,
                     stateL: stateL,
                     state: state,
@@ -82,7 +90,7 @@ class _FilesPagePageState extends State<FilesPage>
                               .map(
                                 (c) => CourseWidget(
                                   course: c,
-                                  onTap: () => loadCourse(c),
+                                  onTap: () async => loadCourse(c),
                                 ),
                               )
                               .sortedByCompare(
@@ -97,7 +105,7 @@ class _FilesPagePageState extends State<FilesPage>
                                   .map(
                                     (f) => FolderWidget(
                                       folder: f,
-                                      onTap: () => loadFolder(f),
+                                      onTap: () async => loadFolder(f),
                                     ),
                                   )
                                   .sortedByCompare(
@@ -112,13 +120,12 @@ class _FilesPagePageState extends State<FilesPage>
                                       onTap: () async {
                                         final theme = Theme.of(context);
                                         final pd =
-                                            ProgressDialog(context: context);
-                                        pd.show(
-                                          max: 100,
-                                          msg: S.of(context).downloading,
-                                          backgroundColor:
-                                              theme.dialogBackgroundColor,
-                                        );
+                                            ProgressDialog(context: context)
+                                              ..show(
+                                                msg: S.of(context).downloading,
+                                                backgroundColor:
+                                                    theme.dialogBackgroundColor,
+                                              );
                                         await downloadFile(
                                           f,
                                           onProgress: (perc) =>

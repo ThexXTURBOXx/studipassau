@@ -9,12 +9,12 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class ScheduleCubit extends Cubit<ScheduleState> {
+  ScheduleCubit(this._storageRepo, this._scheduleRepo)
+      : super(const ScheduleState(StudiPassauState.notFetched));
+
   final StorageRepo _storageRepo;
 
   final ScheduleRepo _scheduleRepo;
-
-  ScheduleCubit(this._storageRepo, this._scheduleRepo)
-      : super(const ScheduleState(StudiPassauState.notFetched));
 
   Future<void> loadSchedule() async {
     final scheduleCache = _storageRepo.getStringList(scheduleKey);

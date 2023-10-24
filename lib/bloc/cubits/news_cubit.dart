@@ -8,12 +8,12 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
 
 class NewsCubit extends Cubit<NewsState> {
+  NewsCubit(this._storageRepo, this._newsRepo)
+      : super(const NewsState(StudiPassauState.notFetched));
+
   final StorageRepo _storageRepo;
 
   final NewsRepo _newsRepo;
-
-  NewsCubit(this._storageRepo, this._newsRepo)
-      : super(const NewsState(StudiPassauState.notFetched));
 
   Future<void> loadNews() async {
     final newsCache = _storageRepo.getStringList(newsKey);

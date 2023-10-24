@@ -28,7 +28,7 @@ class FilesRepo {
   Future<Tuple2<List<Folder>, List<File>>> loadFolder(String folderId) async =>
       parseFolder(await _studIPProvider.apiGetJson('folder/$folderId'));
 
-  Future<Tuple2<List<Folder>, List<File>>> parseFolder(dynamic json) async {
+  Future<Tuple2<List<Folder>, List<File>>> parseFolder(json) async {
     final jsonFolders = json['subfolders'] as List<dynamic>;
     final jsonFiles = json['file_refs'] as List<dynamic>;
     return Tuple2(

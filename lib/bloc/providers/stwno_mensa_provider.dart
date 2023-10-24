@@ -62,8 +62,6 @@ class StwnoDataProvider {
       studentPrice: parsePrice(entries[6].trim()),
       employeePrice: parsePrice(entries[7].trim()),
       othersPrice: parsePrice(entries[8].trim()),
-      // Not given in "API"
-      pupilPrice: null,
     );
   }
 

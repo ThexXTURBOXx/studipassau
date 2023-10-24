@@ -14,8 +14,6 @@ import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
 
 class FilesCubit extends Cubit<FilesState> {
-  final FilesRepo _filesRepo;
-
   FilesCubit(this._filesRepo)
       : super(
           FilesState(
@@ -23,6 +21,8 @@ class FilesCubit extends Cubit<FilesState> {
             currentFolders: Queue<Folder>(),
           ),
         );
+
+  final FilesRepo _filesRepo;
 
   Future<void> loadCourses(String userId) async {
     emit(state.copyWith(state: StudiPassauState.fetching));
@@ -58,23 +58,23 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadCourseTopFolder(course.id);
 
-      final folders = topFolder.item1;
-      folders.sort((c1, c2) {
-        final comp = c1.name.compareTo(c2.name);
-        if (comp != 0) {
-          return comp;
-        }
-        return c1.changeDate.compareTo(c2.changeDate);
-      });
+      final folders = topFolder.item1
+        ..sort((c1, c2) {
+          final comp = c1.name.compareTo(c2.name);
+          if (comp != 0) {
+            return comp;
+          }
+          return c1.changeDate.compareTo(c2.changeDate);
+        });
 
-      final files = topFolder.item2;
-      files.sort((c1, c2) {
-        final comp = c1.changeDate.compareTo(c2.changeDate);
-        if (comp != 0) {
-          return comp;
-        }
-        return c1.name.compareTo(c2.name);
-      });
+      final files = topFolder.item2
+        ..sort((c1, c2) {
+          final comp = c1.changeDate.compareTo(c2.changeDate);
+          if (comp != 0) {
+            return comp;
+          }
+          return c1.name.compareTo(c2.name);
+        });
 
       emit(
         state.copyWith(
@@ -99,23 +99,23 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadFolder(folder.id);
 
-      final folders = topFolder.item1;
-      folders.sort((c1, c2) {
-        final comp = c1.name.compareTo(c2.name);
-        if (comp != 0) {
-          return comp;
-        }
-        return c1.changeDate.compareTo(c2.changeDate);
-      });
+      final folders = topFolder.item1
+        ..sort((c1, c2) {
+          final comp = c1.name.compareTo(c2.name);
+          if (comp != 0) {
+            return comp;
+          }
+          return c1.changeDate.compareTo(c2.changeDate);
+        });
 
-      final files = topFolder.item2;
-      files.sort((c1, c2) {
-        final comp = c1.changeDate.compareTo(c2.changeDate);
-        if (comp != 0) {
-          return comp;
-        }
-        return c1.name.compareTo(c2.name);
-      });
+      final files = topFolder.item2
+        ..sort((c1, c2) {
+          final comp = c1.changeDate.compareTo(c2.changeDate);
+          if (comp != 0) {
+            return comp;
+          }
+          return c1.name.compareTo(c2.name);
+        });
 
       emit(
         state.copyWith(

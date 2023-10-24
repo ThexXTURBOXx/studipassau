@@ -12,10 +12,10 @@ import 'package:studipassau/env/env.dart';
 import 'package:studipassau/util/images.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final StorageRepo _storageRepo;
-
   LoginCubit(this._storageRepo)
       : super(const LoginState(StudiPassauState.notAuthenticated));
+
+  final StorageRepo _storageRepo;
 
   Future<void> authenticate() async {
     emit(state.copyWith(state: StudiPassauState.loading));

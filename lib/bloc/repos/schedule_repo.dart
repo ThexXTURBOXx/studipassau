@@ -131,16 +131,6 @@ class ScheduleRepo {
 }
 
 class _Event extends Equatable {
-  final String id;
-  final String course;
-  final int start;
-  final int end;
-  final String title;
-  final String description;
-  final String categories;
-  final String room;
-  final bool canceled;
-
   const _Event({
     required this.id,
     required this.course,
@@ -165,6 +155,16 @@ class _Event extends Equatable {
         canceled: json['canceled'].toString() == 'true',
       );
 
+  final String id;
+  final String course;
+  final int start;
+  final int end;
+  final String title;
+  final String description;
+  final String categories;
+  final String room;
+  final bool canceled;
+
   @override
   List<Object> get props => [
         id,
@@ -180,8 +180,6 @@ class _Event extends Equatable {
 }
 
 class _Schedule extends Equatable {
-  final List<List<_ScheduleEvent>?> events;
-
   const _Schedule({
     required this.events,
   });
@@ -199,20 +197,13 @@ class _Schedule extends Equatable {
     return _Schedule(events: events);
   }
 
+  final List<List<_ScheduleEvent>?> events;
+
   @override
   List<Object> get props => [events];
 }
 
 class _ScheduleEvent extends Equatable {
-  final String id;
-  final String internalId;
-  final int start;
-  final int end;
-  final String content;
-  final String title;
-  final Color color;
-  final String type;
-
   const _ScheduleEvent({
     required this.id,
     required this.internalId,
@@ -237,6 +228,15 @@ class _ScheduleEvent extends Equatable {
       type: json['type'].toString(),
     );
   }
+
+  final String id;
+  final String internalId;
+  final int start;
+  final int end;
+  final String content;
+  final String title;
+  final Color color;
+  final String type;
 
   @override
   List<Object> get props => [

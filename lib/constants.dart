@@ -181,16 +181,12 @@ void showErrorMessage(BuildContext context, BlocState state) {
     switch (state.state) {
       case StudiPassauState.authenticationError:
         showSnackBar(context, S.of(context).authError);
-        break;
       case StudiPassauState.fetchError:
         showSnackBar(context, S.of(context).fetchError);
-        break;
       case StudiPassauState.httpError:
         showSnackBar(context, S.of(context).httpError);
-        break;
       default:
         showSnackBar(context, S.of(context).miscError);
-        break;
     }
   }
 }

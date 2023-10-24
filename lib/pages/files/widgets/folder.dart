@@ -1,15 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 
 class FolderWidget extends StatelessWidget {
+  const FolderWidget({required this.folder, super.key, this.onTap});
+
   final Folder folder;
   final void Function()? onTap;
-
-  const FolderWidget({super.key, required this.folder, this.onTap});
 
   String get sortKey => title;
 
@@ -19,15 +19,25 @@ class FolderWidget extends StatelessWidget {
       desc.isNotEmpty ? '\n${sprintf(cat, [folder.description])}' : '';
 
   @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<Folder>('folder', folder))
+      ..add(ObjectFlagProperty<void Function()?>.has('onTap', onTap))
+      ..add(StringProperty('sortKey', sortKey))
+      ..add(StringProperty('title', title));
+  }
+
+  @override
   Widget build(BuildContext context) => ListTile(
         leading: const Icon(Icons.folder_open),
         title: Text(title),
         subtitle:
             folder.description.isNotEmpty ? Text(folder.description) : null,
         onTap: onTap,
-        onLongPress: () {
+        onLongPress: () async {
           final s = S.of(context);
-          showDialog<void>(
+          await showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(title),
@@ -55,20 +65,6 @@ class FolderWidget extends StatelessWidget {
 }
 
 class Folder extends Equatable {
-  final String id;
-  final String userId;
-  final String parentId;
-  final String rangeId;
-  final String rangeType;
-  final String folderType;
-  final String name;
-  final String description;
-  final int makeDate;
-  final int changeDate;
-  final bool isVisible;
-  final bool isReadable;
-  final bool isWritable;
-
   const Folder({
     required this.id,
     required this.userId,
@@ -100,6 +96,20 @@ class Folder extends Equatable {
         isReadable: json['is_readable'].toString().parseBool(),
         isWritable: json['is_writable'].toString().parseBool(),
       );
+
+  final String id;
+  final String userId;
+  final String parentId;
+  final String rangeId;
+  final String rangeType;
+  final String folderType;
+  final String name;
+  final String description;
+  final int makeDate;
+  final int changeDate;
+  final bool isVisible;
+  final bool isReadable;
+  final bool isWritable;
 
   @override
   List<Object> get props => [

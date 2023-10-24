@@ -1,22 +1,22 @@
 import 'package:equatable/equatable.dart';
 import 'package:filesize/filesize.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 
 class FileWidget extends StatelessWidget {
-  final File file;
-  final void Function()? onTap;
-  final bool showDownloads;
-
   const FileWidget({
-    super.key,
     required this.file,
+    super.key,
     this.onTap,
     this.showDownloads = false,
   });
+
+  final File file;
+  final void Function()? onTap;
+  final bool showDownloads;
 
   String get sortKey => title;
 
@@ -24,6 +24,17 @@ class FileWidget extends StatelessWidget {
 
   String formatDesc(String cat, String desc) =>
       desc.isNotEmpty ? '\n${sprintf(cat, [file.description])}' : '';
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty<File>('file', file))
+      ..add(ObjectFlagProperty<void Function()?>.has('onTap', onTap))
+      ..add(DiagnosticsProperty<bool>('showDownloads', showDownloads))
+      ..add(StringProperty('sortKey', sortKey))
+      ..add(StringProperty('title', title));
+  }
 
   @override
   Widget build(BuildContext context) => ListTile(
@@ -43,9 +54,9 @@ class FileWidget extends StatelessWidget {
               )
             : null,
         onTap: onTap,
-        onLongPress: () {
+        onLongPress: () async {
           final s = S.of(context);
-          showDialog<void>(
+          await showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
               title: Text(title),
@@ -75,24 +86,6 @@ class FileWidget extends StatelessWidget {
 }
 
 class File extends Equatable {
-  final String id;
-  final String fileId;
-  final String folderId;
-  final int downloads;
-  final String description;
-  final String contentTermsOfUseId;
-  final String userId;
-  final String name;
-  final int makeDate;
-  final int changeDate;
-  final int size;
-  final String mimeType;
-  final String storage;
-  final bool isReadable;
-  final bool isDownloadable;
-  final bool isEditable;
-  final bool isWritable;
-
   const File({
     required this.id,
     required this.fileId,
@@ -132,6 +125,24 @@ class File extends Equatable {
         isEditable: json['is_editable'].toString().parseBool(),
         isWritable: json['is_writable'].toString().parseBool(),
       );
+
+  final String id;
+  final String fileId;
+  final String folderId;
+  final int downloads;
+  final String description;
+  final String contentTermsOfUseId;
+  final String userId;
+  final String name;
+  final int makeDate;
+  final int changeDate;
+  final int size;
+  final String mimeType;
+  final String storage;
+  final bool isReadable;
+  final bool isDownloadable;
+  final bool isEditable;
+  final bool isWritable;
 
   @override
   List<Object> get props => [
