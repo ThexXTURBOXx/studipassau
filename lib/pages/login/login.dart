@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
@@ -17,9 +19,9 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   @override
-  Future<void> initState() async {
+  void initState() {
     super.initState();
-    await login(context);
+    unawaited(login(context));
   }
 
   @override
