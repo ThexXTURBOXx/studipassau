@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.1.2+112
 
 environment:
-  sdk: '>=3.1.4 <4.0.0'
-  flutter: '>=3.13.8'
+  sdk: '>=3.1.5 <4.0.0'
+  flutter: '>=3.13.9'
 
 dependencies:
   black_hole_flutter: ^1.0.1

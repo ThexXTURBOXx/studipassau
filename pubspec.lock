@@ -157,10 +157,10 @@ packages:
     dependency: "direct main"
     description:
       name: catcher_2
-      sha256: "73e251057b1b59442d58b5109d26401cfed850df21da44b028338d4f85f69105"
+      sha256: "0b2dfef3da42c0f1a44f99e3a1d72bacbbea02d836708127ae879ee222846eff"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.0"
+    version: "1.0.1"
   characters:
     dependency: transitive
     description:
@@ -497,10 +497,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_web_auth_2
-      sha256: "8a255c782b7a15fcf35e423babb04ebad2840b30eddced4e51c65e3fe8e26d96"
+      sha256: "75613aa4d8e43df3de0fc3d93df36ae5b4ba2e94070384c5a9baeda99f5a235f"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.0.3"
   flutter_web_auth_2_platform_interface:
     dependency: transitive
     description:
@@ -518,10 +518,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_widget_from_html_core
-      sha256: d1366d0421011547a339f03c77672575dd018759f43b37b6e3257e34af77e302
+      sha256: bb7211d534c600f5a8a9a604f78cb8bc47c8e2478d0b7520a31c870e7e7347db
       url: "https://pub.dev"
     source: hosted
-    version: "0.14.4"
+    version: "0.14.5+1"
   fluttertoast:
     dependency: "direct overridden"
     description:
@@ -1246,10 +1246,10 @@ packages:
     dependency: transitive
     description:
       name: timeago
-      sha256: "4addcda362e51f23cf7ae2357fccd053f29d59b4ddd17fb07fc3e7febb47a456"
+      sha256: c44b80cbc6b44627c00d76960f2af571f6f50e5dbedef4d9215d455e4335165b
       url: "https://pub.dev"
     source: hosted
-    version: "3.5.0"
+    version: "3.6.0"
   timetable:
     dependency: "direct main"
     description:
@@ -1310,10 +1310,10 @@ packages:
     dependency: "direct main"
     description:
       name: url_launcher
-      sha256: "47e208a6711459d813ba18af120d9663c20bdf6985d6ad39fe165d2538378d27"
+      sha256: b1c9e98774adf8820c96fbc7ae3601231d324a7d5ebd8babe27b6dfac91357ba
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.14"
+    version: "6.2.1"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1475,5 +1475,5 @@ packages:
     source: hosted
     version: "3.1.2"
 sdks:
-  dart: ">=3.1.4 <4.0.0"
-  flutter: ">=3.13.8"
+  dart: ">=3.1.5 <4.0.0"
+  flutter: ">=3.13.9"
