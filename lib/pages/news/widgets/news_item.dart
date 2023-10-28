@@ -47,10 +47,14 @@ class NewsWidget extends StatelessWidget {
             context: context,
             builder: (context) => AlertDialog(
               title: Text(title),
-              content: SingleChildScrollView(
-                child: HtmlWidget(
-                  news.bodyHtml,
-                  factoryBuilder: NewsWidgetFactory.new,
+              insetPadding: const EdgeInsets.all(44),
+              content: SizedBox(
+                width: double.maxFinite,
+                child: SingleChildScrollView(
+                  child: HtmlWidget(
+                    news.bodyHtml,
+                    factoryBuilder: NewsWidgetFactory.new,
+                  ),
                 ),
               ),
             ),
