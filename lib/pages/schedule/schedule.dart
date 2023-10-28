@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:dart_date/dart_date.dart' hide Date;
 import 'package:flutter/foundation.dart';
@@ -61,9 +63,9 @@ class _SchedulePagePageState extends State<SchedulePage>
     );
 
     dateControllerContent.date.addListener(() {
-      setState(() async {
+      setState(() {
         final date = dateControllerContent.date.value;
-        await animateHeaderTo(date);
+        unawaited(animateHeaderTo(date));
         selected = date;
       });
     });
