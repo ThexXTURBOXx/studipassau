@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.1.2+112
 
 environment:
-  sdk: '>=3.1.5 <4.0.0'
-  flutter: '>=3.13.9'
+  sdk: '>=3.2.0 <4.0.0'
+  flutter: '>=3.16.0'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -20,7 +20,7 @@ dependencies:
   dart_date: ^1.1.0
   device_info_plus: ^9.0.0
   easy_search_bar: ^2.5.0
-  envied: ^0.3.0
+  envied: ^0.5.1
   equatable: ^2.0.3
   filesize: ^2.0.1
   flutter:
@@ -43,7 +43,7 @@ dependencies:
   maps_launcher: ^2.2.0
   open_filex: ^4.1.1
   openmensa: ^2.1.0
-  package_info_plus: ^4.0.0
+  package_info_plus: ^5.0.0
   path_provider: ^2.0.11
   pref: ^2.5.0
   quick_actions: ^1.0.0
@@ -63,7 +63,7 @@ dependencies:
 
 dev_dependencies:
   build_runner: ^2.1.11
-  envied_generator: ^0.3.0
+  envied_generator: ^0.5.1
   flutter_launcher_icons: ^0.13.0
   flutter_lints: ^3.0.0
 
@@ -73,11 +73,7 @@ dependency_overrides:
       url: https://github.com/4inka/flutter_easy_search_bar.git
   flutter_mailer:
     git:
-      url: https://github.com/ThexXTURBOXx/flutter_mailer.git
-      ref: patch-1
-  fluttertoast:
-    git:
-      url: https://github.com/PonnamKarthik/FlutterToast.git
+      url: https://github.com/taljacobson/flutter_mailer.git
   maps_launcher:
     git:
       url: https://github.com/asaarnak/flutter-maps-launcher.git

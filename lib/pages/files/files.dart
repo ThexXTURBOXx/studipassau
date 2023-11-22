@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
@@ -65,17 +66,22 @@ class _FilesPagePageState extends State<FilesPage>
             builder: (context, state) {
               isWideScreen =
                   MediaQuery.of(context).size.width > wideScreenWidth;
-              return WillPopScope(
-                onWillPop: () async {
-                  final ret = state.goUp();
-                  if (!ret) {
+              return PopScope(
+                canPop: false,
+                onPopInvoked: (didPop) async {
+                  if (didPop) {
+                    return;
+                  }
+                  final wasHome = state.goUp();
+                  if (wasHome) {
+                    await SystemNavigator.pop();
+                  } else {
                     await refresh(
                       context,
                       stateL: stateL,
                       state: state,
                     );
                   }
-                  return ret;
                 },
                 child: RefreshIndicator(
                   key: _refreshIndicatorKey,
@@ -90,7 +96,9 @@ class _FilesPagePageState extends State<FilesPage>
                               .map(
                                 (c) => CourseWidget(
                                   course: c,
-                                  onTap: () async => loadCourse(c),
+                                  onTap: () async {
+                                    await loadCourse(c);
+                                  },
                                 ),
                               )
                               .sortedByCompare(
@@ -105,7 +113,9 @@ class _FilesPagePageState extends State<FilesPage>
                                   .map(
                                     (f) => FolderWidget(
                                       folder: f,
-                                      onTap: () async => loadFolder(f),
+                                      onTap: () async {
+                                        await loadFolder(f);
+                                      },
                                     ),
                                   )
                                   .sortedByCompare(

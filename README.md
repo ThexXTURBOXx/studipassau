@@ -41,7 +41,7 @@ The compilation from source should be straight forward (only Android):
     ```
 7. Generate the environment variable class:
     ```shell
-    flutter pub run build_runner build
+    dart run build_runner build
     ```
 8. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
     ```shell
