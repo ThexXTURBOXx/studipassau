@@ -3,14 +3,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
 import 'package:studipassau/util/geo.dart';
-import 'package:studipassau/util/navigation.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const routeRoomFinder = '/roomfinder';
 
@@ -79,7 +78,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                               ),
                             ),
                             onPressed: () async {
-                              await MapsLauncher.launchQuery(building.address);
+                              // Works only on Android
+                              final mapsUrl = Uri(
+                                scheme: 'geo',
+                                host: '0,0',
+                                queryParameters: {'q': building.address},
+                              );
+                              await launchUrl(mapsUrl);
                             },
                           ),
                         ],
@@ -106,8 +111,9 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
               attributions: [
                 TextSourceAttribution(
                   'OpenStreetMap contributors',
-                  onTap: () async =>
-                      launchUrl('https://openstreetmap.org/copyright'),
+                  onTap: () async => launchUrl(
+                    Uri.https('openstreetmap.org', '/copyright'),
+                  ),
                 ),
               ],
             ),
