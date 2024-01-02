@@ -54,13 +54,7 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
         ),
         drawer: const StudiPassauDrawer(DrawerItem.news),
         body: BlocConsumer<NewsCubit, NewsState>(
-          listener: (context, state) {
-            if (state.state == StudiPassauState.fetchError) {
-              showSnackBar(context, S.of(context).mensaError);
-            } else {
-              showErrorMessage(context, state);
-            }
-          },
+          listener: showErrorMessage,
           builder: (context, state) => RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: () async => refresh(context),

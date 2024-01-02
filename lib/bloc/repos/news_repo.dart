@@ -5,12 +5,15 @@ class NewsRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<News>> parseNews() async {
-    final dynamic jsonNews =
+    final jsonNews =
         await _studIPProvider.apiGetJson('studip/news?limit=10000');
+    final collection = jsonNews['collection'];
 
-    return (jsonNews['collection'] as Map<String, dynamic>)
-        .values
-        .map(News.fromJson)
-        .toList(growable: false);
+    return collection is Map
+        ? (collection as Map<String, dynamic>)
+            .values
+            .map(News.fromJson)
+            .toList(growable: false)
+        : [];
   }
 }
