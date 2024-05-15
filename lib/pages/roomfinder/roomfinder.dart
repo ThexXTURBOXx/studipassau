@@ -73,7 +73,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                               S.of(context).openInMaps,
                             ),
                             style: ButtonStyle(
-                              minimumSize: MaterialStateProperty.all(
+                              minimumSize: WidgetStateProperty.all(
                                 const Size.fromHeight(35),
                               ),
                             ),

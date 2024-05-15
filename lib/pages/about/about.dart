@@ -34,7 +34,7 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
           S.of(context).email,
         ),
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(35)),
+          minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
           await launchUrl(aboutEmailUrl);
@@ -46,7 +46,7 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
           S.of(context).translation,
         ),
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(35)),
+          minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
           await launchUrl(translationUrl);
@@ -58,7 +58,7 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
           S.of(context).viewSource,
         ),
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(const Size.fromHeight(35)),
+          minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
           await launchUrl(githubUrl);

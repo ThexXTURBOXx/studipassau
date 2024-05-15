@@ -135,8 +135,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                       color: getColor(
                         context,
                         date,
-                        context
-                            .theme.colorScheme.background.mediumEmphasisOnColor,
+                        context.theme.colorScheme.surface.mediumEmphasisOnColor,
                       ),
                     ),
                   ),
