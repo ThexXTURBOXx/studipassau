@@ -63,18 +63,10 @@ class FileWidget extends StatelessWidget {
               content: Text(
                 '${sprintf(s.downloads, [file.downloads])}\n'
                 '${sprintf(s.changeDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          file.changeDate * 1000,
-                        ),
-                      ),
+                      formatDateTime(file.changeDate),
                     ])}\n'
                 '${sprintf(s.createDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          file.makeDate * 1000,
-                        ),
-                      ),
+                      formatDateTime(file.makeDate),
                     ])}\n'
                 '${sprintf(s.fileSize, [filesize(file.size)])}'
                 '${formatDesc(s.fileDescription, file.description)}',
@@ -88,80 +80,44 @@ class FileWidget extends StatelessWidget {
 class File extends Equatable {
   const File({
     required this.id,
-    required this.fileId,
-    required this.folderId,
-    required this.downloads,
-    required this.description,
-    required this.contentTermsOfUseId,
-    required this.userId,
     required this.name,
+    required this.description,
     required this.makeDate,
     required this.changeDate,
+    required this.downloads,
     required this.size,
     required this.mimeType,
-    required this.storage,
-    required this.isReadable,
-    required this.isDownloadable,
-    required this.isEditable,
-    required this.isWritable,
   });
 
   factory File.fromJson(json) => File(
         id: json['id'].toString(),
-        fileId: json['file_id'].toString(),
-        folderId: json['folder_id'].toString(),
-        downloads: int.parse(json['downloads'].toString()),
-        description: json['description'].toString(),
-        contentTermsOfUseId: json['content_terms_of_use_id'].toString(),
-        userId: json['user_id'].toString(),
-        name: json['name'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        size: int.parse(json['size'].toString()),
-        mimeType: json['mime_type'].toString(),
-        storage: json['storage'].toString(),
-        isReadable: json['is_readable'].toString().parseBool(),
-        isDownloadable: json['is_downloadable'].toString().parseBool(),
-        isEditable: json['is_editable'].toString().parseBool(),
-        isWritable: json['is_writable'].toString().parseBool(),
+        name: json['attributes']['name'].toString(),
+        description: (json['attributes']['description'] ?? '').toString(),
+        makeDate: DateTime.parse(json['attributes']['mkdate']),
+        changeDate: DateTime.parse(json['attributes']['chdate']),
+        downloads: int.parse(json['attributes']['downloads'].toString()),
+        size: int.parse(json['attributes']['filesize'].toString()),
+        mimeType: json['attributes']['mime_type'].toString(),
       );
 
   final String id;
-  final String fileId;
-  final String folderId;
-  final int downloads;
-  final String description;
-  final String contentTermsOfUseId;
-  final String userId;
   final String name;
-  final int makeDate;
-  final int changeDate;
+  final String description;
+  final DateTime makeDate;
+  final DateTime changeDate;
+  final int downloads;
   final int size;
   final String mimeType;
-  final String storage;
-  final bool isReadable;
-  final bool isDownloadable;
-  final bool isEditable;
-  final bool isWritable;
 
   @override
   List<Object> get props => [
         id,
-        fileId,
-        folderId,
-        downloads,
-        description,
-        contentTermsOfUseId,
-        userId,
         name,
+        description,
         makeDate,
         changeDate,
+        downloads,
         size,
         mimeType,
-        storage,
-        isReadable,
-        isDownloadable,
-        isEditable,
-        isWritable,
       ];
 }

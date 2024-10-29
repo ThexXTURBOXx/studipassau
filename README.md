@@ -23,9 +23,9 @@ The compilation from source should be straight forward (only Android):
 3. Create a file called `.env` in the project's root and add the following lines, replacing your
    OAuth credentials:
     ```env
-    CONSUMER_KEY=<YourConsumerKeyHere>
-    CONSUMER_SECRET=<YourConsumerSecretHere>
-    SENTRY_DSN=https://0@o0.ingest.sentry.io/0
+    CLIENT_ID=<YourClientIDHere>
+    CLIENT_SECRET=<OPTIONAL>
+    SENTRY_DSN=<OPTIONAL>
     ```
 4. Activate my custom version of `intl_utils` which fixes language overrides:
     ```shell

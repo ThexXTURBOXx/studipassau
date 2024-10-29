@@ -19,8 +19,7 @@ const campusPortalUrl = 'https://campus.uni-passau.de/';
 const openMensaMensaId = 196;
 const stwnoMensaId = 'UNI-P';
 const stwnoMensaUrl = 'https://www.stwno.de/infomax/daten-extern/csv/';
-const oauthBaseUrl = '${studIpProviderUrl}dispatch.php/api';
-const apiBaseUrl = '${studIpProviderUrl}api.php/';
+const apiBaseUrl = '${studIpProviderUrl}jsonapi.php/v1/';
 const callbackUrlScheme = 'studipassau';
 const callbackUrlPath = 'oauth_callback';
 const callbackUrl = '$callbackUrlScheme://$callbackUrlPath';
@@ -165,9 +164,12 @@ String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 
 String formatEuroPrice(double value) => euroFormat.format(value);
 
+DateTime parseInLocalZone(String str) =>
+    DateTime.parse('${str.substring(0, str.lastIndexOf('+'))}Z');
+
 Color getColor(int index) =>
     (1 <= index && index < _colorTable.length ? _colorTable[index] : null) ??
-    getPref(notFoundColorPref)!;
+    Color(getPref(notFoundColorPref)!);
 
 String get appVersion => '${packageInfo.version} '
     '(${packageInfo.buildNumber})';

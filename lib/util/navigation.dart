@@ -7,6 +7,9 @@ void navigateTo(BuildContext context, String? name, {Object? arguments}) {
     final r = ModalRoute.of(context);
     if (r == null || r.settings.name != name) {
       Future.delayed(Duration.zero, () async {
+        if (!context.mounted) {
+          return;
+        }
         await Navigator.pushNamedAndRemoveUntil(
           context,
           name,

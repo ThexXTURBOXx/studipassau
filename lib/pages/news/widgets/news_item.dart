@@ -14,18 +14,16 @@ class NewsWidget extends StatelessWidget {
 
   final News news;
 
-  String get title => news.topic;
+  String get title => news.title;
 
   String subtitle(BuildContext context) => news.edited
       ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
           '${formatDateTime(changeDate)})'
       : formatDateTime(makeDate);
 
-  DateTime get makeDate =>
-      DateTime.fromMillisecondsSinceEpoch(news.makeDate * 1000, isUtc: true);
+  DateTime get makeDate => news.makeDate;
 
-  DateTime get changeDate =>
-      DateTime.fromMillisecondsSinceEpoch(news.changeDate * 1000, isUtc: true);
+  DateTime get changeDate => news.changeDate;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -52,7 +50,7 @@ class NewsWidget extends StatelessWidget {
                 width: double.maxFinite,
                 child: SingleChildScrollView(
                   child: HtmlWidget(
-                    news.bodyHtml,
+                    news.content,
                     factoryBuilder: NewsWidgetFactory.new,
                   ),
                 ),
@@ -67,73 +65,45 @@ class NewsWidgetFactory extends WidgetFactory with UrlLauncherFactory {}
 
 class News extends Equatable {
   const News({
-    required this.newsId,
-    required this.topic,
-    required this.body,
-    required this.date,
-    required this.userId,
-    required this.expire,
-    required this.allowComments,
-    required this.changeDate,
-    required this.changeDateUid,
+    required this.id,
+    required this.title,
+    required this.content,
     required this.makeDate,
-    required this.bodyHtml,
+    required this.changeDate,
   });
 
   factory News.fromJson(json) => News(
-        newsId: json['news_id'].toString(),
-        topic: json['topic'].toString(),
-        body: json['body'].toString(),
-        date: int.parse(json['date'].toString()),
-        userId: json['user_id'].toString(),
-        expire: int.parse(json['expire'].toString()),
-        allowComments: int.parse(json['allow_comments'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        changeDateUid: json['chdate_uid'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        bodyHtml: json['body_html'].toString(),
+        id: json['id'].toString(),
+        title: json['attributes']['title'].toString(),
+        content: json['attributes']['content'].toString(),
+        makeDate: DateTime.parse(json['attributes']['mkdate']),
+        changeDate: DateTime.parse(json['attributes']['chdate']),
       );
 
-  final String newsId;
-  final String topic;
-  final String body;
-  final int date;
-  final String userId;
-  final int expire;
-  final int allowComments;
-  final int changeDate;
-  final String changeDateUid;
-  final int makeDate;
-  final String bodyHtml;
+  final String id;
+  final String title;
+  final String content;
+  final DateTime makeDate;
+  final DateTime changeDate;
 
   Map<String, dynamic> toJson() => {
-        'news_id': newsId,
-        'topic': topic,
-        'body': body,
-        'date': date,
-        'user_id': userId,
-        'expire': expire,
-        'allow_comments': allowComments,
-        'chdate': changeDate,
-        'chdate_uid': changeDateUid,
-        'mkdate': makeDate,
-        'body_html': bodyHtml,
+        'id': id,
+        'attributes': {
+          'title': title,
+          'content': content,
+          'mkdate': makeDate.toString(),
+          'chdate': changeDate.toString(),
+        },
       };
 
   bool get edited => makeDate != changeDate;
 
   @override
   List<Object> get props => [
-        newsId,
-        topic,
-        body,
-        date,
-        userId,
-        expire,
-        allowComments,
-        changeDate,
-        changeDateUid,
+        id,
+        title,
+        content,
         makeDate,
-        bodyHtml,
+        changeDate,
       ];
 }

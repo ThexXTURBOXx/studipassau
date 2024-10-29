@@ -10,7 +10,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Install Flutter
         uses: subosito/flutter-action@v2
@@ -18,7 +18,7 @@ jobs:
           channel: 'stable'
 
       - name: Create .env file
-        run: echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
+        run: echo -e "CLIENT_ID=SampleID" > .env
 
       - name: Activate own intl_utils
         run: flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
@@ -30,7 +30,7 @@ jobs:
         run: flutter pub global run intl_utils:generate
 
       - name: Generate env class
-        run: flutter pub run build_runner build
+        run: dart run build_runner build
 
       - name: Analyze
         run: flutter analyze

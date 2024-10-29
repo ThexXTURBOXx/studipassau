@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:black_hole_flutter/black_hole_flutter.dart';
-import 'package:dart_date/dart_date.dart' hide Date;
+import 'package:dart_date/dart_date.dart' hide DateTimeExtension;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Interval;
 import 'package:flutter_bloc/flutter_bloc.dart';

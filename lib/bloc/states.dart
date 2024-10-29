@@ -26,13 +26,15 @@ class LoginState extends BlocState {
   LoginState copyWith({StudiPassauState? state, userData}) =>
       LoginState(state ?? this.state, userData: userData ?? this.userData);
 
-  String get userId => userData['user_id'].toString();
+  String get userId => userData['data']['id'].toString();
 
-  String get username => userData['username'].toString();
+  String get username => userData['data']['attributes']['username'].toString();
 
-  String get formattedName => userData['name']['formatted'].toString();
+  String get formattedName =>
+      userData['data']['attributes']['formatted-name'].toString();
 
-  String get avatarNormal => userData['avatar_normal'].toString();
+  String get avatarNormal =>
+      userData['data']['meta']['avatar']['normal'].toString();
 }
 
 class ScheduleState extends BlocState {

@@ -1,12 +1,10 @@
 import 'package:studipassau/bloc/providers/secure_storage_provider.dart';
 import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
 
-const userDataKey = 'user_data';
-const scheduleKey = 'schedule';
-const mensaPlanKey = 'mensa_plan';
-const oAuthTokenKey = 'oauth_token';
-const oAuthSecretKey = 'oauth_secret';
-const newsKey = 'news';
+const userDataKey = 'user_dataV2';
+const scheduleKey = 'scheduleV2';
+const mensaPlanKey = 'mensa_planV2';
+const newsKey = 'newsV2';
 
 class StorageRepo {
   final _sharedStorageProvider = SharedStorageDataProvider();

@@ -16,11 +16,11 @@ import 'package:studipassau/pages/files/widgets/folder.dart';
 class FilesCubit extends Cubit<FilesState> {
   FilesCubit(this._filesRepo)
       : super(
-          FilesState(
-            StudiPassauState.notFetched,
-            currentFolders: Queue<Folder>(),
-          ),
-        );
+    FilesState(
+      StudiPassauState.notFetched,
+      currentFolders: Queue<Folder>(),
+    ),
+  );
 
   final FilesRepo _filesRepo;
 
@@ -150,15 +150,14 @@ class FilesCubit extends Cubit<FilesState> {
     }
   }
 
-  Future<String> downloadFile(
-    File file, {
+  Future<String> downloadFile(File file, {
     ProgressListener? onProgress,
     Function? onError,
     void Function(String)? onDone,
   }) async {
     final dirs = (await getExternalStorageDirectories(
-          type: StorageDirectory.downloads,
-        )) ??
+      type: StorageDirectory.downloads,
+    )) ??
         [
           await getExternalStorageDirectory() ??
               await getApplicationDocumentsDirectory(),
@@ -167,7 +166,10 @@ class FilesCubit extends Cubit<FilesState> {
 
     return _filesRepo.downloadFile(
       toFile,
-      Request('GET', Uri.parse('${apiBaseUrl}file/${file.id}/download')),
+      Request(
+        'GET',
+        Uri.parse('${apiBaseUrl}file-refs/${file.id}/content'),
+      ),
       onProgress: onProgress,
       onError: onError,
       onDone: onDone,

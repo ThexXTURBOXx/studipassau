@@ -23,7 +23,9 @@ class StudiPassauEvent extends Event {
         title: json['title'].toString(),
         course: json['course'].toString(),
         description: json['description'].toString(),
-        categories: json['categories'].toString(),
+        categories: (json['categories'] as List<dynamic>)
+            .map((c) => c.toString())
+            .toList(growable: false),
         room: json['room'].toString(),
         canceled: json['canceled'].toString().toLowerCase() == 'true',
         backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
@@ -35,7 +37,7 @@ class StudiPassauEvent extends Event {
   final String title;
   final String course;
   final String description;
-  final String categories;
+  final List<String> categories;
   final String room;
   final bool canceled;
   final Color backgroundColor;
@@ -45,7 +47,7 @@ class StudiPassauEvent extends Event {
     String? title,
     String? course,
     String? description,
-    String? categories,
+    List<String>? categories,
     String? room,
     bool? canceled,
     Color? backgroundColor,
@@ -74,7 +76,7 @@ class StudiPassauEvent extends Event {
       ..add(StringProperty('title', title))
       ..add(StringProperty('course', course))
       ..add(StringProperty('description', description))
-      ..add(StringProperty('categories', categories))
+      ..add(IterableProperty<String>('categories', categories))
       ..add(StringProperty('room', room))
       ..add(DiagnosticsProperty<bool>('canceled', canceled))
       ..add(ColorProperty('backgroundColor', backgroundColor));

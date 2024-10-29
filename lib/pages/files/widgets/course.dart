@@ -51,20 +51,15 @@ class Course extends Equatable {
     required this.subtitle,
     required this.type,
     required this.description,
-    required this.modules,
   });
 
   factory Course.fromJson(json) => Course(
-        id: json['course_id'].toString(),
-        number: json['number'].toString(),
-        title: json['title'].toString(),
-        subtitle: json['subtitle'].toString(),
-        type: json['type'].toString(),
-        description: json['description'].toString(),
-        modules: json['modules'] is Map<String, dynamic>
-            ? (json['modules'] as Map<String, dynamic>)
-                .map((key, value) => MapEntry(key, value.toString()))
-            : <String, String>{},
+        id: json['id'].toString(),
+        number: json['attributes']['course-number'].toString(),
+        title: json['attributes']['title'].toString(),
+        subtitle: (json['attributes']['subtitle'] ?? '').toString(),
+        type: json['attributes']['course-type'].toString(),
+        description: json['attributes']['description'].toString(),
       );
 
   final String id;
@@ -73,7 +68,6 @@ class Course extends Equatable {
   final String subtitle;
   final String type;
   final String description;
-  final Map<String, String> modules;
 
   @override
   List<Object> get props => [
@@ -83,6 +77,5 @@ class Course extends Equatable {
         subtitle,
         type,
         description,
-        modules,
       ];
 }

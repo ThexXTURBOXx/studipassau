@@ -75,6 +75,24 @@ Future main() async {
       localizedTitle: 'Mensaplan',
       // TODO(Nico): icon: 'IconResource',
     ),
+    const ShortcutItem(
+      type: routeFiles,
+      // TODO(Nico): Localize!
+      localizedTitle: 'Dateien',
+      // TODO(Nico): icon: 'IconResource',
+    ),
+    const ShortcutItem(
+      type: routeRoomFinder,
+      // TODO(Nico): Localize!
+      localizedTitle: 'Raumfinder',
+      // TODO(Nico): icon: 'IconResource',
+    ),
+    const ShortcutItem(
+      type: routeNews,
+      // TODO(Nico): Localize!
+      localizedTitle: 'Neuigkeiten',
+      // TODO(Nico): icon: 'IconResource',
+    ),
   ]);
 
   Catcher2(

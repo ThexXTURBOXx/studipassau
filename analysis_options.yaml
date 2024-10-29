@@ -128,6 +128,7 @@ linter:
     - implicit_call_tearoffs
     - implicit_reopen
     - invalid_case_patterns
+    - invalid_runtime_check_with_js_interop_types
     - join_return_with_assignment
     - leading_newlines_in_multiline_strings
     - library_annotations
@@ -165,10 +166,7 @@ linter:
     - prefer_asserts_with_message
     - prefer_collection_literals
     - prefer_conditional_assignment
-    - prefer_const_constructors
     - prefer_const_constructors_in_immutables
-    - prefer_const_declarations
-    - prefer_const_literals_to_create_immutables
     - prefer_constructors_over_static_methods
     - prefer_contains
     # - prefer_double_quotes
@@ -228,6 +226,7 @@ linter:
     - unnecessary_lambdas
     - unnecessary_late
     - unnecessary_library_directive
+    - unnecessary_library_name
     - unnecessary_new
     - unnecessary_null_aware_assignments
     - unnecessary_null_aware_operator_on_extension_on_nullable

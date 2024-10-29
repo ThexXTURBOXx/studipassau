@@ -13,31 +13,33 @@ class ScheduleRepo {
   Future<List<StudiPassauEvent>> parseSchedule(String userId) async {
     final notFoundColor = Color(getPref(notFoundColorPref));
     final nonRegularColor = Color(getPref(nonRegularColorPref));
+    final canceledColor = Color(getPref(canceledColorPref));
 
     final dynamic jsonSchedule =
-        await _studIPProvider.apiGetJson('user/$userId/schedule');
-    final dynamic jsonEvents =
-        await _studIPProvider.apiGetJson('user/$userId/events?limit=10000');
+        await _studIPProvider.apiGetJson('users/$userId/schedule');
+    final dynamic jsonEvents = await _studIPProvider
+        .apiGetJson('users/$userId/events?page[limit]=10000');
     final events = _parseEvents(jsonEvents);
     final schedule = _Schedule.fromJson(jsonSchedule).events;
     final eventsCache = <StudiPassauEvent>[];
 
     for (final event in events) {
-      final start =
-          DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
-      final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
-      final eventCourseId = event.course.split('/').last;
+      final eventCourseId = event.ownerId;
 
       String? courseName;
       var color = notFoundColor;
-      if (regularLectureCategories.contains(event.categories)) {
+      if (event.canceled) {
+        color = canceledColor;
+      } else if (event.categories.any(regularLectureCategories.contains)) {
         for (final course
-            in schedule[start.weekday - 1] ?? <_ScheduleEvent>[]) {
-          if (course.id == eventCourseId &&
-              _equalsCourseEventTime(course.start, start) &&
-              _equalsCourseEventTime(course.end, end)) {
+            in schedule[event.start.weekday - 1] ?? <_ScheduleEvent>[]) {
+          if (course.ownerType == event.ownerType &&
+              (course.ownerType != 'courses' ||
+                  course.ownerId == eventCourseId) &&
+              _equalsCourseEventTime(course.start, event.start) &&
+              _equalsCourseEventTime(course.end, event.end)) {
             color = course.color;
-            courseName = course.content;
+            courseName = course.title;
             break;
           }
         }
@@ -45,11 +47,11 @@ class ScheduleRepo {
         color = nonRegularColor;
       }
 
-      if (courseName == null) {
+      if (courseName == null || courseName.isEmpty) {
         try {
-          final courseResp =
-              await _studIPProvider.apiGetJson('course/$eventCourseId');
-          courseName = '${courseResp['number']} ${courseResp['title']}';
+          final courseAttr = (await _studIPProvider
+              .apiGetJson('courses/$eventCourseId'))['data']['attributes'];
+          courseName = '${courseAttr['course-number']} ${courseAttr['title']}';
         } catch (e) {
           courseName = '';
         }
@@ -64,8 +66,8 @@ class ScheduleRepo {
           categories: event.categories,
           room: event.room,
           canceled: event.canceled,
-          start: start,
-          end: end,
+          start: event.start,
+          end: event.end,
           backgroundColor: color,
         ),
       );
@@ -80,7 +82,7 @@ class ScheduleRepo {
       for (var i = 0; i < 7; i++) {
         final day = schedule[i];
         for (final event in day ?? <_ScheduleEvent>[]) {
-          if (event.type == 'null') {
+          if (event.type == 'schedule-entries') {
             final first = (i - (today.weekday - 1) + 14) % 7;
             final hourStart = (event.start / 100).floor();
             final minuteStart = event.start % 100;
@@ -100,8 +102,8 @@ class ScheduleRepo {
                   id: event.id,
                   title: event.title,
                   course: '',
-                  description: event.content,
-                  categories: '',
+                  description: event.description,
+                  categories: [],
                   room: '',
                   canceled: false,
                   start: start + j.days,
@@ -118,13 +120,13 @@ class ScheduleRepo {
     return eventsCache;
   }
 
-  bool _equalsCourseEventTime(int courseStart, DateTime eventStart) =>
-      courseStart == eventStart.hour * 100 + eventStart.minute;
+  bool _equalsCourseEventTime(int courseTime, DateTime eventTime) =>
+      courseTime == eventTime.hour * 100 + eventTime.minute;
 
   List<_Event> _parseEvents(json) {
-    final collection = json['collection'];
-    if (collection != null && collection is List) {
-      return collection.map(_Event.fromJson).toList(growable: false);
+    final data = json['data'];
+    if (data != null && data is List) {
+      return data.map(_Event.fromJson).toList(growable: false);
     }
     return <_Event>[];
   }
@@ -133,49 +135,53 @@ class ScheduleRepo {
 class _Event extends Equatable {
   const _Event({
     required this.id,
-    required this.course,
-    required this.start,
-    required this.end,
     required this.title,
     required this.description,
+    required this.start,
+    required this.end,
     required this.categories,
     required this.room,
-    required this.canceled,
+    required this.ownerType,
+    required this.ownerId,
   });
 
   factory _Event.fromJson(json) => _Event(
-        id: json['event_id'].toString(),
-        course: json['course'].toString(),
-        start: location.translate(int.parse(json['start'].toString()) * 1000),
-        end: location.translate(int.parse(json['end'].toString()) * 1000),
-        title: json['title'].toString(),
-        description: json['description'].toString(),
-        categories: json['categories'].toString(),
-        room: json['room'].toString(),
-        canceled: json['canceled'].toString() == 'true',
+        id: json['id'].toString(),
+        title: json['attributes']['title'].toString(),
+        description: json['attributes']['description'].toString(),
+        start: parseInLocalZone(json['attributes']['start'].toString()),
+        end: parseInLocalZone(json['attributes']['end'].toString()),
+        categories: (json['attributes']['categories'] as List<dynamic>)
+            .map((c) => c.toString())
+            .toList(growable: false),
+        room: (json['attributes']['location'] ?? '').toString(),
+        ownerType: json['relationships']['owner']['data']['type'].toString(),
+        ownerId: json['relationships']['owner']['data']['id'].toString(),
       );
 
   final String id;
-  final String course;
-  final int start;
-  final int end;
   final String title;
   final String description;
-  final String categories;
+  final DateTime start;
+  final DateTime end;
+  final List<String> categories;
   final String room;
-  final bool canceled;
+  final String ownerType;
+  final String ownerId;
+
+  bool get canceled => categories.isEmpty || title.endsWith(' (fällt aus)');
 
   @override
   List<Object> get props => [
         id,
-        course,
-        start,
-        end,
         title,
         description,
+        start,
+        end,
         categories,
         room,
-        canceled,
+        ownerType,
+        ownerId,
       ];
 }
 
@@ -186,13 +192,9 @@ class _Schedule extends Equatable {
 
   factory _Schedule.fromJson(json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
-    for (var i = 0; i < 7; i++) {
-      final dynamic day = json['$i'];
-      if (day != null && day is Map) {
-        for (final event in (day as Map<String, dynamic>).entries) {
-          events[i].add(_ScheduleEvent.fromJson(event.key, event.value));
-        }
-      }
+    for (final e in json['data']) {
+      final event = _ScheduleEvent.fromJson(e);
+      events[event.weekday - 1].add(event);
     }
     return _Schedule(events: events);
   }
@@ -205,48 +207,58 @@ class _Schedule extends Equatable {
 
 class _ScheduleEvent extends Equatable {
   const _ScheduleEvent({
+    required this.type,
     required this.id,
-    required this.internalId,
+    required this.title,
+    required this.description,
     required this.start,
     required this.end,
-    required this.content,
-    required this.title,
+    required this.weekday,
     required this.color,
-    required this.type,
+    required this.ownerType,
+    required this.ownerId,
   });
 
-  factory _ScheduleEvent.fromJson(String courseId, json) {
-    final splitId = courseId.split('-');
-    return _ScheduleEvent(
-      id: splitId[0],
-      internalId: splitId.length < 2 ? '' : splitId[1],
-      start: int.parse(json['start'].toString()),
-      end: int.parse(json['end'].toString()),
-      content: json['content'].toString(),
-      title: json['title'].toString(),
-      color: getColor(int.parse(json['color'].toString())),
-      type: json['type'].toString(),
-    );
-  }
+  factory _ScheduleEvent.fromJson(json) => _ScheduleEvent(
+        type: json['type'].toString(),
+        id: json['id'].toString(),
+        title: json['attributes']['title'].toString(),
+        description: json['attributes']['description'].toString(),
+        start: int.parse(
+          json['attributes']['start'].toString().replaceAll(':', ''),
+        ),
+        end: int.parse(
+          json['attributes']['end'].toString().replaceAll(':', ''),
+        ),
+        weekday: int.parse(json['attributes']['weekday'].toString()),
+        color:
+            getColor(int.parse(json['attributes']['color']?.toString() ?? '0')),
+        ownerType: json['relationships']['owner']['data']['type'].toString(),
+        ownerId: json['relationships']['owner']['data']['id'].toString(),
+      );
 
+  final String type;
   final String id;
-  final String internalId;
+  final String title;
+  final String description;
   final int start;
   final int end;
-  final String content;
-  final String title;
+  final int weekday;
   final Color color;
-  final String type;
+  final String ownerType;
+  final String ownerId;
 
   @override
   List<Object> get props => [
+        type,
         id,
-        internalId,
+        title,
+        description,
         start,
         end,
-        content,
-        title,
+        weekday,
         color,
-        type,
+        ownerType,
+        ownerId,
       ];
 }

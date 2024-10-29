@@ -43,18 +43,10 @@ class FolderWidget extends StatelessWidget {
               title: Text(title),
               content: Text(
                 '${sprintf(s.changeDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          folder.changeDate * 1000,
-                        ),
-                      ),
+                      formatDateTime(folder.changeDate),
                     ])}\n'
                 '${sprintf(s.createDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          folder.makeDate * 1000,
-                        ),
-                      ),
+                      formatDateTime(folder.makeDate),
                     ])}'
                 '${formatDesc(s.fileDescription, folder.description)}',
               ),
@@ -67,64 +59,40 @@ class FolderWidget extends StatelessWidget {
 class Folder extends Equatable {
   const Folder({
     required this.id,
-    required this.userId,
-    required this.parentId,
-    required this.rangeId,
-    required this.rangeType,
     required this.folderType,
     required this.name,
     required this.description,
     required this.makeDate,
     required this.changeDate,
-    required this.isVisible,
-    required this.isReadable,
-    required this.isWritable,
+    required this.parentId,
   });
 
   factory Folder.fromJson(json) => Folder(
         id: json['id'].toString(),
-        userId: json['user_id'].toString(),
-        parentId: json['parent_id'].toString(),
-        rangeId: json['range_id'].toString(),
-        rangeType: json['range_type'].toString(),
-        folderType: json['folder_type'].toString(),
-        name: json['name'].toString(),
-        description: json['description'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        isVisible: json['is_visible'].toString().parseBool(),
-        isReadable: json['is_readable'].toString().parseBool(),
-        isWritable: json['is_writable'].toString().parseBool(),
+        folderType: json['attributes']['folder-type'].toString(),
+        name: json['attributes']['name'].toString(),
+        description: (json['attributes']['description'] ?? '').toString(),
+        makeDate: DateTime.parse(json['attributes']['mkdate']),
+        changeDate: DateTime.parse(json['attributes']['chdate']),
+        parentId: json['parent'].toString(),
       );
 
   final String id;
-  final String userId;
-  final String parentId;
-  final String rangeId;
-  final String rangeType;
   final String folderType;
   final String name;
   final String description;
-  final int makeDate;
-  final int changeDate;
-  final bool isVisible;
-  final bool isReadable;
-  final bool isWritable;
+  final DateTime makeDate;
+  final DateTime changeDate;
+  final String parentId;
 
   @override
   List<Object> get props => [
         id,
-        userId,
-        parentId,
-        rangeId,
-        rangeType,
         folderType,
         name,
         description,
         makeDate,
         changeDate,
-        isVisible,
-        isReadable,
-        isWritable,
+        parentId,
       ];
 }
