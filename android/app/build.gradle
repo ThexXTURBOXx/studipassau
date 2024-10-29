@@ -32,8 +32,8 @@ if (flutterVersionName == null) {
 
 android {
     namespace "studip_uni_passau.femtopedia.de.unipassaustudip"
-    compileSdk 34 // flutter.compileSdkVersion
-    ndkVersion flutter.ndkVersion
+    compileSdk 35 // flutter.compileSdkVersion
+    ndkVersion "26.1.10909125" // flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -60,7 +60,7 @@ android {
     defaultConfig {
         applicationId "studip_uni_passau.femtopedia.de.unipassaustudip"
         minSdk 22 // flutter.minSdkVersion
-        targetSdk 34 // flutter.targetSdkVersion
+        targetSdk 35 // flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
