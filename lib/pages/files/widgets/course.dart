@@ -26,7 +26,7 @@ class CourseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.folder_open),
+        leading: const Icon(Icons.import_contacts),
         title: Text(title),
         subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
         onTap: onTap,

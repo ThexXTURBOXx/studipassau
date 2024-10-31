@@ -5,6 +5,8 @@ import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 
+const goUpType = 'StudiPassau.GoUp';
+
 class FolderWidget extends StatelessWidget {
   const FolderWidget({required this.folder, super.key, this.onTap});
 
@@ -30,12 +32,17 @@ class FolderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.folder_open),
+        leading: folder.isGoUpFolder
+            ? const Icon(Icons.arrow_upward)
+            : const Icon(Icons.folder_open),
         title: Text(title),
         subtitle:
             folder.description.isNotEmpty ? Text(folder.description) : null,
         onTap: onTap,
         onLongPress: () async {
+          if (folder.isGoUpFolder) {
+            return;
+          }
           final s = S.of(context);
           await showDialog<void>(
             context: context,
@@ -77,6 +84,16 @@ class Folder extends Equatable {
         parentId: json['parent'].toString(),
       );
 
+  factory Folder.goUp() => Folder(
+        id: '0',
+        folderType: goUpType,
+        name: '..',
+        description: '',
+        makeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
+        changeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
+        parentId: '0',
+      );
+
   final String id;
   final String folderType;
   final String name;
@@ -84,6 +101,8 @@ class Folder extends Equatable {
   final DateTime makeDate;
   final DateTime changeDate;
   final String parentId;
+
+  bool get isGoUpFolder => folderType == goUpType;
 
   @override
   List<Object> get props => [

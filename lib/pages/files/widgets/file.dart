@@ -46,7 +46,7 @@ class FileWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   Text(
-                    '${file.downloads}',
+                    '${file.downloads} ',
                     style: const TextStyle(color: Colors.grey),
                   ),
                   const Icon(Icons.download, color: Colors.grey),

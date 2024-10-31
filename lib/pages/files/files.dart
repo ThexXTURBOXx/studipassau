@@ -108,7 +108,19 @@ class _FilesPagePageState extends State<FilesPage>
                               .toList(growable: false),
                         )
                       : ListView(
-                          children: <StatelessWidget>[] +
+                          children: <Widget>[
+                                FolderWidget(
+                                  folder: Folder.goUp(),
+                                  onTap: () async {
+                                    state.goUp();
+                                    await refresh(
+                                      context,
+                                      stateL: stateL,
+                                      state: state,
+                                    );
+                                  },
+                                ),
+                              ] +
                               state.folders
                                   .map(
                                     (f) => FolderWidget(
