@@ -39,21 +39,21 @@ const iconBgColor = Color(0xFF2898F1);
 
 const _colorTable = [
   null,
-  Color(0xff008512),
   Color(0xff682c8b),
   Color(0xffb02e7c),
-  Color(0xff129c94),
-  Color(0xfff26e00),
-  Color(0xffa85d45),
-  Color(0xff6ead10),
   Color(0xffd60000),
+  Color(0xfff26e00),
   Color(0xffffbd33),
-  Color(0xff66b671),
+  Color(0xff6ead10),
+  Color(0xff008512),
+  Color(0xff129c94),
+  Color(0xffa85d45),
   Color(0xffa480b9),
   Color(0xffd082b0),
-  Color(0xff71c4bf),
+  Color(0xffe66666),
   Color(0xfff7a866),
-  Color(0xffcb9e8f),
+  Color(0xffffd785),
+  Color(0xffa8ce70),
 ];
 
 const int eventDaysInFuture = 15;
