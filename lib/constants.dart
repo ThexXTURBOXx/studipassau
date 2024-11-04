@@ -167,9 +167,11 @@ String formatEuroPrice(double value) => euroFormat.format(value);
 DateTime parseInLocalZone(String str) =>
     DateTime.parse('${str.substring(0, str.lastIndexOf('+'))}Z');
 
-Color getColor(int index) =>
-    (1 <= index && index < _colorTable.length ? _colorTable[index] : null) ??
-    Color(getPref(notFoundColorPref)!);
+Color getColorOrNotFound(int index) =>
+    getColor(index) ?? Color(getPref(notFoundColorPref)!);
+
+Color? getColor(int index) =>
+    1 <= index && index < _colorTable.length ? _colorTable[index] : null;
 
 String get appVersion => '${packageInfo.version} '
     '(${packageInfo.buildNumber})';

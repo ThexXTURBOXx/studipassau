@@ -19,8 +19,11 @@ class ScheduleRepo {
         await _studIPProvider.apiGetJson('users/$userId/schedule');
     final dynamic jsonEvents = await _studIPProvider
         .apiGetJson('users/$userId/events?page[limit]=10000');
+    final dynamic jsonCMs = await _studIPProvider
+        .apiGetJson('users/$userId/course-memberships?page[limit]=10000');
     final events = _parseEvents(jsonEvents);
     final schedule = _Schedule.fromJson(jsonSchedule).events;
+    final cms = _parseCourseMemberships(jsonCMs);
     final eventsCache = <StudiPassauEvent>[];
 
     for (final event in events) {
@@ -38,7 +41,14 @@ class ScheduleRepo {
                   course.ownerId == eventCourseId) &&
               _equalsCourseEventTime(course.start, event.start) &&
               _equalsCourseEventTime(course.end, event.end)) {
-            color = course.color;
+            final cm = cms
+                .filter(
+                  (cm) =>
+                      cm.courseType == course.ownerType &&
+                      cm.courseId == course.ownerId,
+                )
+                .firstOrNull;
+            color = course.color ?? cm?.color ?? color;
             courseName = course.title;
             break;
           }
@@ -108,7 +118,7 @@ class ScheduleRepo {
                   canceled: false,
                   start: start + j.days,
                   end: end + j.days,
-                  backgroundColor: event.color,
+                  backgroundColor: event.color ?? notFoundColor,
                 ),
               );
             }
@@ -129,6 +139,14 @@ class ScheduleRepo {
       return data.map(_Event.fromJson).toList(growable: false);
     }
     return <_Event>[];
+  }
+
+  List<_CourseMembership> _parseCourseMemberships(json) {
+    final data = json['data'];
+    if (data != null && data is List) {
+      return data.map(_CourseMembership.fromJson).toList(growable: false);
+    }
+    return <_CourseMembership>[];
   }
 }
 
@@ -244,7 +262,7 @@ class _ScheduleEvent extends Equatable {
   final int start;
   final int end;
   final int weekday;
-  final Color color;
+  final Color? color;
   final String ownerType;
   final String ownerId;
 
@@ -257,8 +275,42 @@ class _ScheduleEvent extends Equatable {
         start,
         end,
         weekday,
-        color,
         ownerType,
         ownerId,
+      ];
+}
+
+class _CourseMembership extends Equatable {
+  const _CourseMembership({
+    required this.type,
+    required this.id,
+    required this.color,
+    required this.courseType,
+    required this.courseId,
+  });
+
+  factory _CourseMembership.fromJson(json) => _CourseMembership(
+        type: json['type'].toString(),
+        id: json['id'].toString(),
+        color: getColorOrNotFound(
+          int.parse(json['attributes']['group']?.toString() ?? '0') + 1,
+        ),
+        courseType: json['relationships']['course']['data']['type'].toString(),
+        courseId: json['relationships']['course']['data']['id'].toString(),
+      );
+
+  final String type;
+  final String id;
+  final Color color;
+  final String courseType;
+  final String courseId;
+
+  @override
+  List<Object> get props => [
+        type,
+        id,
+        color,
+        courseType,
+        courseId,
       ];
 }
