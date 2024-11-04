@@ -248,12 +248,16 @@ class _ScheduleEvent extends Equatable {
         end: int.parse(
           json['attributes']['end'].toString().replaceAll(':', ''),
         ),
-        weekday: int.parse(json['attributes']['weekday'].toString()),
+        weekday: _normalizeWeekday(
+          int.parse(json['attributes']['weekday'].toString()),
+        ),
         color:
             getColor(int.parse(json['attributes']['color']?.toString() ?? '0')),
         ownerType: json['relationships']['owner']['data']['type'].toString(),
         ownerId: json['relationships']['owner']['data']['id'].toString(),
       );
+
+  static int _normalizeWeekday(int weekday) => weekday == 0 ? 7 : weekday;
 
   final String type;
   final String id;
