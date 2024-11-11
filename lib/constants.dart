@@ -158,8 +158,19 @@ String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 
 String formatEuroPrice(double value) => euroFormat.format(value);
 
-DateTime parseInLocalZone(String str) =>
-    DateTime.parse('${str.substring(0, str.lastIndexOf('+'))}Z');
+final _timeZoneStart = RegExp(r'\+|-');
+
+DateTime parseInLocalZone(String str) {
+  if (str.endsWith('Z')) {
+    return DateTime.parse(str);
+  }
+  if (str.contains(_timeZoneStart, str.indexOf('T'))) {
+    return DateTime.parse(
+      '${str.substring(0, str.lastIndexOf(_timeZoneStart))}Z',
+    );
+  }
+  return DateTime.parse(str);
+}
 
 Color getColorOrNotFound(int index) =>
     getColor(index) ?? Color(getPref(notFoundColorPref)!);
