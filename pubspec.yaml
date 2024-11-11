@@ -56,7 +56,6 @@ dependencies:
   studip: ^3.0.0-alpha.0
   supercharged: ^2.1.1
   timetable: ^1.0.0-alpha.8
-  timezone: ^0.9.0
   tuple: ^2.0.1
   url_launcher: ^6.0.9
 

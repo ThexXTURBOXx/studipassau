@@ -23,16 +23,11 @@ import 'package:studipassau/pages/roomfinder/roomfinder.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timetable/timetable.dart';
-import 'package:timezone/data/latest_10y.dart' as tz;
-import 'package:timezone/timezone.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Intl.defaultLocale = await findSystemLocale();
-
-  tz.initializeTimeZones();
-  setLocalLocation(location);
 
   packageInfo = await PackageInfo.fromPlatform();
 

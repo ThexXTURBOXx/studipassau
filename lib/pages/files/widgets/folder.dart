@@ -79,8 +79,8 @@ class Folder extends Equatable {
         folderType: json['attributes']['folder-type'].toString(),
         name: json['attributes']['name'].toString(),
         description: (json['attributes']['description'] ?? '').toString(),
-        makeDate: DateTime.parse(json['attributes']['mkdate']),
-        changeDate: DateTime.parse(json['attributes']['chdate']),
+        makeDate: parseInLocalZone(json['attributes']['mkdate']),
+        changeDate: parseInLocalZone(json['attributes']['chdate']),
         parentId: json['parent'].toString(),
       );
 

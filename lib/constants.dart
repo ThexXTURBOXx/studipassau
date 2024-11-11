@@ -11,7 +11,6 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
-import 'package:timezone/timezone.dart';
 
 const envFile = '.env';
 const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
@@ -23,7 +22,6 @@ const apiBaseUrl = '${studIpProviderUrl}jsonapi.php/v1/';
 const callbackUrlScheme = 'studipassau';
 const callbackUrlPath = 'oauth_callback';
 const callbackUrl = '$callbackUrlScheme://$callbackUrlPath';
-const studIpTimeZone = 'Europe/Berlin';
 const bugReportEmail = 'info@femtopedia.de';
 const bugReportSubject = '[Bug] Bug in StudiPassau';
 const bugReportUrl = 'mailto:$bugReportEmail?subject=$bugReportSubject';
@@ -148,10 +146,6 @@ late PackageInfo packageInfo;
 late BasePrefService prefService;
 
 String targetRoute = routeSchedule;
-
-Location? _location;
-
-Location get location => _location ?? (_location = getLocation(studIpTimeZone));
 
 String formatDate(DateTime dateTime) => dateFormat.format(dateTime);
 

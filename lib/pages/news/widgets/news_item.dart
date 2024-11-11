@@ -76,8 +76,8 @@ class News extends Equatable {
         id: json['id'].toString(),
         title: json['attributes']['title'].toString(),
         content: json['attributes']['content'].toString(),
-        makeDate: DateTime.parse(json['attributes']['mkdate']),
-        changeDate: DateTime.parse(json['attributes']['chdate']),
+        makeDate: parseInLocalZone(json['attributes']['mkdate']),
+        changeDate: parseInLocalZone(json['attributes']['chdate']),
       );
 
   final String id;
