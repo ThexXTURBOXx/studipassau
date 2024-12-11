@@ -90,7 +90,7 @@ class StudiPassauEvent extends Event {
         'categories': categories,
         'room': room,
         'canceled': canceled,
-        'backgroundColor': backgroundColor.value,
+        'backgroundColor': backgroundColor.intValue,
         'start': dateTimeSaveFormat.format(start),
         'end': dateTimeSaveFormat.format(end),
       };

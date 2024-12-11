@@ -61,6 +61,5 @@ class LoginCubit extends Cubit<LoginState> {
   void _setApiClient(StudIPClient client) {
     StudIPDataProvider.apiClient = client;
     StudIPHttpFileService.apiClient = client;
-    StudIPCacheManager.construct();
   }
 }

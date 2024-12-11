@@ -158,7 +158,7 @@ String formatWeekday(DateTime dateTime) => weekdayFormat.format(dateTime);
 
 String formatEuroPrice(double value) => euroFormat.format(value);
 
-final _timeZoneStart = RegExp(r'\+|-');
+final _timeZoneStart = RegExp(r'[+\-]');
 
 DateTime parseInLocalZone(String str) {
   if (str.endsWith('Z')) {
@@ -183,6 +183,16 @@ String get appVersion => '${packageInfo.version} '
 
 extension BoolParsing on String {
   bool parseBool() => toLowerCase() == 'true';
+}
+
+extension ColorValue on Color {
+  static int _floatToInt8(double x) => (x * 255.0).round() & 0xff;
+
+  int get intValue =>
+      _floatToInt8(a) << 24 |
+      _floatToInt8(r) << 16 |
+      _floatToInt8(g) << 8 |
+      _floatToInt8(b) << 0;
 }
 
 void showErrorMessage(BuildContext context, BlocState state) {

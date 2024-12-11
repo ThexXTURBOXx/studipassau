@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pref/pref.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
@@ -74,7 +75,7 @@ class PrefColor extends StatelessWidget {
           child: ColorPicker(
             enableAlpha: enableAlpha,
             pickerColor: Color(newValue),
-            onColorChanged: (v) => newValue = v.value,
+            onColorChanged: (v) => newValue = v.intValue,
           ),
         ),
         actions: <Widget>[

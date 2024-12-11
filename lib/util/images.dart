@@ -6,11 +6,9 @@ class StudIPCacheManager extends CacheManager {
   StudIPCacheManager._()
       : super(Config(key, fileService: StudIPHttpFileService()));
 
-  factory StudIPCacheManager.construct() => instance = StudIPCacheManager._();
-
   static const key = 'StudIPCache';
 
-  static late StudIPCacheManager instance;
+  static final StudIPCacheManager instance = StudIPCacheManager._();
 }
 
 class StudIPHttpFileService extends HttpFileService {
