@@ -12,7 +12,7 @@ import 'package:studipassau/util/images.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._storageRepo)
-      : super(const LoginState(StudiPassauState.notAuthenticated));
+    : super(const LoginState(StudiPassauState.notAuthenticated));
 
   final StorageRepo _storageRepo;
 

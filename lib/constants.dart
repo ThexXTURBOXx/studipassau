@@ -29,7 +29,8 @@ const aboutEmail = 'nico.mexis@kabelmail.de';
 const aboutSubject = 'StudiPassau Feedback';
 const aboutEmailUrl = 'mailto:$aboutEmail?subject=$aboutSubject';
 const telegramBotUrl = 'http://t.me/UniPassauBot';
-const translationUrl = 'https://app.localizely.com/projects/'
+const translationUrl =
+    'https://app.localizely.com/projects/'
     '32cea4c8-ff53-4e34-94d8-bcdc8643b236/main/translations';
 const githubUrl = 'https://github.com/ThexXTURBOXx/studipassau';
 
@@ -178,7 +179,8 @@ Color getColorOrNotFound(int index) =>
 Color? getColor(int index) =>
     1 <= index && index < _colorTable.length ? _colorTable[index] : null;
 
-String get appVersion => '${packageInfo.version} '
+String get appVersion =>
+    '${packageInfo.version} '
     '(${packageInfo.buildNumber})';
 
 extension BoolParsing on String {
@@ -220,8 +222,9 @@ Future<void> installRootCertificates() async {
     // API 26 is Oreo (8.0), older versions have outdated root certificates!
     if (androidInfo.version.sdkInt < 26) {
       final data = await PlatformAssetBundle().load('assets/ca/root-certs.pem');
-      SecurityContext.defaultContext
-          .setTrustedCertificatesBytes(data.buffer.asUint8List());
+      SecurityContext.defaultContext.setTrustedCertificatesBytes(
+        data.buffer.asUint8List(),
+      );
     }
   }
 }

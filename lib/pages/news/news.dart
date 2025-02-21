@@ -41,21 +41,22 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).newsTitle),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              tooltip: S.of(context).refresh,
-              onPressed: () async =>
-                  await _refreshIndicatorKey.currentState?.show(),
-            ),
-          ],
+    appBar: AppBar(
+      title: Text(S.of(context).newsTitle),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: S.of(context).refresh,
+          onPressed:
+              () async => await _refreshIndicatorKey.currentState?.show(),
         ),
-        drawer: const StudiPassauDrawer(DrawerItem.news),
-        body: BlocConsumer<NewsCubit, NewsState>(
-          listener: showErrorMessage,
-          builder: (context, state) => RefreshIndicator(
+      ],
+    ),
+    drawer: const StudiPassauDrawer(DrawerItem.news),
+    body: BlocConsumer<NewsCubit, NewsState>(
+      listener: showErrorMessage,
+      builder:
+          (context, state) => RefreshIndicator(
             key: _refreshIndicatorKey,
             onRefresh: () async => refresh(context),
             child: ListView(
@@ -64,13 +65,11 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
                   .toList(growable: false),
             ),
           ),
-        ),
-      );
+    ),
+  );
 
   Future<void> refresh(BuildContext context) async {
-    await context.read<NewsCubit>().fetchNews(
-          onlineSync: onlineSync,
-        );
+    await context.read<NewsCubit>().fetchNews(onlineSync: onlineSync);
     onlineSync = true;
   }
 }

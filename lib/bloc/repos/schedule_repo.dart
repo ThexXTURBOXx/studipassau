@@ -15,12 +15,15 @@ class ScheduleRepo {
     final nonRegularColor = Color(getPref(nonRegularColorPref));
     final canceledColor = Color(getPref(canceledColorPref));
 
-    final dynamic jsonSchedule =
-        await _studIPProvider.apiGetJson('users/$userId/schedule');
-    final dynamic jsonEvents = await _studIPProvider
-        .apiGetJson('users/$userId/events?page[limit]=10000');
-    final dynamic jsonCMs = await _studIPProvider
-        .apiGetJson('users/$userId/course-memberships?page[limit]=10000');
+    final dynamic jsonSchedule = await _studIPProvider.apiGetJson(
+      'users/$userId/schedule',
+    );
+    final dynamic jsonEvents = await _studIPProvider.apiGetJson(
+      'users/$userId/events?page[limit]=10000',
+    );
+    final dynamic jsonCMs = await _studIPProvider.apiGetJson(
+      'users/$userId/course-memberships?page[limit]=10000',
+    );
     final events = _parseEvents(jsonEvents);
     final schedule = _Schedule.fromJson(jsonSchedule).events;
     final cms = _parseCourseMemberships(jsonCMs);
@@ -41,13 +44,14 @@ class ScheduleRepo {
                   course.ownerId == eventCourseId) &&
               _equalsCourseEventTime(course.start, event.start) &&
               _equalsCourseEventTime(course.end, event.end)) {
-            final cm = cms
-                .filter(
-                  (cm) =>
-                      cm.courseType == course.ownerType &&
-                      cm.courseId == course.ownerId,
-                )
-                .firstOrNull;
+            final cm =
+                cms
+                    .filter(
+                      (cm) =>
+                          cm.courseType == course.ownerType &&
+                          cm.courseId == course.ownerId,
+                    )
+                    .firstOrNull;
             color = course.color ?? cm?.color ?? color;
             courseName = course.title;
             break;
@@ -59,8 +63,10 @@ class ScheduleRepo {
 
       if (courseName == null || courseName.isEmpty) {
         try {
-          final courseAttr = (await _studIPProvider
-              .apiGetJson('courses/$eventCourseId'))['data']['attributes'];
+          final courseAttr =
+              (await _studIPProvider.apiGetJson(
+                'courses/$eventCourseId',
+              ))['data']['attributes'];
           courseName = '${courseAttr['course-number']} ${courseAttr['title']}';
         } catch (e) {
           courseName = '';
@@ -164,18 +170,18 @@ class _Event extends Equatable {
   });
 
   factory _Event.fromJson(json) => _Event(
-        id: json['id'].toString(),
-        title: json['attributes']['title'].toString(),
-        description: json['attributes']['description'].toString(),
-        start: parseInLocalZone(json['attributes']['start'].toString()),
-        end: parseInLocalZone(json['attributes']['end'].toString()),
-        categories: (json['attributes']['categories'] as List<dynamic>)
-            .map((c) => c.toString())
-            .toList(growable: false),
-        room: (json['attributes']['location'] ?? '').toString(),
-        ownerType: json['relationships']['owner']['data']['type'].toString(),
-        ownerId: json['relationships']['owner']['data']['id'].toString(),
-      );
+    id: json['id'].toString(),
+    title: json['attributes']['title'].toString(),
+    description: json['attributes']['description'].toString(),
+    start: parseInLocalZone(json['attributes']['start'].toString()),
+    end: parseInLocalZone(json['attributes']['end'].toString()),
+    categories: (json['attributes']['categories'] as List<dynamic>)
+        .map((c) => c.toString())
+        .toList(growable: false),
+    room: (json['attributes']['location'] ?? '').toString(),
+    ownerType: json['relationships']['owner']['data']['type'].toString(),
+    ownerId: json['relationships']['owner']['data']['id'].toString(),
+  );
 
   final String id;
   final String title;
@@ -191,22 +197,20 @@ class _Event extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        title,
-        description,
-        start,
-        end,
-        categories,
-        room,
-        ownerType,
-        ownerId,
-      ];
+    id,
+    title,
+    description,
+    start,
+    end,
+    categories,
+    room,
+    ownerType,
+    ownerId,
+  ];
 }
 
 class _Schedule extends Equatable {
-  const _Schedule({
-    required this.events,
-  });
+  const _Schedule({required this.events});
 
   factory _Schedule.fromJson(json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
@@ -238,24 +242,21 @@ class _ScheduleEvent extends Equatable {
   });
 
   factory _ScheduleEvent.fromJson(json) => _ScheduleEvent(
-        type: json['type'].toString(),
-        id: json['id'].toString(),
-        title: json['attributes']['title'].toString(),
-        description: json['attributes']['description'].toString(),
-        start: int.parse(
-          json['attributes']['start'].toString().replaceAll(':', ''),
-        ),
-        end: int.parse(
-          json['attributes']['end'].toString().replaceAll(':', ''),
-        ),
-        weekday: _normalizeWeekday(
-          int.parse(json['attributes']['weekday'].toString()),
-        ),
-        color:
-            getColor(int.parse(json['attributes']['color']?.toString() ?? '0')),
-        ownerType: json['relationships']['owner']['data']['type'].toString(),
-        ownerId: json['relationships']['owner']['data']['id'].toString(),
-      );
+    type: json['type'].toString(),
+    id: json['id'].toString(),
+    title: json['attributes']['title'].toString(),
+    description: json['attributes']['description'].toString(),
+    start: int.parse(
+      json['attributes']['start'].toString().replaceAll(':', ''),
+    ),
+    end: int.parse(json['attributes']['end'].toString().replaceAll(':', '')),
+    weekday: _normalizeWeekday(
+      int.parse(json['attributes']['weekday'].toString()),
+    ),
+    color: getColor(int.parse(json['attributes']['color']?.toString() ?? '0')),
+    ownerType: json['relationships']['owner']['data']['type'].toString(),
+    ownerId: json['relationships']['owner']['data']['id'].toString(),
+  );
 
   static int _normalizeWeekday(int weekday) => weekday == 0 ? 7 : weekday;
 
@@ -272,16 +273,16 @@ class _ScheduleEvent extends Equatable {
 
   @override
   List<Object> get props => [
-        type,
-        id,
-        title,
-        description,
-        start,
-        end,
-        weekday,
-        ownerType,
-        ownerId,
-      ];
+    type,
+    id,
+    title,
+    description,
+    start,
+    end,
+    weekday,
+    ownerType,
+    ownerId,
+  ];
 }
 
 class _CourseMembership extends Equatable {
@@ -294,14 +295,14 @@ class _CourseMembership extends Equatable {
   });
 
   factory _CourseMembership.fromJson(json) => _CourseMembership(
-        type: json['type'].toString(),
-        id: json['id'].toString(),
-        color: getColorOrNotFound(
-          int.parse(json['attributes']['group']?.toString() ?? '0') + 1,
-        ),
-        courseType: json['relationships']['course']['data']['type'].toString(),
-        courseId: json['relationships']['course']['data']['id'].toString(),
-      );
+    type: json['type'].toString(),
+    id: json['id'].toString(),
+    color: getColorOrNotFound(
+      int.parse(json['attributes']['group']?.toString() ?? '0') + 1,
+    ),
+    courseType: json['relationships']['course']['data']['type'].toString(),
+    courseId: json['relationships']['course']['data']['id'].toString(),
+  );
 
   final String type;
   final String id;
@@ -310,11 +311,5 @@ class _CourseMembership extends Equatable {
   final String courseId;
 
   @override
-  List<Object> get props => [
-        type,
-        id,
-        color,
-        courseType,
-        courseId,
-      ];
+  List<Object> get props => [type, id, color, courseType, courseId];
 }

@@ -28,8 +28,8 @@ Future<void> launchUrl(
     await canLaunchUrlString(url)
         ? await launchUrlString(url, mode: mode)
         : throw PlatformException(
-            code: 'CANT_LAUNCH_URL',
-            message: "Can't launch URL $url",
-          );
+          code: 'CANT_LAUNCH_URL',
+          message: "Can't launch URL $url",
+        );
 
 void closeDrawer(BuildContext context) => Scaffold.of(context).openEndDrawer();

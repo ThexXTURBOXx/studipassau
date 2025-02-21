@@ -12,10 +12,7 @@ class StudIPDataProvider {
   // ignore: avoid_setters_without_getters
   static set apiClient(StudIPClient newClient) => _apiClient = newClient;
 
-  Future<dynamic> apiGetJson(
-    String endpoint, {
-    Map<String, String>? headers,
-  }) =>
+  Future<dynamic> apiGetJson(String endpoint, {Map<String, String>? headers}) =>
       _apiClient.apiGetJson(endpoint, headers: headers);
 
   Future<String> downloadFile(
@@ -28,25 +25,23 @@ class StudIPDataProvider {
     final output = toFile.openWrite();
     var downloaded = 0;
     final resp = _apiClient.send(request);
-    resp.asStream().listen(
-      (r) {
-        r.stream.listen(
-          (chunk) {
-            if (r.contentLength != null) {
-              onProgress?.call((downloaded * 100) / r.contentLength!);
-            }
-            output.add(chunk);
-            downloaded += chunk.length;
-          },
-          onError: onError,
-          onDone: () async {
-            onProgress?.call(100);
-            await output.close();
-            onDone?.call(toFile.path);
-          },
-        );
-      },
-    );
+    resp.asStream().listen((r) {
+      r.stream.listen(
+        (chunk) {
+          if (r.contentLength != null) {
+            onProgress?.call((downloaded * 100) / r.contentLength!);
+          }
+          output.add(chunk);
+          downloaded += chunk.length;
+        },
+        onError: onError,
+        onDone: () async {
+          onProgress?.call(100);
+          await output.close();
+          onDone?.call(toFile.path);
+        },
+      );
+    });
     return toFile.path;
   }
 }

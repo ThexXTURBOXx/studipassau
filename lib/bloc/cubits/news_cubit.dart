@@ -9,7 +9,7 @@ import 'package:studipassau/pages/news/widgets/news_item.dart';
 
 class NewsCubit extends Cubit<NewsState> {
   NewsCubit(this._storageRepo, this._newsRepo)
-      : super(const NewsState(StudiPassauState.notFetched));
+    : super(const NewsState(StudiPassauState.notFetched));
 
   final StorageRepo _storageRepo;
 
@@ -48,12 +48,7 @@ class NewsCubit extends Cubit<NewsState> {
         key: newsKey,
         value: news.map(jsonEncode).toList(growable: false),
       );
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          news: news,
-        ),
-      );
+      emit(state.copyWith(state: StudiPassauState.fetched, news: news));
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {

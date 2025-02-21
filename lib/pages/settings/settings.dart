@@ -67,222 +67,220 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).settingsTitle),
+    appBar: AppBar(title: Text(S.of(context).settingsTitle)),
+    drawer: const StudiPassauDrawer(DrawerItem.settings),
+    body: PrefPage(
+      children: [
+        PrefPageButton(
+          leading: const Icon(Icons.tune),
+          pageTitle: Text(S.of(context).generalPrefCatLongTitle),
+          title: Text(S.of(context).generalPrefCatShortTitle),
+          subtitle: Text(S.of(context).generalPrefCatDesc),
+          page: PrefPage(
+            children: [
+              PrefTitle(title: Text(S.of(context).themePref)),
+              PrefDialogButton(
+                title: Text(S.of(context).uiThemePrefTitle),
+                subtitle: Text(S.of(context).uiThemePrefDesc),
+                dialog: PrefDialog(
+                  title: Text(S.of(context).uiThemePrefTitle),
+                  children: [
+                    PrefRadio(
+                      title: Text(S.of(context).uiThemePrefDefault),
+                      value: uiThemePrefDefault,
+                      pref: uiThemePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).uiThemePrefLight),
+                      value: uiThemePrefLight,
+                      pref: uiThemePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).uiThemePrefDark),
+                      value: uiThemePrefDark,
+                      pref: uiThemePref,
+                    ),
+                  ],
+                ),
+              ),
+              PrefSwitch(
+                title: Text(S.of(context).material3PrefTitle),
+                subtitle: Text(S.of(context).material3PrefDesc),
+                pref: material3Pref,
+              ),
+              PrefTitle(title: Text(S.of(context).othersPref)),
+              PrefDropdown(
+                title: Text(S.of(context).startRoutePrefTitle),
+                subtitle: Text(S.of(context).startRoutePrefDesc),
+                fullWidth: false,
+                pref: startRoutePref,
+                items: [
+                  DropdownMenuItem(
+                    value: routeSchedule,
+                    child: Text(S.of(context).schedulePrefCatShortTitle),
+                  ),
+                  DropdownMenuItem(
+                    value: routeMensa,
+                    child: Text(S.of(context).mensaPrefCatShortTitle),
+                  ),
+                  DropdownMenuItem(
+                    value: routeFiles,
+                    child: Text(S.of(context).filesPrefCatShortTitle),
+                  ),
+                  DropdownMenuItem(
+                    value: routeRoomFinder,
+                    child: Text(S.of(context).roomFinderPrefCatShortTitle),
+                  ),
+                  DropdownMenuItem(
+                    value: routeNews,
+                    child: Text(S.of(context).newsPrefCatShortTitle),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        drawer: const StudiPassauDrawer(DrawerItem.settings),
-        body: PrefPage(
-          children: [
-            PrefPageButton(
-              leading: const Icon(Icons.tune),
-              pageTitle: Text(S.of(context).generalPrefCatLongTitle),
-              title: Text(S.of(context).generalPrefCatShortTitle),
-              subtitle: Text(S.of(context).generalPrefCatDesc),
-              page: PrefPage(
-                children: [
-                  PrefTitle(title: Text(S.of(context).themePref)),
-                  PrefDialogButton(
-                    title: Text(S.of(context).uiThemePrefTitle),
-                    subtitle: Text(S.of(context).uiThemePrefDesc),
-                    dialog: PrefDialog(
-                      title: Text(S.of(context).uiThemePrefTitle),
-                      children: [
-                        PrefRadio(
-                          title: Text(S.of(context).uiThemePrefDefault),
-                          value: uiThemePrefDefault,
-                          pref: uiThemePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).uiThemePrefLight),
-                          value: uiThemePrefLight,
-                          pref: uiThemePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).uiThemePrefDark),
-                          value: uiThemePrefDark,
-                          pref: uiThemePref,
-                        ),
-                      ],
-                    ),
-                  ),
-                  PrefSwitch(
-                    title: Text(S.of(context).material3PrefTitle),
-                    subtitle: Text(S.of(context).material3PrefDesc),
-                    pref: material3Pref,
-                  ),
-                  PrefTitle(title: Text(S.of(context).othersPref)),
-                  PrefDropdown(
-                    title: Text(S.of(context).startRoutePrefTitle),
-                    subtitle: Text(S.of(context).startRoutePrefDesc),
-                    fullWidth: false,
-                    pref: startRoutePref,
-                    items: [
-                      DropdownMenuItem(
-                        value: routeSchedule,
-                        child: Text(S.of(context).schedulePrefCatShortTitle),
-                      ),
-                      DropdownMenuItem(
-                        value: routeMensa,
-                        child: Text(S.of(context).mensaPrefCatShortTitle),
-                      ),
-                      DropdownMenuItem(
-                        value: routeFiles,
-                        child: Text(S.of(context).filesPrefCatShortTitle),
-                      ),
-                      DropdownMenuItem(
-                        value: routeRoomFinder,
-                        child: Text(S.of(context).roomFinderPrefCatShortTitle),
-                      ),
-                      DropdownMenuItem(
-                        value: routeNews,
-                        child: Text(S.of(context).newsPrefCatShortTitle),
-                      ),
-                    ],
-                  ),
-                ],
+        PrefPageButton(
+          leading: const Icon(Icons.event_note),
+          pageTitle: Text(S.of(context).schedulePrefCatLongTitle),
+          title: Text(S.of(context).schedulePrefCatShortTitle),
+          subtitle: Text(S.of(context).schedulePrefCatDesc),
+          page: PrefPage(
+            children: [
+              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefSwitch(
+                title: Text(S.of(context).autoSyncPrefTitle),
+                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                pref: scheduleAutoSyncPref,
               ),
-            ),
-            PrefPageButton(
-              leading: const Icon(Icons.event_note),
-              pageTitle: Text(S.of(context).schedulePrefCatLongTitle),
-              title: Text(S.of(context).schedulePrefCatShortTitle),
-              subtitle: Text(S.of(context).schedulePrefCatDesc),
-              page: PrefPage(
-                children: [
-                  PrefTitle(title: Text(S.of(context).syncPref)),
-                  PrefSwitch(
-                    title: Text(S.of(context).autoSyncPrefTitle),
-                    subtitle: Text(S.of(context).autoSyncPrefDesc),
-                    pref: scheduleAutoSyncPref,
-                  ),
-                  PrefTitle(title: Text(S.of(context).colorsPref)),
-                  PrefColor(
-                    title: Text(S.of(context).nonRegularColorPrefTitle),
-                    subtitle: Text(S.of(context).nonRegularColorPrefDesc),
-                    pref: nonRegularColorPref,
-                  ),
-                  PrefColor(
-                    title: Text(S.of(context).lectureNotFoundColorPrefTitle),
-                    subtitle: Text(S.of(context).lectureNotFoundColorPrefDesc),
-                    pref: notFoundColorPref,
-                  ),
-                  PrefColor(
-                    title: Text(S.of(context).lectureCanceledColorPrefTitle),
-                    subtitle: Text(S.of(context).lectureCanceledColorPrefDesc),
-                    pref: canceledColorPref,
-                  ),
-                  PrefTitle(title: Text(S.of(context).categoriesPref)),
-                  PrefSwitch(
-                    title: Text(S.of(context).showScheduleOnlyPrefTitle),
-                    subtitle: Text(S.of(context).showScheduleOnlyPrefDesc),
-                    pref: showScheduleOnlyPref,
-                  ),
-                ],
+              PrefTitle(title: Text(S.of(context).colorsPref)),
+              PrefColor(
+                title: Text(S.of(context).nonRegularColorPrefTitle),
+                subtitle: Text(S.of(context).nonRegularColorPrefDesc),
+                pref: nonRegularColorPref,
               ),
-            ),
-            PrefPageButton(
-              leading: const Icon(Icons.restaurant),
-              pageTitle: Text(S.of(context).mensaPrefCatLongTitle),
-              title: Text(S.of(context).mensaPrefCatShortTitle),
-              subtitle: Text(S.of(context).mensaPrefCatDesc),
-              page: PrefPage(
-                children: [
-                  PrefTitle(title: Text(S.of(context).syncPref)),
-                  PrefSwitch(
-                    title: Text(S.of(context).autoSyncPrefTitle),
-                    subtitle: Text(S.of(context).autoSyncPrefDesc),
-                    pref: mensaAutoSyncPref,
-                  ),
-                  PrefDialogButton(
-                    title: Text(S.of(context).mensaSourcePrefTitle),
-                    subtitle: Text(S.of(context).mensaSourcePrefDesc),
-                    dialog: PrefDialog(
-                      title: Text(S.of(context).mensaSourcePrefTitle),
-                      children: [
-                        PrefRadio(
-                          title: Text(S.of(context).mensaSourcePrefStwno),
-                          value: mensaSourcePrefStwno,
-                          pref: mensaSourcePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).mensaSourcePrefOM),
-                          value: mensaSourcePrefOM,
-                          pref: mensaSourcePref,
-                        ),
-                      ],
-                    ),
-                  ),
-                  PrefTitle(title: Text(S.of(context).miscPref)),
-                  PrefDialogButton(
-                    title: Text(S.of(context).mensaTypePrefTitle),
-                    subtitle: Text(S.of(context).mensaTypePrefDesc),
-                    dialog: PrefDialog(
-                      title: Text(S.of(context).mensaTypePrefTitle),
-                      children: [
-                        PrefRadio(
-                          title: Text(S.of(context).mensaTypePrefStudent),
-                          value: mensaTypePrefStudent,
-                          pref: mensaTypePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).mensaTypePrefEmployee),
-                          value: mensaTypePrefEmployee,
-                          pref: mensaTypePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).mensaTypePrefGuest),
-                          value: mensaTypePrefGuest,
-                          pref: mensaTypePref,
-                        ),
-                        PrefRadio(
-                          title: Text(S.of(context).mensaTypePrefPupil),
-                          value: mensaTypePrefPupil,
-                          pref: mensaTypePref,
-                        ),
-                      ],
-                    ),
-                  ),
-                  PrefTitle(title: Text(S.of(context).colorsPref)),
-                  PrefColor(
-                    title: Text(S.of(context).soupColorPrefTitle),
-                    subtitle: Text(S.of(context).soupColorPrefDesc),
-                    pref: soupColorPref,
-                  ),
-                  PrefColor(
-                    title: Text(S.of(context).mainDishColorPrefTitle),
-                    subtitle: Text(S.of(context).mainDishColorPrefDesc),
-                    pref: mainDishColorPref,
-                  ),
-                  PrefColor(
-                    title: Text(S.of(context).garnishColorPrefTitle),
-                    subtitle: Text(S.of(context).garnishColorPrefDesc),
-                    pref: garnishColorPref,
-                  ),
-                  PrefColor(
-                    title: Text(S.of(context).dessertColorPrefTitle),
-                    subtitle: Text(S.of(context).dessertColorPrefDesc),
-                    pref: dessertColorPref,
-                  ),
-                ],
+              PrefColor(
+                title: Text(S.of(context).lectureNotFoundColorPrefTitle),
+                subtitle: Text(S.of(context).lectureNotFoundColorPrefDesc),
+                pref: notFoundColorPref,
               ),
-            ),
-            PrefPageButton(
-              leading: const Icon(Icons.newspaper),
-              pageTitle: Text(S.of(context).newsPrefCatLongTitle),
-              title: Text(S.of(context).newsPrefCatShortTitle),
-              subtitle: Text(S.of(context).newsPrefCatDesc),
-              page: PrefPage(
-                children: [
-                  PrefTitle(title: Text(S.of(context).syncPref)),
-                  PrefSwitch(
-                    title: Text(S.of(context).autoSyncPrefTitle),
-                    subtitle: Text(S.of(context).autoSyncPrefDesc),
-                    pref: newsAutoSyncPref,
-                  ),
-                ],
+              PrefColor(
+                title: Text(S.of(context).lectureCanceledColorPrefTitle),
+                subtitle: Text(S.of(context).lectureCanceledColorPrefDesc),
+                pref: canceledColorPref,
               ),
-            ),
-          ],
+              PrefTitle(title: Text(S.of(context).categoriesPref)),
+              PrefSwitch(
+                title: Text(S.of(context).showScheduleOnlyPrefTitle),
+                subtitle: Text(S.of(context).showScheduleOnlyPrefDesc),
+                pref: showScheduleOnlyPref,
+              ),
+            ],
+          ),
         ),
-      );
+        PrefPageButton(
+          leading: const Icon(Icons.restaurant),
+          pageTitle: Text(S.of(context).mensaPrefCatLongTitle),
+          title: Text(S.of(context).mensaPrefCatShortTitle),
+          subtitle: Text(S.of(context).mensaPrefCatDesc),
+          page: PrefPage(
+            children: [
+              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefSwitch(
+                title: Text(S.of(context).autoSyncPrefTitle),
+                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                pref: mensaAutoSyncPref,
+              ),
+              PrefDialogButton(
+                title: Text(S.of(context).mensaSourcePrefTitle),
+                subtitle: Text(S.of(context).mensaSourcePrefDesc),
+                dialog: PrefDialog(
+                  title: Text(S.of(context).mensaSourcePrefTitle),
+                  children: [
+                    PrefRadio(
+                      title: Text(S.of(context).mensaSourcePrefStwno),
+                      value: mensaSourcePrefStwno,
+                      pref: mensaSourcePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).mensaSourcePrefOM),
+                      value: mensaSourcePrefOM,
+                      pref: mensaSourcePref,
+                    ),
+                  ],
+                ),
+              ),
+              PrefTitle(title: Text(S.of(context).miscPref)),
+              PrefDialogButton(
+                title: Text(S.of(context).mensaTypePrefTitle),
+                subtitle: Text(S.of(context).mensaTypePrefDesc),
+                dialog: PrefDialog(
+                  title: Text(S.of(context).mensaTypePrefTitle),
+                  children: [
+                    PrefRadio(
+                      title: Text(S.of(context).mensaTypePrefStudent),
+                      value: mensaTypePrefStudent,
+                      pref: mensaTypePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).mensaTypePrefEmployee),
+                      value: mensaTypePrefEmployee,
+                      pref: mensaTypePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).mensaTypePrefGuest),
+                      value: mensaTypePrefGuest,
+                      pref: mensaTypePref,
+                    ),
+                    PrefRadio(
+                      title: Text(S.of(context).mensaTypePrefPupil),
+                      value: mensaTypePrefPupil,
+                      pref: mensaTypePref,
+                    ),
+                  ],
+                ),
+              ),
+              PrefTitle(title: Text(S.of(context).colorsPref)),
+              PrefColor(
+                title: Text(S.of(context).soupColorPrefTitle),
+                subtitle: Text(S.of(context).soupColorPrefDesc),
+                pref: soupColorPref,
+              ),
+              PrefColor(
+                title: Text(S.of(context).mainDishColorPrefTitle),
+                subtitle: Text(S.of(context).mainDishColorPrefDesc),
+                pref: mainDishColorPref,
+              ),
+              PrefColor(
+                title: Text(S.of(context).garnishColorPrefTitle),
+                subtitle: Text(S.of(context).garnishColorPrefDesc),
+                pref: garnishColorPref,
+              ),
+              PrefColor(
+                title: Text(S.of(context).dessertColorPrefTitle),
+                subtitle: Text(S.of(context).dessertColorPrefDesc),
+                pref: dessertColorPref,
+              ),
+            ],
+          ),
+        ),
+        PrefPageButton(
+          leading: const Icon(Icons.newspaper),
+          pageTitle: Text(S.of(context).newsPrefCatLongTitle),
+          title: Text(S.of(context).newsPrefCatShortTitle),
+          subtitle: Text(S.of(context).newsPrefCatDesc),
+          page: PrefPage(
+            children: [
+              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefSwitch(
+                title: Text(S.of(context).autoSyncPrefTitle),
+                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                pref: newsAutoSyncPref,
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
 }

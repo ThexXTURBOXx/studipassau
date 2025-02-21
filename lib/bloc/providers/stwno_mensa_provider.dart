@@ -12,10 +12,12 @@ class StwnoDataProvider {
     final today = DateTime.now().toUtc().atStartOfDay;
     final week = today.week.weekOfYear;
     final nextWeek = (today + 7.days).week.weekOfYear;
-    final responseCurr =
-        await _client.get(Uri.parse('$stwnoMensaUrl$stwnoMensaId/$week.csv'));
-    final responseNext = await _client
-        .get(Uri.parse('$stwnoMensaUrl$stwnoMensaId/$nextWeek.csv'));
+    final responseCurr = await _client.get(
+      Uri.parse('$stwnoMensaUrl$stwnoMensaId/$week.csv'),
+    );
+    final responseNext = await _client.get(
+      Uri.parse('$stwnoMensaUrl$stwnoMensaId/$nextWeek.csv'),
+    );
     final bodyCurr = stwnoEncoding.decode(responseCurr.bodyBytes);
     final bodyNext = stwnoEncoding.decode(responseNext.bodyBytes);
     return parsePlan(bodyCurr.split('\n')) + parsePlan(bodyNext.split('\n'));
@@ -56,7 +58,8 @@ class StwnoDataProvider {
       // Unused anyway
       id: 0,
       name: parseName(entries[3].trim()),
-      notes: parseFoodProperties(entries[4].trim()) +
+      notes:
+          parseFoodProperties(entries[4].trim()) +
           parseAllergensAndAdditives(entries[3].trim()),
       category: parseCategory(entries[2].trim()),
       studentPrice: parsePrice(entries[6].trim()),

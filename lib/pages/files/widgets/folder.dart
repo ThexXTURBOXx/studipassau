@@ -32,35 +32,33 @@ class FolderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: folder.isGoUpFolder
+    leading:
+        folder.isGoUpFolder
             ? const Icon(Icons.arrow_upward)
             : const Icon(Icons.folder_open),
-        title: Text(title),
-        subtitle:
-            folder.description.isNotEmpty ? Text(folder.description) : null,
-        onTap: onTap,
-        onLongPress: () async {
-          if (folder.isGoUpFolder) {
-            return;
-          }
-          final s = S.of(context);
-          await showDialog<void>(
-            context: context,
-            builder: (context) => AlertDialog(
+    title: Text(title),
+    subtitle: folder.description.isNotEmpty ? Text(folder.description) : null,
+    onTap: onTap,
+    onLongPress: () async {
+      if (folder.isGoUpFolder) {
+        return;
+      }
+      final s = S.of(context);
+      await showDialog<void>(
+        context: context,
+        builder:
+            (context) => AlertDialog(
               title: Text(title),
               content: Text(
-                '${sprintf(s.changeDate, [
-                      formatDateTime(folder.changeDate),
-                    ])}\n'
-                '${sprintf(s.createDate, [
-                      formatDateTime(folder.makeDate),
-                    ])}'
+                '${sprintf(s.changeDate, [formatDateTime(folder.changeDate)])}'
+                '\n'
+                '${sprintf(s.createDate, [formatDateTime(folder.makeDate)])}'
                 '${formatDesc(s.fileDescription, folder.description)}',
               ),
             ),
-          );
-        },
       );
+    },
+  );
 }
 
 class Folder extends Equatable {
@@ -75,24 +73,24 @@ class Folder extends Equatable {
   });
 
   factory Folder.fromJson(json) => Folder(
-        id: json['id'].toString(),
-        folderType: json['attributes']['folder-type'].toString(),
-        name: json['attributes']['name'].toString(),
-        description: (json['attributes']['description'] ?? '').toString(),
-        makeDate: parseInLocalZone(json['attributes']['mkdate']),
-        changeDate: parseInLocalZone(json['attributes']['chdate']),
-        parentId: json['parent'].toString(),
-      );
+    id: json['id'].toString(),
+    folderType: json['attributes']['folder-type'].toString(),
+    name: json['attributes']['name'].toString(),
+    description: (json['attributes']['description'] ?? '').toString(),
+    makeDate: parseInLocalZone(json['attributes']['mkdate']),
+    changeDate: parseInLocalZone(json['attributes']['chdate']),
+    parentId: json['parent'].toString(),
+  );
 
   factory Folder.goUp() => Folder(
-        id: '0',
-        folderType: goUpType,
-        name: '..',
-        description: '',
-        makeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
-        changeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
-        parentId: '0',
-      );
+    id: '0',
+    folderType: goUpType,
+    name: '..',
+    description: '',
+    makeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
+    changeDate: DateTime.fromMicrosecondsSinceEpoch(0, isUtc: true),
+    parentId: '0',
+  );
 
   final String id;
   final String folderType;
@@ -106,12 +104,12 @@ class Folder extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        folderType,
-        name,
-        description,
-        makeDate,
-        changeDate,
-        parentId,
-      ];
+    id,
+    folderType,
+    name,
+    description,
+    makeDate,
+    changeDate,
+    parentId,
+  ];
 }

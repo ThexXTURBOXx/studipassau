@@ -37,9 +37,7 @@ Future main() async {
   final releaseOptions = Catcher2Options(
     DialogReportMode(),
     [
-      SentryHandler(
-        SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn),
-      ),
+      SentryHandler(SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn)),
       ConsoleHandler(),
     ],
     localizationOptions: [

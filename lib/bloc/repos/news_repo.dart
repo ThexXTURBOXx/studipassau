@@ -9,8 +9,9 @@ class NewsRepo {
     final jsonNews = await _studIPProvider.apiGetJson('news?page[limit]=10000');
     final collection = jsonNews['data'];
 
-    final jsonStudipNews =
-        await _studIPProvider.apiGetJson('studip/news?page[limit]=10000');
+    final jsonStudipNews = await _studIPProvider.apiGetJson(
+      'studip/news?page[limit]=10000',
+    );
     final collection2 = jsonStudipNews['data'];
 
     return ((collection is List

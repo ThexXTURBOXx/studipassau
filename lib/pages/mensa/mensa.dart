@@ -50,36 +50,36 @@ class _MensaPagePageState extends State<MensaPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).mensaPlanTitle),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              tooltip: S.of(context).refresh,
-              onPressed: () async =>
-                  await _refreshIndicatorKey.currentState?.show(),
-            ),
-          ],
+    appBar: AppBar(
+      title: Text(S.of(context).mensaPlanTitle),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: S.of(context).refresh,
+          onPressed:
+              () async => await _refreshIndicatorKey.currentState?.show(),
         ),
-        drawer: const StudiPassauDrawer(DrawerItem.mensaPlan),
-        body: BlocConsumer<MensaCubit, MensaState>(
-          listener: (context, state) {
-            if (state.state == StudiPassauState.fetchError) {
-              showSnackBar(context, S.of(context).mensaError);
-            } else {
-              showErrorMessage(context, state);
-            }
-          },
-          builder: (context, state) {
-            isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
-            return RefreshIndicator(
-              key: _refreshIndicatorKey,
-              onRefresh: () async => refresh(context),
-              child: CustomScrollView(slivers: slivers(state.menu)),
-            );
-          },
-        ),
-      );
+      ],
+    ),
+    drawer: const StudiPassauDrawer(DrawerItem.mensaPlan),
+    body: BlocConsumer<MensaCubit, MensaState>(
+      listener: (context, state) {
+        if (state.state == StudiPassauState.fetchError) {
+          showSnackBar(context, S.of(context).mensaError);
+        } else {
+          showErrorMessage(context, state);
+        }
+      },
+      builder: (context, state) {
+        isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
+        return RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () async => refresh(context),
+          child: CustomScrollView(slivers: slivers(state.menu)),
+        );
+      },
+    ),
+  );
 
   List<Widget> slivers(List<DayMenu> menu) {
     final today = DateTime.now().startOfDay;
@@ -105,21 +105,19 @@ class _MensaPagePageState extends State<MensaPage>
                     .map(
                       (m) => ListTile(
                         leading: CircleAvatar(
-                          backgroundColor:
-                              getFoodColor(m.category.trim().characters.first),
+                          backgroundColor: getFoodColor(
+                            m.category.trim().characters.first,
+                          ),
                           child: Text(m.category.trim().characters.first),
                         ),
-                        trailing: isWideScreen
-                            ? Text(
-                                getQuickPrice(m),
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              )
-                            : null,
-                        title: Text(
-                          m.name.trim(),
-                        ),
+                        trailing:
+                            isWideScreen
+                                ? Text(
+                                  getQuickPrice(m),
+                                  style: const TextStyle(color: Colors.grey),
+                                )
+                                : null,
+                        title: Text(m.name.trim()),
                         onTap: () async => onTap(m),
                       ),
                     )
@@ -150,17 +148,18 @@ class _MensaPagePageState extends State<MensaPage>
     final s = S.of(context);
     await showDialog<void>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(m.name.trim()),
-        content: Text(
-          '${s.category}: ${m.category.trim()}\n'
-          '${formatPrice(s.students, m.studentPrice)}'
-          '${formatPrice(s.employees, m.employeePrice)}'
-          '${formatPrice(s.guests, m.othersPrice)}'
-          '${formatPrice(s.pupils, m.pupilPrice)}'
-          '${formatAdditives(s, m.notes)}',
-        ),
-      ),
+      builder:
+          (context) => AlertDialog(
+            title: Text(m.name.trim()),
+            content: Text(
+              '${s.category}: ${m.category.trim()}\n'
+              '${formatPrice(s.students, m.studentPrice)}'
+              '${formatPrice(s.employees, m.employeePrice)}'
+              '${formatPrice(s.guests, m.othersPrice)}'
+              '${formatPrice(s.pupils, m.pupilPrice)}'
+              '${formatAdditives(s, m.notes)}',
+            ),
+          ),
     );
   }
 
@@ -192,9 +191,7 @@ class _MensaPagePageState extends State<MensaPage>
   }
 
   Future<void> refresh(BuildContext context) async {
-    await context.read<MensaCubit>().fetchMensaPlan(
-          onlineSync: onlineSync,
-        );
+    await context.read<MensaCubit>().fetchMensaPlan(onlineSync: onlineSync);
     onlineSync = true;
   }
 }

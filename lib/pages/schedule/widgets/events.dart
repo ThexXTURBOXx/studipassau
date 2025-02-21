@@ -19,19 +19,19 @@ class StudiPassauEvent extends Event {
   });
 
   factory StudiPassauEvent.fromJson(json) => StudiPassauEvent(
-        id: json['id'].toString(),
-        title: json['title'].toString(),
-        course: json['course'].toString(),
-        description: json['description'].toString(),
-        categories: (json['categories'] as List<dynamic>)
-            .map((c) => c.toString())
-            .toList(growable: false),
-        room: json['room'].toString(),
-        canceled: json['canceled'].toString().toLowerCase() == 'true',
-        backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
-        start: dateTimeSaveFormat.parse(json['start'].toString(), true),
-        end: dateTimeSaveFormat.parse(json['end'].toString(), true),
-      );
+    id: json['id'].toString(),
+    title: json['title'].toString(),
+    course: json['course'].toString(),
+    description: json['description'].toString(),
+    categories: (json['categories'] as List<dynamic>)
+        .map((c) => c.toString())
+        .toList(growable: false),
+    room: json['room'].toString(),
+    canceled: json['canceled'].toString().toLowerCase() == 'true',
+    backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
+    start: dateTimeSaveFormat.parse(json['start'].toString(), true),
+    end: dateTimeSaveFormat.parse(json['end'].toString(), true),
+  );
 
   final String id;
   final String title;
@@ -54,19 +54,18 @@ class StudiPassauEvent extends Event {
     bool? showOnTop,
     DateTime? start,
     DateTime? end,
-  }) =>
-      StudiPassauEvent(
-        id: id ?? this.id,
-        title: title ?? this.title,
-        course: course ?? this.course,
-        description: description ?? this.description,
-        categories: categories ?? this.categories,
-        room: room ?? this.room,
-        canceled: canceled ?? this.canceled,
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        start: start ?? this.start,
-        end: end ?? this.end,
-      );
+  }) => StudiPassauEvent(
+    id: id ?? this.id,
+    title: title ?? this.title,
+    course: course ?? this.course,
+    description: description ?? this.description,
+    categories: categories ?? this.categories,
+    room: room ?? this.room,
+    canceled: canceled ?? this.canceled,
+    backgroundColor: backgroundColor ?? this.backgroundColor,
+    start: start ?? this.start,
+    end: end ?? this.end,
+  );
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -83,17 +82,17 @@ class StudiPassauEvent extends Event {
   }
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'title': title,
-        'course': course,
-        'description': description,
-        'categories': categories,
-        'room': room,
-        'canceled': canceled,
-        'backgroundColor': backgroundColor.intValue,
-        'start': dateTimeSaveFormat.format(start),
-        'end': dateTimeSaveFormat.format(end),
-      };
+    'id': id,
+    'title': title,
+    'course': course,
+    'description': description,
+    'categories': categories,
+    'room': room,
+    'canceled': canceled,
+    'backgroundColor': backgroundColor.intValue,
+    'start': dateTimeSaveFormat.format(start),
+    'end': dateTimeSaveFormat.format(end),
+  };
 }
 
 class StudiPassauEventWidget extends StatelessWidget {
@@ -121,40 +120,40 @@ class StudiPassauEventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: margin,
-        child: Material(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(
-              color: context.theme.scaffoldBackgroundColor,
-              width: 0.75,
+    padding: margin,
+    child: Material(
+      shape: RoundedRectangleBorder(
+        side: BorderSide(
+          color: context.theme.scaffoldBackgroundColor,
+          width: 0.75,
+        ),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      clipBehavior: Clip.hardEdge,
+      color: event.backgroundColor,
+      child: InkWell(
+        onTap: onTap,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(4, 2, 4, 0),
+          child: DefaultTextStyle(
+            style: context.textTheme.bodyMedium!.copyWith(
+              fontSize: 12,
+              color: event.backgroundColor.highEmphasisOnColor,
             ),
-            borderRadius: BorderRadius.circular(4),
-          ),
-          clipBehavior: Clip.hardEdge,
-          color: event.backgroundColor,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(4, 2, 4, 0),
-              child: DefaultTextStyle(
-                style: context.textTheme.bodyMedium!.copyWith(
-                  fontSize: 12,
-                  color: event.backgroundColor.highEmphasisOnColor,
+            child: Column(
+              children: [
+                Text(event.room),
+                Text(
+                  event.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
                 ),
-                child: Column(
-                  children: [
-                    Text(event.room),
-                    Text(
-                      event.title,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-              ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class StudiPassauAllDayEventWidget extends StatelessWidget {
@@ -184,45 +183,45 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.all(2),
-        child: CustomPaint(
-          painter: AllDayEventBackgroundPainter(
-            info: info,
-            color: event.backgroundColor,
-            radii: AllDayEventBorderRadii(
-              cornerRadius: BorderRadius.circular(4),
-              leftTipRadius: 4,
-              rightTipRadius: 4,
-            ),
+    padding: const EdgeInsets.all(2),
+    child: CustomPaint(
+      painter: AllDayEventBackgroundPainter(
+        info: info,
+        color: event.backgroundColor,
+        radii: AllDayEventBorderRadii(
+          cornerRadius: BorderRadius.circular(4),
+          leftTipRadius: 4,
+          rightTipRadius: 4,
+        ),
+      ),
+      child: Material(
+        shape: AllDayEventBorder(
+          info: info,
+          radii: AllDayEventBorderRadii(
+            cornerRadius: BorderRadius.circular(4),
+            leftTipRadius: 4,
+            rightTipRadius: 4,
           ),
-          child: Material(
-            shape: AllDayEventBorder(
-              info: info,
-              radii: AllDayEventBorderRadii(
-                cornerRadius: BorderRadius.circular(4),
-                leftTipRadius: 4,
-                rightTipRadius: 4,
+        ),
+        clipBehavior: Clip.antiAlias,
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(4, 2, 0, 2),
+            child: Text(
+              event.title,
+              style: context.theme.textTheme.bodyMedium!.copyWith(
+                fontSize: 14,
+                color: event.backgroundColor.highEmphasisOnColor,
               ),
-            ),
-            clipBehavior: Clip.antiAlias,
-            color: Colors.transparent,
-            child: InkWell(
-              onTap: onTap,
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(4, 2, 0, 2),
-                child: Text(
-                  event.title,
-                  style: context.theme.textTheme.bodyMedium!.copyWith(
-                    fontSize: 14,
-                    color: event.backgroundColor.highEmphasisOnColor,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.visible,
-                  softWrap: false,
-                ),
-              ),
+              maxLines: 1,
+              overflow: TextOverflow.visible,
+              softWrap: false,
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 }

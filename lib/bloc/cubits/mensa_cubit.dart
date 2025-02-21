@@ -11,7 +11,7 @@ import 'package:studipassau/pages/settings/settings.dart';
 
 class MensaCubit extends Cubit<MensaState> {
   MensaCubit(this._storageRepo, this._mensaRepo)
-      : super(const MensaState(StudiPassauState.notFetched));
+    : super(const MensaState(StudiPassauState.notFetched));
 
   final StorageRepo _storageRepo;
 
@@ -45,18 +45,16 @@ class MensaCubit extends Cubit<MensaState> {
     emit(state.copyWith(state: StudiPassauState.fetching));
 
     try {
-      final mensaPlan = getPref(mensaSourcePref) == mensaSourcePrefOM
-          ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
-          : await _mensaRepo.getStwnoMeals(stwnoMensaId);
+      final mensaPlan =
+          getPref(mensaSourcePref) == mensaSourcePrefOM
+              ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
+              : await _mensaRepo.getStwnoMeals(stwnoMensaId);
       await _storageRepo.writeStringList(
         key: mensaPlanKey,
         value: mensaPlan.map(jsonEncode).toList(growable: false),
       );
       emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          mensaPlan: mensaPlan,
-        ),
+        state.copyWith(state: StudiPassauState.fetched, mensaPlan: mensaPlan),
       );
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));

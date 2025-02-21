@@ -45,8 +45,7 @@ class ScheduleState extends BlocState {
   ScheduleState copyWith({
     StudiPassauState? state,
     List<StudiPassauEvent>? schedule,
-  }) =>
-      ScheduleState(state ?? this.state, schedule: schedule ?? this.schedule);
+  }) => ScheduleState(state ?? this.state, schedule: schedule ?? this.schedule);
 
   List<StudiPassauEvent> get events => schedule ?? <StudiPassauEvent>[];
 }
@@ -78,9 +77,10 @@ class FilesState extends BlocState {
   final List<Folder> folders;
   final Queue<Folder> currentFolders;
 
-  FolderState get folderState => currentFolder != null
-      ? FolderState.folder
-      : currentCourse != null
+  FolderState get folderState =>
+      currentFolder != null
+          ? FolderState.folder
+          : currentCourse != null
           ? FolderState.courseHome
           : FolderState.home;
 
@@ -105,15 +105,14 @@ class FilesState extends BlocState {
     List<File>? files,
     List<Folder>? folders,
     Queue<Folder>? currentFolders,
-  }) =>
-      FilesState(
-        state ?? this.state,
-        currentCourse: currentCourse ?? this.currentCourse,
-        courses: courses ?? this.courses,
-        files: files ?? this.files,
-        folders: folders ?? this.folders,
-        currentFolders: currentFolders ?? this.currentFolders,
-      );
+  }) => FilesState(
+    state ?? this.state,
+    currentCourse: currentCourse ?? this.currentCourse,
+    courses: courses ?? this.courses,
+    files: files ?? this.files,
+    folders: folders ?? this.folders,
+    currentFolders: currentFolders ?? this.currentFolders,
+  );
 }
 
 enum FolderState { home, courseHome, folder }
@@ -141,10 +140,7 @@ enum StudiPassauState {
   fetchError(finished: true, errored: true),
   httpError(finished: true, errored: true);
 
-  const StudiPassauState({
-    this.finished = false,
-    this.errored = false,
-  });
+  const StudiPassauState({this.finished = false, this.errored = false});
 
   final bool finished;
   final bool errored;

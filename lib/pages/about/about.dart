@@ -10,29 +10,19 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
     context: context,
     applicationName: S.of(context).applicationTitle,
     applicationVersion: appVersion,
-    applicationLegalese:
-        sprintf(S.of(context).copyright, [DateTime.now().year]),
+    applicationLegalese: sprintf(S.of(context).copyright, [
+      DateTime.now().year,
+    ]),
     applicationIcon: const CircleAvatar(
-      foregroundImage: AssetImage(
-        'assets/icons/studipassau_icon_with_bg.png',
-      ),
+      foregroundImage: AssetImage('assets/icons/studipassau_icon_with_bg.png'),
     ),
     children: [
-      const SizedBox(
-        height: 20,
-      ),
-      Text(
-        S.of(context).aboutText,
-        textAlign: TextAlign.justify,
-      ),
-      const SizedBox(
-        height: 20,
-      ),
+      const SizedBox(height: 20),
+      Text(S.of(context).aboutText, textAlign: TextAlign.justify),
+      const SizedBox(height: 20),
       ElevatedButton.icon(
         icon: const Icon(Icons.mail_outline),
-        label: Text(
-          S.of(context).email,
-        ),
+        label: Text(S.of(context).email),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
@@ -42,9 +32,7 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
       ),
       ElevatedButton.icon(
         icon: const Icon(Icons.translate),
-        label: Text(
-          S.of(context).translation,
-        ),
+        label: Text(S.of(context).translation),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
@@ -54,9 +42,7 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
       ),
       ElevatedButton.icon(
         icon: const Icon(StudiPassauIcons.github),
-        label: Text(
-          S.of(context).viewSource,
-        ),
+        label: Text(S.of(context).viewSource),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),

@@ -36,9 +36,7 @@ class PrefColor extends StatelessWidget {
     super.debugFillProperties(properties);
     properties
       ..add(StringProperty('pref', pref))
-      ..add(
-        ObjectFlagProperty<ValueChanged<Color>?>.has('onChange', onChange),
-      )
+      ..add(ObjectFlagProperty<ValueChanged<Color>?>.has('onChange', onChange))
       ..add(DiagnosticsProperty<bool>('enableAlpha', enableAlpha))
       ..add(DiagnosticsProperty<bool?>('disabled', disabled))
       ..add(IntProperty('defaultValue', defaultValue));
@@ -46,15 +44,15 @@ class PrefColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => PrefCustom<int>(
-        pref: pref,
-        title: title,
-        subtitle: subtitle,
-        onChange: onChange != null
-            ? (v) => onChange!(Color(v ?? defaultValue))
-            : null,
-        disabled: disabled,
-        onTap: _tap,
-        builder: (c, v) => Padding(
+    pref: pref,
+    title: title,
+    subtitle: subtitle,
+    onChange:
+        onChange != null ? (v) => onChange!(Color(v ?? defaultValue)) : null,
+    disabled: disabled,
+    onTap: _tap,
+    builder:
+        (c, v) => Padding(
           padding: const EdgeInsets.only(right: 14),
           child: Container(
             color: Color(v ?? defaultValue),
@@ -62,31 +60,32 @@ class PrefColor extends StatelessWidget {
             height: 20,
           ),
         ),
-      );
+  );
 
   Future<int?> _tap(BuildContext context, int? value) async {
     var newValue = value ?? defaultValue;
 
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(S.of(context).colorPickerTitle),
-        content: SingleChildScrollView(
-          child: ColorPicker(
-            enableAlpha: enableAlpha,
-            pickerColor: Color(newValue),
-            onColorChanged: (v) => newValue = v.intValue,
+      builder:
+          (context) => AlertDialog(
+            title: Text(S.of(context).colorPickerTitle),
+            content: SingleChildScrollView(
+              child: ColorPicker(
+                enableAlpha: enableAlpha,
+                pickerColor: Color(newValue),
+                onColorChanged: (v) => newValue = v.intValue,
+              ),
+            ),
+            actions: <Widget>[
+              ElevatedButton(
+                child: Text(S.of(context).okay),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
           ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text(S.of(context).okay),
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-          ),
-        ],
-      ),
     );
 
     return (result ?? false) ? newValue : value;

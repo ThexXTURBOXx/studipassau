@@ -25,8 +25,14 @@ class StudiPassauIcons {
   static const _kFontFam = 'StudiPassauIcons';
   static const String? _kFontPkg = null;
 
-  static const IconData github =
-      IconData(0xf09b, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-  static const IconData telegramPlane =
-      IconData(0xf3fe, fontFamily: _kFontFam, fontPackage: _kFontPkg);
+  static const IconData github = IconData(
+    0xf09b,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
+  static const IconData telegramPlane = IconData(
+    0xf3fe,
+    fontFamily: _kFontFam,
+    fontPackage: _kFontPkg,
+  );
 }
