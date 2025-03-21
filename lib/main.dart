@@ -114,62 +114,51 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   @override
   void initState() {
     super.initState();
-    prefService
-      ..addKeyListener(uiThemePref, () {
-        setState(() {});
-      })
-      ..addKeyListener(material3Pref, () {
-        setState(() {});
-      });
+    prefService.addKeyListener(uiThemePref, () {
+      setState(() {});
+    });
   }
 
   @override
-  Widget build(BuildContext context) {
-    final bool m3 = getPref(material3Pref);
-    return StudiPassauBlocProvider(
-      child: MaterialApp(
-        onGenerateTitle: (context) => S.of(context).applicationTitle,
-        debugShowCheckedModeBanner: false,
-        themeMode: getThemeMode(),
-        theme: ThemeData(
-          brightness: Brightness.light,
-          primarySwatch: m3 ? null : Colors.blue,
-          colorSchemeSeed: m3 ? Colors.blue : null,
-          useMaterial3: m3,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        darkTheme: ThemeData(
-          brightness: Brightness.dark,
-          primarySwatch: m3 ? null : Colors.blue,
-          colorSchemeSeed: m3 ? Colors.blue : null,
-          useMaterial3: getPref(material3Pref),
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        navigatorKey: Catcher2.navigatorKey,
-        localizationsDelegates: const [
-          S.delegate,
-          TimetableLocalizationsDelegate(
-            setIntlLocale: false,
-            fallbackLocale: Locale('en', 'US'),
-          ),
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: S.delegate.supportedLocales,
-        initialRoute: routeLogin,
-        routes: {
-          routeLogin: (ctx) => const LoginPage(),
-          routeSchedule: (ctx) => const SchedulePage(),
-          routeMensa: (ctx) => const MensaPage(),
-          routeFiles: (ctx) => const FilesPage(),
-          routeRoomFinder: (ctx) => const RoomFinderPage(),
-          routeNews: (ctx) => const NewsPage(),
-          routeSettings: (ctx) => const SettingsPage(),
-        },
+  Widget build(BuildContext context) => StudiPassauBlocProvider(
+    child: MaterialApp(
+      onGenerateTitle: (context) => S.of(context).applicationTitle,
+      debugShowCheckedModeBanner: false,
+      themeMode: getThemeMode(),
+      theme: ThemeData(
+        brightness: Brightness.light,
+        colorSchemeSeed: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-    );
-  }
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
+        colorSchemeSeed: Colors.blue,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      navigatorKey: Catcher2.navigatorKey,
+      localizationsDelegates: const [
+        S.delegate,
+        TimetableLocalizationsDelegate(
+          setIntlLocale: false,
+          fallbackLocale: Locale('en', 'US'),
+        ),
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      initialRoute: routeLogin,
+      routes: {
+        routeLogin: (ctx) => const LoginPage(),
+        routeSchedule: (ctx) => const SchedulePage(),
+        routeMensa: (ctx) => const MensaPage(),
+        routeFiles: (ctx) => const FilesPage(),
+        routeRoomFinder: (ctx) => const RoomFinderPage(),
+        routeNews: (ctx) => const NewsPage(),
+        routeSettings: (ctx) => const SettingsPage(),
+      },
+    ),
+  );
 
   ThemeMode getThemeMode() {
     switch (getPref(uiThemePref)) {
