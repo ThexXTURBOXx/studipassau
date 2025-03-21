@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: args
-      sha256: bf9f5caeea8d8fe6721a9c358dd8a5c1947b27f1cfaa18b39c301273594919e6
+      sha256: d0481093c50b1da8910eb0bb301626d4d8eb7284aa739614d2b394ee09e3ea04
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.0"
+    version: "2.7.0"
   async:
     dependency: transitive
     description:
@@ -527,10 +527,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_web_auth_2
-      sha256: "561c32d32ed537853de43852c35849cf1d37f3482f41f22b718ab6112f96b333"
+      sha256: "6b4c9e01bea6c04d387cded8858e7decb3a62d2c95e9823695b895e54557d8fd"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0-alpha.0"
+    version: "5.0.0-alpha.1"
   flutter_web_auth_2_platform_interface:
     dependency: transitive
     description:
@@ -772,10 +772,10 @@ packages:
     dependency: "direct main"
     description:
       name: oauth2_client
-      sha256: "0ee2bb95684843eec311d1825d474bcde1bf2600ed9cc6f40e899da3f5eb1405"
+      sha256: "7e18f5b0de09503ecb91d9327f37eebcb4270b6d4520f44dc9d0cadf49e33d50"
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.1"
+    version: "4.1.0"
   octo_image:
     dependency: transitive
     description:
@@ -805,10 +805,10 @@ packages:
     dependency: transitive
     description:
       name: package_config
-      sha256: "92d4488434b520a62570293fbd33bb556c7d49230791c1b4bbd973baf6d2dc67"
+      sha256: f096c55ebb7deb7e384101542bfba8c52696c1b56fca2eb62827989ef2353bbc
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "2.2.0"
   package_info_plus:
     dependency: "direct main"
     description:
@@ -1037,18 +1037,18 @@ packages:
     dependency: "direct main"
     description:
       name: sentry
-      sha256: "90c2f956c146bcc9c4843406dd4a65d08b25575828dc2ad51de0ca5cd713209f"
+      sha256: "3a64dd001bff768ce5ab6fc3608deef4dde22acd4b5d947763557b20db9e2a32"
       url: "https://pub.dev"
     source: hosted
-    version: "8.13.2"
+    version: "8.14.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: ee6b41956ad570706bf5c2489915d71d75522d154200c0df24be2c4e5654ca21
+      sha256: "3d361f2d5f805783e2e4ed1bd475ef126b36cf525b359dc3627a765a3fb7424d"
       url: "https://pub.dev"
     source: hosted
-    version: "8.13.2"
+    version: "8.14.0"
   share_plus:
     dependency: "direct main"
     description:
@@ -1258,10 +1258,10 @@ packages:
     dependency: "direct main"
     description:
       name: studip
-      sha256: "9c49300d271b1e496b4ebd52eef3a8d22ad36dbc590397ec871c42d443d1ede1"
+      sha256: b13114662573fd0d5e4c4d859afbb926c2f5a832dbf8e0b6e5c93d6a72dd28a9
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.2"
   supercharged:
     dependency: "direct main"
     description:
@@ -1490,10 +1490,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: b89e6e24d1454e149ab20fbb225af58660f0c0bf4475544650700d8e2da54aef
+      sha256: dc6ecaa00a7c708e5b4d10ee7bec8c270e9276dfcab1783f57e9962d7884305f
       url: "https://pub.dev"
     source: hosted
-    version: "5.11.0"
+    version: "5.12.0"
   win32_registry:
     dependency: transitive
     description:
