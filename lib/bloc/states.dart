@@ -77,12 +77,11 @@ class FilesState extends BlocState {
   final List<Folder> folders;
   final Queue<Folder> currentFolders;
 
-  FolderState get folderState =>
-      currentFolder != null
-          ? FolderState.folder
-          : currentCourse != null
-          ? FolderState.courseHome
-          : FolderState.home;
+  FolderState get folderState => currentFolder != null
+      ? FolderState.folder
+      : currentCourse != null
+      ? FolderState.courseHome
+      : FolderState.home;
 
   Folder? get currentFolder => currentFolders.firstOrNull;
 

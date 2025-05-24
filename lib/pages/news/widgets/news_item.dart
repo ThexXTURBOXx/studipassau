@@ -13,11 +13,10 @@ class NewsWidget extends StatelessWidget {
 
   String get title => news.title;
 
-  String subtitle(BuildContext context) =>
-      news.edited
-          ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
-              '${formatDateTime(changeDate)})'
-          : formatDateTime(makeDate);
+  String subtitle(BuildContext context) => news.edited
+      ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
+            '${formatDateTime(changeDate)})'
+      : formatDateTime(makeDate);
 
   DateTime get makeDate => news.makeDate;
 
@@ -41,20 +40,19 @@ class NewsWidget extends StatelessWidget {
     onTap: () async {
       await showDialog<void>(
         context: context,
-        builder:
-            (context) => AlertDialog(
-              title: Text(title),
-              insetPadding: const EdgeInsets.all(44),
-              content: SizedBox(
-                width: double.maxFinite,
-                child: SingleChildScrollView(
-                  child: HtmlWidget(
-                    news.content,
-                    factoryBuilder: NewsWidgetFactory.new,
-                  ),
-                ),
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          insetPadding: const EdgeInsets.all(44),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: HtmlWidget(
+                news.content,
+                factoryBuilder: NewsWidgetFactory.new,
               ),
             ),
+          ),
+        ),
       );
     },
   );

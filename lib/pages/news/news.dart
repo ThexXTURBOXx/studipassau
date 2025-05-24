@@ -47,24 +47,23 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
         IconButton(
           icon: const Icon(Icons.refresh),
           tooltip: S.of(context).refresh,
-          onPressed:
-              () async => await _refreshIndicatorKey.currentState?.show(),
+          onPressed: () async =>
+              await _refreshIndicatorKey.currentState?.show(),
         ),
       ],
     ),
     drawer: const StudiPassauDrawer(DrawerItem.news),
     body: BlocConsumer<NewsCubit, NewsState>(
       listener: showErrorMessage,
-      builder:
-          (context, state) => RefreshIndicator(
-            key: _refreshIndicatorKey,
-            onRefresh: () async => refresh(context),
-            child: ListView(
-              children: state.newsOrEmpty
-                  .map((e) => NewsWidget(news: e))
-                  .toList(growable: false),
-            ),
-          ),
+      builder: (context, state) => RefreshIndicator(
+        key: _refreshIndicatorKey,
+        onRefresh: () async => refresh(context),
+        child: ListView(
+          children: state.newsOrEmpty
+              .map((e) => NewsWidget(news: e))
+              .toList(growable: false),
+        ),
+      ),
     ),
   );
 

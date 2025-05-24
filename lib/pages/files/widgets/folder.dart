@@ -32,10 +32,9 @@ class FolderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-    leading:
-        folder.isGoUpFolder
-            ? const Icon(Icons.arrow_upward)
-            : const Icon(Icons.folder_open),
+    leading: folder.isGoUpFolder
+        ? const Icon(Icons.arrow_upward)
+        : const Icon(Icons.folder_open),
     title: Text(title),
     subtitle: folder.description.isNotEmpty ? Text(folder.description) : null,
     onTap: onTap,
@@ -46,16 +45,15 @@ class FolderWidget extends StatelessWidget {
       final s = S.of(context);
       await showDialog<void>(
         context: context,
-        builder:
-            (context) => AlertDialog(
-              title: Text(title),
-              content: Text(
-                '${sprintf(s.changeDate, [formatDateTime(folder.changeDate)])}'
-                '\n'
-                '${sprintf(s.createDate, [formatDateTime(folder.makeDate)])}'
-                '${formatDesc(s.fileDescription, folder.description)}',
-              ),
-            ),
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${sprintf(s.changeDate, [formatDateTime(folder.changeDate)])}'
+            '\n'
+            '${sprintf(s.createDate, [formatDateTime(folder.makeDate)])}'
+            '${formatDesc(s.fileDescription, folder.description)}',
+          ),
+        ),
       );
     },
   );

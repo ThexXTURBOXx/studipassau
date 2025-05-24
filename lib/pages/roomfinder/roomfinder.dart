@@ -42,8 +42,8 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
       searchHintText: S.of(context).searchBuildings,
       asyncSuggestions: (searchValue) async => searchBuildings(searchValue),
       suggestionToString: (value) => '${value.name} (${value.abbrev})',
-      onSuggestionTap:
-          (value) => controller.move(value.polygon.boundingBox.center, 18),
+      onSuggestionTap: (value) =>
+          controller.move(value.polygon.boundingBox.center, 18),
     ),
     drawer: const StudiPassauDrawer(DrawerItem.roomFinder),
     body: FlutterMap(
@@ -57,35 +57,29 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
             if (isPointInPolygon(point, building.polygon)) {
               await showDialog<void>(
                 context: context,
-                builder:
-                    (context) => AlertDialog(
-                      title: Text('${building.name} (${building.abbrev})'),
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            formatEntry(
-                              S.of(context).address,
-                              building.address,
-                            ),
-                          ),
-                          ElevatedButton.icon(
-                            icon: const Icon(Icons.map),
-                            label: Text(S.of(context).openInMaps),
-                            style: ButtonStyle(
-                              minimumSize: WidgetStateProperty.all(
-                                const Size.fromHeight(35),
-                              ),
-                            ),
-                            onPressed:
-                                () async => await MapsLauncher.launchQuery(
-                                  building.address,
-                                ),
-                          ),
-                        ],
+                builder: (context) => AlertDialog(
+                  title: Text('${building.name} (${building.abbrev})'),
+                  content: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        formatEntry(S.of(context).address, building.address),
                       ),
-                    ),
+                      ElevatedButton.icon(
+                        icon: const Icon(Icons.map),
+                        label: Text(S.of(context).openInMaps),
+                        style: ButtonStyle(
+                          minimumSize: WidgetStateProperty.all(
+                            const Size.fromHeight(35),
+                          ),
+                        ),
+                        onPressed: () async =>
+                            await MapsLauncher.launchQuery(building.address),
+                      ),
+                    ],
+                  ),
+                ),
               );
               break;
             }
@@ -103,9 +97,8 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
           attributions: [
             TextSourceAttribution(
               'OpenStreetMap contributors',
-              onTap:
-                  () async =>
-                      launchUrl(Uri.https('openstreetmap.org', '/copyright')),
+              onTap: () async =>
+                  launchUrl(Uri.https('openstreetmap.org', '/copyright')),
             ),
           ],
         ),

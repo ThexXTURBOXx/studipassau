@@ -44,7 +44,12 @@ class StwnoDataProvider {
       if (menus.isNotEmpty) {
         menus.first.meals.add(meal);
       } else {
-        plan.add(DayMenu(day: Day(date: date, closed: false), meals: [meal]));
+        plan.add(
+          DayMenu(
+            day: Day(date: date, closed: false),
+            meals: [meal],
+          ),
+        );
       }
     }
   }

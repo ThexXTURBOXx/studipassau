@@ -41,35 +41,33 @@ class FileWidget extends StatelessWidget {
     leading: const Icon(Icons.insert_drive_file_outlined),
     title: Text(title),
     subtitle: file.description.isNotEmpty ? Text(file.description) : null,
-    trailing:
-        showDownloads
-            ? Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(
-                  '${file.downloads} ',
-                  style: const TextStyle(color: Colors.grey),
-                ),
-                const Icon(Icons.download, color: Colors.grey),
-              ],
-            )
-            : null,
+    trailing: showDownloads
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                '${file.downloads} ',
+                style: const TextStyle(color: Colors.grey),
+              ),
+              const Icon(Icons.download, color: Colors.grey),
+            ],
+          )
+        : null,
     onTap: onTap,
     onLongPress: () async {
       final s = S.of(context);
       await showDialog<void>(
         context: context,
-        builder:
-            (context) => AlertDialog(
-              title: Text(title),
-              content: Text(
-                '${sprintf(s.downloads, [file.downloads])}\n'
-                '${sprintf(s.changeDate, [formatDateTime(file.changeDate)])}\n'
-                '${sprintf(s.createDate, [formatDateTime(file.makeDate)])}\n'
-                '${sprintf(s.fileSize, [filesize(file.size)])}'
-                '${formatDesc(s.fileDescription, file.description)}',
-              ),
-            ),
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${sprintf(s.downloads, [file.downloads])}\n'
+            '${sprintf(s.changeDate, [formatDateTime(file.changeDate)])}\n'
+            '${sprintf(s.createDate, [formatDateTime(file.makeDate)])}\n'
+            '${sprintf(s.fileSize, [filesize(file.size)])}'
+            '${formatDesc(s.fileDescription, file.description)}',
+          ),
+        ),
       );
     },
   );

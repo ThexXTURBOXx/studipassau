@@ -31,28 +31,23 @@ class StudiPassauBlocProvider extends StatelessWidget {
           create: (context) => LoginCubit(context.read<StorageRepo>()),
         ),
         BlocProvider<ScheduleCubit>(
-          create:
-              (context) => ScheduleCubit(
-                context.read<StorageRepo>(),
-                context.read<ScheduleRepo>(),
-              ),
+          create: (context) => ScheduleCubit(
+            context.read<StorageRepo>(),
+            context.read<ScheduleRepo>(),
+          ),
         ),
         BlocProvider<MensaCubit>(
-          create:
-              (context) => MensaCubit(
-                context.read<StorageRepo>(),
-                context.read<MensaRepo>(),
-              ),
+          create: (context) => MensaCubit(
+            context.read<StorageRepo>(),
+            context.read<MensaRepo>(),
+          ),
         ),
         BlocProvider<FilesCubit>(
           create: (context) => FilesCubit(context.read<FilesRepo>()),
         ),
         BlocProvider<NewsCubit>(
-          create:
-              (context) => NewsCubit(
-                context.read<StorageRepo>(),
-                context.read<NewsRepo>(),
-              ),
+          create: (context) =>
+              NewsCubit(context.read<StorageRepo>(), context.read<NewsRepo>()),
         ),
       ],
       child: child,

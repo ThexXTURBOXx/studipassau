@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 2.0.0+200
 
 environment:
-  sdk: '>=3.7.0 <4.0.0'
-  flutter: '>=3.29.1'
+  sdk: '>=3.8.0 <4.0.0'
+  flutter: '>=3.32.0'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -33,7 +33,7 @@ dependencies:
   flutter_map: ^8.0.0
   flutter_native_splash: ^2.0.1+1
   flutter_secure_storage: ^10.0.0-beta.4
-  flutter_sticky_header: ^0.7.0
+  flutter_sticky_header: ^0.8.0
   flutter_widget_from_html_core: ^0.16.0
   fwfh_url_launcher: ^0.16.0
   http: ^1.0.0
@@ -49,7 +49,7 @@ dependencies:
   quick_actions: ^1.0.0
   sentry: ^8.0.0
   sentry_flutter: ^8.0.0
-  share_plus: ^10.0.0
+  share_plus: ^11.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
   sprintf: ^7.0.0

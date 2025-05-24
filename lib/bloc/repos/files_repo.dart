@@ -27,15 +27,14 @@ class FilesRepo {
       'courses/$courseId/folders?page[limit]=10000',
     );
     final folders = json['data'] as List<dynamic>;
-    final rootFolder =
-        folders
-            .filter(
-              (f) =>
-                  f['attributes'] != null &&
-                  f['attributes']['folder-type'] == 'RootFolder',
-            )
-            .map(Folder.fromJson)
-            .firstOrNull;
+    final rootFolder = folders
+        .filter(
+          (f) =>
+              f['attributes'] != null &&
+              f['attributes']['folder-type'] == 'RootFolder',
+        )
+        .map(Folder.fromJson)
+        .firstOrNull;
     return rootFolder == null ? Tuple2([], []) : loadFolder(rootFolder.id);
   }
 

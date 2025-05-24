@@ -44,14 +44,13 @@ class ScheduleRepo {
                   course.ownerId == eventCourseId) &&
               _equalsCourseEventTime(course.start, event.start) &&
               _equalsCourseEventTime(course.end, event.end)) {
-            final cm =
-                cms
-                    .filter(
-                      (cm) =>
-                          cm.courseType == course.ownerType &&
-                          cm.courseId == course.ownerId,
-                    )
-                    .firstOrNull;
+            final cm = cms
+                .filter(
+                  (cm) =>
+                      cm.courseType == course.ownerType &&
+                      cm.courseId == course.ownerId,
+                )
+                .firstOrNull;
             color = course.color ?? cm?.color ?? color;
             courseName = course.title;
             break;
@@ -63,10 +62,9 @@ class ScheduleRepo {
 
       if (courseName == null || courseName.isEmpty) {
         try {
-          final courseAttr =
-              (await _studIPProvider.apiGetJson(
-                'courses/$eventCourseId',
-              ))['data']['attributes'];
+          final courseAttr = (await _studIPProvider.apiGetJson(
+            'courses/$eventCourseId',
+          ))['data']['attributes'];
           courseName = '${courseAttr['course-number']} ${courseAttr['title']}';
         } catch (e) {
           courseName = '';

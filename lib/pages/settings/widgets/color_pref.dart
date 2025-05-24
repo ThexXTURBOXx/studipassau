@@ -47,19 +47,15 @@ class PrefColor extends StatelessWidget {
     pref: pref,
     title: title,
     subtitle: subtitle,
-    onChange:
-        onChange != null ? (v) => onChange!(Color(v ?? defaultValue)) : null,
+    onChange: onChange != null
+        ? (v) => onChange!(Color(v ?? defaultValue))
+        : null,
     disabled: disabled,
     onTap: _tap,
-    builder:
-        (c, v) => Padding(
-          padding: const EdgeInsets.only(right: 14),
-          child: Container(
-            color: Color(v ?? defaultValue),
-            width: 20,
-            height: 20,
-          ),
-        ),
+    builder: (c, v) => Padding(
+      padding: const EdgeInsets.only(right: 14),
+      child: Container(color: Color(v ?? defaultValue), width: 20, height: 20),
+    ),
   );
 
   Future<int?> _tap(BuildContext context, int? value) async {
@@ -67,25 +63,24 @@ class PrefColor extends StatelessWidget {
 
     final result = await showDialog<bool>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(S.of(context).colorPickerTitle),
-            content: SingleChildScrollView(
-              child: ColorPicker(
-                enableAlpha: enableAlpha,
-                pickerColor: Color(newValue),
-                onColorChanged: (v) => newValue = v.intValue,
-              ),
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                child: Text(S.of(context).okay),
-                onPressed: () {
-                  Navigator.of(context).pop(true);
-                },
-              ),
-            ],
+      builder: (context) => AlertDialog(
+        title: Text(S.of(context).colorPickerTitle),
+        content: SingleChildScrollView(
+          child: ColorPicker(
+            enableAlpha: enableAlpha,
+            pickerColor: Color(newValue),
+            onColorChanged: (v) => newValue = v.intValue,
           ),
+        ),
+        actions: <Widget>[
+          ElevatedButton(
+            child: Text(S.of(context).okay),
+            onPressed: () {
+              Navigator.of(context).pop(true);
+            },
+          ),
+        ],
+      ),
     );
 
     return (result ?? false) ? newValue : value;

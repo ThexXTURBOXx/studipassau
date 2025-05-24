@@ -10,10 +10,9 @@ class CourseWidget extends StatelessWidget {
 
   String get sortKey => course.title.trim();
 
-  String get title =>
-      course.number.isEmpty || course.number == 'null'
-          ? course.title.trim()
-          : '${course.number.trim()} ${course.title.trim()}';
+  String get title => course.number.isEmpty || course.number == 'null'
+      ? course.title.trim()
+      : '${course.number.trim()} ${course.title.trim()}';
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -31,18 +30,16 @@ class CourseWidget extends StatelessWidget {
     title: Text(title),
     subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
     onTap: onTap,
-    onLongPress:
-        () async => showDialog<void>(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: Text(title),
-                content: Text(
-                  '${course.subtitle}\n'
-                  '${course.description}',
-                ),
-              ),
+    onLongPress: () async => showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(
+          '${course.subtitle}\n'
+          '${course.description}',
         ),
+      ),
+    ),
   );
 }
 

@@ -56,8 +56,8 @@ class _MensaPagePageState extends State<MensaPage>
         IconButton(
           icon: const Icon(Icons.refresh),
           tooltip: S.of(context).refresh,
-          onPressed:
-              () async => await _refreshIndicatorKey.currentState?.show(),
+          onPressed: () async =>
+              await _refreshIndicatorKey.currentState?.show(),
         ),
       ],
     ),
@@ -110,13 +110,12 @@ class _MensaPagePageState extends State<MensaPage>
                           ),
                           child: Text(m.category.trim().characters.first),
                         ),
-                        trailing:
-                            isWideScreen
-                                ? Text(
-                                  getQuickPrice(m),
-                                  style: const TextStyle(color: Colors.grey),
-                                )
-                                : null,
+                        trailing: isWideScreen
+                            ? Text(
+                                getQuickPrice(m),
+                                style: const TextStyle(color: Colors.grey),
+                              )
+                            : null,
                         title: Text(m.name.trim()),
                         onTap: () async => onTap(m),
                       ),
@@ -148,18 +147,17 @@ class _MensaPagePageState extends State<MensaPage>
     final s = S.of(context);
     await showDialog<void>(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: Text(m.name.trim()),
-            content: Text(
-              '${s.category}: ${m.category.trim()}\n'
-              '${formatPrice(s.students, m.studentPrice)}'
-              '${formatPrice(s.employees, m.employeePrice)}'
-              '${formatPrice(s.guests, m.othersPrice)}'
-              '${formatPrice(s.pupils, m.pupilPrice)}'
-              '${formatAdditives(s, m.notes)}',
-            ),
-          ),
+      builder: (context) => AlertDialog(
+        title: Text(m.name.trim()),
+        content: Text(
+          '${s.category}: ${m.category.trim()}\n'
+          '${formatPrice(s.students, m.studentPrice)}'
+          '${formatPrice(s.employees, m.employeePrice)}'
+          '${formatPrice(s.guests, m.othersPrice)}'
+          '${formatPrice(s.pupils, m.pupilPrice)}'
+          '${formatAdditives(s, m.notes)}',
+        ),
+      ),
     );
   }
 
@@ -168,8 +166,8 @@ class _MensaPagePageState extends State<MensaPage>
 
   String formatAdditives(S s, List<String>? additives) =>
       additives != null && additives.isNotEmpty
-          ? '${s.additives}: ${additives.join(", ")}'
-          : '${s.additives}: ${s.noAdditives}';
+      ? '${s.additives}: ${additives.join(", ")}'
+      : '${s.additives}: ${s.noAdditives}';
 
   Color? getFoodColor(String category) {
     switch (category) {
