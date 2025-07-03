@@ -34,7 +34,7 @@ dependencies:
   flutter_native_splash: ^2.0.1+1
   flutter_secure_storage: ^9.0.0
   flutter_sticky_header: ^0.8.0
-  flutter_web_auth_2: ^4.0.0-alpha.0
+  flutter_web_auth_2: ^5.0.0-alpha.0
   flutter_widget_from_html_core: ^0.16.0
   fwfh_url_launcher: ^0.16.0
   http: ^1.0.0
