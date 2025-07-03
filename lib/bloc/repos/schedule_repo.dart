@@ -121,7 +121,7 @@ class ScheduleRepo {
   bool _equalsCourseEventTime(int courseStart, DateTime eventStart) =>
       courseStart == eventStart.hour * 100 + eventStart.minute;
 
-  List<_Event> _parseEvents(json) {
+  List<_Event> _parseEvents(dynamic json) {
     final collection = json['collection'];
     if (collection != null && collection is List) {
       return collection.map(_Event.fromJson).toList(growable: false);
@@ -143,7 +143,7 @@ class _Event extends Equatable {
     required this.canceled,
   });
 
-  factory _Event.fromJson(json) => _Event(
+  factory _Event.fromJson(dynamic json) => _Event(
         id: json['event_id'].toString(),
         course: json['course'].toString(),
         start: location.translate(int.parse(json['start'].toString()) * 1000),
@@ -184,7 +184,7 @@ class _Schedule extends Equatable {
     required this.events,
   });
 
-  factory _Schedule.fromJson(json) {
+  factory _Schedule.fromJson(dynamic json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
     for (var i = 0; i < 7; i++) {
       final dynamic day = json['$i'];

@@ -81,7 +81,7 @@ class Folder extends Equatable {
     required this.isWritable,
   });
 
-  factory Folder.fromJson(json) => Folder(
+  factory Folder.fromJson(dynamic json) => Folder(
         id: json['id'].toString(),
         userId: json['user_id'].toString(),
         parentId: json['parent_id'].toString(),

@@ -80,7 +80,7 @@ class News extends Equatable {
     required this.bodyHtml,
   });
 
-  factory News.fromJson(json) => News(
+  factory News.fromJson(dynamic json) => News(
         newsId: json['news_id'].toString(),
         topic: json['topic'].toString(),
         body: json['body'].toString(),

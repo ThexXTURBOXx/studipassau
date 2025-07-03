@@ -786,7 +786,7 @@ packages:
     source: hosted
     version: "2.1.0"
   open_filex:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       path: "."
       ref: HEAD

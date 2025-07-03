@@ -18,7 +18,7 @@ class StudiPassauEvent extends Event {
     required super.end,
   });
 
-  factory StudiPassauEvent.fromJson(json) => StudiPassauEvent(
+  factory StudiPassauEvent.fromJson(dynamic json) => StudiPassauEvent(
         id: json['id'].toString(),
         title: json['title'].toString(),
         course: json['course'].toString(),
@@ -88,7 +88,7 @@ class StudiPassauEvent extends Event {
         'categories': categories,
         'room': room,
         'canceled': canceled,
-        'backgroundColor': backgroundColor.value,
+        'backgroundColor': backgroundColor.intValue,
         'start': dateTimeSaveFormat.format(start),
         'end': dateTimeSaveFormat.format(end),
       };

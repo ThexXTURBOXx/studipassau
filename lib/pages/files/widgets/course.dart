@@ -54,7 +54,7 @@ class Course extends Equatable {
     required this.modules,
   });
 
-  factory Course.fromJson(json) => Course(
+  factory Course.fromJson(dynamic json) => Course(
         id: json['course_id'].toString(),
         number: json['number'].toString(),
         title: json['title'].toString(),

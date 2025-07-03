@@ -32,64 +32,58 @@ class StudiPassauDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) => UserAccountsDrawerHeader(
-                accountName: Text(state.formattedName),
-                accountEmail: Text(state.username),
-                decoration: const BoxDecoration(
-                  color: iconBgColor,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      'assets/icons/studipassau_icon.png',
-                    ),
-                  ),
-                ),
-                currentAccountPicture: ClipRRect(
-                  borderRadius: BorderRadius.circular(110),
-                  child: CachedNetworkImage(
-                    fit: BoxFit.cover,
-                    imageUrl: state.avatarNormal,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) =>
-                            CircularProgressIndicator(
-                      value: downloadProgress.progress,
-                    ),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
-                    cacheManager: StudIPCacheManager.instance,
-                  ),
-                ),
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: [
+        BlocBuilder<LoginCubit, LoginState>(
+          builder: (context, state) => UserAccountsDrawerHeader(
+            accountName: Text(state.formattedName),
+            accountEmail: Text(state.username),
+            decoration: const BoxDecoration(
+              color: iconBgColor,
+              image: DecorationImage(
+                image: AssetImage('assets/icons/studipassau_icon.png'),
               ),
             ),
-            for (final DrawerItem item in DrawerItem.values)
-              item.isDivider
-                  ? const Divider()
-                  : item.isSubTitle
-                      ? Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 4,
-                            horizontal: 16,
-                          ),
-                          child: Text(
-                            item.title(context),
-                            style: TextStyle(color: context.theme.hintColor),
-                          ),
-                        )
-                      : ListTile(
-                          leading: Icon(item.icon),
-                          title: Text(item.title(context)),
-                          onTap: () async => selected == item
-                              ? closeDrawer(context)
-                              : item.onTap(context),
-                          selected: selected == item,
-                          selectedTileColor: context.theme.highlightColor,
-                        ),
-          ],
+            currentAccountPicture: ClipRRect(
+              borderRadius: BorderRadius.circular(110),
+              child: CachedNetworkImage(
+                fit: BoxFit.cover,
+                imageUrl: state.avatarNormal,
+                progressIndicatorBuilder: (context, url, downloadProgress) =>
+                    CircularProgressIndicator(value: downloadProgress.progress),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+                cacheManager: StudIPCacheManager.instance,
+              ),
+            ),
+          ),
         ),
-      );
+        for (final DrawerItem item in DrawerItem.values)
+          item.isDivider
+              ? const Divider()
+              : item.isSubTitle
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 16,
+                  ),
+                  child: Text(
+                    item.title(context),
+                    style: TextStyle(color: context.theme.hintColor),
+                  ),
+                )
+              : ListTile(
+                  leading: Icon(item.icon),
+                  title: Text(item.title(context)),
+                  onTap: () async => selected == item
+                      ? closeDrawer(context)
+                      : item.onTap(context),
+                  selected: selected == item,
+                  selectedTileColor: context.theme.highlightColor,
+                ),
+      ],
+    ),
+  );
 }
 
 enum DrawerItem {
@@ -174,9 +168,11 @@ enum DrawerItem {
       case DrawerItem.share:
         return (context) async {
           closeDrawer(context);
-          await Share.share(
-            S.of(context).shareBody,
-            subject: S.of(context).shareSubject,
+          await SharePlus.instance.share(
+            ShareParams(
+              text: S.of(context).shareBody,
+              subject: S.of(context).shareSubject,
+            ),
           );
         };
       case DrawerItem.campusPortal:
@@ -212,8 +208,9 @@ enum DrawerItem {
         return route == null
             ? (context) async {
                 closeDrawer(context);
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(S.of(context).wip)));
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(S.of(context).wip)));
               }
             : (context) async => navigateTo(context, route);
     }

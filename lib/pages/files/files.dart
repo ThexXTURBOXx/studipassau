@@ -48,129 +48,112 @@ class _FilesPagePageState extends State<FilesPage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).filesTitle),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              tooltip: S.of(context).refresh,
-              onPressed: () async =>
-                  await _refreshIndicatorKey.currentState?.show(),
-            ),
-          ],
+    appBar: AppBar(
+      title: Text(S.of(context).filesTitle),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: S.of(context).refresh,
+          onPressed: () async =>
+              await _refreshIndicatorKey.currentState?.show(),
         ),
-        drawer: const StudiPassauDrawer(DrawerItem.files),
-        body: BlocBuilder<LoginCubit, LoginState>(
-          builder: (context, stateL) => BlocConsumer<FilesCubit, FilesState>(
-            listener: showErrorMessage,
-            builder: (context, state) {
-              isWideScreen =
-                  MediaQuery.of(context).size.width > wideScreenWidth;
-              return PopScope(
-                canPop: false,
-                onPopInvokedWithResult: (didPop, _) async {
-                  if (didPop) {
-                    return;
-                  }
-                  final wasHome = state.goUp();
-                  if (wasHome) {
-                    await SystemNavigator.pop();
-                  } else {
-                    await refresh(
-                      context,
-                      stateL: stateL,
-                      state: state,
-                    );
-                  }
-                },
-                child: RefreshIndicator(
-                  key: _refreshIndicatorKey,
-                  onRefresh: () async => refresh(
-                    context,
-                    stateL: stateL,
-                    state: state,
-                  ),
-                  child: state.folderState == FolderState.home
-                      ? ListView(
-                          children: state.courses
+      ],
+    ),
+    drawer: const StudiPassauDrawer(DrawerItem.files),
+    body: BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, stateL) => BlocConsumer<FilesCubit, FilesState>(
+        listener: showErrorMessage,
+        builder: (context, state) {
+          isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
+          return PopScope(
+            canPop: false,
+            onPopInvokedWithResult: (didPop, _) async {
+              if (didPop) {
+                return;
+              }
+              final wasHome = state.goUp();
+              if (wasHome) {
+                await SystemNavigator.pop();
+              } else {
+                await refresh(context, stateL: stateL, state: state);
+              }
+            },
+            child: RefreshIndicator(
+              key: _refreshIndicatorKey,
+              onRefresh: () async =>
+                  refresh(context, stateL: stateL, state: state),
+              child: state.folderState == FolderState.home
+                  ? ListView(
+                      children: state.courses
+                          .map(
+                            (c) => CourseWidget(
+                              course: c,
+                              onTap: () async {
+                                await loadCourse(c);
+                              },
+                            ),
+                          )
+                          .sortedByCompare((f) => f.sortKey, compareNatural)
+                          .toList(growable: false),
+                    )
+                  : ListView(
+                      children:
+                          <StatelessWidget>[] +
+                          state.folders
                               .map(
-                                (c) => CourseWidget(
-                                  course: c,
+                                (f) => FolderWidget(
+                                  folder: f,
                                   onTap: () async {
-                                    await loadCourse(c);
+                                    await loadFolder(f);
                                   },
                                 ),
                               )
-                              .sortedByCompare(
-                                (f) => f.sortKey,
-                                compareNatural,
+                              .sortedByCompare((f) => f.sortKey, compareNatural)
+                              .toList(growable: false) +
+                          state.files
+                              .map(
+                                (f) => FileWidget(
+                                  file: f,
+                                  onTap: () async {
+                                    final theme = Theme.of(context);
+                                    final pd = ProgressDialog(context: context)
+                                      ..show(
+                                        msg: S.of(context).downloading,
+                                        backgroundColor:
+                                            theme.dialogTheme.backgroundColor ??
+                                            Colors.white,
+                                      );
+                                    await downloadFile(
+                                      f,
+                                      onProgress: (perc) =>
+                                          pd.update(value: perc.round()),
+                                      onDone: OpenFilex.open,
+                                    );
+                                  },
+                                  showDownloads: isWideScreen,
+                                ),
                               )
+                              .sortedByCompare((f) => f.sortKey, compareNatural)
                               .toList(growable: false),
-                        )
-                      : ListView(
-                          children: <StatelessWidget>[] +
-                              state.folders
-                                  .map(
-                                    (f) => FolderWidget(
-                                      folder: f,
-                                      onTap: () async {
-                                        await loadFolder(f);
-                                      },
-                                    ),
-                                  )
-                                  .sortedByCompare(
-                                    (f) => f.sortKey,
-                                    compareNatural,
-                                  )
-                                  .toList(growable: false) +
-                              state.files
-                                  .map(
-                                    (f) => FileWidget(
-                                      file: f,
-                                      onTap: () async {
-                                        final theme = Theme.of(context);
-                                        final pd =
-                                            ProgressDialog(context: context)
-                                              ..show(
-                                                msg: S.of(context).downloading,
-                                                backgroundColor:
-                                                    theme.dialogBackgroundColor,
-                                              );
-                                        await downloadFile(
-                                          f,
-                                          onProgress: (perc) =>
-                                              pd.update(value: perc.round()),
-                                          onDone: OpenFilex.open,
-                                        );
-                                      },
-                                      showDownloads: isWideScreen,
-                                    ),
-                                  )
-                                  .sortedByCompare(
-                                    (f) => f.sortKey,
-                                    compareNatural,
-                                  )
-                                  .toList(growable: false),
-                        ),
-                ),
-              );
-            },
-          ),
-        ),
-      );
+                    ),
+            ),
+          );
+        },
+      ),
+    ),
+  );
 
   Future<String> downloadFile(
     File file, {
     ProgressListener? onProgress,
     Function? onError,
     void Function(String)? onDone,
-  }) async =>
-      context.read<FilesCubit>().downloadFile(
-            file,
-            onProgress: onProgress,
-            onError: onError,
-            onDone: onDone,
-          );
+  }) async => context.read<FilesCubit>().downloadFile(
+    file,
+    onProgress: onProgress,
+    onError: onError,
+    onDone: onDone,
+  );
 
   Future<void> loadCourse(Course course) async {
     await context.read<FilesCubit>().loadCourseTopFolder(course);
@@ -186,9 +169,9 @@ class _FilesPagePageState extends State<FilesPage>
     FilesState? state,
   }) async {
     await context.read<FilesCubit>().refresh(
-          userId: stateL?.userId,
-          course: state?.currentCourse,
-          folder: state?.currentFolder,
-        );
+      userId: stateL?.userId,
+      course: state?.currentCourse,
+      folder: state?.currentFolder,
+    );
   }
 }

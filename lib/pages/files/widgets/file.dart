@@ -106,7 +106,7 @@ class File extends Equatable {
     required this.isWritable,
   });
 
-  factory File.fromJson(json) => File(
+  factory File.fromJson(dynamic json) => File(
         id: json['id'].toString(),
         fileId: json['file_id'].toString(),
         folderId: json['folder_id'].toString(),
