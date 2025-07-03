@@ -348,6 +348,14 @@
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
   },
+  "lectureCanceledColorPrefTitle": "Abgesagte Sitzungs-Farbe",
+  "@lectureCanceledColorPrefTitle": {
+    "description": "Title for canceled lecture color preference"
+  },
+  "lectureCanceledColorPrefDesc": "Farbe der Sitzungen, die abgesagt wurden",
+  "@lectureCanceledColorPrefDesc": {
+    "description": "Description for canceled lecture color preference"
+  },
   "categoriesPref": "Kategorien",
   "@categoriesPref": {
     "description": "Title for a group of category-related preferences"
@@ -479,6 +487,30 @@
   "newsPrefCatDesc": "Anpassung der Neuigkeiten",
   "@newsPrefCatDesc": {
     "description": "News preferences category description"
+  },
+  "roomFinderPrefCatLongTitle": "Raumfinder-Einstellungen",
+  "@roomFinderPrefCatLongTitle": {
+    "description": "Room finder preferences category long title"
+  },
+  "roomFinderPrefCatShortTitle": "Raumfinder",
+  "@roomFinderPrefCatShortTitle": {
+    "description": "Room finder preferences category short title"
+  },
+  "roomFinderPrefCatDesc": "Anpassung des Raumfinders",
+  "@roomFinderPrefCatDesc": {
+    "description": "Room finder preferences category description"
+  },
+  "filesPrefCatLongTitle": "Dateien-Einstellungen",
+  "@filesPrefCatLongTitle": {
+    "description": "Files preferences category long title"
+  },
+  "filesPrefCatShortTitle": "Dateien",
+  "@filesPrefCatShortTitle": {
+    "description": "Files preferences category short title"
+  },
+  "filesPrefCatDesc": "Anpassung der Dateien",
+  "@filesPrefCatDesc": {
+    "description": "Files preferences category description"
   },
   "downloading": "Herunterladen...",
   "@downloading": {

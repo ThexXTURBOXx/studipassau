@@ -348,6 +348,14 @@
   "@lectureNotFoundColorPrefDesc": {
     "description": "Description for not-found lecture color preference"
   },
+  "lectureCanceledColorPrefTitle": "Canceled lecture color",
+  "@lectureCanceledColorPrefTitle": {
+    "description": "Title for canceled lecture color preference"
+  },
+  "lectureCanceledColorPrefDesc": "Color of sessions that have been canceled",
+  "@lectureCanceledColorPrefDesc": {
+    "description": "Description for canceled lecture color preference"
+  },
   "categoriesPref": "Categories",
   "@categoriesPref": {
     "description": "Title for a group of category-related preferences"
@@ -479,6 +487,30 @@
   "newsPrefCatDesc": "Customization of the news section",
   "@newsPrefCatDesc": {
     "description": "News preferences category description"
+  },
+  "roomFinderPrefCatLongTitle": "Room finder settings",
+  "@roomFinderPrefCatLongTitle": {
+    "description": "Room finder preferences category long title"
+  },
+  "roomFinderPrefCatShortTitle": "Room finder",
+  "@roomFinderPrefCatShortTitle": {
+    "description": "Room finder preferences category short title"
+  },
+  "roomFinderPrefCatDesc": "Customization of the room finder section",
+  "@roomFinderPrefCatDesc": {
+    "description": "Room finder preferences category description"
+  },
+  "filesPrefCatLongTitle": "Files settings",
+  "@filesPrefCatLongTitle": {
+    "description": "Files preferences category long title"
+  },
+  "filesPrefCatShortTitle": "Files",
+  "@filesPrefCatShortTitle": {
+    "description": "Files preferences category short title"
+  },
+  "filesPrefCatDesc": "Customization of the files section",
+  "@filesPrefCatDesc": {
+    "description": "Files preferences category description"
   },
   "downloading": "Downloading...",
   "@downloading": {

@@ -1,4 +1,4 @@
-import 'package:easy_search_bar/easy_search_bar.dart';
+import 'package:easy_search_bar_2/easy_search_bar_2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -34,7 +34,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
   //print(ModalRoute.of(context)!.settings.arguments);
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: EasySearchBar<Building>(
+        appBar: EasySearchBar2<Building>(
           title: Text(S.of(context).roomFinderTitle),
           onSearch: (value) {},
           searchHintText: S.of(context).searchBuildings,

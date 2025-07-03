@@ -68,7 +68,7 @@ class _FilesPagePageState extends State<FilesPage>
                   MediaQuery.of(context).size.width > wideScreenWidth;
               return PopScope(
                 canPop: false,
-                onPopInvoked: (didPop) async {
+                onPopInvokedWithResult: (didPop, _) async {
                   if (didPop) {
                     return;
                   }

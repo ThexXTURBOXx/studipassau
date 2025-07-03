@@ -3,7 +3,10 @@ import 'package:pref/pref.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
+import 'package:studipassau/pages/news/news.dart';
+import 'package:studipassau/pages/roomfinder/roomfinder.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/widgets/color_pref.dart';
 
@@ -15,6 +18,7 @@ const startRoutePref = 'start_route';
 const scheduleAutoSyncPref = 'schedule_auto_sync';
 const nonRegularColorPref = 'non_regular_color';
 const notFoundColorPref = 'not_found_color';
+const canceledColorPref = 'canceled_color';
 const showScheduleOnlyPref = 'show_schedule_only';
 const mensaAutoSyncPref = 'mensa_auto_sync';
 const mensaSourcePref = 'mensa_source';
@@ -44,6 +48,7 @@ const Map<String, dynamic> defaults = {
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
   notFoundColorPref: 0xffea3838,
+  canceledColorPref: 0xff636363,
   showScheduleOnlyPref: true,
   mensaAutoSyncPref: true,
   mensaSourcePref: mensaSourcePrefStwno,
@@ -120,7 +125,18 @@ class SettingsPage extends StatelessWidget {
                         value: routeMensa,
                         child: Text(S.of(context).mensaPrefCatShortTitle),
                       ),
-                      // TODO(Nico): Add files section
+                      DropdownMenuItem(
+                        value: routeFiles,
+                        child: Text(S.of(context).filesPrefCatShortTitle),
+                      ),
+                      DropdownMenuItem(
+                        value: routeRoomFinder,
+                        child: Text(S.of(context).roomFinderPrefCatShortTitle),
+                      ),
+                      DropdownMenuItem(
+                        value: routeNews,
+                        child: Text(S.of(context).newsPrefCatShortTitle),
+                      ),
                     ],
                   ),
                 ],
@@ -149,6 +165,11 @@ class SettingsPage extends StatelessWidget {
                     title: Text(S.of(context).lectureNotFoundColorPrefTitle),
                     subtitle: Text(S.of(context).lectureNotFoundColorPrefDesc),
                     pref: notFoundColorPref,
+                  ),
+                  PrefColor(
+                    title: Text(S.of(context).lectureCanceledColorPrefTitle),
+                    subtitle: Text(S.of(context).lectureCanceledColorPrefDesc),
+                    pref: canceledColorPref,
                   ),
                   PrefTitle(title: Text(S.of(context).categoriesPref)),
                   PrefSwitch(
