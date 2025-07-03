@@ -17,20 +17,23 @@ jobs:
         with:
           channel: 'stable'
 
-      - name: Create .env.NEW file
-        run: echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env.NEW
+      - name: Create .env file
+        run: echo -e "CONSUMER_KEY=SampleKey\nCONSUMER_SECRET=SampleSecret\nSENTRY_DSN=https://0@o0.ingest.sentry.io/0" > .env
 
       - name: Activate own intl_utils
-        run: flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
+        run: dart pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
 
       - name: Get dependencies
         run: flutter pub get
 
       - name: Generate language files
-        run: flutter pub global run intl_utils:generate
+        run: dart pub global run intl_utils:generate
 
       - name: Generate env class
         run: dart run build_runner build
 
+      - name: Lint
+        run: dart format -o none --set-exit-if-changed .
+
       - name: Analyze
-        run: flutter analyze
+        run: dart analyze

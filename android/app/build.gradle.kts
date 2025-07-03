@@ -15,13 +15,13 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "studip_uni_passau.femtopedia.de.unipassaustudip"
-    compileSdk = 35 // flutter.compileSdkVersion
+    compileSdk = 36 // flutter.compileSdkVersion
     // ndkVersion = flutter.ndkVersion
 
     defaultConfig {
         applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
         minSdk = 23 // flutter.minSdkVersion
-        targetSdk = 35 // flutter.targetSdkVersion
+        targetSdk = 36 // flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }

@@ -13,7 +13,7 @@ import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:timezone/timezone.dart';
 
-const envFile = '.env.NEW';
+const envFile = '.env';
 const studIpProviderUrl = 'https://studip.uni-passau.de/studip/';
 const campusPortalUrl = 'https://campus.uni-passau.de/';
 const openMensaMensaId = 196;

@@ -29,7 +29,7 @@ The compilation from source should be straight forward (only Android):
     ```
 4. Activate my custom version of `intl_utils` which fixes language overrides:
     ```shell
-    flutter pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
+    dart pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
     ```
 5. Download the dependencies:
    ```shell
@@ -37,7 +37,7 @@ The compilation from source should be straight forward (only Android):
    ```
 6. Generate the language files:
     ```shell
-    flutter pub global run intl_utils:generate
+    dart pub global run intl_utils:generate
     ```
 7. Generate the environment variable class:
     ```shell
