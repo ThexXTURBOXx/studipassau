@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -116,13 +118,15 @@ class _FilesPagePageState extends State<FilesPage>
                                   file: f,
                                   onTap: () async {
                                     final theme = Theme.of(context);
-                                    final pd = ProgressDialog(context: context)
-                                      ..show(
+                                    final pd = ProgressDialog(context: context);
+                                    unawaited(
+                                      pd.show(
                                         msg: S.of(context).downloading,
                                         backgroundColor:
                                             theme.dialogTheme.backgroundColor ??
                                             Colors.white,
-                                      );
+                                      ),
+                                    );
                                     await downloadFile(
                                       f,
                                       onProgress: (perc) =>

@@ -47,8 +47,8 @@ dependencies:
   path_provider: ^2.0.11
   pref: ^2.5.0
   quick_actions: ^1.0.0
-  sentry: ^9.0.0
-  sentry_flutter: ^9.0.0
+  sentry: ^9.3.0
+  sentry_flutter: ^9.3.0
   share_plus: ^11.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
