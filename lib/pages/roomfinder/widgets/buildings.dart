@@ -45,7 +45,7 @@ final buildings = [
         const LatLng(48.570274, 13.456322),
         const LatLng(48.570228, 13.456134),
         const LatLng(48.570377, 13.456129),
-      ]
+      ],
     ],
     markerPos: const LatLng(48.570117, 13.456325),
     color: Colors.black.withAlpha(128),
@@ -478,7 +478,7 @@ final buildings = [
         const LatLng(48.572576, 13.455229),
         const LatLng(48.572473, 13.455374),
         const LatLng(48.572495, 13.455208),
-      ]
+      ],
     ],
     color: Colors.blue.withAlpha(128),
   ),
@@ -748,22 +748,18 @@ class Building {
     LatLng? markerPos,
     Color color = const Color(0xFF00FF00),
     PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
-  })  : polygon = Polygon(
-          points: points,
-          holePointsList: holePoints,
-          color: color,
-          label: abbrev,
-          labelPlacement: labelPlacement,
-        ),
-        marker = Marker(
-          point: markerPos ?? LatLngBounds.fromPoints(points).center,
-          rotate: true,
-          child: const Icon(
-            Icons.circle,
-            color: Colors.red,
-            size: 20,
-          ),
-        );
+  }) : polygon = Polygon(
+         points: points,
+         holePointsList: holePoints,
+         color: color,
+         label: abbrev,
+         labelPlacement: labelPlacement,
+       ),
+       marker = Marker(
+         point: markerPos ?? LatLngBounds.fromPoints(points).center,
+         rotate: true,
+         child: const Icon(Icons.circle, color: Colors.red, size: 20),
+       );
 
   final String name;
   final String abbrev;

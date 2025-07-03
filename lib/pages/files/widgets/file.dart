@@ -38,51 +38,39 @@ class FileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.insert_drive_file_outlined),
-        title: Text(title),
-        subtitle: file.description.isNotEmpty ? Text(file.description) : null,
-        trailing: showDownloads
-            ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    '${file.downloads}',
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  const Icon(Icons.download, color: Colors.grey),
-                ],
-              )
-            : null,
-        onTap: onTap,
-        onLongPress: () async {
-          final s = S.of(context);
-          await showDialog<void>(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(title),
-              content: Text(
-                '${sprintf(s.downloads, [file.downloads])}\n'
-                '${sprintf(s.changeDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          file.changeDate * 1000,
-                        ),
-                      ),
-                    ])}\n'
-                '${sprintf(s.createDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          file.makeDate * 1000,
-                        ),
-                      ),
-                    ])}\n'
-                '${sprintf(s.fileSize, [filesize(file.size)])}'
-                '${formatDesc(s.fileDescription, file.description)}',
+    leading: const Icon(Icons.insert_drive_file_outlined),
+    title: Text(title),
+    subtitle: file.description.isNotEmpty ? Text(file.description) : null,
+    trailing: showDownloads
+        ? Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                '${file.downloads}',
+                style: const TextStyle(color: Colors.grey),
               ),
-            ),
-          );
-        },
+              const Icon(Icons.download, color: Colors.grey),
+            ],
+          )
+        : null,
+    onTap: onTap,
+    onLongPress: () async {
+      final s = S.of(context);
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${sprintf(s.downloads, [file.downloads])}\n'
+            '${sprintf(s.changeDate, [formatDateTime(DateTime.fromMillisecondsSinceEpoch(file.changeDate * 1000))])}\n'
+            '${sprintf(s.createDate, [formatDateTime(DateTime.fromMillisecondsSinceEpoch(file.makeDate * 1000))])}\n'
+            '${sprintf(s.fileSize, [filesize(file.size)])}'
+            '${formatDesc(s.fileDescription, file.description)}',
+          ),
+        ),
       );
+    },
+  );
 }
 
 class File extends Equatable {
@@ -107,24 +95,24 @@ class File extends Equatable {
   });
 
   factory File.fromJson(dynamic json) => File(
-        id: json['id'].toString(),
-        fileId: json['file_id'].toString(),
-        folderId: json['folder_id'].toString(),
-        downloads: int.parse(json['downloads'].toString()),
-        description: json['description'].toString(),
-        contentTermsOfUseId: json['content_terms_of_use_id'].toString(),
-        userId: json['user_id'].toString(),
-        name: json['name'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        size: int.parse(json['size'].toString()),
-        mimeType: json['mime_type'].toString(),
-        storage: json['storage'].toString(),
-        isReadable: json['is_readable'].toString().parseBool(),
-        isDownloadable: json['is_downloadable'].toString().parseBool(),
-        isEditable: json['is_editable'].toString().parseBool(),
-        isWritable: json['is_writable'].toString().parseBool(),
-      );
+    id: json['id'].toString(),
+    fileId: json['file_id'].toString(),
+    folderId: json['folder_id'].toString(),
+    downloads: int.parse(json['downloads'].toString()),
+    description: json['description'].toString(),
+    contentTermsOfUseId: json['content_terms_of_use_id'].toString(),
+    userId: json['user_id'].toString(),
+    name: json['name'].toString(),
+    makeDate: int.parse(json['mkdate'].toString()),
+    changeDate: int.parse(json['chdate'].toString()),
+    size: int.parse(json['size'].toString()),
+    mimeType: json['mime_type'].toString(),
+    storage: json['storage'].toString(),
+    isReadable: json['is_readable'].toString().parseBool(),
+    isDownloadable: json['is_downloadable'].toString().parseBool(),
+    isEditable: json['is_editable'].toString().parseBool(),
+    isWritable: json['is_writable'].toString().parseBool(),
+  );
 
   final String id;
   final String fileId;
@@ -146,22 +134,22 @@ class File extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        fileId,
-        folderId,
-        downloads,
-        description,
-        contentTermsOfUseId,
-        userId,
-        name,
-        makeDate,
-        changeDate,
-        size,
-        mimeType,
-        storage,
-        isReadable,
-        isDownloadable,
-        isEditable,
-        isWritable,
-      ];
+    id,
+    fileId,
+    folderId,
+    downloads,
+    description,
+    contentTermsOfUseId,
+    userId,
+    name,
+    makeDate,
+    changeDate,
+    size,
+    mimeType,
+    storage,
+    isReadable,
+    isDownloadable,
+    isEditable,
+    isWritable,
+  ];
 }

@@ -12,18 +12,19 @@ class FilesRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<Course>> getCourses(String userId) async {
-    final jsonCourses = (await _studIPProvider
-            .apiGetJson('user/$userId/courses?limit=10000'))['collection']
-        as Map<String, dynamic>;
+    final jsonCourses =
+        (await _studIPProvider.apiGetJson(
+              'user/$userId/courses?limit=10000',
+            ))['collection']
+            as Map<String, dynamic>;
     return jsonCourses.values.map(Course.fromJson).toList(growable: false);
   }
 
   Future<Tuple2<List<Folder>, List<File>>> loadCourseTopFolder(
     String courseId,
-  ) async =>
-      parseFolder(
-        await _studIPProvider.apiGetJson('course/$courseId/top_folder'),
-      );
+  ) async => parseFolder(
+    await _studIPProvider.apiGetJson('course/$courseId/top_folder'),
+  );
 
   Future<Tuple2<List<Folder>, List<File>>> loadFolder(String folderId) async =>
       parseFolder(await _studIPProvider.apiGetJson('folder/$folderId'));
@@ -49,12 +50,11 @@ class FilesRepo {
     ProgressListener? onProgress,
     Function? onError,
     void Function(String)? onDone,
-  }) =>
-      _studIPProvider.downloadFile(
-        toFile,
-        request,
-        onProgress: onProgress,
-        onError: onError,
-        onDone: onDone,
-      );
+  }) => _studIPProvider.downloadFile(
+    toFile,
+    request,
+    onProgress: onProgress,
+    onError: onError,
+    onDone: onDone,
+  );
 }

@@ -14,17 +14,21 @@ class ScheduleRepo {
     final notFoundColor = Color(getPref(notFoundColorPref));
     final nonRegularColor = Color(getPref(nonRegularColorPref));
 
-    final dynamic jsonSchedule =
-        await _studIPProvider.apiGetJson('user/$userId/schedule');
-    final dynamic jsonEvents =
-        await _studIPProvider.apiGetJson('user/$userId/events?limit=10000');
+    final dynamic jsonSchedule = await _studIPProvider.apiGetJson(
+      'user/$userId/schedule',
+    );
+    final dynamic jsonEvents = await _studIPProvider.apiGetJson(
+      'user/$userId/events?limit=10000',
+    );
     final events = _parseEvents(jsonEvents);
     final schedule = _Schedule.fromJson(jsonSchedule).events;
     final eventsCache = <StudiPassauEvent>[];
 
     for (final event in events) {
-      final start =
-          DateTime.fromMillisecondsSinceEpoch(event.start, isUtc: true);
+      final start = DateTime.fromMillisecondsSinceEpoch(
+        event.start,
+        isUtc: true,
+      );
       final end = DateTime.fromMillisecondsSinceEpoch(event.end, isUtc: true);
       final eventCourseId = event.course.split('/').last;
 
@@ -47,8 +51,9 @@ class ScheduleRepo {
 
       if (courseName == null) {
         try {
-          final courseResp =
-              await _studIPProvider.apiGetJson('course/$eventCourseId');
+          final courseResp = await _studIPProvider.apiGetJson(
+            'course/$eventCourseId',
+          );
           courseName = '${courseResp['number']} ${courseResp['title']}';
         } catch (e) {
           courseName = '';
@@ -144,16 +149,16 @@ class _Event extends Equatable {
   });
 
   factory _Event.fromJson(dynamic json) => _Event(
-        id: json['event_id'].toString(),
-        course: json['course'].toString(),
-        start: location.translate(int.parse(json['start'].toString()) * 1000),
-        end: location.translate(int.parse(json['end'].toString()) * 1000),
-        title: json['title'].toString(),
-        description: json['description'].toString(),
-        categories: json['categories'].toString(),
-        room: json['room'].toString(),
-        canceled: json['canceled'].toString() == 'true',
-      );
+    id: json['event_id'].toString(),
+    course: json['course'].toString(),
+    start: location.translate(int.parse(json['start'].toString()) * 1000),
+    end: location.translate(int.parse(json['end'].toString()) * 1000),
+    title: json['title'].toString(),
+    description: json['description'].toString(),
+    categories: json['categories'].toString(),
+    room: json['room'].toString(),
+    canceled: json['canceled'].toString() == 'true',
+  );
 
   final String id;
   final String course;
@@ -167,22 +172,20 @@ class _Event extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        course,
-        start,
-        end,
-        title,
-        description,
-        categories,
-        room,
-        canceled,
-      ];
+    id,
+    course,
+    start,
+    end,
+    title,
+    description,
+    categories,
+    room,
+    canceled,
+  ];
 }
 
 class _Schedule extends Equatable {
-  const _Schedule({
-    required this.events,
-  });
+  const _Schedule({required this.events});
 
   factory _Schedule.fromJson(dynamic json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
@@ -240,13 +243,13 @@ class _ScheduleEvent extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        internalId,
-        start,
-        end,
-        content,
-        title,
-        color,
-        type,
-      ];
+    id,
+    internalId,
+    start,
+    end,
+    content,
+    title,
+    color,
+    type,
+  ];
 }

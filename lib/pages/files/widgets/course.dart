@@ -26,21 +26,21 @@ class CourseWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.folder_open),
+    leading: const Icon(Icons.folder_open),
+    title: Text(title),
+    subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
+    onTap: onTap,
+    onLongPress: () async => showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
         title: Text(title),
-        subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
-        onTap: onTap,
-        onLongPress: () async => showDialog<void>(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(title),
-            content: Text(
-              '${course.subtitle}\n'
-              '${course.description}',
-            ),
-          ),
+        content: Text(
+          '${course.subtitle}\n'
+          '${course.description}',
         ),
-      );
+      ),
+    ),
+  );
 }
 
 class Course extends Equatable {
@@ -55,17 +55,18 @@ class Course extends Equatable {
   });
 
   factory Course.fromJson(dynamic json) => Course(
-        id: json['course_id'].toString(),
-        number: json['number'].toString(),
-        title: json['title'].toString(),
-        subtitle: json['subtitle'].toString(),
-        type: json['type'].toString(),
-        description: json['description'].toString(),
-        modules: json['modules'] is Map<String, dynamic>
-            ? (json['modules'] as Map<String, dynamic>)
-                .map((key, value) => MapEntry(key, value.toString()))
-            : <String, String>{},
-      );
+    id: json['course_id'].toString(),
+    number: json['number'].toString(),
+    title: json['title'].toString(),
+    subtitle: json['subtitle'].toString(),
+    type: json['type'].toString(),
+    description: json['description'].toString(),
+    modules: json['modules'] is Map<String, dynamic>
+        ? (json['modules'] as Map<String, dynamic>).map(
+            (key, value) => MapEntry(key, value.toString()),
+          )
+        : <String, String>{},
+  );
 
   final String id;
   final String number;
@@ -77,12 +78,12 @@ class Course extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        number,
-        title,
-        subtitle,
-        type,
-        description,
-        modules,
-      ];
+    id,
+    number,
+    title,
+    subtitle,
+    type,
+    description,
+    modules,
+  ];
 }

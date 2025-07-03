@@ -24,8 +24,7 @@ class StorageRepo {
   Future<bool> writeStringList({
     required String key,
     required List<String> value,
-  }) =>
-      _sharedStorageProvider.writeStringList(key, value);
+  }) => _sharedStorageProvider.writeStringList(key, value);
 
   Future<Map<String, String>> readAllSecure() =>
       _secureStorageProvider.readAll();

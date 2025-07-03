@@ -26,29 +26,25 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) => BlocListener<LoginCubit, LoginState>(
-        listener: (context, state) {
-          if ((state.state == StudiPassauState.authenticated ||
-                  state.state == StudiPassauState.httpError) &&
-              state.userData != null) {
-            navigateTo(context, targetRoute);
-          }
-        },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(S.of(context).loginTitle),
-          ),
-          body: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                BlocBuilder<LoginCubit, LoginState>(
-                  builder: getIndicator,
-                ),
-              ],
-            ),
-          ),
+    listener: (context, state) {
+      if ((state.state == StudiPassauState.authenticated ||
+              state.state == StudiPassauState.httpError) &&
+          state.userData != null) {
+        navigateTo(context, targetRoute);
+      }
+    },
+    child: Scaffold(
+      appBar: AppBar(title: Text(S.of(context).loginTitle)),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            BlocBuilder<LoginCubit, LoginState>(builder: getIndicator),
+          ],
         ),
-      );
+      ),
+    ),
+  );
 
   Widget getIndicator(BuildContext context, LoginState state) {
     switch (state.state) {
@@ -65,18 +61,13 @@ class _LoginPageState extends State<LoginPage> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                Text(
-                  S.of(context).httpError,
-                  textAlign: TextAlign.center,
-                ),
+                Text(S.of(context).httpError, textAlign: TextAlign.center),
                 retryButton(context),
               ],
             ),
           );
         }
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
+        return const Center(child: CircularProgressIndicator());
       case StudiPassauState.authenticating:
         return Text(
           S.of(context).loginAuthenticating,
@@ -88,9 +79,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget retryButton(BuildContext context) => MaterialButton(
-        onPressed: () async => login(context),
-        child: Text(S.of(context).loginTryAgain.toUpperCase()),
-      );
+    onPressed: () async => login(context),
+    child: Text(S.of(context).loginTryAgain.toUpperCase()),
+  );
 
   Future<void> login(BuildContext context) async {
     await context.read<LoginCubit>().authenticate();

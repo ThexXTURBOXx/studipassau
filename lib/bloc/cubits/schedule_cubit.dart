@@ -10,7 +10,7 @@ import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class ScheduleCubit extends Cubit<ScheduleState> {
   ScheduleCubit(this._storageRepo, this._scheduleRepo)
-      : super(const ScheduleState(StudiPassauState.notFetched));
+    : super(const ScheduleState(StudiPassauState.notFetched));
 
   final StorageRepo _storageRepo;
 
@@ -49,12 +49,7 @@ class ScheduleCubit extends Cubit<ScheduleState> {
         key: scheduleKey,
         value: schedule.map(jsonEncode).toList(growable: false),
       );
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          schedule: schedule,
-        ),
-      );
+      emit(state.copyWith(state: StudiPassauState.fetched, schedule: schedule));
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on SocketException {

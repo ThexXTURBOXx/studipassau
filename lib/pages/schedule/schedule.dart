@@ -96,120 +96,111 @@ class _SchedulePagePageState extends State<SchedulePage>
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(
-          title: Text(S.of(context).scheduleTitle),
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(Icons.refresh),
-              tooltip: S.of(context).refresh,
-              onPressed: () async {
-                await _refreshIndicatorKey.currentState?.show();
-              },
-            ),
-          ],
+    appBar: AppBar(
+      title: Text(S.of(context).scheduleTitle),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.refresh),
+          tooltip: S.of(context).refresh,
+          onPressed: () async {
+            await _refreshIndicatorKey.currentState?.show();
+          },
         ),
-        drawer: const StudiPassauDrawer(DrawerItem.schedule),
-        body: BlocBuilder<LoginCubit, LoginState>(
-          builder: (context, stateL) =>
-              BlocConsumer<ScheduleCubit, ScheduleState>(
-            listener: showErrorMessage,
-            builder: (context, stateS) => RefreshIndicator(
-              key: _refreshIndicatorKey,
-              onRefresh: () async => refresh(context, stateL.userId),
-              child: TimetableTheme(
-                data: TimetableThemeData(
-                  context,
-                  dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
+      ],
+    ),
+    drawer: const StudiPassauDrawer(DrawerItem.schedule),
+    body: BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, stateL) => BlocConsumer<ScheduleCubit, ScheduleState>(
+        listener: showErrorMessage,
+        builder: (context, stateS) => RefreshIndicator(
+          key: _refreshIndicatorKey,
+          onRefresh: () async => refresh(context, stateL.userId),
+          child: TimetableTheme(
+            data: TimetableThemeData(
+              context,
+              dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
+                context,
+                date,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: getColor(context, date, Colors.transparent),
+                ),
+              ),
+              weekdayIndicatorStyleProvider: (date) => WeekdayIndicatorStyle(
+                context,
+                date,
+                textStyle: context.theme.textTheme.bodySmall!.copyWith(
+                  color: getColor(
                     context,
                     date,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: getColor(context, date, Colors.transparent),
-                    ),
-                  ),
-                  weekdayIndicatorStyleProvider: (date) =>
-                      WeekdayIndicatorStyle(
-                    context,
-                    date,
-                    textStyle: context.theme.textTheme.bodySmall!.copyWith(
-                      color: getColor(
-                        context,
-                        date,
-                        context.theme.colorScheme.surface.mediumEmphasisOnColor,
-                      ),
-                    ),
+                    context.theme.colorScheme.surface.mediumEmphasisOnColor,
                   ),
                 ),
-                child: Column(
-                  children: [
-                    DatePageView(
-                      controller: dateControllerHeader,
-                      shrinkWrapInCrossAxis: true,
-                      builder: (context, date) => DateHeader(
-                        date,
-                        onTap: () async => dateControllerContent.animateTo(
-                          date,
-                          vsync: this,
-                        ),
-                        style: DateHeaderStyle(
-                          context,
-                          date,
-                        ),
-                      ),
+              ),
+            ),
+            child: Column(
+              children: [
+                DatePageView(
+                  controller: dateControllerHeader,
+                  shrinkWrapInCrossAxis: true,
+                  builder: (context, date) => DateHeader(
+                    date,
+                    onTap: () async =>
+                        dateControllerContent.animateTo(date, vsync: this),
+                    style: DateHeaderStyle(context, date),
+                  ),
+                ),
+                Expanded(
+                  child: TimetableConfig<StudiPassauEvent>(
+                    dateController: dateControllerContent,
+                    timeController: timeController,
+                    eventProvider: (visible) =>
+                        getEvents(stateS.events, visible),
+                    eventBuilder: (context, event) => StudiPassauEventWidget(
+                      event,
+                      onTap: () async => onTap(context, event),
                     ),
-                    Expanded(
-                      child: TimetableConfig<StudiPassauEvent>(
-                        dateController: dateControllerContent,
-                        timeController: timeController,
-                        eventProvider: (visible) =>
-                            getEvents(stateS.events, visible),
-                        eventBuilder: (context, event) =>
-                            StudiPassauEventWidget(
-                          event,
-                          onTap: () async => onTap(context, event),
-                        ),
-                        allDayEventBuilder: (context, event, info) =>
-                            StudiPassauAllDayEventWidget(
+                    allDayEventBuilder: (context, event, info) =>
+                        StudiPassauAllDayEventWidget(
                           event,
                           info: info,
                           onTap: () async => onTap(context, event),
                         ),
-                        callbacks: const TimetableCallbacks(),
-                        theme: TimetableThemeData(
-                          context,
-                          startOfWeek: DateTime.monday,
-                        ),
-                        timeOverlayProvider: (ctx, date) => <TimeOverlay>[
-                          TimeOverlay(
-                            start: 8.hours,
-                            end: 20.hours,
-                            widget: const ColoredBox(color: Colors.black12),
-                          ),
-                        ],
-                        child: MultiDateTimetableContent<StudiPassauEvent>(),
-                      ),
+                    callbacks: const TimetableCallbacks(),
+                    theme: TimetableThemeData(
+                      context,
+                      startOfWeek: DateTime.monday,
                     ),
-                  ],
+                    timeOverlayProvider: (ctx, date) => <TimeOverlay>[
+                      TimeOverlay(
+                        start: 8.hours,
+                        end: 20.hours,
+                        widget: const ColoredBox(color: Colors.black12),
+                      ),
+                    ],
+                    child: MultiDateTimetableContent<StudiPassauEvent>(),
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
-      );
+      ),
+    ),
+  );
 
   List<StudiPassauEvent> getEvents(
     List<StudiPassauEvent> events,
     Interval visible,
-  ) =>
-      events
-          .where((e) => visible.includes(e.start) && visible.includes(e.end))
-          .toList(growable: false);
+  ) => events
+      .where((e) => visible.includes(e.start) && visible.includes(e.end))
+      .toList(growable: false);
 
   Future<void> refresh(BuildContext context, String userId) async {
     await context.read<ScheduleCubit>().fetchSchedule(
-          userId,
-          onlineSync: onlineSync,
-        );
+      userId,
+      onlineSync: onlineSync,
+    );
     onlineSync = true;
   }
 
@@ -228,14 +219,12 @@ class _SchedulePagePageState extends State<SchedulePage>
           '${formatLine(s.canceled, event.canceled ? s.yes : null)}',
         ),
         backgroundColor: event.backgroundColor,
-        titleTextStyle: Theme.of(context)
-            .textTheme
-            .titleLarge!
-            .copyWith(color: event.backgroundColor.highEmphasisOnColor),
-        contentTextStyle: Theme.of(context)
-            .textTheme
-            .titleMedium!
-            .copyWith(color: event.backgroundColor.highEmphasisOnColor),
+        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+          color: event.backgroundColor.highEmphasisOnColor,
+        ),
+        contentTextStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+          color: event.backgroundColor.highEmphasisOnColor,
+        ),
       ),
     );
   }
@@ -248,11 +237,11 @@ class _SchedulePagePageState extends State<SchedulePage>
     final isSelected = date == selected;
     return date.isToday
         ? isSelected
-            ? Colors.brown
-            : theme.colorScheme.primary
+              ? Colors.brown
+              : theme.colorScheme.primary
         : isSelected
-            ? Colors.green
-            : defaultColor;
+        ? Colors.green
+        : defaultColor;
   }
 
   Future<void> animateHeaderTo(DateTime date) async {
@@ -262,8 +251,8 @@ class _SchedulePagePageState extends State<SchedulePage>
       range.minDate!.isAfter(newDate)
           ? range.minDate!
           : range.maxDate!.isBefore(date + 3.days)
-              ? range.maxDate! - 6.days
-              : newDate,
+          ? range.maxDate! - 6.days
+          : newDate,
       vsync: this,
     );
   }

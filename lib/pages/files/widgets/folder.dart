@@ -30,38 +30,25 @@ class FolderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.folder_open),
-        title: Text(title),
-        subtitle:
-            folder.description.isNotEmpty ? Text(folder.description) : null,
-        onTap: onTap,
-        onLongPress: () async {
-          final s = S.of(context);
-          await showDialog<void>(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(title),
-              content: Text(
-                '${sprintf(s.changeDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          folder.changeDate * 1000,
-                        ),
-                      ),
-                    ])}\n'
-                '${sprintf(s.createDate, [
-                      formatDateTime(
-                        DateTime.fromMillisecondsSinceEpoch(
-                          folder.makeDate * 1000,
-                        ),
-                      ),
-                    ])}'
-                '${formatDesc(s.fileDescription, folder.description)}',
-              ),
-            ),
-          );
-        },
+    leading: const Icon(Icons.folder_open),
+    title: Text(title),
+    subtitle: folder.description.isNotEmpty ? Text(folder.description) : null,
+    onTap: onTap,
+    onLongPress: () async {
+      final s = S.of(context);
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${sprintf(s.changeDate, [formatDateTime(DateTime.fromMillisecondsSinceEpoch(folder.changeDate * 1000))])}\n'
+            '${sprintf(s.createDate, [formatDateTime(DateTime.fromMillisecondsSinceEpoch(folder.makeDate * 1000))])}'
+            '${formatDesc(s.fileDescription, folder.description)}',
+          ),
+        ),
       );
+    },
+  );
 }
 
 class Folder extends Equatable {
@@ -82,20 +69,20 @@ class Folder extends Equatable {
   });
 
   factory Folder.fromJson(dynamic json) => Folder(
-        id: json['id'].toString(),
-        userId: json['user_id'].toString(),
-        parentId: json['parent_id'].toString(),
-        rangeId: json['range_id'].toString(),
-        rangeType: json['range_type'].toString(),
-        folderType: json['folder_type'].toString(),
-        name: json['name'].toString(),
-        description: json['description'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        isVisible: json['is_visible'].toString().parseBool(),
-        isReadable: json['is_readable'].toString().parseBool(),
-        isWritable: json['is_writable'].toString().parseBool(),
-      );
+    id: json['id'].toString(),
+    userId: json['user_id'].toString(),
+    parentId: json['parent_id'].toString(),
+    rangeId: json['range_id'].toString(),
+    rangeType: json['range_type'].toString(),
+    folderType: json['folder_type'].toString(),
+    name: json['name'].toString(),
+    description: json['description'].toString(),
+    makeDate: int.parse(json['mkdate'].toString()),
+    changeDate: int.parse(json['chdate'].toString()),
+    isVisible: json['is_visible'].toString().parseBool(),
+    isReadable: json['is_readable'].toString().parseBool(),
+    isWritable: json['is_writable'].toString().parseBool(),
+  );
 
   final String id;
   final String userId;
@@ -113,18 +100,18 @@ class Folder extends Equatable {
 
   @override
   List<Object> get props => [
-        id,
-        userId,
-        parentId,
-        rangeId,
-        rangeType,
-        folderType,
-        name,
-        description,
-        makeDate,
-        changeDate,
-        isVisible,
-        isReadable,
-        isWritable,
-      ];
+    id,
+    userId,
+    parentId,
+    rangeId,
+    rangeType,
+    folderType,
+    name,
+    description,
+    makeDate,
+    changeDate,
+    isVisible,
+    isReadable,
+    isWritable,
+  ];
 }

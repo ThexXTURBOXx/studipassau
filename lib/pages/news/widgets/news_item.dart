@@ -7,10 +7,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 
 class NewsWidget extends StatelessWidget {
-  const NewsWidget({
-    required this.news,
-    super.key,
-  });
+  const NewsWidget({required this.news, super.key});
 
   final News news;
 
@@ -18,7 +15,7 @@ class NewsWidget extends StatelessWidget {
 
   String subtitle(BuildContext context) => news.edited
       ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
-          '${formatDateTime(changeDate)})'
+            '${formatDateTime(changeDate)})'
       : formatDateTime(makeDate);
 
   DateTime get makeDate =>
@@ -39,28 +36,28 @@ class NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-        leading: const Icon(Icons.newspaper),
-        title: Text(title),
-        subtitle: Text(subtitle(context)),
-        onTap: () async {
-          await showDialog<void>(
-            context: context,
-            builder: (context) => AlertDialog(
-              title: Text(title),
-              insetPadding: const EdgeInsets.all(44),
-              content: SizedBox(
-                width: double.maxFinite,
-                child: SingleChildScrollView(
-                  child: HtmlWidget(
-                    news.bodyHtml,
-                    factoryBuilder: NewsWidgetFactory.new,
-                  ),
-                ),
+    leading: const Icon(Icons.newspaper),
+    title: Text(title),
+    subtitle: Text(subtitle(context)),
+    onTap: () async {
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          insetPadding: const EdgeInsets.all(44),
+          content: SizedBox(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: HtmlWidget(
+                news.bodyHtml,
+                factoryBuilder: NewsWidgetFactory.new,
               ),
             ),
-          );
-        },
+          ),
+        ),
       );
+    },
+  );
 }
 
 class NewsWidgetFactory extends WidgetFactory with UrlLauncherFactory {}
@@ -81,18 +78,18 @@ class News extends Equatable {
   });
 
   factory News.fromJson(dynamic json) => News(
-        newsId: json['news_id'].toString(),
-        topic: json['topic'].toString(),
-        body: json['body'].toString(),
-        date: int.parse(json['date'].toString()),
-        userId: json['user_id'].toString(),
-        expire: int.parse(json['expire'].toString()),
-        allowComments: int.parse(json['allow_comments'].toString()),
-        changeDate: int.parse(json['chdate'].toString()),
-        changeDateUid: json['chdate_uid'].toString(),
-        makeDate: int.parse(json['mkdate'].toString()),
-        bodyHtml: json['body_html'].toString(),
-      );
+    newsId: json['news_id'].toString(),
+    topic: json['topic'].toString(),
+    body: json['body'].toString(),
+    date: int.parse(json['date'].toString()),
+    userId: json['user_id'].toString(),
+    expire: int.parse(json['expire'].toString()),
+    allowComments: int.parse(json['allow_comments'].toString()),
+    changeDate: int.parse(json['chdate'].toString()),
+    changeDateUid: json['chdate_uid'].toString(),
+    makeDate: int.parse(json['mkdate'].toString()),
+    bodyHtml: json['body_html'].toString(),
+  );
 
   final String newsId;
   final String topic;
@@ -107,33 +104,33 @@ class News extends Equatable {
   final String bodyHtml;
 
   Map<String, dynamic> toJson() => {
-        'news_id': newsId,
-        'topic': topic,
-        'body': body,
-        'date': date,
-        'user_id': userId,
-        'expire': expire,
-        'allow_comments': allowComments,
-        'chdate': changeDate,
-        'chdate_uid': changeDateUid,
-        'mkdate': makeDate,
-        'body_html': bodyHtml,
-      };
+    'news_id': newsId,
+    'topic': topic,
+    'body': body,
+    'date': date,
+    'user_id': userId,
+    'expire': expire,
+    'allow_comments': allowComments,
+    'chdate': changeDate,
+    'chdate_uid': changeDateUid,
+    'mkdate': makeDate,
+    'body_html': bodyHtml,
+  };
 
   bool get edited => makeDate != changeDate;
 
   @override
   List<Object> get props => [
-        newsId,
-        topic,
-        body,
-        date,
-        userId,
-        expire,
-        allowComments,
-        changeDate,
-        changeDateUid,
-        makeDate,
-        bodyHtml,
-      ];
+    newsId,
+    topic,
+    body,
+    date,
+    userId,
+    expire,
+    allowComments,
+    changeDate,
+    changeDateUid,
+    makeDate,
+    bodyHtml,
+  ];
 }

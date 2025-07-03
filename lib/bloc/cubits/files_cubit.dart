@@ -15,12 +15,12 @@ import 'package:studipassau/pages/files/widgets/folder.dart';
 
 class FilesCubit extends Cubit<FilesState> {
   FilesCubit(this._filesRepo)
-      : super(
-          FilesState(
-            StudiPassauState.notFetched,
-            currentFolders: Queue<Folder>(),
-          ),
-        );
+    : super(
+        FilesState(
+          StudiPassauState.notFetched,
+          currentFolders: Queue<Folder>(),
+        ),
+      );
 
   final FilesRepo _filesRepo;
 
@@ -37,12 +37,7 @@ class FilesCubit extends Cubit<FilesState> {
         return c1.number.compareTo(c2.number);
       });
 
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          courses: courses,
-        ),
-      );
+      emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on io.SocketException {
@@ -136,11 +131,7 @@ class FilesCubit extends Cubit<FilesState> {
     }
   }
 
-  Future<void> refresh({
-    String? userId,
-    Course? course,
-    Folder? folder,
-  }) async {
+  Future<void> refresh({String? userId, Course? course, Folder? folder}) async {
     if (folder != null) {
       return loadFolder(folder, refresh: true);
     } else if (course != null) {
@@ -156,7 +147,8 @@ class FilesCubit extends Cubit<FilesState> {
     Function? onError,
     void Function(String)? onDone,
   }) async {
-    final dirs = (await getExternalStorageDirectories(
+    final dirs =
+        (await getExternalStorageDirectories(
           type: StorageDirectory.downloads,
         )) ??
         [
