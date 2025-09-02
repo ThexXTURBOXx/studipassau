@@ -85,7 +85,7 @@ class File extends Equatable {
     required this.mimeType,
   });
 
-  factory File.fromJson(json) => File(
+  factory File.fromJson(dynamic json) => File(
     id: json['id'].toString(),
     name: json['attributes']['name'].toString(),
     description: (json['attributes']['description'] ?? '').toString(),

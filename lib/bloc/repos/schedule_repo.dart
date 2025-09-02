@@ -137,7 +137,7 @@ class ScheduleRepo {
   bool _equalsCourseEventTime(int courseTime, DateTime eventTime) =>
       courseTime == eventTime.hour * 100 + eventTime.minute;
 
-  List<_Event> _parseEvents(json) {
+  List<_Event> _parseEvents(dynamic json) {
     final data = json['data'];
     if (data != null && data is List) {
       return data.map(_Event.fromJson).toList(growable: false);
@@ -145,7 +145,7 @@ class ScheduleRepo {
     return <_Event>[];
   }
 
-  List<_CourseMembership> _parseCourseMemberships(json) {
+  List<_CourseMembership> _parseCourseMemberships(dynamic json) {
     final data = json['data'];
     if (data != null && data is List) {
       return data.map(_CourseMembership.fromJson).toList(growable: false);
@@ -167,7 +167,7 @@ class _Event extends Equatable {
     required this.ownerId,
   });
 
-  factory _Event.fromJson(json) => _Event(
+  factory _Event.fromJson(dynamic json) => _Event(
     id: json['id'].toString(),
     title: json['attributes']['title'].toString(),
     description: json['attributes']['description'].toString(),
@@ -210,7 +210,7 @@ class _Event extends Equatable {
 class _Schedule extends Equatable {
   const _Schedule({required this.events});
 
-  factory _Schedule.fromJson(json) {
+  factory _Schedule.fromJson(dynamic json) {
     final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
     for (final e in json['data']) {
       final event = _ScheduleEvent.fromJson(e);
@@ -239,7 +239,7 @@ class _ScheduleEvent extends Equatable {
     required this.ownerId,
   });
 
-  factory _ScheduleEvent.fromJson(json) => _ScheduleEvent(
+  factory _ScheduleEvent.fromJson(dynamic json) => _ScheduleEvent(
     type: json['type'].toString(),
     id: json['id'].toString(),
     title: json['attributes']['title'].toString(),
@@ -292,7 +292,7 @@ class _CourseMembership extends Equatable {
     required this.courseId,
   });
 
-  factory _CourseMembership.fromJson(json) => _CourseMembership(
+  factory _CourseMembership.fromJson(dynamic json) => _CourseMembership(
     type: json['type'].toString(),
     id: json['id'].toString(),
     color: getColorOrNotFound(

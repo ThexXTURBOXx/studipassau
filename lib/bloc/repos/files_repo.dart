@@ -49,8 +49,8 @@ class FilesRepo {
       );
 
   Future<Tuple2<List<Folder>, List<File>>> parseFolder(
-    jsonFolders,
-    jsonFiles,
+    dynamic jsonFolders,
+    dynamic jsonFiles,
   ) async => Tuple2(
     (jsonFolders['data'] as List<dynamic>)
         .filter(

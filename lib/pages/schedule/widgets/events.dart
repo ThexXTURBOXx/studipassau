@@ -18,7 +18,7 @@ class StudiPassauEvent extends Event {
     required super.end,
   });
 
-  factory StudiPassauEvent.fromJson(json) => StudiPassauEvent(
+  factory StudiPassauEvent.fromJson(dynamic json) => StudiPassauEvent(
     id: json['id'].toString(),
     title: json['title'].toString(),
     course: json['course'].toString(),

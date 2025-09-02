@@ -15,24 +15,24 @@ if (keystorePropertiesFile.exists()) {
 
 android {
     namespace = "studip_uni_passau.femtopedia.de.unipassaustudip"
-    compileSdk = 35 // flutter.compileSdkVersion
+    compileSdk = flutter.compileSdkVersion
     // ndkVersion = flutter.ndkVersion
 
     defaultConfig {
         applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
-        minSdk = 23 // flutter.minSdkVersion
-        targetSdk = 35 // flutter.targetSdkVersion
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_21.toString()
     }
 
     signingConfigs {

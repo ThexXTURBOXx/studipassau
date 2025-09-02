@@ -70,7 +70,7 @@ class Folder extends Equatable {
     required this.parentId,
   });
 
-  factory Folder.fromJson(json) => Folder(
+  factory Folder.fromJson(dynamic json) => Folder(
     id: json['id'].toString(),
     folderType: json['attributes']['folder-type'].toString(),
     name: json['attributes']['name'].toString(),

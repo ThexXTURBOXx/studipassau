@@ -69,7 +69,7 @@ class News extends Equatable {
     required this.changeDate,
   });
 
-  factory News.fromJson(json) => News(
+  factory News.fromJson(dynamic json) => News(
     id: json['id'].toString(),
     title: json['attributes']['title'].toString(),
     content: json['attributes']['content'].toString(),
