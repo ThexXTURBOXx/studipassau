@@ -91,8 +91,8 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: packageInfo.packageName,
         ),
-        PolygonLayer(polygons: polygons),
         MarkerLayer(markers: markers),
+        PolygonLayer(polygons: polygons),
         RichAttributionWidget(
           attributions: [
             TextSourceAttribution(
