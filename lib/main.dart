@@ -22,6 +22,7 @@ import 'package:studipassau/pages/news/news.dart';
 import 'package:studipassau/pages/roomfinder/roomfinder.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:studipassau/util/navigation.dart';
 import 'package:timetable/timetable.dart';
 
 Future main() async {
@@ -142,7 +143,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: S.delegate.supportedLocales,
-      initialRoute: routeLogin,
+      initialRoute: routeRequiresAuth(targetRoute) ? routeLogin : targetRoute,
       routes: {
         routeLogin: (ctx) => const LoginPage(),
         routeSchedule: (ctx) => const SchedulePage(),

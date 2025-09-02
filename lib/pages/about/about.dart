@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
+import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/util/navigation.dart';
 
-Future<void> showStudiPassauAbout(BuildContext context) async {
+Future<void> showStudiPassauAbout(
+  BuildContext context,
+  LoginState state,
+) async {
   showAboutDialog(
     context: context,
     applicationName: S.of(context).applicationTitle,
@@ -18,7 +22,10 @@ Future<void> showStudiPassauAbout(BuildContext context) async {
     ),
     children: [
       const SizedBox(height: 20),
-      Text(S.of(context).aboutText, textAlign: TextAlign.justify),
+      Text(
+        sprintf(S.of(context).aboutText, [state.formattedName]),
+        textAlign: TextAlign.justify,
+      ),
       const SizedBox(height: 20),
       ElevatedButton.icon(
         icon: const Icon(Icons.mail_outline),

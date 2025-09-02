@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+import '../pages/files/files.dart';
+import '../pages/news/news.dart';
+import '../pages/schedule/schedule.dart';
+
 void navigateTo(BuildContext context, String? name, {Object? arguments}) {
   if (name != null) {
     final r = ModalRoute.of(context);
@@ -32,3 +36,7 @@ Future<void> launchUrl(
       );
 
 void closeDrawer(BuildContext context) => Scaffold.of(context).openEndDrawer();
+
+bool routeRequiresAuth(String route) {
+  return route == routeSchedule || route == routeFiles || route == routeNews;
+}

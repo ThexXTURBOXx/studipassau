@@ -11,6 +11,7 @@ import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:supercharged/supercharged.dart';
@@ -110,82 +111,93 @@ class _SchedulePagePageState extends State<SchedulePage>
     ),
     drawer: const StudiPassauDrawer(DrawerItem.schedule),
     body: BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, stateL) => BlocConsumer<ScheduleCubit, ScheduleState>(
-        listener: showErrorMessage,
-        builder: (context, stateS) => RefreshIndicator(
-          key: _refreshIndicatorKey,
-          onRefresh: () async => refresh(context, stateL.userId),
-          child: TimetableTheme(
-            data: TimetableThemeData(
-              context,
-              dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
-                context,
-                date,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: getColor(context, date, Colors.transparent),
-                ),
-              ),
-              weekdayIndicatorStyleProvider: (date) => WeekdayIndicatorStyle(
-                context,
-                date,
-                textStyle: context.theme.textTheme.bodySmall!.copyWith(
-                  color: getColor(
+      builder: (context, stateL) => stateL.userData == null
+          ? CenteredRetryScreen.login(context: context, route: routeSchedule)
+          : BlocConsumer<ScheduleCubit, ScheduleState>(
+              listener: showErrorMessage,
+              builder: (context, stateS) => RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: () async => refresh(context, stateL.userId),
+                child: TimetableTheme(
+                  data: TimetableThemeData(
                     context,
-                    date,
-                    context.theme.colorScheme.surface.mediumEmphasisOnColor,
-                  ),
-                ),
-              ),
-            ),
-            child: Column(
-              children: [
-                DatePageView(
-                  controller: dateControllerHeader,
-                  shrinkWrapInCrossAxis: true,
-                  builder: (context, date) => DateHeader(
-                    date,
-                    onTap: () async =>
-                        dateControllerContent.animateTo(date, vsync: this),
-                    style: DateHeaderStyle(context, date),
-                  ),
-                ),
-                Expanded(
-                  child: TimetableConfig<StudiPassauEvent>(
-                    dateController: dateControllerContent,
-                    timeController: timeController,
-                    eventProvider: (visible) =>
-                        getEvents(stateS.events, visible),
-                    eventBuilder: (context, event) => StudiPassauEventWidget(
-                      event,
-                      onTap: () async => onTap(context, event),
-                    ),
-                    allDayEventBuilder: (context, event, info) =>
-                        StudiPassauAllDayEventWidget(
-                          event,
-                          info: info,
-                          onTap: () async => onTap(context, event),
-                        ),
-                    callbacks: const TimetableCallbacks(),
-                    theme: TimetableThemeData(
+                    dateIndicatorStyleProvider: (date) => DateIndicatorStyle(
                       context,
-                      startOfWeek: DateTime.monday,
+                      date,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: getColor(context, date, Colors.transparent),
+                      ),
                     ),
-                    timeOverlayProvider: (ctx, date) => <TimeOverlay>[
-                      TimeOverlay(
-                        start: 8.hours,
-                        end: 20.hours,
-                        widget: const ColoredBox(color: Colors.black12),
+                    weekdayIndicatorStyleProvider: (date) =>
+                        WeekdayIndicatorStyle(
+                          context,
+                          date,
+                          textStyle: context.theme.textTheme.bodySmall!
+                              .copyWith(
+                                color: getColor(
+                                  context,
+                                  date,
+                                  context
+                                      .theme
+                                      .colorScheme
+                                      .surface
+                                      .mediumEmphasisOnColor,
+                                ),
+                              ),
+                        ),
+                  ),
+                  child: Column(
+                    children: [
+                      DatePageView(
+                        controller: dateControllerHeader,
+                        shrinkWrapInCrossAxis: true,
+                        builder: (context, date) => DateHeader(
+                          date,
+                          onTap: () async => dateControllerContent.animateTo(
+                            date,
+                            vsync: this,
+                          ),
+                          style: DateHeaderStyle(context, date),
+                        ),
+                      ),
+                      Expanded(
+                        child: TimetableConfig<StudiPassauEvent>(
+                          dateController: dateControllerContent,
+                          timeController: timeController,
+                          eventProvider: (visible) =>
+                              getEvents(stateS.events, visible),
+                          eventBuilder: (context, event) =>
+                              StudiPassauEventWidget(
+                                event,
+                                onTap: () async => onTap(context, event),
+                              ),
+                          allDayEventBuilder: (context, event, info) =>
+                              StudiPassauAllDayEventWidget(
+                                event,
+                                info: info,
+                                onTap: () async => onTap(context, event),
+                              ),
+                          callbacks: const TimetableCallbacks(),
+                          theme: TimetableThemeData(
+                            context,
+                            startOfWeek: DateTime.monday,
+                          ),
+                          timeOverlayProvider: (ctx, date) => <TimeOverlay>[
+                            TimeOverlay(
+                              start: 8.hours,
+                              end: 20.hours,
+                              widget: const ColoredBox(color: Colors.black12),
+                            ),
+                          ],
+                          child: MultiDateTimetableContent<StudiPassauEvent>(),
+                        ),
                       ),
                     ],
-                    child: MultiDateTimetableContent<StudiPassauEvent>(),
                   ),
                 ),
-              ],
+              ),
             ),
-          ),
-        ),
-      ),
     ),
   );
 

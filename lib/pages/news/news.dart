@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
@@ -53,17 +55,22 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
       ],
     ),
     drawer: const StudiPassauDrawer(DrawerItem.news),
-    body: BlocConsumer<NewsCubit, NewsState>(
+    body: BlocConsumer<LoginCubit, LoginState>(
       listener: showErrorMessage,
-      builder: (context, state) => RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: () async => refresh(context),
-        child: ListView(
-          children: state.newsOrEmpty
-              .map((e) => NewsWidget(news: e))
-              .toList(growable: false),
-        ),
-      ),
+      builder: (context, stateL) => stateL.userData == null
+          ? CenteredRetryScreen.login(context: context, route: routeNews)
+          : BlocConsumer<NewsCubit, NewsState>(
+              listener: showErrorMessage,
+              builder: (context, stateN) => RefreshIndicator(
+                key: _refreshIndicatorKey,
+                onRefresh: () async => refresh(context),
+                child: ListView(
+                  children: stateN.newsOrEmpty
+                      .map((e) => NewsWidget(news: e))
+                      .toList(growable: false),
+                ),
+              ),
+            ),
     ),
   );
 

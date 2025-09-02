@@ -32,56 +32,65 @@ class StudiPassauDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Drawer(
-    child: ListView(
-      padding: EdgeInsets.zero,
-      children: [
-        BlocBuilder<LoginCubit, LoginState>(
-          builder: (context, state) => UserAccountsDrawerHeader(
-            accountName: Text(state.formattedName),
-            accountEmail: Text(state.username),
-            decoration: const BoxDecoration(
-              color: iconBgColor,
-              image: DecorationImage(
-                image: AssetImage('assets/icons/studipassau_icon.png'),
-              ),
-            ),
-            currentAccountPicture: ClipRRect(
-              borderRadius: BorderRadius.circular(110),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: state.avatarNormal,
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    CircularProgressIndicator(value: downloadProgress.progress),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                cacheManager: StudIPCacheManager.instance,
-              ),
-            ),
-          ),
-        ),
-        for (final DrawerItem item in DrawerItem.values)
-          item.isDivider
-              ? const Divider()
-              : item.isSubTitle
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 16,
-                  ),
-                  child: Text(
-                    item.title(context),
-                    style: TextStyle(color: context.theme.hintColor),
-                  ),
-                )
-              : ListTile(
-                  leading: Icon(item.icon),
-                  title: Text(item.title(context)),
-                  onTap: () async => selected == item
-                      ? closeDrawer(context)
-                      : item.onTap(context),
-                  selected: selected == item,
-                  selectedTileColor: context.theme.highlightColor,
+    child: BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) => SafeArea(
+        top: false,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            UserAccountsDrawerHeader(
+              accountName: Text(state.formattedName),
+              accountEmail: Text(state.username),
+              decoration: const BoxDecoration(
+                color: iconBgColor,
+                image: DecorationImage(
+                  image: AssetImage('assets/icons/studipassau_icon.png'),
                 ),
-      ],
+              ),
+              currentAccountPicture: ClipRRect(
+                borderRadius: BorderRadius.circular(110),
+                child: state.userData == null
+                    ? const Icon(Icons.error)
+                    : CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: state.avatarNormal,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                  value: downloadProgress.progress,
+                                ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.error),
+                        cacheManager: StudIPCacheManager.instance,
+                      ),
+              ),
+            ),
+            for (final DrawerItem item in DrawerItem.values)
+              item.isDivider
+                  ? const Divider()
+                  : item.isSubTitle
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 16,
+                      ),
+                      child: Text(
+                        item.title(context),
+                        style: TextStyle(color: context.theme.hintColor),
+                      ),
+                    )
+                  : ListTile(
+                      leading: Icon(item.icon),
+                      title: Text(item.title(context)),
+                      onTap: () async => selected == item
+                          ? closeDrawer(context)
+                          : item.onTap(context, state),
+                      selected: selected == item,
+                      selectedTileColor: context.theme.highlightColor,
+                    ),
+          ],
+        ),
+      ),
     ),
   );
 }
@@ -151,22 +160,22 @@ enum DrawerItem {
     }
   }
 
-  Future<void> Function(BuildContext context) get onTap {
+  Future<void> Function(BuildContext context, LoginState state) get onTap {
     switch (this) {
       case DrawerItem.about:
         return showStudiPassauAbout;
       case DrawerItem.browser:
-        return (context) async {
+        return (context, state) async {
           closeDrawer(context);
           await launchUrl(studIpProviderUrl);
         };
       case DrawerItem.bugReport:
-        return (context) async {
+        return (context, state) async {
           closeDrawer(context);
           await launchUrl(bugReportUrl);
         };
       case DrawerItem.share:
-        return (context) async {
+        return (context, state) async {
           closeDrawer(context);
           await SharePlus.instance.share(
             ShareParams(
@@ -176,12 +185,12 @@ enum DrawerItem {
           );
         };
       case DrawerItem.campusPortal:
-        return (context) async {
+        return (context, state) async {
           closeDrawer(context);
           await launchUrl(campusPortalUrl);
         };
       case DrawerItem.telegramBot:
-        return (context) async {
+        return (context, state) async {
           closeDrawer(context);
           await showDialog<void>(
             context: context,
@@ -206,13 +215,13 @@ enum DrawerItem {
         };
       default:
         return route == null
-            ? (context) async {
+            ? (context, state) async {
                 closeDrawer(context);
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text(S.of(context).wip)));
               }
-            : (context) async => navigateTo(context, route);
+            : (context, state) async => navigateTo(context, route);
     }
   }
 }

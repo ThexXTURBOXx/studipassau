@@ -104,9 +104,25 @@
   "@loginTitle": {
     "description": "The title for the login screen"
   },
+  "loginError": "Bei der Anmeldung ist ein Fehler aufgetreten.",
+  "@loginError": {
+    "description": "The text for the retry text on failed authentication"
+  },
   "loginTryAgain": "Nochmal versuchen",
   "@loginTryAgain": {
     "description": "The text for the retry button on failed authentication"
+  },
+  "login": "Einloggen",
+  "@login": {
+    "description": "The text for the login button"
+  },
+  "continueWithoutLogin": "Ohne Anmeldung fortfahren",
+  "@continueWithoutLogin": {
+    "description": "The text for the continue without login button"
+  },
+  "loginRequired": "Du musst angemeldet sein, um diese Funktion nutzen zu können. Bitte klicke auf die Schaltfläche unten, um dich anzumelden.",
+  "@loginRequired": {
+    "description": "The text prompting a user to log in to use the specific feature (e.g., schedule)"
   },
   "okay": "Okay",
   "@okay": {
@@ -220,7 +236,7 @@
   "@no": {
     "description": "Just a normal 'No'."
   },
-  "aboutText": "Hallo, Student!\n\nIch bin Nico Mexis, ein Student an der Universität Passau, und ich entwickle diese App.\nWenn du irgendwelche Fehler in der App findest, kontaktiere mich gern via E-Mail oder klicke den \"Einen Fehler melden\"-Knopf im Seitenmenü.\n\nHab noch einen schönen Tag und bis bald,\nDein Nico\n\nIch übernehme keine Haftung für jegliche Fehler!",
+  "aboutText": "Hallo, %s!\n\nIch bin Nico Mexis, ein Student an der Universität Passau, und ich entwickle diese App.\nWenn du irgendwelche Fehler in der App findest, kontaktiere mich gern via E-Mail oder klicke den \"Einen Fehler melden\"-Knopf im Seitenmenü.\n\nHab noch einen schönen Tag und bis bald,\nDein Nico\n\nIch übernehme keine Haftung für jegliche Fehler!",
   "@aboutText": {
     "description": "Text shown in the about screen."
   },

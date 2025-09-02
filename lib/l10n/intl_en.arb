@@ -104,9 +104,25 @@
   "@loginTitle": {
     "description": "The title for the login screen"
   },
+  "loginError": "An error occurred while logging in.",
+  "@loginError": {
+    "description": "The text for the retry text on failed authentication"
+  },
   "loginTryAgain": "Try again",
   "@loginTryAgain": {
     "description": "The text for the retry button on failed authentication"
+  },
+  "login": "Login",
+  "@login": {
+    "description": "The text for the login button"
+  },
+  "continueWithoutLogin": "Continue without Login",
+  "@continueWithoutLogin": {
+    "description": "The text for the continue without login button"
+  },
+  "loginRequired": "You need to be logged in in order to use this feature. Please click the button below to login.",
+  "@loginRequired": {
+    "description": "The text prompting a user to log in to use the specific feature (e.g., schedule)"
   },
   "okay": "Okay",
   "@okay": {
@@ -220,7 +236,7 @@
   "@no": {
     "description": "Just a normal 'No'."
   },
-  "aboutText": "Hello, Student!\n\nI am Nico Mexis, a student at the University of Passau, and I am developing this app.\nIf you encounter any bugs, feel free to contact me via email or click the \"Report a bug\" option in the drawer menu.\n\nHave a great day and see you soon,\nNico\n\nI do not assume liability for any error!",
+  "aboutText": "Hello, %s!\n\nI am Nico Mexis, a student at the University of Passau, and I am developing this app.\nIf you encounter any bugs, feel free to contact me via email or click the \"Report a bug\" option in the drawer menu.\n\nHave a great day and see you soon,\nNico\n\nI do not assume liability for any error!",
   "@aboutText": {
     "description": "Text shown in the about screen."
   },
