@@ -26,7 +26,6 @@ final buildings = [
     name: 'Nikolakloster',
     abbrev: 'NK',
     address: 'Innstraße 40, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.570434, 13.455940),
       const LatLng(48.570559, 13.456262),
@@ -66,7 +65,6 @@ final buildings = [
     name: 'Philosophicum',
     abbrev: 'PHIL',
     address: 'Innstraße 25, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.569627, 13.455806),
       const LatLng(48.569723, 13.456305),
@@ -83,7 +81,6 @@ final buildings = [
     name: 'Wirtschaftswissenschaften',
     abbrev: 'WIWI',
     address: 'Innstraße 27, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.569230, 13.454933),
       const LatLng(48.569152, 13.455030),
@@ -112,7 +109,6 @@ final buildings = [
     name: 'Zentralbibliothek',
     abbrev: 'ZB',
     address: 'Innstraße 29, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.568509, 13.453440),
       const LatLng(48.568363, 13.453671),
@@ -139,7 +135,6 @@ final buildings = [
     name: 'Mensa',
     abbrev: 'M',
     address: 'Innstraße 29, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567848, 13.453349),
       const LatLng(48.567795, 13.453424),
@@ -163,7 +158,6 @@ final buildings = [
     name: 'Zentrum für Medien und Kommunikation',
     abbrev: 'ZMK',
     address: 'Innstraße 33a, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567120, 13.452162),
       const LatLng(48.566786, 13.452639),
@@ -176,7 +170,6 @@ final buildings = [
     name: 'Audimax',
     abbrev: 'AM',
     address: 'Innstraße 31, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567871, 13.452242),
       const LatLng(48.567796, 13.452371),
@@ -201,7 +194,6 @@ final buildings = [
     name: 'Fakultät für Informatik und Mathematik',
     abbrev: 'FIM',
     address: 'Innstraße 33, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567185, 13.451642),
       const LatLng(48.567096, 13.451797),
@@ -229,7 +221,6 @@ final buildings = [
     name: 'Zentrum für Informationstechnologie und Medienmanagement',
     abbrev: 'ZIM',
     address: 'Innstraße 33, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.566805, 13.451330),
       const LatLng(48.566936, 13.451245),
@@ -242,7 +233,6 @@ final buildings = [
     name: 'Kunsterziehung',
     abbrev: 'KE',
     address: 'Innstraße 35, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567555, 13.450938),
       const LatLng(48.567633, 13.451239),
@@ -258,7 +248,6 @@ final buildings = [
     name: 'Juridicum',
     abbrev: 'JUR',
     address: 'Innstraße 39, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567237, 13.450332),
       const LatLng(48.566953, 13.450723),
@@ -297,7 +286,6 @@ final buildings = [
     name: 'IT-Zentrum/International House',
     abbrev: 'ITZ/IH',
     address: 'Innstraße 43, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.566092, 13.450673),
       const LatLng(48.565907, 13.450823),
@@ -427,7 +415,6 @@ final buildings = [
     name: 'Gebäude Dr.-Hans-Kapfinger-Straße 14b',
     abbrev: 'HK14b',
     address: 'Dr.-Hans-Kapfinger-Straße 14b, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.572820, 13.454531),
       const LatLng(48.572738, 13.455062),
@@ -498,7 +485,6 @@ final buildings = [
     name: 'Institutsgebäude',
     abbrev: 'IG',
     address: 'Gottfried-Schäffer-Straße 20, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.572519, 13.461292),
       const LatLng(48.572391, 13.461475),
@@ -543,7 +529,6 @@ final buildings = [
     name: 'Betriebstechnik',
     abbrev: 'BT',
     address: 'Innstraße 37, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.567361, 13.450440),
       const LatLng(48.567482, 13.450746),
@@ -560,7 +545,6 @@ final buildings = [
     // TODO(Nico): BH10? According to https://www.uni-passau.de/fileadmin/dokumente/Lageplan/Stadtplan_Universitaet.pdf
     abbrev: 'BA10',
     address: 'Bahnhofstraße 10, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.574436, 13.455271),
       const LatLng(48.574425, 13.455448),
@@ -590,7 +574,6 @@ final buildings = [
     name: 'Gebäude Dr.-Hans-Kapfinger-Straße 30',
     abbrev: 'HK30',
     address: 'Dr.-Hans-Kapfinger-Straße 30, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.571893, 13.454267),
       const LatLng(48.571897, 13.454127),
@@ -621,7 +604,6 @@ final buildings = [
     name: 'Ruder- und Kanuanlage Sportzentrum',
     abbrev: 'RUKA',
     address: 'Innstraße 125, 94036 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.548466, 13.436836),
       const LatLng(48.548491, 13.436927),
@@ -634,7 +616,6 @@ final buildings = [
     name: 'Gebäude Karlsbader Straße',
     abbrev: 'KB',
     address: 'Karlsbader Straße 11a, 94036 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.559856, 13.420208),
       const LatLng(48.560097, 13.420916),
@@ -647,7 +628,6 @@ final buildings = [
     name: 'Franz Stockbauer Weg 3',
     abbrev: 'FSW3',
     address: 'Franz Stockbauer Weg 3, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.571031, 13.455681),
       const LatLng(48.570977, 13.455761),
@@ -662,7 +642,6 @@ final buildings = [
     name: 'Schloss Neuburg',
     abbrev: 'SN',
     address: 'Am Burgberg 8, 94127 Neuburg am Inn',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.506523, 13.450616),
       const LatLng(48.506484, 13.450858),
@@ -679,7 +658,6 @@ final buildings = [
     name: 'Ludwigstraße 8',
     abbrev: 'LU8',
     address: 'Ludwigstraße 8, 94032 Passau',
-    labelPlacement: PolygonLabelPlacement.polylabel,
     points: [
       const LatLng(48.574641, 13.459200),
       const LatLng(48.574804, 13.459522),
@@ -747,13 +725,14 @@ class Building {
     List<List<LatLng>>? holePoints,
     LatLng? markerPos,
     Color color = const Color(0xFF00FF00),
-    PolygonLabelPlacement labelPlacement = PolygonLabelPlacement.centroid,
+    PolygonLabelPlacementCalculator labelPlacementCalculator =
+        const PolygonLabelPlacementCalculator.centroid(),
   }) : polygon = Polygon(
          points: points,
          holePointsList: holePoints,
          color: color,
          label: abbrev,
-         labelPlacement: labelPlacement,
+         labelPlacementCalculator: labelPlacementCalculator,
        ),
        marker = Marker(
          point: markerPos ?? LatLngBounds.fromPoints(points).center,
