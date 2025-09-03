@@ -4,6 +4,7 @@ import java.io.FileInputStream
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id("dev.flutter.flutter-gradle-plugin")
 }
 
@@ -16,15 +17,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "studip_uni_passau.femtopedia.de.unipassaustudip"
     compileSdk = flutter.compileSdkVersion
-    // ndkVersion = flutter.ndkVersion
-
-    defaultConfig {
-        applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
-    }
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -33,6 +26,14 @@ android {
 
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_21.toString()
+    }
+
+    defaultConfig {
+        applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
     }
 
     signingConfigs {
@@ -45,7 +46,7 @@ android {
     }
 
     buildTypes {
-        getByName("release") {
+        release {
             signingConfig = signingConfigs.getByName("release")
             isMinifyEnabled = true
             isShrinkResources = true
@@ -53,7 +54,7 @@ android {
                 debugSymbolLevel = "symbol_table"
             }
         }
-        getByName("debug") {
+        debug {
             signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = false
             isShrinkResources = false
