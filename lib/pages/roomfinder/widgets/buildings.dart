@@ -666,6 +666,18 @@ final buildings = [
     ],
     color: Colors.blue.withAlpha(128),
   ),
+  Building(
+    name: 'Kulturtransport-Gelände',
+    abbrev: 'KTP',
+    address: 'Innstraße 45a, 94032 Passau',
+    points: [
+      const LatLng(48.566434, 13.450314),
+      const LatLng(48.566274, 13.450566),
+      const LatLng(48.565937, 13.450072),
+      const LatLng(48.566097, 13.449815),
+    ],
+    color: Colors.red.withAlpha(128),
+  ),
 ];
 
 List<Polygon> get polygons =>
