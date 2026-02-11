@@ -28,7 +28,7 @@ const studIpTimeZone = 'Europe/Berlin';
 const bugReportEmail = 'info@femtopedia.de';
 const bugReportSubject = '[Bug] Bug in StudiPassau';
 const bugReportUrl = 'mailto:$bugReportEmail?subject=$bugReportSubject';
-const aboutEmail = 'nico.mexis@kabelmail.de';
+const aboutEmail = 'nico.mexis@uni-passau.de';
 const aboutSubject = 'StudiPassau Feedback';
 const aboutEmailUrl = 'mailto:$aboutEmail?subject=$aboutSubject';
 const telegramBotUrl = 'http://t.me/UniPassauBot';
