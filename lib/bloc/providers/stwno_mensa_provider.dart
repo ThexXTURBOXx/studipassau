@@ -10,17 +10,24 @@ class StwnoDataProvider {
 
   Future<List<DayMenu>> getMealsOfCanteen(String canteenId) async {
     final today = DateTime.now().toUtc().atStartOfDay;
+    final prevWeek = (today - 7.days).week.weekOfYear;
     final week = today.week.weekOfYear;
     final nextWeek = (today + 7.days).week.weekOfYear;
+    final responsePrev = await _client.get(
+      Uri.parse('$stwnoMensaUrl$stwnoMensaId/$prevWeek.csv'),
+    );
     final responseCurr = await _client.get(
       Uri.parse('$stwnoMensaUrl$stwnoMensaId/$week.csv'),
     );
     final responseNext = await _client.get(
       Uri.parse('$stwnoMensaUrl$stwnoMensaId/$nextWeek.csv'),
     );
+    final bodyPrev = stwnoEncoding.decode(responsePrev.bodyBytes);
     final bodyCurr = stwnoEncoding.decode(responseCurr.bodyBytes);
     final bodyNext = stwnoEncoding.decode(responseNext.bodyBytes);
-    return parsePlan(bodyCurr.split('\n')) + parsePlan(bodyNext.split('\n'));
+    return parsePlan(bodyPrev.split('\n')) +
+        parsePlan(bodyCurr.split('\n')) +
+        parsePlan(bodyNext.split('\n'));
   }
 
   List<DayMenu> parsePlan(List<String> lines) {
