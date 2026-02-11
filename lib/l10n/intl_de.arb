@@ -236,11 +236,11 @@
   "@no": {
     "description": "Just a normal 'No'."
   },
-  "aboutText": "Hallo, %s!\n\nIch bin Nico Mexis, ein Student an der Universität Passau, und ich entwickle diese App.\nWenn du irgendwelche Fehler in der App findest, kontaktiere mich gern via E-Mail oder klicke den \"Einen Fehler melden\"-Knopf im Seitenmenü.\n\nHab noch einen schönen Tag und bis bald,\nDein Nico\n\nIch übernehme keine Haftung für jegliche Fehler!",
+  "aboutText": "Hallo, %s!\n\nIch bin Nico Mexis, ein ehemaliger Student an der Universität Passau, und ich entwickle diese App.\nWenn du irgendwelche Fehler in der App findest, kontaktiere mich gern via E-Mail oder klicke den \"Einen Fehler melden\"-Knopf im Seitenmenü.\n\nHab noch einen schönen Tag und bis bald,\nDein Nico\n\nIch übernehme keine Haftung für jegliche Fehler!",
   "@aboutText": {
     "description": "Text shown in the about screen."
   },
-  "email": "E-Mail: nico.mexis@kabelmail.de",
+  "email": "E-Mail: nico.mexis@uni-passau.de",
   "@email": {
     "description": "Text for the button to send an email to me"
   },
