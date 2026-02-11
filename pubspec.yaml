@@ -9,8 +9,8 @@ publish_to: 'none'
 version: 1.2.0+120
 
 environment:
-  sdk: '>=3.8.1 <4.0.0'
-  flutter: '>=3.32.5'
+  sdk: '>=3.9.0 <4.0.0'
+  flutter: '>=3.35.2'
 
 dependencies:
   black_hole_flutter: ^1.0.1
@@ -47,8 +47,8 @@ dependencies:
   path_provider: ^2.0.11
   pref: ^2.5.0
   quick_actions: ^1.0.0
-  sentry: ^9.3.0
-  sentry_flutter: ^9.3.0
+  sentry: ^9.0.0
+  sentry_flutter: ^9.0.0
   share_plus: ^11.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
