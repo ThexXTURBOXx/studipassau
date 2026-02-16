@@ -124,6 +124,14 @@
   "@loginRequired": {
     "description": "The text prompting a user to log in to use the specific feature (e.g., schedule)"
   },
+  "notLoggedIn": "Not logged in",
+  "@notLoggedIn": {
+    "description": "Text to be displayed instead of names, IDs etc. when not logged in"
+  },
+  "stranger": "Stranger",
+  "@stranger": {
+    "description": "Text to be displayed instead of names, IDs etc. when not logged in"
+  },
   "okay": "Okay",
   "@okay": {
     "description": "String that just represents an 'Okay'. Mostly used in buttons of AlertDialogs."

@@ -23,7 +23,9 @@ Future<void> showStudiPassauAbout(
     children: [
       const SizedBox(height: 20),
       Text(
-        sprintf(S.of(context).aboutText, [state.formattedName]),
+        sprintf(S.of(context).aboutText, [
+          state.formattedName ?? S.of(context).stranger,
+        ]),
         textAlign: TextAlign.justify,
       ),
       const SizedBox(height: 20),

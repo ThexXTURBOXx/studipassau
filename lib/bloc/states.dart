@@ -26,19 +26,16 @@ class LoginState extends BlocState {
   LoginState copyWith({StudiPassauState? state, userData}) =>
       LoginState(state ?? this.state, userData: userData ?? this.userData);
 
-  String get userId => userData?['data']?['id']?.toString() ?? 'Not logged in';
+  String? get userId => userData?['data']?['id']?.toString();
 
-  String get username =>
-      userData?['data']?['attributes']?['username']?.toString() ??
-      'Not logged in';
+  String? get username =>
+      userData?['data']?['attributes']?['username']?.toString();
 
-  String get formattedName =>
-      userData?['data']?['attributes']?['formatted-name']?.toString() ??
-      'Not logged in';
+  String? get formattedName =>
+      userData?['data']?['attributes']?['formatted-name']?.toString();
 
-  String get avatarNormal =>
-      userData?['data']?['meta']?['avatar']?['normal']?.toString() ??
-      'Not logged in';
+  String? get avatarNormal =>
+      userData?['data']?['meta']?['avatar']?['normal']?.toString();
 }
 
 class ScheduleState extends BlocState {

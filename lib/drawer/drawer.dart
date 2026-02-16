@@ -39,8 +39,10 @@ class StudiPassauDrawer extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: Text(state.formattedName),
-              accountEmail: Text(state.username),
+              accountName: Text(
+                state.formattedName ?? S.of(context).notLoggedIn,
+              ),
+              accountEmail: Text(state.username ?? S.of(context).notLoggedIn),
               decoration: const BoxDecoration(
                 color: iconBgColor,
                 image: DecorationImage(
@@ -49,11 +51,11 @@ class StudiPassauDrawer extends StatelessWidget {
               ),
               currentAccountPicture: ClipRRect(
                 borderRadius: BorderRadius.circular(110),
-                child: state.userData == null
+                child: state.userData == null || state.avatarNormal == null
                     ? const Icon(Icons.error)
                     : CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: state.avatarNormal,
+                        imageUrl: state.avatarNormal!,
                         progressIndicatorBuilder:
                             (context, url, downloadProgress) =>
                                 CircularProgressIndicator(

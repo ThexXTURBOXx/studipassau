@@ -117,7 +117,10 @@ class _SchedulePagePageState extends State<SchedulePage>
               listener: showErrorMessage,
               builder: (context, stateS) => RefreshIndicator(
                 key: _refreshIndicatorKey,
-                onRefresh: () async => refresh(context, stateL.userId),
+                onRefresh: () async => refresh(
+                  context,
+                  stateL.userId ?? S.of(context).notLoggedIn,
+                ),
                 child: TimetableTheme(
                   data: TimetableThemeData(
                     context,
