@@ -624,6 +624,7 @@ final buildings = [
     ],
     color: Colors.blue.withAlpha(128),
   ),
+  /* Demolished due to IWZ construction
   Building(
     name: 'Franz Stockbauer Weg 3',
     abbrev: 'FSW3',
@@ -637,7 +638,7 @@ final buildings = [
       const LatLng(48.570991, 13.455627),
     ],
     color: Colors.blue.withAlpha(128),
-  ),
+  ),*/
   Building(
     name: 'Schloss Neuburg',
     abbrev: 'SN',
@@ -677,6 +678,24 @@ final buildings = [
       const LatLng(48.566097, 13.449815),
     ],
     color: Colors.red.withAlpha(128),
+  ),
+  // TODO(nico): Update when built
+  Building(
+    name: 'Entstehendes Internationales Wissenschaftszentrum',
+    abbrev: 'IWZ',
+    address: 'Kleiner Exerzierplatz 17, 94032 Passau',
+    points: [
+      const LatLng(48.571038, 13.455901),
+      const LatLng(48.570779, 13.455434),
+      const LatLng(48.570793, 13.455042),
+      const LatLng(48.570953, 13.454822),
+      const LatLng(48.571098, 13.455075),
+      const LatLng(48.571388, 13.454668),
+      const LatLng(48.571452, 13.454700),
+      const LatLng(48.571555, 13.455177),
+      const LatLng(48.571548, 13.455253),
+    ],
+    color: Colors.blue.withAlpha(128),
   ),
 ];
 
