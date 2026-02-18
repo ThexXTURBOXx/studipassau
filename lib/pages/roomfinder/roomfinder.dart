@@ -50,6 +50,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
       mapController: controller,
       options: MapOptions(
         initialCenter: const LatLng(48.567369, 13.451903),
+        minZoom: 10,
         initialZoom: 15.5,
         maxZoom: 18,
         onTap: (pos, point) async {
