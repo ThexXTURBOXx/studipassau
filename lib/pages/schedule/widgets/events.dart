@@ -23,7 +23,7 @@ class StudiPassauEvent extends Event {
     title: json['title'].toString(),
     course: json['course'].toString(),
     description: json['description'].toString(),
-    categories: (json['categories'] as List<dynamic>)
+    categories: (json['categories'] as Iterable<dynamic>)
         .map((c) => c.toString())
         .toList(growable: false),
     room: json['room'].toString(),

@@ -16,7 +16,7 @@ class FilesRepo {
         (await _studIPProvider.apiGetJson(
               'users/$userId/courses?page[limit]=10000',
             ))['data']
-            as List<dynamic>;
+            as Iterable;
     return jsonCourses.map(Course.fromJson).toList(growable: false);
   }
 
@@ -26,7 +26,7 @@ class FilesRepo {
     final json = await _studIPProvider.apiGetJson(
       'courses/$courseId/folders?page[limit]=10000',
     );
-    final folders = json['data'] as List<dynamic>;
+    final folders = json['data'] as Iterable;
     final rootFolder = folders
         .filter(
           (f) =>
@@ -52,13 +52,13 @@ class FilesRepo {
     dynamic jsonFolders,
     dynamic jsonFiles,
   ) async => Tuple2(
-    (jsonFolders['data'] as List<dynamic>)
+    (jsonFolders['data'] as Iterable)
         .filter(
           (f) => f['attributes'] != null && f['attributes']['name'] != null,
         )
         .map(Folder.fromJson)
         .toList(growable: false),
-    (jsonFiles['data'] as List<dynamic>)
+    (jsonFiles['data'] as Iterable)
         .filter(
           (f) => f['attributes'] != null && f['attributes']['name'] != null,
         )

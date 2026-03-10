@@ -173,7 +173,7 @@ class _Event extends Equatable {
     description: json['attributes']['description'].toString(),
     start: parseInLocalZone(json['attributes']['start'].toString()),
     end: parseInLocalZone(json['attributes']['end'].toString()),
-    categories: (json['attributes']['categories'] as List<dynamic>)
+    categories: (json['attributes']['categories'] as Iterable)
         .map((c) => c.toString())
         .toList(growable: false),
     room: (json['attributes']['location'] ?? '').toString(),
