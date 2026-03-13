@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
@@ -16,18 +17,23 @@ class LoginCubit extends Cubit<LoginState> {
 
   final StorageRepo _storageRepo;
 
+  Future<void> loadUserData() async {
+    final cfgJson = _storageRepo.getString(userDataKey);
+    if (cfgJson != null) {
+      emit(state.copyWith(userData: jsonDecode(cfgJson)));
+    }
+  }
+
   Future<void> authenticate() async {
     emit(state.copyWith(state: StudiPassauState.loading));
     try {
-      final cfgJson = _storageRepo.getString(userDataKey);
-      dynamic userData;
+      await loadUserData();
+    } catch (e, s) {
+      Catcher2.reportCheckedError(e, s);
+    }
 
-      if (cfgJson != null) {
-        userData = jsonDecode(cfgJson);
-        emit(state.copyWith(userData: userData));
-      }
-
-      emit(state.copyWith(state: StudiPassauState.authenticating));
+    emit(state.copyWith(state: StudiPassauState.authenticating));
+    try {
       final client = StudIPClient(
         oAuthBaseUrl: studIpProviderUrl,
         redirectUri: 'studipassau://oauth_callback',
@@ -37,8 +43,8 @@ class LoginCubit extends Cubit<LoginState> {
         apiBaseUrl: apiBaseUrl,
       );
       _setApiClient(client);
-      userData = await client.apiGetJson('users/me');
 
+      dynamic userData = await client.apiGetJson('users/me');
       emit(
         state.copyWith(
           state: StudiPassauState.authenticated,
@@ -49,12 +55,12 @@ class LoginCubit extends Cubit<LoginState> {
         key: userDataKey,
         value: jsonEncode(userData),
       );
+    } on StateError {
+      emit(state.copyWith(state: StudiPassauState.httpError));
+    } on SocketException {
+      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e) {
-      if (e is StateError || e is SocketException) {
-        emit(state.copyWith(state: StudiPassauState.httpError));
-      } else {
-        emit(state.copyWith(state: StudiPassauState.authenticationError));
-      }
+      emit(state.copyWith(state: StudiPassauState.authenticationError));
     }
   }
 

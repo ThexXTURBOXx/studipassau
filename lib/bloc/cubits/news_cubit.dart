@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
@@ -41,8 +42,12 @@ class NewsCubit extends Cubit<NewsState> {
 
   Future<void> fetchNews({required bool onlineSync}) async {
     if (state.news == null) {
-      emit(state.copyWith(state: StudiPassauState.loading));
-      await loadNews();
+      try {
+        emit(state.copyWith(state: StudiPassauState.loading));
+        await loadNews();
+      } catch (e, s) {
+        Catcher2.reportCheckedError(e, s);
+      }
     }
 
     if (!onlineSync) {
@@ -70,6 +75,8 @@ class NewsCubit extends Cubit<NewsState> {
             .map((id) => _coursesRepo.getCourse(id)),
       );
       emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
+    } on SessionInvalidException {
+      emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {

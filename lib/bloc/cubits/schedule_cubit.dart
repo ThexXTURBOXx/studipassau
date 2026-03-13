@@ -33,8 +33,12 @@ class ScheduleCubit extends Cubit<ScheduleState> {
 
   Future<void> fetchSchedule(String userId, {required bool onlineSync}) async {
     if (state.schedule == null) {
-      emit(state.copyWith(state: StudiPassauState.loading));
-      await loadSchedule();
+      try {
+        emit(state.copyWith(state: StudiPassauState.loading));
+        await loadSchedule();
+      } catch (e, s) {
+        Catcher2.reportCheckedError(e, s);
+      }
     }
 
     if (!onlineSync) {
