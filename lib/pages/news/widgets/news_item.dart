@@ -1,3 +1,4 @@
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
@@ -39,9 +40,22 @@ class NewsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => ListTile(
-    leading: const Icon(Icons.newspaper),
-    title: Text(title),
-    subtitle: Text(subtitle(context)),
+    leading: Icon(
+      Icons.newspaper,
+      color: news.attributes.isPublic ? null : context.theme.disabledColor,
+    ),
+    title: Text(
+      title,
+      style: TextStyle(
+        color: news.attributes.isPublic ? null : context.theme.disabledColor,
+      ),
+    ),
+    subtitle: Text(
+      subtitle(context),
+      style: TextStyle(
+        color: news.attributes.isPublic ? null : context.theme.disabledColor,
+      ),
+    ),
     onTap: () async {
       await showDialog<void>(
         context: context,
@@ -87,4 +101,8 @@ sealed class NewsAttributes with _$NewsAttributes {
       _$NewsAttributesFromJson(json);
 
   bool get edited => makeDate != changeDate;
+
+  bool get isPublic => isPublicAt(DateTime.now().copyWith(isUtc: true));
+
+  bool isPublicAt(DateTime at) => at.isBefore(publicationEnd);
 }
