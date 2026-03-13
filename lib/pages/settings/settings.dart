@@ -13,6 +13,7 @@ const routeSettings = '/settings';
 
 const uiThemePref = 'ui_theme';
 const startRoutePref = 'start_route';
+const autoLoginPref = 'auto_login';
 const scheduleAutoSyncPref = 'schedule_auto_sync';
 const nonRegularColorPref = 'non_regular_color';
 const notFoundColorPref = 'not_found_color';
@@ -42,6 +43,7 @@ const mensaTypePrefPupil = 'pupil';
 const Map<String, dynamic> defaults = {
   uiThemePref: uiThemePrefDefault,
   startRoutePref: routeSchedule,
+  autoLoginPref: true,
   scheduleAutoSyncPref: true,
   nonRegularColorPref: 0xff339966,
   notFoundColorPref: 0xffea3838,
@@ -100,11 +102,6 @@ class SettingsPage extends StatelessWidget {
                   ],
                 ),
               ),
-              /*PrefSwitch(
-                title: Text(context.i18n.material3PrefTitle),
-                subtitle: Text(context.i18n.material3PrefDesc),
-                pref: material3Pref,
-              ),*/
               PrefTitle(title: Text(context.i18n.othersPref)),
               PrefDropdown(
                 title: Text(context.i18n.startRoutePrefTitle),
@@ -133,6 +130,11 @@ class SettingsPage extends StatelessWidget {
                     child: Text(context.i18n.newsPrefCatShortTitle),
                   ),
                 ],
+              ),
+              PrefSwitch(
+                title: Text(context.i18n.autoLoginPrefTitle),
+                subtitle: Text(context.i18n.autoLoginPrefDesc),
+                pref: autoLoginPref,
               ),
             ],
           ),

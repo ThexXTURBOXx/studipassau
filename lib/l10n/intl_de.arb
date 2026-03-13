@@ -308,14 +308,6 @@
   "@uiThemePrefDark": {
     "description": "Title for dark app theme"
   },
-  "material3PrefTitle": "Material 3 Design",
-  "@material3PrefTitle": {
-    "description": "Title for Material 3 preference"
-  },
-  "material3PrefDesc": "Zu Material 3 Design wechseln",
-  "@material3PrefDesc": {
-    "description": "Description for Material 3 preference"
-  },
   "othersPref": "Anderes",
   "@othersPref": {
     "description": "Title for a group of other miscellaneous preferences"
@@ -327,6 +319,14 @@
   "startRoutePrefDesc": "Startbildschirm ändern",
   "@startRoutePrefDesc": {
     "description": "Description for app theme preference"
+  },
+  "autoLoginPrefTitle": "Automatischer Login",
+  "@autoLoginPrefTitle": {
+    "description": "Title for auto login preference"
+  },
+  "autoLoginPrefDesc": "Automatisch einloggen sobald die App geöffnet wird",
+  "@autoLoginPrefDesc": {
+    "description": "Description for auto login preference"
   },
   "schedulePrefCatLongTitle": "Stundenplan-Einstellungen",
   "@schedulePrefCatLongTitle": {
