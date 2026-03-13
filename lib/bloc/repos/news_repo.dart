@@ -21,6 +21,6 @@ class NewsRepo {
         )
         .toList();
 
-    return allNews.sortedBy((n) => n.attributes.makeDate).toList();
+    return allNews.sortedBy((n) => n.attributes.makeDate).reversed.toList();
   }
 }
