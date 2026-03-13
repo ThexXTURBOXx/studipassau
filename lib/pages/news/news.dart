@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,15 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
                 onRefresh: () async => refresh(context),
                 child: ListView(
                   children: stateN.newsOrEmpty
-                      .map((e) => NewsWidget(news: e))
+                      .map(
+                        (e) => NewsWidget(
+                          news: e,
+                          courseTitleGetter: (id) => stateN.courses
+                              ?.firstWhereOrNull((c) => c.id == id)
+                              ?.attributes
+                              .formattedTitle,
+                        ),
+                      )
                       .toList(growable: false),
                 ),
               ),

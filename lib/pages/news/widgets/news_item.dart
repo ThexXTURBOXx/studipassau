@@ -13,16 +13,26 @@ part 'news_item.freezed.dart';
 part 'news_item.g.dart';
 
 class NewsWidget extends StatelessWidget {
-  const NewsWidget({required this.news, super.key});
+  const NewsWidget({
+    required this.news,
+    required this.courseTitleGetter,
+    super.key,
+  });
 
   final News news;
 
+  final String? Function(String?) courseTitleGetter;
+
   String get title => news.attributes.title;
 
-  String subtitle(BuildContext context) => news.attributes.edited
-      ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
-            '${formatDateTime(changeDate)})'
-      : formatDateTime(makeDate);
+  String subtitle(BuildContext context) =>
+      (news.isCourseNews
+          ? '${S.of(context).course}: ${courseTitleGetter(news.courseId) ?? S.of(context).loading}\n'
+          : '') +
+      (news.attributes.edited
+          ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
+                '${formatDateTime(changeDate)})'
+          : formatDateTime(makeDate));
 
   DateTime get makeDate => news.attributes.makeDate;
 
@@ -41,7 +51,7 @@ class NewsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) => ListTile(
     leading: Icon(
-      Icons.newspaper,
+      news.isCourseNews ? Icons.menu_book_outlined : Icons.newspaper,
       color: news.attributes.isPublic ? null : context.theme.disabledColor,
     ),
     title: Text(
@@ -105,4 +115,11 @@ sealed class NewsAttributes with _$NewsAttributes {
   bool get isPublic => isPublicAt(DateTime.now().copyWith(isUtc: true));
 
   bool isPublicAt(DateTime at) => at.isBefore(publicationEnd);
+}
+
+extension CourseNews on News {
+  bool get isCourseNews =>
+      relationship('ranges').firstOrNull?.type == 'courses';
+
+  String? get courseId => relationship('ranges').firstOrNull?.id;
 }

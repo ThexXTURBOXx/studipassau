@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'jsonapi.freezed.dart';
 part 'jsonapi.g.dart';
 
-List<JsonApiResource<A>> parseCollection<A>(
+JsonApiResource<A> parseObject<A>(
   Map<String, dynamic> json,
   A Function(Object?) fromJsonA,
 ) {
@@ -14,17 +14,47 @@ List<JsonApiResource<A>> parseCollection<A>(
   return doc.data;
 }
 
+List<JsonApiResource<A>> parseCollection<A>(
+  Map<String, dynamic> json,
+  A Function(Object?) fromJsonA,
+) {
+  final doc = JsonApiDocumentList.fromJson(
+    json,
+    (item) => JsonApiResource.fromJson(item as Map<String, dynamic>, fromJsonA),
+  );
+  return doc.data;
+}
+
 @Freezed(genericArgumentFactories: true)
 abstract class JsonApiDocument<T> with _$JsonApiDocument<T> {
   const JsonApiDocument._();
 
-  const factory JsonApiDocument({required List<T> data, JsonApiMeta? meta}) =
+  const factory JsonApiDocument({required T data, JsonApiMeta? meta}) =
       _JsonApiDocument<T>;
 
   factory JsonApiDocument.fromJson(
     Map<String, dynamic> json,
     T Function(Object?) fromJsonT,
   ) => _$JsonApiDocumentFromJson(json, fromJsonT);
+
+  @override
+  Map<String, dynamic> toJson(Object? Function(T) toJsonT) =>
+      _$JsonApiDocumentToJson(this as _JsonApiDocument<T>, toJsonT);
+}
+
+@Freezed(genericArgumentFactories: true)
+abstract class JsonApiDocumentList<T> with _$JsonApiDocumentList<T> {
+  const JsonApiDocumentList._();
+
+  const factory JsonApiDocumentList({
+    required List<T> data,
+    JsonApiMeta? meta,
+  }) = _JsonApiDocumentList<T>;
+
+  factory JsonApiDocumentList.fromJson(
+    Map<String, dynamic> json,
+    T Function(Object?) fromJsonT,
+  ) => _$JsonApiDocumentListFromJson(json, fromJsonT);
 
   @override
   Map<String, dynamic> toJson(Object? Function(T) toJsonT) =>

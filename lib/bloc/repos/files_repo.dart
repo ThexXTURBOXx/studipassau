@@ -3,7 +3,6 @@ import 'dart:io' as io;
 import 'package:collection/collection.dart';
 import 'package:http/http.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
-import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
 import 'package:studipassau/util/jsonapi.dart';
@@ -11,16 +10,6 @@ import 'package:tuple/tuple.dart';
 
 class FilesRepo {
   final _studIPProvider = StudIPDataProvider();
-
-  Future<List<Course>> getCourses(String userId) async {
-    final json = await _studIPProvider.apiGetJson(
-      'users/$userId/courses?page[limit]=10000',
-    );
-    return parseCollection(
-      json,
-      (item) => CourseAttributes.fromJson(item as Map<String, dynamic>),
-    );
-  }
 
   Future<Tuple2<List<Folder>, List<FileRef>>> loadCourseTopFolder(
     String courseId,

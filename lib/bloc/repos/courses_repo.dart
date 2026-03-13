@@ -1,0 +1,25 @@
+import 'package:studipassau/bloc/providers/studip_provider.dart';
+import 'package:studipassau/pages/files/widgets/course.dart';
+import 'package:studipassau/util/jsonapi.dart';
+
+class CoursesRepo {
+  final _studIPProvider = StudIPDataProvider();
+
+  Future<List<Course>> getCourses(String userId) async {
+    final json = await _studIPProvider.apiGetJson(
+      'users/$userId/courses?page[limit]=10000',
+    );
+    return parseCollection(
+      json,
+      (item) => CourseAttributes.fromJson(item as Map<String, dynamic>),
+    );
+  }
+
+  Future<Course> getCourse(String id) async {
+    final json = await _studIPProvider.apiGetJson('courses/$id');
+    return parseObject(
+      json,
+      (item) => CourseAttributes.fromJson(item as Map<String, dynamic>),
+    );
+  }
+}

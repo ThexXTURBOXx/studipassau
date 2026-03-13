@@ -5,6 +5,7 @@ import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';
 import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
+import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/files_repo.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
@@ -24,6 +25,7 @@ class StudiPassauBlocProvider extends StatelessWidget {
       RepositoryProvider<MensaRepo>(create: (context) => MensaRepo()),
       RepositoryProvider<FilesRepo>(create: (context) => FilesRepo()),
       RepositoryProvider<NewsRepo>(create: (context) => NewsRepo()),
+      RepositoryProvider<CoursesRepo>(create: (context) => CoursesRepo()),
     ],
     child: MultiBlocProvider(
       providers: [
@@ -43,11 +45,17 @@ class StudiPassauBlocProvider extends StatelessWidget {
           ),
         ),
         BlocProvider<FilesCubit>(
-          create: (context) => FilesCubit(context.read<FilesRepo>()),
+          create: (context) => FilesCubit(
+            context.read<FilesRepo>(),
+            context.read<CoursesRepo>(),
+          ),
         ),
         BlocProvider<NewsCubit>(
-          create: (context) =>
-              NewsCubit(context.read<StorageRepo>(), context.read<NewsRepo>()),
+          create: (context) => NewsCubit(
+            context.read<StorageRepo>(),
+            context.read<NewsRepo>(),
+            context.read<CoursesRepo>(),
+          ),
         ),
       ],
       child: child,

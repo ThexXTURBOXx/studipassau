@@ -15,13 +15,7 @@ class CourseWidget extends StatelessWidget {
 
   String get sortKey => course.attributes.title.trim();
 
-  String get title {
-    final courseNumber = course.attributes.courseNumber;
-    final title = course.attributes.title;
-    return courseNumber?.isEmpty ?? true
-        ? title.trim()
-        : '${courseNumber!.trim()} ${title.trim()}';
-  }
+  String get title => course.attributes.formattedTitle;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -39,7 +33,7 @@ class CourseWidget extends StatelessWidget {
     final description = course.attributes.description;
 
     return ListTile(
-      leading: const Icon(Icons.import_contacts),
+      leading: const Icon(Icons.menu_book_outlined),
       title: Text(title),
       subtitle: subtitle?.isEmpty ?? true ? null : Text(subtitle!),
       onTap: onTap,
@@ -76,4 +70,8 @@ sealed class CourseAttributes with _$CourseAttributes {
 
   factory CourseAttributes.fromJson(Map<String, dynamic> json) =>
       _$CourseAttributesFromJson(json);
+
+  String get formattedTitle => courseNumber?.isEmpty ?? true
+      ? title.trim()
+      : '${courseNumber!.trim()} ${title.trim()}';
 }

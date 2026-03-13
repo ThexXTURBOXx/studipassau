@@ -118,14 +118,27 @@ class FilesState extends BlocState {
 enum FolderState { home, courseHome, folder }
 
 class NewsState extends BlocState {
-  const NewsState(super.state, {this.news});
+  const NewsState(super.state, {this.news, this.courses});
 
   final List<News>? news;
 
-  NewsState copyWith({StudiPassauState? state, List<News>? news}) =>
-      NewsState(state ?? this.state, news: news ?? this.news);
+  final List<Course>? courses;
+
+  NewsState copyWith({
+    StudiPassauState? state,
+    List<News>? news,
+    List<Course>? courses,
+  }) => NewsState(
+    state ?? this.state,
+    news: news ?? this.news,
+    courses: courses ?? this.courses,
+  );
 
   List<News> get newsOrEmpty => news ?? <News>[];
+
+  Course? getCourse(String id) => courses?.firstWhere((c) => c.id == id);
+
+  String? getCourseTitle(String id) => getCourse(id)?.attributes.title;
 }
 
 enum StudiPassauState {

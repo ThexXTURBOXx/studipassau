@@ -3,18 +3,22 @@ import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
+import 'package:supercharged/supercharged.dart';
 
 class NewsCubit extends Cubit<NewsState> {
-  NewsCubit(this._storageRepo, this._newsRepo)
+  NewsCubit(this._storageRepo, this._newsRepo, this._coursesRepo)
     : super(const NewsState(StudiPassauState.notFetched));
 
   final StorageRepo _storageRepo;
 
   final NewsRepo _newsRepo;
+
+  final CoursesRepo _coursesRepo;
 
   Future<void> loadNews() async {
     final newsCache = _storageRepo.getStringList(newsKey);
@@ -57,6 +61,15 @@ class NewsCubit extends Cubit<NewsState> {
             .toList(growable: false),
       );
       emit(state.copyWith(state: StudiPassauState.fetched, news: news));
+
+      final courses = await Future.wait(
+        news
+            .filter((n) => n.isCourseNews)
+            .map((n) => n.courseId)
+            .nonNulls
+            .map((id) => _coursesRepo.getCourse(id)),
+      );
+      emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {

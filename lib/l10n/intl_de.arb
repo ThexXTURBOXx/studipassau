@@ -575,5 +575,9 @@
   "edited": "bearbeitet",
   "@edited": {
     "description": "Text indicating that something has been edited"
+  },
+  "loading": "Laden...",
+  "@loading": {
+    "description": "Text indicating that something is being loaded"
   }
 }

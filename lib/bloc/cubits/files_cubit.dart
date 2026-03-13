@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
+import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/files_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
@@ -17,7 +18,7 @@ import 'package:studipassau/pages/files/widgets/folder.dart';
 import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {
-  FilesCubit(this._filesRepo)
+  FilesCubit(this._filesRepo, this._coursesRepo)
     : super(
         FilesState(
           StudiPassauState.notFetched,
@@ -27,11 +28,13 @@ class FilesCubit extends Cubit<FilesState> {
 
   final FilesRepo _filesRepo;
 
+  final CoursesRepo _coursesRepo;
+
   Future<void> loadCourses(String userId) async {
     emit(state.copyWith(state: StudiPassauState.fetching));
 
     try {
-      final courses = (await _filesRepo.getCourses(userId)).sorted(
+      final courses = (await _coursesRepo.getCourses(userId)).sorted(
         compareBy<Course, String>(
           (c) => c.attributes.title,
         ).thenByNullable((c) => c.attributes.courseNumber),
