@@ -1,26 +1,31 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/util/json.dart';
+import 'package:studipassau/util/jsonapi.dart';
+
+part 'news_item.freezed.dart';
+part 'news_item.g.dart';
 
 class NewsWidget extends StatelessWidget {
   const NewsWidget({required this.news, super.key});
 
   final News news;
 
-  String get title => news.title;
+  String get title => news.attributes.title;
 
-  String subtitle(BuildContext context) => news.edited
+  String subtitle(BuildContext context) => news.attributes.edited
       ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
             '${formatDateTime(changeDate)})'
       : formatDateTime(makeDate);
 
-  DateTime get makeDate => news.makeDate;
+  DateTime get makeDate => news.attributes.makeDate;
 
-  DateTime get changeDate => news.changeDate;
+  DateTime get changeDate => news.attributes.changeDate;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -47,7 +52,7 @@ class NewsWidget extends StatelessWidget {
             width: double.maxFinite,
             child: SingleChildScrollView(
               child: HtmlWidget(
-                news.content,
+                news.attributes.content,
                 factoryBuilder: NewsWidgetFactory.new,
               ),
             ),
@@ -60,41 +65,26 @@ class NewsWidget extends StatelessWidget {
 
 class NewsWidgetFactory extends WidgetFactory with UrlLauncherFactory {}
 
-class News extends Equatable {
-  const News({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.makeDate,
-    required this.changeDate,
-  });
+typedef News = JsonApiResource<NewsAttributes>;
 
-  factory News.fromJson(dynamic json) => News(
-    id: json['id'].toString(),
-    title: json['attributes']['title'].toString(),
-    content: json['attributes']['content'].toString(),
-    makeDate: parseInLocalZone(json['attributes']['mkdate']),
-    changeDate: parseInLocalZone(json['attributes']['chdate']),
-  );
+@freezed
+sealed class NewsAttributes with _$NewsAttributes {
+  const NewsAttributes._();
 
-  final String id;
-  final String title;
-  final String content;
-  final DateTime makeDate;
-  final DateTime changeDate;
+  @StringConverter()
+  @DateTimeInLocalZoneConverter()
+  const factory NewsAttributes({
+    required String title,
+    required String content,
+    @JsonKey(name: 'mkdate') required DateTime makeDate,
+    @JsonKey(name: 'chdate') required DateTime changeDate,
+    @JsonKey(name: 'publication-start') required DateTime publicationStart,
+    @JsonKey(name: 'publication-end') required DateTime publicationEnd,
+    @JsonKey(name: 'comments-allowed') required bool commentsAllowed,
+  }) = _NewsAttributes;
 
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'attributes': {
-      'title': title,
-      'content': content,
-      'mkdate': makeDate.toString(),
-      'chdate': changeDate.toString(),
-    },
-  };
+  factory NewsAttributes.fromJson(Map<String, dynamic> json) =>
+      _$NewsAttributesFromJson(json);
 
   bool get edited => makeDate != changeDate;
-
-  @override
-  List<Object> get props => [id, title, content, makeDate, changeDate];
 }

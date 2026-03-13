@@ -1,70 +1,78 @@
 import 'dart:io' as io;
 
+import 'package:collection/collection.dart';
 import 'package:http/http.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
-import 'package:supercharged/supercharged.dart';
+import 'package:studipassau/util/jsonapi.dart';
 import 'package:tuple/tuple.dart';
 
 class FilesRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<Course>> getCourses(String userId) async {
-    final jsonCourses =
-        (await _studIPProvider.apiGetJson(
-              'users/$userId/courses?page[limit]=10000',
-            ))['data']
-            as Iterable;
-    return jsonCourses.map(Course.fromJson).toList(growable: false);
+    final json = await _studIPProvider.apiGetJson(
+      'users/$userId/courses?page[limit]=10000',
+    );
+    return parseCollection(
+      json,
+      (item) => CourseAttributes.fromJson(item as Map<String, dynamic>),
+    );
   }
 
-  Future<Tuple2<List<Folder>, List<File>>> loadCourseTopFolder(
+  Future<Tuple2<List<Folder>, List<FileRef>>> loadCourseTopFolder(
     String courseId,
   ) async {
     final json = await _studIPProvider.apiGetJson(
       'courses/$courseId/folders?page[limit]=10000',
     );
-    final folders = json['data'] as Iterable;
-    final rootFolder = folders
-        .filter(
-          (f) =>
-              f['attributes'] != null &&
-              f['attributes']['folder-type'] == 'RootFolder',
-        )
-        .map(Folder.fromJson)
-        .firstOrNull;
+    if (json?['data'] is! Iterable) return Tuple2([], []);
+
+    final folders = parseCollection<FolderAttributes>(
+      json,
+      (item) => FolderAttributes.fromJson(item as Map<String, dynamic>),
+    );
+    final rootFolder = folders.firstWhereOrNull(
+      (f) => f.attributes.folderType == 'RootFolder',
+    );
     return rootFolder == null ? Tuple2([], []) : loadFolder(rootFolder.id);
   }
 
-  Future<Tuple2<List<Folder>, List<File>>> loadFolder(String folderId) async =>
-      parseFolder(
-        await _studIPProvider.apiGetJson(
-          'folders/$folderId/folders?page[limit]=10000',
-        ),
-        await _studIPProvider.apiGetJson(
-          'folders/$folderId/file-refs?page[limit]=10000',
-        ),
-      );
+  Future<Tuple2<List<Folder>, List<FileRef>>> loadFolder(
+    String folderId,
+  ) async {
+    final results = await Future.wait([
+      _studIPProvider.apiGetJson('folders/$folderId/folders?page[limit]=10000'),
+      _studIPProvider.apiGetJson(
+        'folders/$folderId/file-refs?page[limit]=10000',
+      ),
+    ]);
 
-  Future<Tuple2<List<Folder>, List<File>>> parseFolder(
+    return parseFolder(results[0], results[1]);
+  }
+
+  Future<Tuple2<List<Folder>, List<FileRef>>> parseFolder(
     dynamic jsonFolders,
     dynamic jsonFiles,
-  ) async => Tuple2(
-    (jsonFolders['data'] as Iterable)
-        .filter(
-          (f) => f['attributes'] != null && f['attributes']['name'] != null,
-        )
-        .map(Folder.fromJson)
-        .toList(growable: false),
-    (jsonFiles['data'] as Iterable)
-        .filter(
-          (f) => f['attributes'] != null && f['attributes']['name'] != null,
-        )
-        .map(File.fromJson)
-        .toList(growable: false),
-  );
+  ) async {
+    final folders = jsonFolders['data'] is Iterable
+        ? parseCollection<FolderAttributes>(
+            jsonFolders,
+            (item) => FolderAttributes.fromJson(item as Map<String, dynamic>),
+          )
+        : <Folder>[];
+
+    final files = jsonFiles['data'] is Iterable
+        ? parseCollection<FileRefAttributes>(
+            jsonFiles,
+            (item) => FileRefAttributes.fromJson(item as Map<String, dynamic>),
+          )
+        : <FileRef>[];
+
+    return Tuple2(folders, files);
+  }
 
   Future<String> downloadFile(
     io.File toFile,

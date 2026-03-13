@@ -1,11 +1,16 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:studipassau/util/json.dart';
+import 'package:studipassau/util/jsonapi.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
+
+part 'schedule_repo.freezed.dart';
+part 'schedule_repo.g.dart';
 
 class ScheduleRepo {
   final _studIPProvider = StudIPDataProvider();
@@ -15,44 +20,51 @@ class ScheduleRepo {
     final nonRegularColor = Color(getPref(nonRegularColorPref));
     final canceledColor = Color(getPref(canceledColorPref));
 
-    final dynamic jsonSchedule = await _studIPProvider.apiGetJson(
-      'users/$userId/schedule',
+    final results = await Future.wait([
+      _studIPProvider.apiGetJson('users/$userId/schedule'),
+      _studIPProvider.apiGetJson('users/$userId/events?page[limit]=10000'),
+      _studIPProvider.apiGetJson(
+        'users/$userId/course-memberships?page[limit]=10000',
+      ),
+    ]);
+
+    final schedule = _parseSchedule(results[0]);
+    final events = parseCollection(
+      results[1] as Map<String, dynamic>,
+      (obj) => EventAttributes.fromJson(obj as Map<String, dynamic>),
     );
-    final dynamic jsonEvents = await _studIPProvider.apiGetJson(
-      'users/$userId/events?page[limit]=10000',
+    final cms = parseCollection(
+      results[2] as Map<String, dynamic>,
+      (obj) => CourseMembershipAttributes.fromJson(obj as Map<String, dynamic>),
     );
-    final dynamic jsonCMs = await _studIPProvider.apiGetJson(
-      'users/$userId/course-memberships?page[limit]=10000',
-    );
-    final events = _parseEvents(jsonEvents);
-    final schedule = _Schedule.fromJson(jsonSchedule).events;
-    final cms = _parseCourseMemberships(jsonCMs);
     final eventsCache = <StudiPassauEvent>[];
 
     for (final event in events) {
-      final eventCourseId = event.ownerId;
+      final eventRel = event.relationship('owner').first;
+      final eventCourseId = eventRel.id;
+      final eventAttrs = event.attributes;
 
       String? courseName;
       var color = notFoundColor;
-      if (event.canceled) {
+
+      if (eventAttrs.isCancelled) {
         color = canceledColor;
-      } else if (event.categories.any(regularLectureCategories.contains)) {
-        for (final course
-            in schedule[event.start.weekday - 1] ?? <_ScheduleEvent>[]) {
-          if (course.ownerType == event.ownerType &&
-              (course.ownerType != 'courses' ||
-                  course.ownerId == eventCourseId) &&
-              _equalsCourseEventTime(course.start, event.start) &&
-              _equalsCourseEventTime(course.end, event.end)) {
-            final cm = cms
-                .filter(
-                  (cm) =>
-                      cm.courseType == course.ownerType &&
-                      cm.courseId == course.ownerId,
-                )
-                .firstOrNull;
-            color = course.color ?? cm?.color ?? color;
-            courseName = course.title;
+      } else if (eventAttrs.categories.any(regularLectureCategories.contains)) {
+        for (final course in schedule[eventAttrs.start.weekday - 1]) {
+          final courseRel = course.relationship('owner').first;
+          if (courseRel.type == eventRel.type &&
+              (courseRel.type != 'courses' || courseRel.id == eventCourseId) &&
+              _equalsCourseEventTime(
+                course.attributes.start,
+                eventAttrs.start,
+              ) &&
+              _equalsCourseEventTime(course.attributes.end, eventAttrs.end)) {
+            final cm = cms.filter((cm) {
+              final cmRel = cm.relationship('course').first;
+              return cmRel.type == courseRel.type && cmRel.id == courseRel.id;
+            }).firstOrNull;
+            color = course.attributes.color ?? cm?.attributes.color ?? color;
+            courseName = course.attributes.title;
             break;
           }
         }
@@ -74,14 +86,14 @@ class ScheduleRepo {
       eventsCache.add(
         StudiPassauEvent(
           id: event.id,
-          title: event.title,
+          title: eventAttrs.title,
           course: courseName,
-          description: event.description,
-          categories: event.categories,
-          room: event.room,
-          canceled: event.canceled,
-          start: event.start,
-          end: event.end,
+          description: eventAttrs.description,
+          categories: eventAttrs.categories,
+          room: eventAttrs.location,
+          canceled: eventAttrs.isCancelled,
+          start: eventAttrs.start,
+          end: eventAttrs.end,
           backgroundColor: color,
         ),
       );
@@ -94,38 +106,34 @@ class ScheduleRepo {
         isUtc: true,
       );
       for (var i = 0; i < 7; i++) {
-        final day = schedule[i];
-        for (final event in day ?? <_ScheduleEvent>[]) {
-          if (event.type == 'schedule-entries') {
-            final first = (i - (today.weekday - 1) + 14) % 7;
-            final hourStart = (event.start / 100).floor();
-            final minuteStart = event.start % 100;
-            final hourEnd = (event.end / 100).floor();
-            final minuteEnd = event.end % 100;
-            final start = (today + first.days).copyWith(
-              hour: hourStart,
-              minute: minuteStart,
+        for (final entry in schedule[i]) {
+          if (entry.type != 'schedule-entries') continue;
+
+          final first = (i - (today.weekday - 1) + 14) % 7;
+          final start = _intTimeToDateTime(
+            today + first.days,
+            entry.attributes.start,
+          );
+          final end = _intTimeToDateTime(
+            today + first.days,
+            entry.attributes.end,
+          );
+
+          for (var j = 0; j <= eventDaysInFuture - first; j += 7) {
+            eventsCache.add(
+              StudiPassauEvent(
+                id: entry.id,
+                title: entry.attributes.title,
+                course: '',
+                description: entry.attributes.description,
+                categories: const [],
+                room: '',
+                canceled: false,
+                start: start + j.days,
+                end: end + j.days,
+                backgroundColor: entry.attributes.color ?? notFoundColor,
+              ),
             );
-            final end = (today + first.days).copyWith(
-              hour: hourEnd,
-              minute: minuteEnd,
-            );
-            for (var j = 0; j <= eventDaysInFuture - first; j += 7) {
-              eventsCache.add(
-                StudiPassauEvent(
-                  id: event.id,
-                  title: event.title,
-                  course: '',
-                  description: event.description,
-                  categories: [],
-                  room: '',
-                  canceled: false,
-                  start: start + j.days,
-                  end: end + j.days,
-                  backgroundColor: event.color ?? notFoundColor,
-                ),
-              );
-            }
           }
         }
       }
@@ -134,180 +142,94 @@ class ScheduleRepo {
     return eventsCache;
   }
 
+  List<List<ScheduleEntry>> _parseSchedule(dynamic json) {
+    final entries = parseCollection(
+      json as Map<String, dynamic>,
+      (obj) => ScheduleEntryAttributes.fromJson(obj as Map<String, dynamic>),
+    );
+    final schedule = List<List<ScheduleEntry>>.generate(7, (_) => []);
+    for (final entry in entries) {
+      schedule[entry.attributes.weekday - 1].add(entry);
+    }
+    return schedule;
+  }
+
   bool _equalsCourseEventTime(int courseTime, DateTime eventTime) =>
       courseTime == eventTime.hour * 100 + eventTime.minute;
 
-  List<_Event> _parseEvents(dynamic json) {
-    final data = json['data'];
-    if (data != null && data is List) {
-      return data.map(_Event.fromJson).toList(growable: false);
-    }
-    return <_Event>[];
-  }
-
-  List<_CourseMembership> _parseCourseMemberships(dynamic json) {
-    final data = json['data'];
-    if (data != null && data is List) {
-      return data.map(_CourseMembership.fromJson).toList(growable: false);
-    }
-    return <_CourseMembership>[];
-  }
+  DateTime _intTimeToDateTime(DateTime base, int time) =>
+      base.copyWith(hour: time ~/ 100, minute: time % 100);
 }
 
-class _Event extends Equatable {
-  const _Event({
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.start,
-    required this.end,
-    required this.categories,
-    required this.room,
-    required this.ownerType,
-    required this.ownerId,
-  });
+typedef ScheduleEntry = JsonApiResource<ScheduleEntryAttributes>;
 
-  factory _Event.fromJson(dynamic json) => _Event(
-    id: json['id'].toString(),
-    title: json['attributes']['title'].toString(),
-    description: json['attributes']['description'].toString(),
-    start: parseInLocalZone(json['attributes']['start'].toString()),
-    end: parseInLocalZone(json['attributes']['end'].toString()),
-    categories: (json['attributes']['categories'] as Iterable)
-        .map((c) => c.toString())
-        .toList(growable: false),
-    room: (json['attributes']['location'] ?? '').toString(),
-    ownerType: json['relationships']['owner']['data']['type'].toString(),
-    ownerId: json['relationships']['owner']['data']['id'].toString(),
-  );
+@freezed
+abstract class ScheduleEntryAttributes with _$ScheduleEntryAttributes {
+  const ScheduleEntryAttributes._();
 
-  final String id;
-  final String title;
-  final String description;
-  final DateTime start;
-  final DateTime end;
-  final List<String> categories;
-  final String room;
-  final String ownerType;
-  final String ownerId;
+  @StringConverter()
+  const factory ScheduleEntryAttributes({
+    required String title,
+    String? description,
+    @HHMMIntConverter() required int start,
+    @HHMMIntConverter() required int end,
+    @JsonKey(name: 'weekday') required int rawWeekday,
+    @JsonKey(name: 'color') required String colorId,
+  }) = _ScheduleEntryAttributes;
 
-  bool get canceled => categories.isEmpty || title.endsWith(' (fällt aus)');
+  factory ScheduleEntryAttributes.fromJson(Map<String, dynamic> json) =>
+      _$ScheduleEntryAttributesFromJson(json);
 
-  @override
-  List<Object> get props => [
-    id,
-    title,
-    description,
-    start,
-    end,
-    categories,
-    room,
-    ownerType,
-    ownerId,
-  ];
+  /// Normalizes Sunday (0 in Stud.IP) to 7 for 1-based Monday indexing.
+  int get weekday => rawWeekday == 0 ? 7 : rawWeekday;
+
+  Color? get color => getColor(int.parse(colorId));
 }
 
-class _Schedule extends Equatable {
-  const _Schedule({required this.events});
+typedef Event = JsonApiResource<EventAttributes>;
 
-  factory _Schedule.fromJson(dynamic json) {
-    final events = List<List<_ScheduleEvent>>.generate(7, (index) => []);
-    for (final e in json['data']) {
-      final event = _ScheduleEvent.fromJson(e);
-      events[event.weekday - 1].add(event);
-    }
-    return _Schedule(events: events);
-  }
+@freezed
+abstract class EventAttributes with _$EventAttributes {
+  const EventAttributes._();
 
-  final List<List<_ScheduleEvent>?> events;
+  @StringConverter()
+  @DateTimeInLocalZoneConverter()
+  const factory EventAttributes({
+    required String title,
+    required String description,
+    required DateTime start,
+    required DateTime end,
+    required List<String> categories,
+    required String location,
+    @JsonKey(name: 'is-cancelled') required bool isCancelled,
+    @JsonKey(name: 'mkdate') required DateTime makeDate,
+    @JsonKey(name: 'chdate') required DateTime changeDate,
+  }) = _EventAttributes;
 
-  @override
-  List<Object> get props => [events];
+  factory EventAttributes.fromJson(Map<String, dynamic> json) =>
+      _$EventAttributesFromJson(json);
 }
 
-class _ScheduleEvent extends Equatable {
-  const _ScheduleEvent({
-    required this.type,
-    required this.id,
-    required this.title,
-    required this.description,
-    required this.start,
-    required this.end,
-    required this.weekday,
-    required this.color,
-    required this.ownerType,
-    required this.ownerId,
-  });
+typedef CourseMembership = JsonApiResource<CourseMembershipAttributes>;
 
-  factory _ScheduleEvent.fromJson(dynamic json) => _ScheduleEvent(
-    type: json['type'].toString(),
-    id: json['id'].toString(),
-    title: json['attributes']['title'].toString(),
-    description: json['attributes']['description'].toString(),
-    start: int.parse(
-      json['attributes']['start'].toString().replaceAll(':', ''),
-    ),
-    end: int.parse(json['attributes']['end'].toString().replaceAll(':', '')),
-    weekday: _normalizeWeekday(
-      int.parse(json['attributes']['weekday'].toString()),
-    ),
-    color: getColor(int.parse(json['attributes']['color']?.toString() ?? '0')),
-    ownerType: json['relationships']['owner']['data']['type'].toString(),
-    ownerId: json['relationships']['owner']['data']['id'].toString(),
-  );
+@freezed
+abstract class CourseMembershipAttributes with _$CourseMembershipAttributes {
+  const CourseMembershipAttributes._();
 
-  static int _normalizeWeekday(int weekday) => weekday == 0 ? 7 : weekday;
+  @StringConverter()
+  @DateTimeInLocalZoneConverter()
+  const factory CourseMembershipAttributes({
+    required String permission,
+    required int position,
+    required int group,
+    @JsonKey(name: 'mkdate') required DateTime makeDate,
+    required String label,
+    required String visible,
+    String? comment,
+  }) = _CourseMembershipAttributes;
 
-  final String type;
-  final String id;
-  final String title;
-  final String description;
-  final int start;
-  final int end;
-  final int weekday;
-  final Color? color;
-  final String ownerType;
-  final String ownerId;
+  factory CourseMembershipAttributes.fromJson(Map<String, dynamic> json) =>
+      _$CourseMembershipAttributesFromJson(json);
 
-  @override
-  List<Object> get props => [
-    type,
-    id,
-    title,
-    description,
-    start,
-    end,
-    weekday,
-    ownerType,
-    ownerId,
-  ];
-}
-
-class _CourseMembership extends Equatable {
-  const _CourseMembership({
-    required this.type,
-    required this.id,
-    required this.color,
-    required this.courseType,
-    required this.courseId,
-  });
-
-  factory _CourseMembership.fromJson(dynamic json) => _CourseMembership(
-    type: json['type'].toString(),
-    id: json['id'].toString(),
-    color: getColorOrNotFound(
-      int.parse(json['attributes']['group']?.toString() ?? '0') + 1,
-    ),
-    courseType: json['relationships']['course']['data']['type'].toString(),
-    courseId: json['relationships']['course']['data']['id'].toString(),
-  );
-
-  final String type;
-  final String id;
-  final Color color;
-  final String courseType;
-  final String courseId;
-
-  @override
-  List<Object> get props => [type, id, color, courseType, courseId];
+  Color? get color => getColorOrNotFound(group + 1);
 }

@@ -1,6 +1,11 @@
-import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:studipassau/util/json.dart';
+import 'package:studipassau/util/jsonapi.dart';
+
+part 'course.freezed.dart';
+part 'course.g.dart';
 
 class CourseWidget extends StatelessWidget {
   const CourseWidget({required this.course, super.key, this.onTap});
@@ -8,11 +13,15 @@ class CourseWidget extends StatelessWidget {
   final Course course;
   final void Function()? onTap;
 
-  String get sortKey => course.title.trim();
+  String get sortKey => course.attributes.title.trim();
 
-  String get title => course.number.isEmpty || course.number == 'null'
-      ? course.title.trim()
-      : '${course.number.trim()} ${course.title.trim()}';
+  String get title {
+    final courseNumber = course.attributes.courseNumber;
+    final title = course.attributes.title;
+    return courseNumber?.isEmpty ?? true
+        ? title.trim()
+        : '${courseNumber!.trim()} ${title.trim()}';
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -25,50 +34,46 @@ class CourseWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    leading: const Icon(Icons.import_contacts),
-    title: Text(title),
-    subtitle: course.subtitle.isNotEmpty ? Text(course.subtitle) : null,
-    onTap: onTap,
-    onLongPress: () async => showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(title),
-        content: Text(
-          '${course.subtitle}\n'
-          '${course.description}',
+  Widget build(BuildContext context) {
+    final subtitle = course.attributes.subtitle;
+    final description = course.attributes.description;
+
+    return ListTile(
+      leading: const Icon(Icons.import_contacts),
+      title: Text(title),
+      subtitle: subtitle?.isEmpty ?? true ? null : Text(subtitle!),
+      onTap: onTap,
+      onLongPress: () async => showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: Text(title),
+          content: Text(
+            '${subtitle?.isEmpty ?? true ? "" : subtitle}\n'
+            '${description?.isEmpty ?? true ? "" : description}',
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
 
-class Course extends Equatable {
-  const Course({
-    required this.id,
-    required this.number,
-    required this.title,
-    required this.subtitle,
-    required this.type,
-    required this.description,
-  });
+typedef Course = JsonApiResource<CourseAttributes>;
 
-  factory Course.fromJson(dynamic json) => Course(
-    id: json['id'].toString(),
-    number: json['attributes']['course-number'].toString(),
-    title: json['attributes']['title'].toString(),
-    subtitle: (json['attributes']['subtitle'] ?? '').toString(),
-    type: json['attributes']['course-type'].toString(),
-    description: json['attributes']['description'].toString(),
-  );
+@freezed
+sealed class CourseAttributes with _$CourseAttributes {
+  const CourseAttributes._();
 
-  final String id;
-  final String number;
-  final String title;
-  final String subtitle;
-  final String type;
-  final String description;
+  @StringConverter()
+  const factory CourseAttributes({
+    @JsonKey(name: 'course-number') String? courseNumber,
+    required String title,
+    String? subtitle,
+    @JsonKey(name: 'course-type') required int courseType,
+    String? description,
+    String? location,
+    String? miscellaneous,
+  }) = _CourseAttributes;
 
-  @override
-  List<Object> get props => [id, number, title, subtitle, type, description];
+  factory CourseAttributes.fromJson(Map<String, dynamic> json) =>
+      _$CourseAttributesFromJson(json);
 }

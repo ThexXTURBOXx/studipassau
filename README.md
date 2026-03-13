@@ -39,7 +39,7 @@ The compilation from source should be straight forward (only Android):
     ```shell
     dart pub global run intl_utils:generate
     ```
-7. Generate the environment variable class:
+7. Generate additional files (env variables/schemas/etc.) automatically:
     ```shell
     dart run build_runner build
     ```

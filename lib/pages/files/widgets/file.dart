@@ -1,10 +1,15 @@
-import 'package:equatable/equatable.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/generated/l10n.dart';
+import 'package:studipassau/util/json.dart';
+import 'package:studipassau/util/jsonapi.dart';
+
+part 'file.freezed.dart';
+part 'file.g.dart';
 
 class FileWidget extends StatelessWidget {
   const FileWidget({
@@ -14,22 +19,26 @@ class FileWidget extends StatelessWidget {
     this.showDownloads = false,
   });
 
-  final File file;
+  final FileRef file;
   final void Function()? onTap;
   final bool showDownloads;
 
   String get sortKey => title;
 
-  String get title => file.name;
+  String get title => file.attributes.name;
 
-  String formatDesc(String cat, String desc) =>
-      desc.isNotEmpty ? '\n${sprintf(cat, [file.description])}' : '';
+  String formatDesc(String cat) {
+    final description = file.attributes.description;
+    return description?.isEmpty ?? true
+        ? ''
+        : '\n${sprintf(cat, [description])}';
+  }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty<File>('file', file))
+      ..add(DiagnosticsProperty<FileRef>('file', file))
       ..add(ObjectFlagProperty<void Function()?>.has('onTap', onTap))
       ..add(DiagnosticsProperty<bool>('showDownloads', showDownloads))
       ..add(StringProperty('sortKey', sortKey))
@@ -37,83 +46,68 @@ class FileWidget extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) => ListTile(
-    leading: const Icon(Icons.insert_drive_file_outlined),
-    title: Text(title),
-    subtitle: file.description.isNotEmpty ? Text(file.description) : null,
-    trailing: showDownloads
-        ? Row(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-              Text(
-                '${file.downloads} ',
-                style: const TextStyle(color: Colors.grey),
-              ),
-              const Icon(Icons.download, color: Colors.grey),
-            ],
-          )
-        : null,
-    onTap: onTap,
-    onLongPress: () async {
-      final s = S.of(context);
-      await showDialog<void>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text(title),
-          content: Text(
-            '${sprintf(s.downloads, [file.downloads])}\n'
-            '${sprintf(s.changeDate, [formatDateTime(file.changeDate)])}\n'
-            '${sprintf(s.createDate, [formatDateTime(file.makeDate)])}\n'
-            '${sprintf(s.fileSize, [filesize(file.size)])}'
-            '${formatDesc(s.fileDescription, file.description)}',
+  Widget build(BuildContext context) {
+    final description = file.attributes.description;
+
+    return ListTile(
+      leading: const Icon(Icons.insert_drive_file_outlined),
+      title: Text(title),
+      subtitle: description?.isEmpty ?? true ? null : Text(description!),
+      trailing: showDownloads
+          ? Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(
+                  '${file.attributes.downloads} ',
+                  style: const TextStyle(color: Colors.grey),
+                ),
+                const Icon(Icons.download, color: Colors.grey),
+              ],
+            )
+          : null,
+      onTap: onTap,
+      onLongPress: () async {
+        final s = S.of(context);
+        await showDialog<void>(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text(title),
+            content: Text(
+              '${sprintf(s.downloads, [file.attributes.downloads])}\n'
+              '${sprintf(s.changeDate, [formatDateTime(file.attributes.changeDate)])}\n'
+              '${sprintf(s.createDate, [formatDateTime(file.attributes.makeDate)])}\n'
+              '${sprintf(s.fileSize, [filesize(file.attributes.filesize)])}'
+              '${formatDesc(s.fileDescription)}',
+            ),
           ),
-        ),
-      );
-    },
-  );
+        );
+      },
+    );
+  }
 }
 
-class File extends Equatable {
-  const File({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.makeDate,
-    required this.changeDate,
-    required this.downloads,
-    required this.size,
-    required this.mimeType,
-  });
+typedef FileRef = JsonApiResource<FileRefAttributes>;
 
-  factory File.fromJson(dynamic json) => File(
-    id: json['id'].toString(),
-    name: json['attributes']['name'].toString(),
-    description: (json['attributes']['description'] ?? '').toString(),
-    makeDate: parseInLocalZone(json['attributes']['mkdate']),
-    changeDate: parseInLocalZone(json['attributes']['chdate']),
-    downloads: int.parse(json['attributes']['downloads'].toString()),
-    size: int.parse(json['attributes']['filesize'].toString()),
-    mimeType: json['attributes']['mime_type'].toString(),
-  );
+@freezed
+sealed class FileRefAttributes with _$FileRefAttributes {
+  const FileRefAttributes._();
 
-  final String id;
-  final String name;
-  final String description;
-  final DateTime makeDate;
-  final DateTime changeDate;
-  final int downloads;
-  final int size;
-  final String mimeType;
+  @StringConverter()
+  @DateTimeInLocalZoneConverter()
+  const factory FileRefAttributes({
+    required String name,
+    String? description,
+    @JsonKey(name: 'mkdate') required DateTime makeDate,
+    @JsonKey(name: 'chdate') required DateTime changeDate,
+    required int downloads,
+    required int filesize,
+    @JsonKey(name: 'mime-type') required String mimeType,
+    @JsonKey(name: 'is-readable') required bool isReadable,
+    @JsonKey(name: 'is-downloadable') required bool isDownloadable,
+    @JsonKey(name: 'is-editable') required bool isEditable,
+    @JsonKey(name: 'is-writable') required bool isWritable,
+  }) = _FileRefAttributes;
 
-  @override
-  List<Object> get props => [
-    id,
-    name,
-    description,
-    makeDate,
-    changeDate,
-    downloads,
-    size,
-    mimeType,
-  ];
+  factory FileRefAttributes.fromJson(Map<String, dynamic> json) =>
+      _$FileRefAttributesFromJson(json);
 }

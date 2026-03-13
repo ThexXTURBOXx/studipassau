@@ -1,98 +1,36 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:studipassau/constants.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:studipassau/util/json.dart';
 import 'package:timetable/timetable.dart';
 
-class StudiPassauEvent extends Event {
-  const StudiPassauEvent({
-    required this.id,
-    required this.title,
-    required this.course,
-    required this.description,
-    required this.categories,
-    required this.room,
-    required this.canceled,
-    required this.backgroundColor,
-    required super.start,
-    required super.end,
-  });
+part 'events.freezed.dart';
+part 'events.g.dart';
 
-  factory StudiPassauEvent.fromJson(dynamic json) => StudiPassauEvent(
-    id: json['id'].toString(),
-    title: json['title'].toString(),
-    course: json['course'].toString(),
-    description: json['description'].toString(),
-    categories: (json['categories'] as Iterable<dynamic>)
-        .map((c) => c.toString())
-        .toList(growable: false),
-    room: json['room'].toString(),
-    canceled: json['canceled'].toString().toLowerCase() == 'true',
-    backgroundColor: Color(int.parse(json['backgroundColor'].toString())),
-    start: dateTimeSaveFormat.parse(json['start'].toString(), true),
-    end: dateTimeSaveFormat.parse(json['end'].toString(), true),
-  );
+@freezed
+sealed class StudiPassauEvent with _$StudiPassauEvent implements Event {
+  const StudiPassauEvent._();
 
-  final String id;
-  final String title;
-  final String course;
-  final String description;
-  final List<String> categories;
-  final String room;
-  final bool canceled;
-  final Color backgroundColor;
+  @StringConverter()
+  const factory StudiPassauEvent({
+    required String id,
+    required String title,
+    required String course,
+    required String? description,
+    required List<String> categories,
+    required String room,
+    @BoolConverter() required bool canceled,
+    @ColorConverter() required Color backgroundColor,
+    @DateTimeInSaveConverter() required DateTime start,
+    @DateTimeInSaveConverter() required DateTime end,
+  }) = _StudiPassauEvent;
 
-  StudiPassauEvent copyWith({
-    String? id,
-    String? title,
-    String? course,
-    String? description,
-    List<String>? categories,
-    String? room,
-    bool? canceled,
-    Color? backgroundColor,
-    bool? showOnTop,
-    DateTime? start,
-    DateTime? end,
-  }) => StudiPassauEvent(
-    id: id ?? this.id,
-    title: title ?? this.title,
-    course: course ?? this.course,
-    description: description ?? this.description,
-    categories: categories ?? this.categories,
-    room: room ?? this.room,
-    canceled: canceled ?? this.canceled,
-    backgroundColor: backgroundColor ?? this.backgroundColor,
-    start: start ?? this.start,
-    end: end ?? this.end,
-  );
+  factory StudiPassauEvent.fromJson(Map<String, dynamic> json) =>
+      _$StudiPassauEventFromJson(json);
 
   @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(StringProperty('id', id))
-      ..add(StringProperty('title', title))
-      ..add(StringProperty('course', course))
-      ..add(StringProperty('description', description))
-      ..add(IterableProperty<String>('categories', categories))
-      ..add(StringProperty('room', room))
-      ..add(DiagnosticsProperty<bool>('canceled', canceled))
-      ..add(ColorProperty('backgroundColor', backgroundColor));
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'title': title,
-    'course': course,
-    'description': description,
-    'categories': categories,
-    'room': room,
-    'canceled': canceled,
-    'backgroundColor': backgroundColor.intValue,
-    'start': dateTimeSaveFormat.format(start),
-    'end': dateTimeSaveFormat.format(end),
-  };
+  bool get isAllDay => end.difference(start).inDays >= 1;
 }
 
 class StudiPassauEventWidget extends StatelessWidget {

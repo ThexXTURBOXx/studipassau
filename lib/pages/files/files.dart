@@ -109,7 +109,7 @@ class _FilesPagePageState extends State<FilesPage>
                             children:
                                 <Widget>[
                                   FolderWidget(
-                                    folder: Folder.goUp(),
+                                    folder: goUpFolder(),
                                     onTap: () async {
                                       state.goUp();
                                       await refresh(
@@ -177,7 +177,7 @@ class _FilesPagePageState extends State<FilesPage>
   );
 
   Future<String> downloadFile(
-    File file, {
+    FileRef file, {
     ProgressListener? onProgress,
     Function? onError,
     void Function(String)? onDone,

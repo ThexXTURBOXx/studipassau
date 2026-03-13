@@ -31,7 +31,7 @@ class StwnoDataProvider {
   }
 
   List<DayMenu> parsePlan(List<String> lines) {
-    final plan = <DayMenu>[];
+    final plan = <Day, List<Meal>>{};
     for (var i = 1; i < lines.length; i++) {
       final entries = lines[i].split(';');
       try {
@@ -40,43 +40,40 @@ class StwnoDataProvider {
         // Ignore exceptions and just parse next one...
       }
     }
-    return plan;
+    return plan.entries
+        .map((e) => DayMenu(day: e.key, meals: e.value))
+        .toList(growable: false);
   }
 
-  void addToMenu(List<DayMenu> plan, List<String> entries) {
-    final meal = parseMeal(entries);
+  void addToMenu(Map<Day, List<Meal>> plan, List<String> entry) {
+    final meal = parseMeal(entry);
     if (meal != null) {
-      final date = parseDate(entries[0]);
-      final menus = plan.where((e) => e.day.date == date);
+      final date = parseDate(entry[0]);
+      final menus = plan.entries.where((e) => e.key.date == date);
       if (menus.isNotEmpty) {
-        menus.first.meals.add(meal);
+        menus.first.value.add(meal);
       } else {
-        plan.add(
-          DayMenu(
-            day: Day(date: date, closed: false),
-            meals: [meal],
-          ),
-        );
+        plan[Day(date: date, closed: false)] = [meal];
       }
     }
   }
 
-  Meal? parseMeal(List<String> entries) {
-    if (entries.length != 9) {
+  Meal? parseMeal(List<String> entry) {
+    if (entry.length != 9) {
       return null;
     }
 
     return Meal(
       // Unused anyway
       id: 0,
-      name: parseName(entries[3].trim()),
+      name: parseName(entry[3].trim()),
       notes:
-          parseFoodProperties(entries[4].trim()) +
-          parseAllergensAndAdditives(entries[3].trim()),
-      category: parseCategory(entries[2].trim()),
-      studentPrice: parsePrice(entries[6].trim()),
-      employeePrice: parsePrice(entries[7].trim()),
-      othersPrice: parsePrice(entries[8].trim()),
+          parseFoodProperties(entry[4].trim()) +
+          parseAllergensAndAdditives(entry[3].trim()),
+      category: parseCategory(entry[2].trim()),
+      studentPrice: parsePrice(entry[6].trim()),
+      employeePrice: parsePrice(entry[7].trim()),
+      othersPrice: parsePrice(entry[8].trim()),
     );
   }
 

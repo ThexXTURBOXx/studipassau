@@ -245,7 +245,7 @@ class _SchedulePagePageState extends State<SchedulePage>
   }
 
   String formatLine(String title, String? entry) =>
-      entry != null && entry.isNotEmpty ? '$title: $entry\n' : '';
+      entry?.isEmpty ?? true ? '' : '$title: $entry\n';
 
   Color getColor(BuildContext context, DateTime date, Color defaultColor) {
     final theme = context.theme;

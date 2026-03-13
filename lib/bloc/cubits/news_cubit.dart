@@ -22,7 +22,12 @@ class NewsCubit extends Cubit<NewsState> {
         state.copyWith(
           state: StudiPassauState.fetched,
           news: newsCache
-              .map((e) => News.fromJson(jsonDecode(e)))
+              .map(
+                (e) => News.fromJson(
+                  jsonDecode(e) as Map<String, dynamic>,
+                  (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
+                ),
+              )
               .toList(growable: false),
         ),
       );
@@ -46,7 +51,9 @@ class NewsCubit extends Cubit<NewsState> {
       final news = await _newsRepo.parseNews();
       await _storageRepo.writeStringList(
         key: newsKey,
-        value: news.map(jsonEncode).toList(growable: false),
+        value: news
+            .map((n) => jsonEncode(n.toJson((a) => a.toJson())))
+            .toList(growable: false),
       );
       emit(state.copyWith(state: StudiPassauState.fetched, news: news));
     } on SocketException {

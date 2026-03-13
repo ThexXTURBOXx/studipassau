@@ -24,7 +24,9 @@ class MensaCubit extends Cubit<MensaState> {
         state.copyWith(
           state: StudiPassauState.fetched,
           mensaPlan: mensaCache
-              .map((e) => DayMenu.fromJson(jsonDecode(e)))
+              .map(
+                (e) => DayMenu.fromJson(jsonDecode(e) as Map<String, dynamic>),
+              )
               .toList(growable: false),
         ),
       );

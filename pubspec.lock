@@ -149,10 +149,10 @@ packages:
     dependency: "direct main"
     description:
       name: catcher_2
-      sha256: b74a258033627564a8554ada884f742a4086d24b18c6ee83eb243e8015c50967
+      sha256: "3c9bc7435d250c1a958bbc7beb2f1d960ffb6c2658f2a5afd8d8e6db15cf8708"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.8"
   characters:
     dependency: transitive
     description:
@@ -346,7 +346,7 @@ packages:
     source: hosted
     version: "1.3.3"
   equatable:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: equatable
       sha256: "3e0141505477fd8ad55d6eb4e7776d3fe8430be8e497ccb1521370c3f21a3e2b"
@@ -560,14 +560,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "9.0.0"
-  frontend_server_client:
-    dependency: transitive
+  freezed:
+    dependency: "direct dev"
     description:
-      name: frontend_server_client
-      sha256: f64a0333a82f30b0cca061bc3d143813a486dc086b574bfb233b7c1372427694
+      name: freezed
+      sha256: f23ea33b3863f119b58ed1b586e881a46bd28715ddcc4dbc33104524e3434131
       url: "https://pub.dev"
     source: hosted
-    version: "4.0.0"
+    version: "3.2.5"
+  freezed_annotation:
+    dependency: "direct main"
+    description:
+      name: freezed_annotation
+      sha256: "7294967ff0a6d98638e7acb774aac3af2550777accd8149c90af5b014e6d44d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0"
   fwfh_url_launcher:
     dependency: "direct main"
     description:
@@ -671,7 +679,15 @@ packages:
       sha256: cb09e7dac6210041fad964ed7fbee004f14258b4eca4040f72d1234062ace4c8
       url: "https://pub.dev"
     source: hosted
-    version: "4.9.0"
+    version: "4.11.0"
+  json_serializable:
+    dependency: "direct dev"
+    description:
+      name: json_serializable
+      sha256: "44729f5c45748e6748f6b9a57ab8f7e4336edc8ae41fc295070e3814e616a6c0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.13.0"
   latlong2:
     dependency: "direct main"
     description:
@@ -821,10 +837,10 @@ packages:
     dependency: "direct main"
     description:
       name: openmensa
-      sha256: "7ba45921ad9f821b5704037e1776a420eaf154645e3fde6fd7d1726f5f4b8376"
+      sha256: "3a5bacd9467d9ae60c314fe97c24b01355e09886c5082cbfaeaceefe59aaa2e5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.4"
+    version: "3.0.0-alpha.3"
   package_config:
     dependency: transitive
     description:
@@ -1178,10 +1194,10 @@ packages:
     dependency: transitive
     description:
       name: source_gen
-      sha256: "1d562a3c1f713904ebbed50d2760217fd8a51ca170ac4b05b0db490699dbac17"
+      sha256: adc962c96fffb2de1728ef396a995aaedcafbe635abdca13d2a987ce17e57751
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.0"
+    version: "4.2.1"
   source_helper:
     dependency: transitive
     description:
@@ -1353,10 +1369,11 @@ packages:
   timetable:
     dependency: "direct main"
     description:
-      name: timetable
-      sha256: "7607675752870113db29eb8d873059a4ddb929d016b1de854b9dfdd2bc51b076"
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: HEAD
+      resolved-ref: "012c8e70021e8aadcaa94e52b87b0469a9846524"
+      url: "https://github.com/ThexXTURBOXx/timetable"
+    source: git
     version: "1.0.0-alpha.15"
   tuple:
     dependency: "direct main"

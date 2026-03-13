@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:io' as io;
 
+import 'package:collection/collection.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
@@ -12,6 +13,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
+import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {
   FilesCubit(this._filesRepo)
@@ -28,14 +30,11 @@ class FilesCubit extends Cubit<FilesState> {
     emit(state.copyWith(state: StudiPassauState.fetching));
 
     try {
-      final courses = await _filesRepo.getCourses(userId);
-      courses.sort((c1, c2) {
-        final comp = c1.title.compareTo(c2.title);
-        if (comp != 0) {
-          return comp;
-        }
-        return c1.number.compareTo(c2.number);
-      });
+      final courses = (await _filesRepo.getCourses(userId)).sorted(
+        compareBy<Course, String>(
+          (c) => c.attributes.title,
+        ).thenByNullable((c) => c.attributes.courseNumber),
+      );
 
       emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
     } on SessionInvalidException {
@@ -53,23 +52,17 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadCourseTopFolder(course.id);
 
-      final folders = topFolder.item1
-        ..sort((c1, c2) {
-          final comp = c1.name.compareTo(c2.name);
-          if (comp != 0) {
-            return comp;
-          }
-          return c1.changeDate.compareTo(c2.changeDate);
-        });
+      final folders = topFolder.item1.sorted(
+        compareBy<Folder, String>(
+          (f) => f.attributes.name,
+        ).thenBy((f) => f.attributes.changeDate),
+      );
 
-      final files = topFolder.item2
-        ..sort((c1, c2) {
-          final comp = c1.changeDate.compareTo(c2.changeDate);
-          if (comp != 0) {
-            return comp;
-          }
-          return c1.name.compareTo(c2.name);
-        });
+      final files = topFolder.item2.sorted(
+        compareBy<FileRef, String>(
+          (f) => f.attributes.name,
+        ).thenBy((f) => f.attributes.changeDate),
+      );
 
       emit(
         state.copyWith(
@@ -94,23 +87,17 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadFolder(folder.id);
 
-      final folders = topFolder.item1
-        ..sort((c1, c2) {
-          final comp = c1.name.compareTo(c2.name);
-          if (comp != 0) {
-            return comp;
-          }
-          return c1.changeDate.compareTo(c2.changeDate);
-        });
+      final folders = topFolder.item1.sorted(
+        compareBy<Folder, String>(
+          (f) => f.attributes.name,
+        ).thenBy((f) => f.attributes.changeDate),
+      );
 
-      final files = topFolder.item2
-        ..sort((c1, c2) {
-          final comp = c1.changeDate.compareTo(c2.changeDate);
-          if (comp != 0) {
-            return comp;
-          }
-          return c1.name.compareTo(c2.name);
-        });
+      final files = topFolder.item2.sorted(
+        compareBy<FileRef, String>(
+          (f) => f.attributes.name,
+        ).thenBy((f) => f.attributes.changeDate),
+      );
 
       emit(
         state.copyWith(
@@ -142,7 +129,7 @@ class FilesCubit extends Cubit<FilesState> {
   }
 
   Future<String> downloadFile(
-    File file, {
+    FileRef file, {
     ProgressListener? onProgress,
     Function? onError,
     void Function(String)? onDone,
@@ -155,7 +142,7 @@ class FilesCubit extends Cubit<FilesState> {
           await getExternalStorageDirectory() ??
               await getApplicationDocumentsDirectory(),
         ];
-    final toFile = io.File('${dirs[0].path}/${file.name}');
+    final toFile = io.File('${dirs[0].path}/${file.attributes.name}');
 
     return _filesRepo.downloadFile(
       toFile,

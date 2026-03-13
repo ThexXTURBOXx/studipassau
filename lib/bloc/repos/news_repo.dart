@@ -1,25 +1,26 @@
 import 'package:collection/collection.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
+import 'package:studipassau/util/jsonapi.dart';
 
 class NewsRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<News>> parseNews() async {
-    final jsonNews = await _studIPProvider.apiGetJson('news?page[limit]=10000');
-    final collection = jsonNews['data'];
+    final results = await Future.wait([
+      _studIPProvider.apiGetJson('news?page[limit]=10000'),
+      _studIPProvider.apiGetJson('studip/news?page[limit]=10000'),
+    ]);
 
-    final jsonStudipNews = await _studIPProvider.apiGetJson(
-      'studip/news?page[limit]=10000',
-    );
-    final collection2 = jsonStudipNews['data'];
+    final allNews = results
+        .expand(
+          (json) => parseCollection<NewsAttributes>(
+            json,
+            (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
+          ),
+        )
+        .toList();
 
-    return ((collection is List
-                ? collection.map(News.fromJson).toList(growable: false)
-                : <News>[]) +
-            (collection2 is List
-                ? collection2.map(News.fromJson).toList(growable: false)
-                : <News>[]))
-        .sortedBy((n) => n.makeDate);
+    return allNews.sortedBy((n) => n.attributes.makeDate).toList();
   }
 }

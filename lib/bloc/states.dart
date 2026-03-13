@@ -74,7 +74,7 @@ class FilesState extends BlocState {
 
   Course? currentCourse;
   final List<Course> courses;
-  final List<File> files;
+  final List<FileRef> files;
   final List<Folder> folders;
   final Queue<Folder> currentFolders;
 
@@ -102,7 +102,7 @@ class FilesState extends BlocState {
     StudiPassauState? state,
     Course? currentCourse,
     List<Course>? courses,
-    List<File>? files,
+    List<FileRef>? files,
     List<Folder>? folders,
     Queue<Folder>? currentFolders,
   }) => FilesState(
