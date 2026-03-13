@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
@@ -59,7 +60,8 @@ class MensaCubit extends Cubit<MensaState> {
       );
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));
-    } catch (e) {
+    } catch (e, s) {
+      Catcher2.reportCheckedError(e, s);
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }
   }

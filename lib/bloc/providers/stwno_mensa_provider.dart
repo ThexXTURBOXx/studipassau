@@ -1,3 +1,4 @@
+import 'package:catcher_2/catcher_2.dart';
 import 'package:http/http.dart' as http;
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/constants.dart';
@@ -36,8 +37,8 @@ class StwnoDataProvider {
       final entries = lines[i].split(';');
       try {
         addToMenu(plan, entries);
-      } catch (ignored) {
-        // Ignore exceptions and just parse next one...
+      } catch (e, s) {
+        Catcher2.reportCheckedError(e, s);
       }
     }
     return plan.entries
@@ -60,6 +61,12 @@ class StwnoDataProvider {
 
   Meal? parseMeal(List<String> entry) {
     if (entry.length != 9) {
+      // Only report entries with at least 2 columns.
+      // The rest are most likely just empty rows...
+      if (entry.length > 1) {
+        Catcher2.reportCheckedError(null, null, extraData: {'entry': entry});
+      }
+
       return null;
     }
 

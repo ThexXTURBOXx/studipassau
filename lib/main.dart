@@ -34,12 +34,14 @@ Future main() async {
 
   await installRootCertificates();
 
-  final debugOptions = Catcher2Options.getDefaultDebugOptions();
+  final debugOptions = Catcher2Options(SilentReportMode(), [
+    ConsoleHandler(enableCustomParameters: true),
+  ]);
   final releaseOptions = Catcher2Options(
     DialogReportMode(),
     [
       SentryHandler(SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn)),
-      ConsoleHandler(),
+      ConsoleHandler(enableCustomParameters: true),
     ],
     localizationOptions: [
       LocalizationOptions.buildDefaultEnglishOptions(),
