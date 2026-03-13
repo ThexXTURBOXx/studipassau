@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pref/pref.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/mensa/mensa.dart';
 import 'package:studipassau/pages/news/news.dart';
@@ -65,36 +64,36 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-    appBar: AppBar(title: Text(S.of(context).settingsTitle)),
+    appBar: AppBar(title: Text(context.i18n.settingsTitle)),
     drawer: const StudiPassauDrawer(DrawerItem.settings),
     body: PrefPage(
       children: [
         PrefPageButton(
           leading: const Icon(Icons.tune),
-          pageTitle: Text(S.of(context).generalPrefCatLongTitle),
-          title: Text(S.of(context).generalPrefCatShortTitle),
-          subtitle: Text(S.of(context).generalPrefCatDesc),
+          pageTitle: Text(context.i18n.generalPrefCatLongTitle),
+          title: Text(context.i18n.generalPrefCatShortTitle),
+          subtitle: Text(context.i18n.generalPrefCatDesc),
           page: PrefPage(
             children: [
-              PrefTitle(title: Text(S.of(context).themePref)),
+              PrefTitle(title: Text(context.i18n.themePref)),
               PrefDialogButton(
-                title: Text(S.of(context).uiThemePrefTitle),
-                subtitle: Text(S.of(context).uiThemePrefDesc),
+                title: Text(context.i18n.uiThemePrefTitle),
+                subtitle: Text(context.i18n.uiThemePrefDesc),
                 dialog: PrefDialog(
-                  title: Text(S.of(context).uiThemePrefTitle),
+                  title: Text(context.i18n.uiThemePrefTitle),
                   children: [
                     PrefRadio(
-                      title: Text(S.of(context).uiThemePrefDefault),
+                      title: Text(context.i18n.uiThemePrefDefault),
                       value: uiThemePrefDefault,
                       pref: uiThemePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).uiThemePrefLight),
+                      title: Text(context.i18n.uiThemePrefLight),
                       value: uiThemePrefLight,
                       pref: uiThemePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).uiThemePrefDark),
+                      title: Text(context.i18n.uiThemePrefDark),
                       value: uiThemePrefDark,
                       pref: uiThemePref,
                     ),
@@ -102,36 +101,36 @@ class SettingsPage extends StatelessWidget {
                 ),
               ),
               /*PrefSwitch(
-                title: Text(S.of(context).material3PrefTitle),
-                subtitle: Text(S.of(context).material3PrefDesc),
+                title: Text(context.i18n.material3PrefTitle),
+                subtitle: Text(context.i18n.material3PrefDesc),
                 pref: material3Pref,
               ),*/
-              PrefTitle(title: Text(S.of(context).othersPref)),
+              PrefTitle(title: Text(context.i18n.othersPref)),
               PrefDropdown(
-                title: Text(S.of(context).startRoutePrefTitle),
-                subtitle: Text(S.of(context).startRoutePrefDesc),
+                title: Text(context.i18n.startRoutePrefTitle),
+                subtitle: Text(context.i18n.startRoutePrefDesc),
                 fullWidth: false,
                 pref: startRoutePref,
                 items: [
                   DropdownMenuItem(
                     value: routeSchedule,
-                    child: Text(S.of(context).schedulePrefCatShortTitle),
+                    child: Text(context.i18n.schedulePrefCatShortTitle),
                   ),
                   DropdownMenuItem(
                     value: routeMensa,
-                    child: Text(S.of(context).mensaPrefCatShortTitle),
+                    child: Text(context.i18n.mensaPrefCatShortTitle),
                   ),
                   DropdownMenuItem(
                     value: routeFiles,
-                    child: Text(S.of(context).filesPrefCatShortTitle),
+                    child: Text(context.i18n.filesPrefCatShortTitle),
                   ),
                   DropdownMenuItem(
                     value: routeRoomFinder,
-                    child: Text(S.of(context).roomFinderPrefCatShortTitle),
+                    child: Text(context.i18n.roomFinderPrefCatShortTitle),
                   ),
                   DropdownMenuItem(
                     value: routeNews,
-                    child: Text(S.of(context).newsPrefCatShortTitle),
+                    child: Text(context.i18n.newsPrefCatShortTitle),
                   ),
                 ],
               ),
@@ -140,37 +139,37 @@ class SettingsPage extends StatelessWidget {
         ),
         PrefPageButton(
           leading: const Icon(Icons.event_note),
-          pageTitle: Text(S.of(context).schedulePrefCatLongTitle),
-          title: Text(S.of(context).schedulePrefCatShortTitle),
-          subtitle: Text(S.of(context).schedulePrefCatDesc),
+          pageTitle: Text(context.i18n.schedulePrefCatLongTitle),
+          title: Text(context.i18n.schedulePrefCatShortTitle),
+          subtitle: Text(context.i18n.schedulePrefCatDesc),
           page: PrefPage(
             children: [
-              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefTitle(title: Text(context.i18n.syncPref)),
               PrefSwitch(
-                title: Text(S.of(context).autoSyncPrefTitle),
-                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                title: Text(context.i18n.autoSyncPrefTitle),
+                subtitle: Text(context.i18n.autoSyncPrefDesc),
                 pref: scheduleAutoSyncPref,
               ),
-              PrefTitle(title: Text(S.of(context).colorsPref)),
+              PrefTitle(title: Text(context.i18n.colorsPref)),
               PrefColor(
-                title: Text(S.of(context).nonRegularColorPrefTitle),
-                subtitle: Text(S.of(context).nonRegularColorPrefDesc),
+                title: Text(context.i18n.nonRegularColorPrefTitle),
+                subtitle: Text(context.i18n.nonRegularColorPrefDesc),
                 pref: nonRegularColorPref,
               ),
               PrefColor(
-                title: Text(S.of(context).lectureNotFoundColorPrefTitle),
-                subtitle: Text(S.of(context).lectureNotFoundColorPrefDesc),
+                title: Text(context.i18n.lectureNotFoundColorPrefTitle),
+                subtitle: Text(context.i18n.lectureNotFoundColorPrefDesc),
                 pref: notFoundColorPref,
               ),
               PrefColor(
-                title: Text(S.of(context).lectureCanceledColorPrefTitle),
-                subtitle: Text(S.of(context).lectureCanceledColorPrefDesc),
+                title: Text(context.i18n.lectureCanceledColorPrefTitle),
+                subtitle: Text(context.i18n.lectureCanceledColorPrefDesc),
                 pref: canceledColorPref,
               ),
-              PrefTitle(title: Text(S.of(context).categoriesPref)),
+              PrefTitle(title: Text(context.i18n.categoriesPref)),
               PrefSwitch(
-                title: Text(S.of(context).showScheduleOnlyPrefTitle),
-                subtitle: Text(S.of(context).showScheduleOnlyPrefDesc),
+                title: Text(context.i18n.showScheduleOnlyPrefTitle),
+                subtitle: Text(context.i18n.showScheduleOnlyPrefDesc),
                 pref: showScheduleOnlyPref,
               ),
             ],
@@ -178,85 +177,85 @@ class SettingsPage extends StatelessWidget {
         ),
         PrefPageButton(
           leading: const Icon(Icons.restaurant),
-          pageTitle: Text(S.of(context).mensaPrefCatLongTitle),
-          title: Text(S.of(context).mensaPrefCatShortTitle),
-          subtitle: Text(S.of(context).mensaPrefCatDesc),
+          pageTitle: Text(context.i18n.mensaPrefCatLongTitle),
+          title: Text(context.i18n.mensaPrefCatShortTitle),
+          subtitle: Text(context.i18n.mensaPrefCatDesc),
           page: PrefPage(
             children: [
-              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefTitle(title: Text(context.i18n.syncPref)),
               PrefSwitch(
-                title: Text(S.of(context).autoSyncPrefTitle),
-                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                title: Text(context.i18n.autoSyncPrefTitle),
+                subtitle: Text(context.i18n.autoSyncPrefDesc),
                 pref: mensaAutoSyncPref,
               ),
               PrefDialogButton(
-                title: Text(S.of(context).mensaSourcePrefTitle),
-                subtitle: Text(S.of(context).mensaSourcePrefDesc),
+                title: Text(context.i18n.mensaSourcePrefTitle),
+                subtitle: Text(context.i18n.mensaSourcePrefDesc),
                 dialog: PrefDialog(
-                  title: Text(S.of(context).mensaSourcePrefTitle),
+                  title: Text(context.i18n.mensaSourcePrefTitle),
                   children: [
                     PrefRadio(
-                      title: Text(S.of(context).mensaSourcePrefStwno),
+                      title: Text(context.i18n.mensaSourcePrefStwno),
                       value: mensaSourcePrefStwno,
                       pref: mensaSourcePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).mensaSourcePrefOM),
+                      title: Text(context.i18n.mensaSourcePrefOM),
                       value: mensaSourcePrefOM,
                       pref: mensaSourcePref,
                     ),
                   ],
                 ),
               ),
-              PrefTitle(title: Text(S.of(context).miscPref)),
+              PrefTitle(title: Text(context.i18n.miscPref)),
               PrefDialogButton(
-                title: Text(S.of(context).mensaTypePrefTitle),
-                subtitle: Text(S.of(context).mensaTypePrefDesc),
+                title: Text(context.i18n.mensaTypePrefTitle),
+                subtitle: Text(context.i18n.mensaTypePrefDesc),
                 dialog: PrefDialog(
-                  title: Text(S.of(context).mensaTypePrefTitle),
+                  title: Text(context.i18n.mensaTypePrefTitle),
                   children: [
                     PrefRadio(
-                      title: Text(S.of(context).mensaTypePrefStudent),
+                      title: Text(context.i18n.mensaTypePrefStudent),
                       value: mensaTypePrefStudent,
                       pref: mensaTypePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).mensaTypePrefEmployee),
+                      title: Text(context.i18n.mensaTypePrefEmployee),
                       value: mensaTypePrefEmployee,
                       pref: mensaTypePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).mensaTypePrefGuest),
+                      title: Text(context.i18n.mensaTypePrefGuest),
                       value: mensaTypePrefGuest,
                       pref: mensaTypePref,
                     ),
                     PrefRadio(
-                      title: Text(S.of(context).mensaTypePrefPupil),
+                      title: Text(context.i18n.mensaTypePrefPupil),
                       value: mensaTypePrefPupil,
                       pref: mensaTypePref,
                     ),
                   ],
                 ),
               ),
-              PrefTitle(title: Text(S.of(context).colorsPref)),
+              PrefTitle(title: Text(context.i18n.colorsPref)),
               PrefColor(
-                title: Text(S.of(context).soupColorPrefTitle),
-                subtitle: Text(S.of(context).soupColorPrefDesc),
+                title: Text(context.i18n.soupColorPrefTitle),
+                subtitle: Text(context.i18n.soupColorPrefDesc),
                 pref: soupColorPref,
               ),
               PrefColor(
-                title: Text(S.of(context).mainDishColorPrefTitle),
-                subtitle: Text(S.of(context).mainDishColorPrefDesc),
+                title: Text(context.i18n.mainDishColorPrefTitle),
+                subtitle: Text(context.i18n.mainDishColorPrefDesc),
                 pref: mainDishColorPref,
               ),
               PrefColor(
-                title: Text(S.of(context).garnishColorPrefTitle),
-                subtitle: Text(S.of(context).garnishColorPrefDesc),
+                title: Text(context.i18n.garnishColorPrefTitle),
+                subtitle: Text(context.i18n.garnishColorPrefDesc),
                 pref: garnishColorPref,
               ),
               PrefColor(
-                title: Text(S.of(context).dessertColorPrefTitle),
-                subtitle: Text(S.of(context).dessertColorPrefDesc),
+                title: Text(context.i18n.dessertColorPrefTitle),
+                subtitle: Text(context.i18n.dessertColorPrefDesc),
                 pref: dessertColorPref,
               ),
             ],
@@ -264,15 +263,15 @@ class SettingsPage extends StatelessWidget {
         ),
         PrefPageButton(
           leading: const Icon(Icons.newspaper),
-          pageTitle: Text(S.of(context).newsPrefCatLongTitle),
-          title: Text(S.of(context).newsPrefCatShortTitle),
-          subtitle: Text(S.of(context).newsPrefCatDesc),
+          pageTitle: Text(context.i18n.newsPrefCatLongTitle),
+          title: Text(context.i18n.newsPrefCatShortTitle),
+          subtitle: Text(context.i18n.newsPrefCatDesc),
           page: PrefPage(
             children: [
-              PrefTitle(title: Text(S.of(context).syncPref)),
+              PrefTitle(title: Text(context.i18n.syncPref)),
               PrefSwitch(
-                title: Text(S.of(context).autoSyncPrefTitle),
-                subtitle: Text(S.of(context).autoSyncPrefDesc),
+                title: Text(context.i18n.autoSyncPrefTitle),
+                subtitle: Text(context.i18n.autoSyncPrefDesc),
                 pref: newsAutoSyncPref,
               ),
             ],

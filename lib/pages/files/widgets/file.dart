@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/util/json.dart';
 import 'package:studipassau/util/jsonapi.dart';
 
@@ -67,7 +66,7 @@ class FileWidget extends StatelessWidget {
           : null,
       onTap: onTap,
       onLongPress: () async {
-        final s = S.of(context);
+        final s = context.i18n;
         await showDialog<void>(
           context: context,
           builder: (context) => AlertDialog(

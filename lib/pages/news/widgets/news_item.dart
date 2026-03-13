@@ -5,7 +5,6 @@ import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/util/json.dart';
 import 'package:studipassau/util/jsonapi.dart';
 
@@ -27,10 +26,10 @@ class NewsWidget extends StatelessWidget {
 
   String subtitle(BuildContext context) =>
       (news.isCourseNews
-          ? '${S.of(context).course}: ${courseTitleGetter(news.courseId) ?? S.of(context).loading}\n'
+          ? '${context.i18n.course}: ${courseTitleGetter(news.courseId) ?? context.i18n.loading}\n'
           : '') +
       (news.attributes.edited
-          ? '${formatDateTime(makeDate)} (${S.of(context).edited}: '
+          ? '${formatDateTime(makeDate)} (${context.i18n.edited}: '
                 '${formatDateTime(changeDate)})'
           : formatDateTime(makeDate));
 

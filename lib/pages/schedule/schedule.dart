@@ -10,7 +10,6 @@ import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -98,11 +97,11 @@ class _SchedulePagePageState extends State<SchedulePage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text(S.of(context).scheduleTitle),
+      title: Text(context.i18n.scheduleTitle),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.refresh),
-          tooltip: S.of(context).refresh,
+          tooltip: context.i18n.refresh,
           onPressed: () async {
             await _refreshIndicatorKey.currentState?.show();
           },
@@ -117,10 +116,8 @@ class _SchedulePagePageState extends State<SchedulePage>
               listener: showErrorMessage,
               builder: (context, stateS) => RefreshIndicator(
                 key: _refreshIndicatorKey,
-                onRefresh: () async => refresh(
-                  context,
-                  stateL.userId ?? S.of(context).notLoggedIn,
-                ),
+                onRefresh: () async =>
+                    refresh(context, stateL.userId ?? context.i18n.notLoggedIn),
                 child: TimetableTheme(
                   data: TimetableThemeData(
                     context,
@@ -220,7 +217,7 @@ class _SchedulePagePageState extends State<SchedulePage>
   }
 
   Future<void> onTap(BuildContext ctx, StudiPassauEvent event) async {
-    final s = S.of(ctx);
+    final s = ctx.i18n;
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(
@@ -234,10 +231,10 @@ class _SchedulePagePageState extends State<SchedulePage>
           '${formatLine(s.canceled, event.canceled ? s.yes : null)}',
         ),
         backgroundColor: event.backgroundColor,
-        titleTextStyle: Theme.of(context).textTheme.titleLarge!.copyWith(
+        titleTextStyle: context.theme.textTheme.titleLarge!.copyWith(
           color: event.backgroundColor.highEmphasisOnColor,
         ),
-        contentTextStyle: Theme.of(context).textTheme.titleMedium!.copyWith(
+        contentTextStyle: context.theme.textTheme.titleMedium!.copyWith(
           color: event.backgroundColor.highEmphasisOnColor,
         ),
       ),

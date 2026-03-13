@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/widgets/retry_button.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/util/navigation.dart';
@@ -36,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     },
     child: Scaffold(
-      appBar: AppBar(title: Text(S.of(context).loginTitle)),
+      appBar: AppBar(title: Text(context.i18n.loginTitle)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +51,7 @@ class _LoginPageState extends State<LoginPage> {
     switch (state.state) {
       case StudiPassauState.notAuthenticated:
         return Text(
-          S.of(context).loginNotAuthenticated,
+          context.i18n.loginNotAuthenticated,
           textAlign: TextAlign.center,
         );
       case StudiPassauState.httpError:
@@ -60,18 +59,18 @@ class _LoginPageState extends State<LoginPage> {
       case StudiPassauState.loading:
         return state.userData == null
             ? RetryScreen.withButton(
-                text: S.of(context).httpError,
+                text: context.i18n.httpError,
                 button: retryButton(context),
               )
             : const Center(child: CircularProgressIndicator());
       case StudiPassauState.authenticating:
         return Text(
-          S.of(context).loginAuthenticating,
+          context.i18n.loginAuthenticating,
           textAlign: TextAlign.center,
         );
       default:
         return RetryScreen.withButton(
-          text: S.of(context).loginError,
+          text: context.i18n.loginError,
           button: retryButton(context),
         );
     }
@@ -80,11 +79,11 @@ class _LoginPageState extends State<LoginPage> {
   Widget retryButton(BuildContext context) => Column(
     children: [
       RetryButton(
-        buttonText: S.of(context).loginTryAgain.toUpperCase(),
+        buttonText: context.i18n.loginTryAgain.toUpperCase(),
         buttonAction: (context) async => login(context),
       ),
       RetryButton(
-        buttonText: S.of(context).continueWithoutLogin.toUpperCase(),
+        buttonText: context.i18n.continueWithoutLogin.toUpperCase(),
         buttonAction: (context) async => navigateTo(context, targetRoute),
       ),
     ],

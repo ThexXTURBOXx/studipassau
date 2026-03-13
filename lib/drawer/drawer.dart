@@ -7,7 +7,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/pages/about/about.dart';
 import 'package:studipassau/pages/files/files.dart';
@@ -40,9 +39,9 @@ class StudiPassauDrawer extends StatelessWidget {
           children: [
             UserAccountsDrawerHeader(
               accountName: Text(
-                state.formattedName ?? S.of(context).notLoggedIn,
+                state.formattedName ?? context.i18n.notLoggedIn,
               ),
-              accountEmail: Text(state.username ?? S.of(context).notLoggedIn),
+              accountEmail: Text(state.username ?? context.i18n.notLoggedIn),
               decoration: const BoxDecoration(
                 color: iconBgColor,
                 image: DecorationImage(
@@ -130,33 +129,33 @@ enum DrawerItem {
   String title(BuildContext context) {
     switch (this) {
       case DrawerItem.schedule:
-        return S.of(context).drawerSchedule;
+        return context.i18n.drawerSchedule;
       case DrawerItem.mensaPlan:
-        return S.of(context).drawerMensaPlan;
+        return context.i18n.drawerMensaPlan;
       case DrawerItem.files:
-        return S.of(context).drawerFiles;
+        return context.i18n.drawerFiles;
       case DrawerItem.roomFinder:
-        return S.of(context).drawerRoomFinder;
+        return context.i18n.drawerRoomFinder;
       case DrawerItem.news:
-        return S.of(context).drawerNews;
+        return context.i18n.drawerNews;
       case DrawerItem.misc:
-        return S.of(context).drawerMisc;
+        return context.i18n.drawerMisc;
       case DrawerItem.browser:
-        return S.of(context).drawerOpenInBrowser;
+        return context.i18n.drawerOpenInBrowser;
       case DrawerItem.settings:
-        return S.of(context).drawerSettings;
+        return context.i18n.drawerSettings;
       case DrawerItem.bugReport:
-        return S.of(context).drawerBugs;
+        return context.i18n.drawerBugs;
       case DrawerItem.share:
-        return S.of(context).drawerShare;
+        return context.i18n.drawerShare;
       case DrawerItem.about:
-        return S.of(context).drawerAbout;
+        return context.i18n.drawerAbout;
       case DrawerItem.tools:
-        return S.of(context).drawerTools;
+        return context.i18n.drawerTools;
       case DrawerItem.campusPortal:
-        return S.of(context).drawerCampusPortal;
+        return context.i18n.drawerCampusPortal;
       case DrawerItem.telegramBot:
-        return S.of(context).drawerTelegramBot;
+        return context.i18n.drawerTelegramBot;
       default:
         return '';
     }
@@ -181,8 +180,8 @@ enum DrawerItem {
           closeDrawer(context);
           await SharePlus.instance.share(
             ShareParams(
-              text: S.of(context).shareBody,
-              subject: S.of(context).shareSubject,
+              text: context.i18n.shareBody,
+              subject: context.i18n.shareSubject,
             ),
           );
         };
@@ -197,19 +196,19 @@ enum DrawerItem {
           await showDialog<void>(
             context: context,
             builder: (context) => AlertDialog(
-              title: Text(S.of(context).telegramBotTitle),
-              content: Text(S.of(context).telegramBotBody),
+              title: Text(context.i18n.telegramBotTitle),
+              content: Text(context.i18n.telegramBotBody),
               actions: <Widget>[
                 TextButton(
                   onPressed: () => Navigator.pop(context, 'Cancel'),
-                  child: Text(S.of(context).cancel),
+                  child: Text(context.i18n.cancel),
                 ),
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, 'Okay');
                     launchUrl(telegramBotUrl);
                   },
-                  child: Text(S.of(context).okay),
+                  child: Text(context.i18n.okay),
                 ),
               ],
             ),
@@ -219,9 +218,9 @@ enum DrawerItem {
         return route == null
             ? (context, state) async {
                 closeDrawer(context);
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(S.of(context).wip)));
+                context.scaffoldMessenger.showSnackBar(
+                  SnackBar(content: Text(context.i18n.wip)),
+                );
               }
             : (context, state) async => navigateTo(context, route);
     }

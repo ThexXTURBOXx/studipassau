@@ -120,7 +120,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
   @override
   Widget build(BuildContext context) => StudiPassauBlocProvider(
     child: MaterialApp(
-      onGenerateTitle: (context) => S.of(context).applicationTitle,
+      onGenerateTitle: (context) => context.i18n.applicationTitle,
       debugShowCheckedModeBanner: false,
       themeMode: getThemeMode(),
       theme: ThemeData(

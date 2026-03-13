@@ -1,3 +1,4 @@
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/foundation.dart';
@@ -51,11 +52,11 @@ class _MensaPagePageState extends State<MensaPage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text(S.of(context).mensaPlanTitle),
+      title: Text(context.i18n.mensaPlanTitle),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.refresh),
-          tooltip: S.of(context).refresh,
+          tooltip: context.i18n.refresh,
           onPressed: () async =>
               await _refreshIndicatorKey.currentState?.show(),
         ),
@@ -65,13 +66,13 @@ class _MensaPagePageState extends State<MensaPage>
     body: BlocConsumer<MensaCubit, MensaState>(
       listener: (context, state) {
         if (state.state == StudiPassauState.fetchError) {
-          showSnackBar(context, S.of(context).mensaError);
+          showSnackBar(context, context.i18n.mensaError);
         } else {
           showErrorMessage(context, state);
         }
       },
       builder: (context, state) {
-        isWideScreen = MediaQuery.of(context).size.width > wideScreenWidth;
+        isWideScreen = context.mediaQuery.size.width > wideScreenWidth;
         return RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: () async => refresh(context),
@@ -144,7 +145,7 @@ class _MensaPagePageState extends State<MensaPage>
   }
 
   Future<void> onTap(Meal m) async {
-    final s = S.of(context);
+    final s = context.i18n;
     await showDialog<void>(
       context: context,
       builder: (context) => AlertDialog(

@@ -1,9 +1,9 @@
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:pref/pref.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
 class PrefColor extends StatelessWidget {
@@ -64,7 +64,7 @@ class PrefColor extends StatelessWidget {
     final result = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(S.of(context).colorPickerTitle),
+        title: Text(context.i18n.colorPickerTitle),
         content: SingleChildScrollView(
           child: ColorPicker(
             enableAlpha: enableAlpha,
@@ -74,9 +74,9 @@ class PrefColor extends StatelessWidget {
         ),
         actions: <Widget>[
           ElevatedButton(
-            child: Text(S.of(context).okay),
+            child: Text(context.i18n.okay),
             onPressed: () {
-              Navigator.of(context).pop(true);
+              context.navigator.pop(true);
             },
           ),
         ],

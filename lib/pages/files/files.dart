@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
@@ -52,11 +52,11 @@ class _FilesPagePageState extends State<FilesPage>
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text(S.of(context).filesTitle),
+      title: Text(context.i18n.filesTitle),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.refresh),
-          tooltip: S.of(context).refresh,
+          tooltip: context.i18n.refresh,
           onPressed: () async =>
               await _refreshIndicatorKey.currentState?.show(),
         ),
@@ -69,8 +69,7 @@ class _FilesPagePageState extends State<FilesPage>
           : BlocConsumer<FilesCubit, FilesState>(
               listener: showErrorMessage,
               builder: (context, state) {
-                isWideScreen =
-                    MediaQuery.of(context).size.width > wideScreenWidth;
+                isWideScreen = context.mediaQuery.size.width > wideScreenWidth;
                 return PopScope(
                   canPop: false,
                   onPopInvokedWithResult: (didPop, _) async {
@@ -139,15 +138,15 @@ class _FilesPagePageState extends State<FilesPage>
                                       (f) => FileWidget(
                                         file: f,
                                         onTap: () async {
-                                          final theme = Theme.of(context);
                                           final pd = ProgressDialog(
                                             context: context,
                                           );
                                           unawaited(
                                             pd.show(
-                                              msg: S.of(context).downloading,
+                                              msg: context.i18n.downloading,
                                               backgroundColor:
-                                                  theme
+                                                  context
+                                                      .theme
                                                       .dialogTheme
                                                       .backgroundColor ??
                                                   Colors.white,

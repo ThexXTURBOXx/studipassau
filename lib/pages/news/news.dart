@@ -7,7 +7,6 @@ import 'package:studipassau/bloc/cubits/news_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -45,11 +44,11 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text(S.of(context).newsTitle),
+      title: Text(context.i18n.newsTitle),
       actions: <Widget>[
         IconButton(
           icon: const Icon(Icons.refresh),
-          tooltip: S.of(context).refresh,
+          tooltip: context.i18n.refresh,
           onPressed: () async =>
               await _refreshIndicatorKey.currentState?.show(),
         ),

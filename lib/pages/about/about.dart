@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/icons/studi_passau_icons.dart';
 import 'package:studipassau/util/navigation.dart';
 
@@ -12,26 +11,24 @@ Future<void> showStudiPassauAbout(
 ) async {
   showAboutDialog(
     context: context,
-    applicationName: S.of(context).applicationTitle,
+    applicationName: context.i18n.applicationTitle,
     applicationVersion: appVersion,
-    applicationLegalese: sprintf(S.of(context).copyright, [
-      DateTime.now().year,
-    ]),
+    applicationLegalese: sprintf(context.i18n.copyright, [DateTime.now().year]),
     applicationIcon: const CircleAvatar(
       foregroundImage: AssetImage('assets/icons/studipassau_icon_with_bg.png'),
     ),
     children: [
       const SizedBox(height: 20),
       Text(
-        sprintf(S.of(context).aboutText, [
-          state.formattedName ?? S.of(context).stranger,
+        sprintf(context.i18n.aboutText, [
+          state.formattedName ?? context.i18n.stranger,
         ]),
         textAlign: TextAlign.justify,
       ),
       const SizedBox(height: 20),
       ElevatedButton.icon(
         icon: const Icon(Icons.mail_outline),
-        label: Text(S.of(context).email),
+        label: Text(context.i18n.email),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
@@ -41,7 +38,7 @@ Future<void> showStudiPassauAbout(
       ),
       ElevatedButton.icon(
         icon: const Icon(Icons.translate),
-        label: Text(S.of(context).translation),
+        label: Text(context.i18n.translation),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
@@ -51,7 +48,7 @@ Future<void> showStudiPassauAbout(
       ),
       ElevatedButton.icon(
         icon: const Icon(StudiPassauIcons.github),
-        label: Text(S.of(context).viewSource),
+        label: Text(context.i18n.viewSource),
         style: ButtonStyle(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),

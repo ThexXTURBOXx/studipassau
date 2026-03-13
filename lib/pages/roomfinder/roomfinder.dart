@@ -7,7 +7,6 @@ import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
 import 'package:studipassau/util/geo.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -33,13 +32,12 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
     );
   }
 
-  //print(ModalRoute.of(context)!.settings.arguments);
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: EasySearchBar2<Building>(
-      title: Text(S.of(context).roomFinderTitle),
+      title: Text(context.i18n.roomFinderTitle),
       onSearch: (value) {},
-      searchHintText: S.of(context).searchBuildings,
+      searchHintText: context.i18n.searchBuildings,
       asyncSuggestions: (searchValue) async => searchBuildings(searchValue),
       suggestionToString: (value) => '${value.name} (${value.abbrev})',
       onSuggestionTap: (value) =>
@@ -64,12 +62,10 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
-                        formatEntry(S.of(context).address, building.address),
-                      ),
+                      Text(formatEntry(context.i18n.address, building.address)),
                       ElevatedButton.icon(
                         icon: const Icon(Icons.map),
-                        label: Text(S.of(context).openInMaps),
+                        label: Text(context.i18n.openInMaps),
                         style: ButtonStyle(
                           minimumSize: WidgetStateProperty.all(
                             const Size.fromHeight(35),

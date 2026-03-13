@@ -1,3 +1,4 @@
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -8,7 +9,7 @@ import '../pages/schedule/schedule.dart';
 
 void navigateTo(BuildContext context, String? name, {Object? arguments}) {
   if (name != null) {
-    final r = ModalRoute.of(context);
+    final r = context.getModalRoute();
     if (r == null || r.settings.name != name) {
       Future.delayed(Duration.zero, () async {
         if (!context.mounted) {
@@ -35,7 +36,7 @@ Future<void> launchUrl(
         message: "Can't launch URL $url",
       );
 
-void closeDrawer(BuildContext context) => Scaffold.of(context).openEndDrawer();
+void closeDrawer(BuildContext context) => context.scaffold.openEndDrawer();
 
 bool routeRequiresAuth(String route) {
   return route == routeSchedule || route == routeFiles || route == routeNews;

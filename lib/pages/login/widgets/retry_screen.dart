@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/login/widgets/retry_button.dart';
 import 'package:studipassau/util/navigation.dart';
@@ -48,8 +47,8 @@ class CenteredRetryScreen extends RetryScreen {
     required String route,
   }) : this(
          key: key,
-         text: S.of(context).loginRequired,
-         buttonText: S.of(context).login.toUpperCase(),
+         text: context.i18n.loginRequired,
+         buttonText: context.i18n.login.toUpperCase(),
          buttonAction: (context) {
            targetRoute = route;
            navigateTo(context, routeLogin);

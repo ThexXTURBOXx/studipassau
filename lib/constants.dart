@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -197,23 +198,27 @@ extension ColorValue on Color {
       _floatToInt8(b) << 0;
 }
 
+extension MoreContext on BuildContext {
+  S get i18n => S.of(this);
+}
+
 void showErrorMessage(BuildContext context, BlocState state) {
   if (state.errored) {
     switch (state.state) {
       case StudiPassauState.authenticationError:
-        showSnackBar(context, S.of(context).authError);
+        showSnackBar(context, context.i18n.authError);
       case StudiPassauState.fetchError:
-        showSnackBar(context, S.of(context).fetchError);
+        showSnackBar(context, context.i18n.fetchError);
       case StudiPassauState.httpError:
-        showSnackBar(context, S.of(context).httpError);
+        showSnackBar(context, context.i18n.httpError);
       default:
-        showSnackBar(context, S.of(context).miscError);
+        showSnackBar(context, context.i18n.miscError);
     }
   }
 }
 
 void showSnackBar(BuildContext context, String msg) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(msg)));
+  context.scaffoldMessenger.showSnackBar(SnackBar(content: Text(msg)));
 }
 
 Future<void> installRootCertificates() async {
