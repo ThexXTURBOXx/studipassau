@@ -5,6 +5,7 @@ const userDataKey = 'user_dataV2';
 const scheduleKey = 'scheduleV2';
 const mensaPlanKey = 'mensa_planV2';
 const newsKey = 'newsV2';
+const courseNewsKey = 'course_newsV2';
 
 class StorageRepo {
   final _sharedStorageProvider = SharedStorageDataProvider();

@@ -8,6 +8,7 @@ import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/news.dart';
 import 'package:supercharged/supercharged.dart';
 
@@ -38,6 +39,22 @@ class NewsCubit extends Cubit<NewsState> {
         ),
       );
     }
+
+    final courseNewsCache = _storageRepo.getStringList(courseNewsKey);
+    if (courseNewsCache != null) {
+      emit(
+        state.copyWith(
+          courses: courseNewsCache
+              .map(
+                (e) => Course.fromJson(
+                  jsonDecode(e) as Map<String, dynamic>,
+                  (a) => CourseAttributes.fromJson(a as Map<String, dynamic>),
+                ),
+              )
+              .toList(growable: false),
+        ),
+      );
+    }
   }
 
   Future<void> fetchNews({required bool onlineSync}) async {
@@ -59,13 +76,13 @@ class NewsCubit extends Cubit<NewsState> {
 
     try {
       final news = await _newsRepo.parseNews();
+      emit(state.copyWith(state: StudiPassauState.fetched, news: news));
       await _storageRepo.writeStringList(
         key: newsKey,
         value: news
             .map((n) => jsonEncode(n.toJson((a) => a.toJson())))
             .toList(growable: false),
       );
-      emit(state.copyWith(state: StudiPassauState.fetched, news: news));
 
       final courses = await Future.wait(
         news
@@ -74,7 +91,13 @@ class NewsCubit extends Cubit<NewsState> {
             .nonNulls
             .map((id) => _coursesRepo.getCourse(id)),
       );
-      emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
+      emit(state.copyWith(courses: courses));
+      await _storageRepo.writeStringList(
+        key: courseNewsKey,
+        value: courses
+            .map((n) => jsonEncode(n.toJson((a) => a.toJson())))
+            .toList(growable: false),
+      );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on SocketException {
