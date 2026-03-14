@@ -17,25 +17,19 @@ class ScheduleCubit extends Cubit<ScheduleState> {
 
   final ScheduleRepo _scheduleRepo;
 
-  Future<void> loadSchedule() async {
-    final scheduleCache = _storageRepo.getStringList(scheduleKey);
-    if (scheduleCache != null) {
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          schedule: scheduleCache
-              .map((e) => StudiPassauEvent.fromJson(jsonDecode(e)))
-              .toList(growable: false),
-        ),
-      );
-    }
-  }
+  Future<List<StudiPassauEvent>?> _loadCachedSchedule() async => _storageRepo
+      .getStringList(scheduleKey)
+      ?.map((e) => StudiPassauEvent.fromJson(jsonDecode(e)))
+      .toList(growable: false);
 
   Future<void> fetchSchedule(String userId, {required bool onlineSync}) async {
+    emit(state.copyWith(state: StudiPassauState.loading));
     if (state.schedule == null) {
       try {
-        emit(state.copyWith(state: StudiPassauState.loading));
-        await loadSchedule();
+        final schedule = await _loadCachedSchedule();
+        if (schedule != null) {
+          emit(state.copyWith(schedule: schedule));
+        }
       } catch (e, s) {
         Catcher2.reportCheckedError(e, s);
       }
@@ -47,14 +41,13 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));
-
     try {
       final schedule = await _scheduleRepo.parseSchedule(userId);
+      emit(state.copyWith(state: StudiPassauState.fetched, schedule: schedule));
       await _storageRepo.writeStringList(
         key: scheduleKey,
         value: schedule.map(jsonEncode).toList(growable: false),
       );
-      emit(state.copyWith(state: StudiPassauState.fetched, schedule: schedule));
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on SocketException {

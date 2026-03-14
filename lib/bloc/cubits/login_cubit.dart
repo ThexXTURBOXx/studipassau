@@ -9,9 +9,9 @@ import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/env/env.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/user.dart';
 import 'package:studipassau/util/images.dart';
-import 'package:studipassau/models/jsonapi.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._storageRepo)
@@ -19,24 +19,23 @@ class LoginCubit extends Cubit<LoginState> {
 
   final StorageRepo _storageRepo;
 
-  Future<void> loadUserData() async {
+  Future<User?> _loadCachedMe() async {
     final cfgJson = _storageRepo.getString(userDataKey);
-    if (cfgJson != null) {
-      emit(
-        state.copyWith(
-          me: User.fromJson(
+    return cfgJson == null
+        ? null
+        : User.fromJson(
             jsonDecode(cfgJson) as Map<String, dynamic>,
             (a) => UserAttributes.fromJson(a as Map<String, dynamic>),
-          ),
-        ),
-      );
-    }
+          );
   }
 
   Future<void> authenticate() async {
     emit(state.copyWith(state: StudiPassauState.loading));
     try {
-      await loadUserData();
+      final me = await _loadCachedMe();
+      if (me != null) {
+        emit(state.copyWith(me: me));
+      }
     } catch (e, s) {
       Catcher2.reportCheckedError(e, s);
     }

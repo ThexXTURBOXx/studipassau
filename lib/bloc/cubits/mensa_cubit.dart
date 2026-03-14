@@ -18,27 +18,19 @@ class MensaCubit extends Cubit<MensaState> {
 
   final MensaRepo _mensaRepo;
 
-  Future<void> loadMensaPlan() async {
-    final mensaCache = _storageRepo.getStringList(mensaPlanKey);
-    if (mensaCache != null) {
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          mensaPlan: mensaCache
-              .map(
-                (e) => DayMenu.fromJson(jsonDecode(e) as Map<String, dynamic>),
-              )
-              .toList(growable: false),
-        ),
-      );
-    }
-  }
+  Future<List<DayMenu>?> _loadCachedMensaPlan() async => _storageRepo
+      .getStringList(mensaPlanKey)
+      ?.map((e) => DayMenu.fromJson(jsonDecode(e) as Map<String, dynamic>))
+      .toList(growable: false);
 
   Future<void> fetchMensaPlan({required bool onlineSync}) async {
+    emit(state.copyWith(state: StudiPassauState.loading));
     if (state.mensaPlan == null) {
       try {
-        emit(state.copyWith(state: StudiPassauState.loading));
-        await loadMensaPlan();
+        final mensaPlan = await _loadCachedMensaPlan();
+        if (mensaPlan != null) {
+          emit(state.copyWith(mensaPlan: mensaPlan));
+        }
       } catch (e, s) {
         Catcher2.reportCheckedError(e, s);
       }
@@ -50,17 +42,16 @@ class MensaCubit extends Cubit<MensaState> {
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));
-
     try {
       final mensaPlan = getPref(mensaSourcePref) == mensaSourcePrefOM
           ? await _mensaRepo.getOpenMensaMeals(openMensaMensaId)
           : await _mensaRepo.getStwnoMeals(stwnoMensaId);
+      emit(
+        state.copyWith(state: StudiPassauState.fetched, mensaPlan: mensaPlan),
+      );
       await _storageRepo.writeStringList(
         key: mensaPlanKey,
         value: mensaPlan.map(jsonEncode).toList(growable: false),
-      );
-      emit(
-        state.copyWith(state: StudiPassauState.fetched, mensaPlan: mensaPlan),
       );
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));

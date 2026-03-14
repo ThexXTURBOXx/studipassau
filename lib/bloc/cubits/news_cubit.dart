@@ -22,46 +22,44 @@ class NewsCubit extends Cubit<NewsState> {
 
   final CoursesRepo _coursesRepo;
 
-  Future<void> loadNews() async {
-    final newsCache = _storageRepo.getStringList(newsKey);
-    if (newsCache != null) {
-      emit(
-        state.copyWith(
-          state: StudiPassauState.fetched,
-          news: newsCache
-              .map(
-                (e) => News.fromJson(
-                  jsonDecode(e) as Map<String, dynamic>,
-                  (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
-                ),
-              )
-              .toList(growable: false),
+  Future<List<News>?> _loadCachedNews() async => _storageRepo
+      .getStringList(newsKey)
+      ?.map(
+        (e) => News.fromJson(
+          jsonDecode(e) as Map<String, dynamic>,
+          (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
         ),
-      );
-    }
+      )
+      .toList(growable: false);
 
-    final courseNewsCache = _storageRepo.getStringList(courseNewsKey);
-    if (courseNewsCache != null) {
-      emit(
-        state.copyWith(
-          courses: courseNewsCache
-              .map(
-                (e) => Course.fromJson(
-                  jsonDecode(e) as Map<String, dynamic>,
-                  (a) => CourseAttributes.fromJson(a as Map<String, dynamic>),
-                ),
-              )
-              .toList(growable: false),
+  Future<List<Course>?> _loadCachedCourses() async => _storageRepo
+      .getStringList(courseNewsKey)
+      ?.map(
+        (e) => Course.fromJson(
+          jsonDecode(e) as Map<String, dynamic>,
+          (a) => CourseAttributes.fromJson(a as Map<String, dynamic>),
         ),
-      );
-    }
-  }
+      )
+      .toList(growable: false);
 
   Future<void> fetchNews({required bool onlineSync}) async {
+    emit(state.copyWith(state: StudiPassauState.loading));
     if (state.news == null) {
       try {
-        emit(state.copyWith(state: StudiPassauState.loading));
-        await loadNews();
+        final news = await _loadCachedNews();
+        if (news != null) {
+          emit(state.copyWith(news: news));
+        }
+      } catch (e, s) {
+        Catcher2.reportCheckedError(e, s);
+      }
+    }
+    if (state.courses == null) {
+      try {
+        final courses = await _loadCachedCourses();
+        if (courses != null) {
+          emit(state.copyWith(courses: courses));
+        }
       } catch (e, s) {
         Catcher2.reportCheckedError(e, s);
       }
@@ -73,7 +71,6 @@ class NewsCubit extends Cubit<NewsState> {
     }
 
     emit(state.copyWith(state: StudiPassauState.fetching));
-
     try {
       final news = await _newsRepo.parseNews();
       emit(state.copyWith(state: StudiPassauState.fetched, news: news));
