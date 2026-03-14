@@ -140,16 +140,35 @@ class NewsState extends BlocState {
 }
 
 enum StudiPassauState {
+  /// Only used in login phase (app start = not authenticated yet)
   notAuthenticated,
-  loading,
+
+  /// Only used in login phase (we are currently authenticating against backend)
   authenticating,
+
+  /// Only used in login phase (authentication was finished successfully)
   authenticated(finished: true),
-  authenticationError(finished: true, errored: true),
+
+  /// No data is fetched or loaded yet (default state)
   notFetched,
+
+  /// Used when something is being loaded from cache
+  loading,
+
+  /// Cache load has finished and (updated) data is being fetched from the server
   fetching,
+
+  /// (Updated) data was fetched from the server successfully
   fetched(finished: true),
-  fetchError(finished: true, errored: true),
-  httpError(finished: true, errored: true);
+
+  /// There was an authentication error, e.g., the session is invalid
+  authenticationError(finished: true, errored: true),
+
+  /// There was a connectivity issue during fetching
+  httpError(finished: true, errored: true),
+
+  /// There was some miscellaneous error during fetching
+  fetchError(finished: true, errored: true);
 
   const StudiPassauState({this.finished = false, this.errored = false});
 
