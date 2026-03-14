@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
-import 'package:studipassau/models/news.dart';
 import 'package:studipassau/models/jsonapi.dart';
+import 'package:studipassau/models/news.dart';
 
 class NewsRepo {
   final _studIPProvider = StudIPDataProvider();

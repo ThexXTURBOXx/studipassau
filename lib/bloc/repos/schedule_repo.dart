@@ -3,10 +3,10 @@ import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/course_membership.dart';
 import 'package:studipassau/models/event.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/schedule_entry.dart';
 import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/pages/settings/settings.dart';
-import 'package:studipassau/models/jsonapi.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 

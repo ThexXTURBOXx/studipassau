@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/util/json.dart';
 import 'package:studipassau/models/jsonapi.dart';
+import 'package:studipassau/util/json.dart';
 
 part 'course_membership.freezed.dart';
 part 'course_membership.g.dart';

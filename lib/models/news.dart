@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:fwfh_url_launcher/fwfh_url_launcher.dart';
-import 'package:studipassau/util/json.dart';
 import 'package:studipassau/models/jsonapi.dart';
+import 'package:studipassau/util/json.dart';
 
 part 'news.freezed.dart';
 part 'news.g.dart';
