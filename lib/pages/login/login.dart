@@ -56,13 +56,13 @@ class _LoginPageState extends State<LoginPage> {
         );
       case StudiPassauState.httpError:
       case StudiPassauState.authenticated:
-      case StudiPassauState.loading:
         return state.me == null
             ? RetryScreen.withButton(
                 text: context.i18n.httpError,
                 button: retryButton(context),
               )
             : const Center(child: CircularProgressIndicator());
+      case StudiPassauState.loading:
       case StudiPassauState.authenticating:
         return Text(
           context.i18n.loginAuthenticating,
