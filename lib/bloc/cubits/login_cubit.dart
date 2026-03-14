@@ -9,7 +9,9 @@ import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/env/env.dart';
+import 'package:studipassau/models/user.dart';
 import 'package:studipassau/util/images.dart';
+import 'package:studipassau/util/jsonapi.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._storageRepo)
@@ -20,7 +22,14 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> loadUserData() async {
     final cfgJson = _storageRepo.getString(userDataKey);
     if (cfgJson != null) {
-      emit(state.copyWith(userData: jsonDecode(cfgJson)));
+      emit(
+        state.copyWith(
+          me: User.fromJson(
+            jsonDecode(cfgJson) as Map<String, dynamic>,
+            (a) => UserAttributes.fromJson(a as Map<String, dynamic>),
+          ),
+        ),
+      );
     }
   }
 
@@ -44,22 +53,21 @@ class LoginCubit extends Cubit<LoginState> {
       );
       _setApiClient(client);
 
-      dynamic userData = await client.apiGetJson('users/me');
-      emit(
-        state.copyWith(
-          state: StudiPassauState.authenticated,
-          userData: userData,
-        ),
+      User me = parseObject(
+        await client.apiGetJson('users/me'),
+        (item) => UserAttributes.fromJson(item as Map<String, dynamic>),
       );
+      emit(state.copyWith(state: StudiPassauState.authenticated, me: me));
       await _storageRepo.writeString(
         key: userDataKey,
-        value: jsonEncode(userData),
+        value: jsonEncode(me.toJson((a) => a.toJson())),
       );
     } on StateError {
       emit(state.copyWith(state: StudiPassauState.httpError));
     } on SocketException {
       emit(state.copyWith(state: StudiPassauState.httpError));
-    } catch (e) {
+    } catch (e, s) {
+      Catcher2.reportCheckedError(e, s);
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     }
   }

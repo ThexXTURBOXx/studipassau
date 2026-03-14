@@ -64,7 +64,7 @@ class _FilesPagePageState extends State<FilesPage>
     ),
     drawer: const StudiPassauDrawer(DrawerItem.files),
     body: BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, stateL) => stateL.userData == null
+      builder: (context, stateL) => stateL.me == null
           ? CenteredRetryScreen.login(context: context, route: routeFiles)
           : BlocConsumer<FilesCubit, FilesState>(
               listener: showErrorMessage,

@@ -57,7 +57,7 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
     drawer: const StudiPassauDrawer(DrawerItem.news),
     body: BlocConsumer<LoginCubit, LoginState>(
       listener: showErrorMessage,
-      builder: (context, stateL) => stateL.userData == null
+      builder: (context, stateL) => stateL.me == null
           ? CenteredRetryScreen.login(context: context, route: routeNews)
           : BlocConsumer<NewsCubit, NewsState>(
               listener: showErrorMessage,

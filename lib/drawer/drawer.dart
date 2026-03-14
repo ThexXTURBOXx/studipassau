@@ -50,7 +50,7 @@ class StudiPassauDrawer extends StatelessWidget {
               ),
               currentAccountPicture: ClipRRect(
                 borderRadius: BorderRadius.circular(110),
-                child: state.userData == null || state.avatarNormal == null
+                child: state.me == null || state.avatarNormal == null
                     ? const Icon(Icons.error)
                     : CachedNetworkImage(
                         fit: BoxFit.cover,

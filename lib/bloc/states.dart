@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 import 'package:openmensa/openmensa.dart';
+import 'package:studipassau/models/user.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
@@ -19,23 +20,20 @@ class BlocState {
 }
 
 class LoginState extends BlocState {
-  const LoginState(super.state, {this.userData});
+  const LoginState(super.state, {this.me});
 
-  final dynamic userData;
+  final User? me;
 
-  LoginState copyWith({StudiPassauState? state, userData}) =>
-      LoginState(state ?? this.state, userData: userData ?? this.userData);
+  LoginState copyWith({StudiPassauState? state, User? me}) =>
+      LoginState(state ?? this.state, me: me ?? this.me);
 
-  String? get userId => userData?['data']?['id']?.toString();
+  String? get userId => me?.id;
 
-  String? get username =>
-      userData?['data']?['attributes']?['username']?.toString();
+  String? get username => me?.attributes.username;
 
-  String? get formattedName =>
-      userData?['data']?['attributes']?['formatted-name']?.toString();
+  String? get formattedName => me?.attributes.formattedName;
 
-  String? get avatarNormal =>
-      userData?['data']?['meta']?['avatar']?['normal']?.toString();
+  String? get avatarNormal => me?.meta?['avatar']?['normal']?.toString();
 }
 
 class ScheduleState extends BlocState {

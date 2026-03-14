@@ -110,7 +110,7 @@ class _SchedulePagePageState extends State<SchedulePage>
     ),
     drawer: const StudiPassauDrawer(DrawerItem.schedule),
     body: BlocBuilder<LoginCubit, LoginState>(
-      builder: (context, stateL) => stateL.userData == null
+      builder: (context, stateL) => stateL.me == null
           ? CenteredRetryScreen.login(context: context, route: routeSchedule)
           : BlocConsumer<ScheduleCubit, ScheduleState>(
               listener: showErrorMessage,

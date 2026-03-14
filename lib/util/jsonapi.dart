@@ -94,6 +94,7 @@ abstract class JsonApiResource<A> with _$JsonApiResource<A> {
     required String type,
     required A attributes,
     required Map<String, JsonApiRelationship> relationships,
+    Map<String, dynamic>? meta,
   }) = _JsonApiResource<A>;
 
   factory JsonApiResource.fromJson(

@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
     listener: (context, state) {
       if ((state.state == StudiPassauState.authenticated ||
               state.state == StudiPassauState.httpError) &&
-          state.userData != null) {
+          state.me != null) {
         navigateTo(context, targetRoute);
       }
     },
@@ -57,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
       case StudiPassauState.httpError:
       case StudiPassauState.authenticated:
       case StudiPassauState.loading:
-        return state.userData == null
+        return state.me == null
             ? RetryScreen.withButton(
                 text: context.i18n.httpError,
                 button: retryButton(context),
