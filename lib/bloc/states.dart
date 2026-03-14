@@ -2,12 +2,12 @@ import 'dart:collection';
 
 import 'package:collection/collection.dart';
 import 'package:openmensa/openmensa.dart';
+import 'package:studipassau/models/course.dart';
+import 'package:studipassau/models/file_ref.dart';
+import 'package:studipassau/models/folder.dart';
+import 'package:studipassau/models/news.dart';
+import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/models/user.dart';
-import 'package:studipassau/pages/files/widgets/course.dart';
-import 'package:studipassau/pages/files/widgets/file.dart';
-import 'package:studipassau/pages/files/widgets/folder.dart';
-import 'package:studipassau/pages/news/widgets/news_item.dart';
-import 'package:studipassau/pages/schedule/widgets/events.dart';
 
 class BlocState {
   const BlocState(this.state);

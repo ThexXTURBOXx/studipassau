@@ -10,6 +10,7 @@ import 'package:studipassau/bloc/cubits/schedule_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
+import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';

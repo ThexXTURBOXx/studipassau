@@ -3,9 +3,9 @@ import 'dart:io' as io;
 import 'package:collection/collection.dart';
 import 'package:http/http.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
-import 'package:studipassau/pages/files/widgets/file.dart';
-import 'package:studipassau/pages/files/widgets/folder.dart';
-import 'package:studipassau/util/jsonapi.dart';
+import 'package:studipassau/models/file_ref.dart';
+import 'package:studipassau/models/folder.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:tuple/tuple.dart';
 
 class FilesRepo {

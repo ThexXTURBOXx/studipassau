@@ -8,7 +8,7 @@ import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
-import 'package:studipassau/pages/news/widgets/news_item.dart';
+import 'package:studipassau/models/news.dart';
 import 'package:supercharged/supercharged.dart';
 
 class NewsCubit extends Cubit<NewsState> {

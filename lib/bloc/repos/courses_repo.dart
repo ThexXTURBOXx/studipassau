@@ -1,6 +1,6 @@
 import 'package:studipassau/bloc/providers/studip_provider.dart';
-import 'package:studipassau/pages/files/widgets/course.dart';
-import 'package:studipassau/util/jsonapi.dart';
+import 'package:studipassau/models/course.dart';
+import 'package:studipassau/models/jsonapi.dart';
 
 class CoursesRepo {
   final _studIPProvider = StudIPDataProvider();

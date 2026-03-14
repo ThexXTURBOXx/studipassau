@@ -7,7 +7,7 @@ import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/repos/schedule_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
-import 'package:studipassau/pages/schedule/widgets/events.dart';
+import 'package:studipassau/models/studipassau_event.dart';
 
 class ScheduleCubit extends Cubit<ScheduleState> {
   ScheduleCubit(this._storageRepo, this._scheduleRepo)

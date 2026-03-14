@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:studipassau/util/json.dart';
-import 'package:studipassau/util/jsonapi.dart';
+import 'package:studipassau/models/jsonapi.dart';
 
 part 'user.freezed.dart';
 part 'user.g.dart';

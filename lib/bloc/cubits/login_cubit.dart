@@ -11,7 +11,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/env/env.dart';
 import 'package:studipassau/models/user.dart';
 import 'package:studipassau/util/images.dart';
-import 'package:studipassau/util/jsonapi.dart';
+import 'package:studipassau/models/jsonapi.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this._storageRepo)

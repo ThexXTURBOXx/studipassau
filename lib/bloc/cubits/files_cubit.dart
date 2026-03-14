@@ -12,9 +12,9 @@ import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/files_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/pages/files/widgets/course.dart';
-import 'package:studipassau/pages/files/widgets/file.dart';
-import 'package:studipassau/pages/files/widgets/folder.dart';
+import 'package:studipassau/models/course.dart';
+import 'package:studipassau/models/file_ref.dart';
+import 'package:studipassau/models/folder.dart';
 import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {

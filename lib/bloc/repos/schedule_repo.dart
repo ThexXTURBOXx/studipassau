@@ -1,16 +1,14 @@
 import 'package:flutter/cupertino.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/pages/schedule/widgets/events.dart';
+import 'package:studipassau/models/course_membership.dart';
+import 'package:studipassau/models/event.dart';
+import 'package:studipassau/models/schedule_entry.dart';
+import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/pages/settings/settings.dart';
-import 'package:studipassau/util/json.dart';
-import 'package:studipassau/util/jsonapi.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
-
-part 'schedule_repo.freezed.dart';
-part 'schedule_repo.g.dart';
 
 class ScheduleRepo {
   final _studIPProvider = StudIPDataProvider();
@@ -159,77 +157,4 @@ class ScheduleRepo {
 
   DateTime _intTimeToDateTime(DateTime base, int time) =>
       base.copyWith(hour: time ~/ 100, minute: time % 100);
-}
-
-typedef ScheduleEntry = JsonApiResource<ScheduleEntryAttributes>;
-
-@freezed
-abstract class ScheduleEntryAttributes with _$ScheduleEntryAttributes {
-  const ScheduleEntryAttributes._();
-
-  @StringConverter()
-  const factory ScheduleEntryAttributes({
-    required String title,
-    String? description,
-    @HHMMIntConverter() required int start,
-    @HHMMIntConverter() required int end,
-    @JsonKey(name: 'weekday') required int rawWeekday,
-    @JsonKey(name: 'color') required String colorId,
-  }) = _ScheduleEntryAttributes;
-
-  factory ScheduleEntryAttributes.fromJson(Map<String, dynamic> json) =>
-      _$ScheduleEntryAttributesFromJson(json);
-
-  /// Normalizes Sunday (0 in Stud.IP) to 7 for 1-based Monday indexing.
-  int get weekday => rawWeekday == 0 ? 7 : rawWeekday;
-
-  Color? get color => getColor(int.parse(colorId));
-}
-
-typedef Event = JsonApiResource<EventAttributes>;
-
-@freezed
-abstract class EventAttributes with _$EventAttributes {
-  const EventAttributes._();
-
-  @StringConverter()
-  @DateTimeInLocalZoneConverter()
-  const factory EventAttributes({
-    required String title,
-    required String description,
-    required DateTime start,
-    required DateTime end,
-    required List<String> categories,
-    required String location,
-    @JsonKey(name: 'is-cancelled') required bool isCancelled,
-    @JsonKey(name: 'mkdate') required DateTime makeDate,
-    @JsonKey(name: 'chdate') required DateTime changeDate,
-  }) = _EventAttributes;
-
-  factory EventAttributes.fromJson(Map<String, dynamic> json) =>
-      _$EventAttributesFromJson(json);
-}
-
-typedef CourseMembership = JsonApiResource<CourseMembershipAttributes>;
-
-@freezed
-abstract class CourseMembershipAttributes with _$CourseMembershipAttributes {
-  const CourseMembershipAttributes._();
-
-  @StringConverter()
-  @DateTimeInLocalZoneConverter()
-  const factory CourseMembershipAttributes({
-    required String permission,
-    required int position,
-    required int group,
-    @JsonKey(name: 'mkdate') required DateTime makeDate,
-    required String label,
-    required String visible,
-    String? comment,
-  }) = _CourseMembershipAttributes;
-
-  factory CourseMembershipAttributes.fromJson(Map<String, dynamic> json) =>
-      _$CourseMembershipAttributesFromJson(json);
-
-  Color? get color => getColorOrNotFound(group + 1);
 }
