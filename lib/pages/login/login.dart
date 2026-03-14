@@ -65,7 +65,9 @@ class _LoginPageState extends State<LoginPage> {
       case StudiPassauState.loading:
       case StudiPassauState.authenticating:
         return Text(
-          context.i18n.loginAuthenticating,
+          state.me == null
+              ? context.i18n.loginAuthenticatingFirst
+              : context.i18n.loginAuthenticating,
           textAlign: TextAlign.center,
         );
       default:

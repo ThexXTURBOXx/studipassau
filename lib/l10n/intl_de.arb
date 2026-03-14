@@ -92,8 +92,12 @@
   "@loginAuthenticated": {
     "description": "The text shown after successful login (usually only visible for a fraction of a second)"
   },
-  "loginAuthenticating": "Ein Browser sollte gerade geöffnet sein. Falls nicht, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+  "loginAuthenticating": "Authentifiziere...",
   "@loginAuthenticating": {
+    "description": "The text shown when authenticating to Stud.IP"
+  },
+  "loginAuthenticatingFirst": "Ein Browser sollte gerade geöffnet sein. Falls nicht, installiere bitte einen kompatiblen (empfohlen: Google Chrome) oder, falls bereits einer installiert ist, melde dies bitte als Bug!",
+  "@loginAuthenticatingFirst": {
     "description": "The text shown when a browser window should be open in the login process"
   },
   "loginNotAuthenticated": "Starte Authentifikation...",
