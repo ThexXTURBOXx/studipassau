@@ -20,7 +20,8 @@ abstract class EventAttributes with _$EventAttributes {
     required DateTime end,
     required List<String> categories,
     required String location,
-    @JsonKey(name: 'is-cancelled') required bool isCancelled,
+    @JsonKey(name: 'is-cancelled', defaultValue: false)
+    required bool isCancelled,
     @JsonKey(name: 'mkdate') required DateTime makeDate,
     @JsonKey(name: 'chdate') required DateTime changeDate,
   }) = _EventAttributes;
