@@ -1,0 +1,7 @@
+» Mensaplan gefixt
+» Raumfinder hinzugefügt
+» Einige Dinge im Crash Reporter korrigiert
+» Campus-Portal-Link zum Drawer hinzugefügt
+» Verbessertes Material-3-Thema
+» Aktualisierung auf Flutter 3.10.0 beta
+» Abhängigkeiten aktualisiert

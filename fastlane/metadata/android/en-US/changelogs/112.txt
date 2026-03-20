@@ -1,0 +1,4 @@
+» Add support for Android 14
+» Added LU8 to the navigator
+» Update dependencies
+» Update Flutter

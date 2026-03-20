@@ -1,0 +1,4 @@
+» Flutter and dependencies updated
+» Mensaplan now working correctly again
+» KTP added to room finder
+» Minor bugs fixed here and there

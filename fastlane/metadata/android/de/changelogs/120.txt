@@ -1,0 +1,5 @@
+» Material 3 Design nun erzwungen
+» Kleinere Fehler hier und da behoben
+» Abhängigkeiten aktualisiert
+» Flutter auf 3.32.5 aktualisiert
+» Support für neuere Geräte

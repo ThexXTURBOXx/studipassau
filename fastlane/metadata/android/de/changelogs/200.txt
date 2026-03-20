@@ -1,0 +1,3 @@
+» Anständiger Offline-Modus
+» Wechsel zu OAuth 2.0 (du musst dich leider nochmal anmelden, sorry!)
+» Nahezu die gesamte App wurde neu geschrieben!

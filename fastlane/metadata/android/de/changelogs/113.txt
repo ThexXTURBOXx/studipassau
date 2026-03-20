@@ -1,0 +1,4 @@
+» News-Bereich hinzugefügt
+» Dateien sind jetzt "natürlich" sortiert
+» Abhängigkeiten aktualisiert
+» Flutter auf 3.16.0 aktualisiert

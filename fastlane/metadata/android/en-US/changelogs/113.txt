@@ -1,0 +1,4 @@
+» Add news section
+» Files are now sorted "naturally"
+» Update dependencies
+» Update Flutter to 3.16.0

@@ -1,0 +1,4 @@
+» Included root certificates to support older Android versions
+» Improved Material 3 theme
+» Update to Flutter 3.7.1
+» Update dependencies

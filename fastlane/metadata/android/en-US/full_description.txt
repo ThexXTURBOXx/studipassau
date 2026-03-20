@@ -1,0 +1,13 @@
+This app offers the following functions:
+
+ » A complete timetable
+ » Mensa plan with data from STWNO or OpenMensa
+ » Files view
+ » Room finder
+ » News
+
+Many functions are still in planning/development.
+
+The entire app is open source: https://github.com/ThexXTURBOXx/studipassau
+
+Created and still maintained by a former student of the University of Passau.

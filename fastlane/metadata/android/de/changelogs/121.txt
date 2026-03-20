@@ -1,0 +1,4 @@
+» Flutter und Abhängigkeiten aktualisiert
+» Mensaplan funktioniert nun wieder korrekt
+» KTP zu Raumfinder hinzugefügt
+» Kleinere Fehler hier und da behoben

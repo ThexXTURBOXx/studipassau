@@ -1,0 +1,3 @@
+» Proper offline mode
+» Switch to OAuth 2.0 (unfortunately, you’ll need to log in again - sorry!)
+» Almost everything has been rewritten!

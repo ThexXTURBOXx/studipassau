@@ -1,0 +1,4 @@
+» Unterstützung für Android 14
+» LU8 zum Navigator hinzugefügt
+» Abhängigkeiten aktualisiert
+» Flutter aktualisiert

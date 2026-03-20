@@ -1,0 +1,13 @@
+Diese App bietet folgende Funktionen:
+
+ » Ein vollständiger Stundenplan
+ » Mensaplan mit Daten des STWNO oder von OpenMensa
+ » Dateienansicht
+ » Raumfinder
+ » Neuigkeiten
+
+Viele Funktionen befinden sich noch in Planung/Entwicklung.
+
+Die gesamte App ist Open Source: https://github.com/ThexXTURBOXx/studipassau
+
+Gemacht und immer noch gepflegt von einem ehemaligen Studenten der Universität Passau.

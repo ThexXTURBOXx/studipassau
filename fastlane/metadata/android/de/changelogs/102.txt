@@ -1,0 +1,4 @@
+» Root-Zertifikate sind nun enthalten, um ältere Android-Versionen zu unterstützen
+» Verbessertes Material-3-Thema
+» Aktualisiert auf Flutter 3.7.1
+» Abhängigkeiten aktualisiert
