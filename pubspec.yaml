@@ -67,9 +67,13 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^6.0.0
   freezed: ^3.2.5
+  intl_utils: 2.8.14
   json_serializable: ^6.13.0
 
 dependency_overrides:
+  intl_utils:
+    git:
+      url: https://github.com/ThexXTURBOXx/intl_utils.git
   open_filex:
     git:
       url: https://github.com/ThexXTURBOXx/open_filex

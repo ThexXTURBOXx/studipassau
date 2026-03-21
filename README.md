@@ -27,23 +27,19 @@ The compilation from source should be straight forward (only Android):
     CLIENT_SECRET=<OPTIONAL>
     SENTRY_DSN=<OPTIONAL>
     ```
-4. Activate my custom version of `intl_utils` which fixes language overrides:
-    ```shell
-    dart pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
-    ```
-5. Download the dependencies:
+4. Download the dependencies:
    ```shell
    flutter pub get
    ```
-6. Generate the language files:
+5. Generate the language files:
     ```shell
-    dart pub global run intl_utils:generate
+    dart run intl_utils:generate
     ```
-7. Generate additional files (env variables/schemas/etc.) automatically:
+6. Generate additional files (env variables/schemas/etc.) automatically:
     ```shell
     dart run build_runner build
     ```
-8. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
+7. Compile it using either Android Studio's `Build -> Flutter -> Build APK` feature or
     ```shell
     flutter build apk
     ```
