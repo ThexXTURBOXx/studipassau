@@ -20,14 +20,11 @@ jobs:
       - name: Create .env file
         run: echo -e "CLIENT_ID=SampleID" > .env
 
-      - name: Activate own intl_utils
-        run: dart pub global activate --source git https://github.com/ThexXTURBOXx/intl_utils.git --overwrite
-
       - name: Get dependencies
         run: flutter pub get
 
       - name: Generate language files
-        run: dart pub global run intl_utils:generate
+        run: dart run intl_utils:generate
 
       - name: Generate additional classes
         run: dart run build_runner build
