@@ -5,15 +5,15 @@ import 'package:studipassau/constants.dart';
 
 part 'env.g.dart';
 
-@Envied(path: envFile, requireEnvFile: true, obfuscate: true)
+@Envied(path: envFile, requireEnvFile: true)
 abstract class Env {
   @EnviedField(varName: 'CLIENT_ID')
-  static final String clientId = _Env.clientId;
+  static const String clientId = _Env.clientId;
   @EnviedField(varName: 'CLIENT_SECRET', defaultValue: '0')
-  static final String clientSecret = _Env.clientSecret;
+  static const String clientSecret = _Env.clientSecret;
   @EnviedField(
     varName: 'SENTRY_DSN',
     defaultValue: 'https://0@o0.ingest.sentry.io/0',
   )
-  static final String sentryDsn = _Env.sentryDsn;
+  static const String sentryDsn = _Env.sentryDsn;
 }
