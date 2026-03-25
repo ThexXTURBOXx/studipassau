@@ -11,23 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-
-      - name: Install Flutter
-        uses: subosito/flutter-action@v2
         with:
-          channel: 'stable'
+          submodules: recursive
+          fetch-depth: 0
 
-      - name: Create .env file
-        run: echo -e "CLIENT_ID=SampleID" > .env
+      - name: Setup Flutter
+        run: |
+          echo "PUB_CACHE=${{ github.workspace }}/.pub-cache" >> $GITHUB_ENV
+          ${{ github.workspace }}/.flutter/bin/flutter config --no-analytics
+          echo "${{ github.workspace }}/.flutter/bin" >> $GITHUB_PATH
+          echo "${{ github.workspace }}/.flutter/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
 
       - name: Get dependencies
         run: flutter pub get
 
-      - name: Generate language files
-        run: dart run intl_utils:generate
-
-      - name: Generate additional classes
-        run: dart run build_runner build
+      - name: Generate additional files
+        run: |
+          dart run intl_utils:generate
+          dart run build_runner build
 
       - name: Lint
         run: dart format -o none --set-exit-if-changed .

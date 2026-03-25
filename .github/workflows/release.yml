@@ -1,0 +1,75 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Cache Gradle
+        uses: burrunan/gradle-cache-action@v3
+        with:
+          build-root-directory: ./android
+
+      - name: Setup Flutter
+        run: |
+          echo "PUB_CACHE=${{ github.workspace }}/.pub-cache" >> $GITHUB_ENV
+          ${{ github.workspace }}/.flutter/bin/flutter config --no-analytics
+          echo "${{ github.workspace }}/.flutter/bin" >> $GITHUB_PATH
+          echo "${{ github.workspace }}/.flutter/bin/cache/dart-sdk/bin" >> $GITHUB_PATH
+
+      - name: Setup Keystore
+        run: |
+          echo "${{ secrets.KEYSTORE_JKS }}" | base64 --decode > android/app/keystore.jks
+          echo "${{ secrets.KEY_PROPERTIES }}" | base64 --decode > android/key.properties
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Generate additional files
+        run: |
+          dart run intl_utils:generate
+          dart run build_runner build --delete-conflicting-outputs
+
+      - name: Build
+        run: |
+          flutter build apk --release
+          flutter build appbundle --release
+
+      - name: Archive App Bundle
+        uses: actions/upload-artifact@v7
+        with:
+          path: |
+            build/app/outputs/flutter-apk/*.apk
+            build/app/outputs/bundle/release/*.aab
+
+      - name: Prepare Changelog Path
+        id: changelog_meta
+        run: |
+          # Remove dots from the tag (e.g., 1.2.3 -> 123)
+          CLEAN_TAG=$(echo "${{ github.ref_name }}" | tr -d '.')
+          FILE_PATH="fastlane/metadata/android/en-US/changelogs/${CLEAN_TAG}.txt"
+          echo "path=$FILE_PATH" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          files: build/app/outputs/flutter-apk/*.apk
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body_path: ${{ steps.changelog_meta.outputs.path }}
