@@ -26,12 +26,17 @@ class StwnoDataProvider {
     final bodyPrev = stwnoEncoding.decode(responsePrev.bodyBytes);
     final bodyCurr = stwnoEncoding.decode(responseCurr.bodyBytes);
     final bodyNext = stwnoEncoding.decode(responseNext.bodyBytes);
-    return parsePlan(bodyPrev.split('\n')) +
-        parsePlan(bodyCurr.split('\n')) +
-        parsePlan(bodyNext.split('\n'));
+    return parsePlan(bodyPrev) + parsePlan(bodyCurr) + parsePlan(bodyNext);
   }
 
-  List<DayMenu> parsePlan(List<String> lines) {
+  List<DayMenu> parsePlan(String line) => parseSplitPlan(
+    line
+        .split('\r\n')
+        .map((l) => l.replaceAll('\n', ''))
+        .toList(growable: false),
+  );
+
+  List<DayMenu> parseSplitPlan(List<String> lines) {
     final plan = <Day, List<Meal>>{};
     for (var i = 1; i < lines.length; i++) {
       final entries = lines[i].split(';');
