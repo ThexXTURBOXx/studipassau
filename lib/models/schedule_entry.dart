@@ -30,5 +30,5 @@ abstract class ScheduleEntryAttributes with _$ScheduleEntryAttributes {
   /// Normalizes Sunday (0 in Stud.IP) to 7 for 1-based Monday indexing.
   int get weekday => rawWeekday == 0 ? 7 : rawWeekday;
 
-  Color? get color => getColor(int.parse(colorId));
+  Color? get color => getColor(int.tryParse(colorId));
 }

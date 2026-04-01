@@ -174,11 +174,13 @@ DateTime parseInLocalZone(String str) {
   return DateTime.parse(str);
 }
 
-Color getColorOrNotFound(int index) =>
+Color getColorOrNotFound(int? index) =>
     getColor(index) ?? Color(getPref(notFoundColorPref)!);
 
-Color? getColor(int index) =>
-    1 <= index && index < _colorTable.length ? _colorTable[index] : null;
+Color? getColor(int? index) =>
+    index != null && 1 <= index && index < _colorTable.length
+    ? _colorTable[index]
+    : null;
 
 String get appVersion =>
     '${packageInfo.version} '
