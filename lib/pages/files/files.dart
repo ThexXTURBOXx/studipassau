@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:studipassau/bloc/cubits/files_cubit.dart';
@@ -21,6 +22,7 @@ import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
+import 'package:supercharged/supercharged.dart';
 
 const routeFiles = '/files';
 
@@ -91,19 +93,58 @@ class _FilesPagePageState extends State<FilesPage>
                     onRefresh: () async =>
                         refresh(context, stateL: stateL, state: state),
                     child: state.folderState == FolderState.home
-                        ? ListView(
-                            children: state.courses
+                        ? CustomScrollView(
+                            slivers: state.courses
+                                .groupBy(
+                                  (c) =>
+                                      c.relationship('start-semester').first.id,
+                                )
                                 .map(
-                                  (c) => CourseWidget(
-                                    course: c,
-                                    onTap: () async {
-                                      await loadCourse(c);
-                                    },
+                                  (s, cs) => MapEntry(
+                                    state.semesters.firstWhere(
+                                      (se) => se.id == s,
+                                    ),
+                                    cs,
                                   ),
                                 )
-                                .sortedByCompare(
-                                  (f) => f.sortKey,
-                                  compareNatural,
+                                .entries
+                                .sortedBy((e) => e.key.attributes.start)
+                                .reversed
+                                .map(
+                                  (e) => SliverStickyHeader(
+                                    header: Container(
+                                      height: 60,
+                                      color: Colors.lightBlue,
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                      ),
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        e.key.attributes.title,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                    sliver: SliverList(
+                                      delegate: SliverChildListDelegate.fixed(
+                                        e.value
+                                            .map(
+                                              (c) => CourseWidget(
+                                                course: c,
+                                                onTap: () async {
+                                                  await loadCourse(c);
+                                                },
+                                              ),
+                                            )
+                                            .sortedByCompare(
+                                              (f) => f.sortKey,
+                                              compareNatural,
+                                            )
+                                            .toList(growable: false),
+                                      ),
+                                    ),
+                                  ),
                                 )
                                 .toList(growable: false),
                           )

@@ -10,6 +10,7 @@ import 'package:studipassau/bloc/repos/files_repo.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/schedule_repo.dart';
+import 'package:studipassau/bloc/repos/semester_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 
 class StudiPassauBlocProvider extends StatelessWidget {
@@ -26,6 +27,7 @@ class StudiPassauBlocProvider extends StatelessWidget {
       RepositoryProvider<FilesRepo>(create: (context) => FilesRepo()),
       RepositoryProvider<NewsRepo>(create: (context) => NewsRepo()),
       RepositoryProvider<CoursesRepo>(create: (context) => CoursesRepo()),
+      RepositoryProvider<SemesterRepo>(create: (context) => SemesterRepo()),
     ],
     child: MultiBlocProvider(
       providers: [
@@ -48,6 +50,7 @@ class StudiPassauBlocProvider extends StatelessWidget {
           create: (context) => FilesCubit(
             context.read<FilesRepo>(),
             context.read<CoursesRepo>(),
+            context.read<SemesterRepo>(),
           ),
         ),
         BlocProvider<NewsCubit>(

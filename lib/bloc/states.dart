@@ -6,6 +6,7 @@ import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/file_ref.dart';
 import 'package:studipassau/models/folder.dart';
 import 'package:studipassau/models/news.dart';
+import 'package:studipassau/models/semester.dart';
 import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/models/user.dart';
 
@@ -68,13 +69,15 @@ class FilesState extends BlocState {
     this.courses = const [],
     this.files = const [],
     this.folders = const [],
+    this.semesters = const [],
   });
 
+  final Queue<Folder> currentFolders;
   Course? currentCourse;
   final List<Course> courses;
   final List<FileRef> files;
   final List<Folder> folders;
-  final Queue<Folder> currentFolders;
+  final List<Semester> semesters;
 
   FolderState get folderState => currentFolder != null
       ? FolderState.folder
@@ -98,18 +101,20 @@ class FilesState extends BlocState {
 
   FilesState copyWith({
     StudiPassauState? state,
+    Queue<Folder>? currentFolders,
     Course? currentCourse,
     List<Course>? courses,
     List<FileRef>? files,
     List<Folder>? folders,
-    Queue<Folder>? currentFolders,
+    List<Semester>? semesters,
   }) => FilesState(
     state ?? this.state,
+    currentFolders: currentFolders ?? this.currentFolders,
     currentCourse: currentCourse ?? this.currentCourse,
     courses: courses ?? this.courses,
     files: files ?? this.files,
     folders: folders ?? this.folders,
-    currentFolders: currentFolders ?? this.currentFolders,
+    semesters: semesters ?? this.semesters,
   );
 }
 

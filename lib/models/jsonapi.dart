@@ -93,7 +93,7 @@ abstract class JsonApiResource<A> with _$JsonApiResource<A> {
     required String id,
     required String type,
     required A attributes,
-    required Map<String, JsonApiRelationship> relationships,
+    Map<String, JsonApiRelationship>? relationships,
     Map<String, dynamic>? meta,
   }) = _JsonApiResource<A>;
 
@@ -106,7 +106,7 @@ abstract class JsonApiResource<A> with _$JsonApiResource<A> {
   Map<String, dynamic> toJson(Object? Function(A) toJsonA) =>
       _$JsonApiResourceToJson(this as _JsonApiResource<A>, toJsonA);
 
-  JsonApiRelationship relationship(String id) => relationships[id]!;
+  JsonApiRelationship relationship(String id) => relationships![id]!;
 }
 
 @freezed

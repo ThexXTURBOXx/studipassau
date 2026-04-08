@@ -10,15 +10,17 @@ import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/files_repo.dart';
+import 'package:studipassau/bloc/repos/semester_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/file_ref.dart';
 import 'package:studipassau/models/folder.dart';
+import 'package:studipassau/models/semester.dart';
 import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {
-  FilesCubit(this._filesRepo, this._coursesRepo)
+  FilesCubit(this._filesRepo, this._coursesRepo, this._semesterRepo)
     : super(
         FilesState(
           StudiPassauState.notFetched,
@@ -30,17 +32,34 @@ class FilesCubit extends Cubit<FilesState> {
 
   final CoursesRepo _coursesRepo;
 
+  final SemesterRepo _semesterRepo;
+
   Future<void> loadCourses(String userId) async {
     emit(state.copyWith(state: StudiPassauState.fetching));
 
     try {
-      final courses = (await _coursesRepo.getCourses(userId)).sorted(
+      final results = await Future.wait([
+        _coursesRepo.getCourses(userId),
+        _semesterRepo.getSemesters(),
+      ]);
+
+      final courses = (results[0] as List<Course>).sorted(
         compareBy<Course, String>(
           (c) => c.attributes.title,
         ).thenByNullable((c) => c.attributes.courseNumber),
       );
+      final semesters = (results[1] as List<Semester>)
+          .sortedBy((s) => s.attributes.start)
+          .reversed
+          .toList(growable: false);
 
-      emit(state.copyWith(state: StudiPassauState.fetched, courses: courses));
+      emit(
+        state.copyWith(
+          state: StudiPassauState.fetched,
+          courses: courses,
+          semesters: semesters,
+        ),
+      );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     } on io.SocketException {
