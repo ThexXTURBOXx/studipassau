@@ -76,7 +76,9 @@ class _MensaPagePageState extends State<MensaPage>
         return RefreshIndicator(
           key: _refreshIndicatorKey,
           onRefresh: () async => refresh(context),
-          child: CustomScrollView(slivers: slivers(state.menu)),
+          child: SafeArea(
+            child: CustomScrollView(slivers: slivers(state.menu)),
+          ),
         );
       },
     ),

@@ -93,60 +93,64 @@ class _FilesPagePageState extends State<FilesPage>
                     onRefresh: () async =>
                         refresh(context, stateL: stateL, state: state),
                     child: state.folderState == FolderState.home
-                        ? CustomScrollView(
-                            slivers: state.courses
-                                .groupBy(
-                                  (c) =>
-                                      c.relationship('start-semester').first.id,
-                                )
-                                .map(
-                                  (s, cs) => MapEntry(
-                                    state.semesters.firstWhere(
-                                      (se) => se.id == s,
-                                    ),
-                                    cs,
-                                  ),
-                                )
-                                .entries
-                                .sortedBy((e) => e.key.attributes.start)
-                                .reversed
-                                .map(
-                                  (e) => SliverStickyHeader(
-                                    header: Container(
-                                      height: 60,
-                                      color: Colors.lightBlue,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 16,
+                        ? SafeArea(
+                            child: CustomScrollView(
+                              slivers: state.courses
+                                  .groupBy(
+                                    (c) => c
+                                        .relationship('start-semester')
+                                        .first
+                                        .id,
+                                  )
+                                  .map(
+                                    (s, cs) => MapEntry(
+                                      state.semesters.firstWhere(
+                                        (se) => se.id == s,
                                       ),
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        e.key.attributes.title,
-                                        style: const TextStyle(
-                                          color: Colors.white,
+                                      cs,
+                                    ),
+                                  )
+                                  .entries
+                                  .sortedBy((e) => e.key.attributes.start)
+                                  .reversed
+                                  .map(
+                                    (e) => SliverStickyHeader(
+                                      header: Container(
+                                        height: 60,
+                                        color: Colors.lightBlue,
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        child: Text(
+                                          e.key.attributes.title,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                      sliver: SliverList(
+                                        delegate: SliverChildListDelegate.fixed(
+                                          e.value
+                                              .map(
+                                                (c) => CourseWidget(
+                                                  course: c,
+                                                  onTap: () async {
+                                                    await loadCourse(c);
+                                                  },
+                                                ),
+                                              )
+                                              .sortedByCompare(
+                                                (f) => f.sortKey,
+                                                compareNatural,
+                                              )
+                                              .toList(growable: false),
                                         ),
                                       ),
                                     ),
-                                    sliver: SliverList(
-                                      delegate: SliverChildListDelegate.fixed(
-                                        e.value
-                                            .map(
-                                              (c) => CourseWidget(
-                                                course: c,
-                                                onTap: () async {
-                                                  await loadCourse(c);
-                                                },
-                                              ),
-                                            )
-                                            .sortedByCompare(
-                                              (f) => f.sortKey,
-                                              compareNatural,
-                                            )
-                                            .toList(growable: false),
-                                      ),
-                                    ),
-                                  ),
-                                )
-                                .toList(growable: false),
+                                  )
+                                  .toList(growable: false),
+                            ),
                           )
                         : ListView(
                             children:
