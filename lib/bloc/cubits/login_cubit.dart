@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sentry/sentry.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
@@ -57,6 +58,8 @@ class LoginCubit extends Cubit<LoginState> {
         (item) => UserAttributes.fromJson(item as Map<String, dynamic>),
       );
       emit(state.copyWith(state: StudiPassauState.authenticated, me: me));
+
+      _setMe(me);
       await _storageRepo.writeString(
         key: userDataKey,
         value: jsonEncode(me.toJson((a) => a.toJson())),
@@ -74,5 +77,14 @@ class LoginCubit extends Cubit<LoginState> {
   void _setApiClient(StudIPClient client) {
     StudIPDataProvider.apiClient = client;
     StudIPHttpFileService.apiClient = client;
+  }
+
+  void _setMe(User user) {
+    sentryHandler.userContext = SentryUser(
+      id: user.id,
+      username: user.attributes.username,
+      email: user.attributes.email,
+      name: user.attributes.formattedName,
+    );
   }
 }

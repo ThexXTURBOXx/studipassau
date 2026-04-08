@@ -13,7 +13,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:studipassau/bloc/bloc_provider.dart';
 import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
 import 'package:studipassau/constants.dart';
-import 'package:studipassau/env/env.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/files/files.dart';
 import 'package:studipassau/pages/login/login.dart';
@@ -34,19 +33,12 @@ Future main() async {
   await installRootCertificates();
 
   final debugOptions = Catcher2Options(SilentReportMode(), [
-    ConsoleHandler(enableCustomParameters: true),
-  ]);
-  final releaseOptions = Catcher2Options(
-    DialogReportMode(),
-    [
-      SentryHandler(SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn)),
-      ConsoleHandler(enableCustomParameters: true),
-    ],
-    localizationOptions: [
-      LocalizationOptions.buildDefaultEnglishOptions(),
-      LocalizationOptions.buildDefaultGermanOptions(),
-    ],
-  );
+    consoleHandler,
+  ], localizationOptions: catcherLocalizations);
+  final releaseOptions = Catcher2Options(DialogReportMode(), [
+    sentryHandler,
+    consoleHandler,
+  ], localizationOptions: catcherLocalizations);
 
   SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
 
@@ -91,9 +83,9 @@ Future main() async {
   ]);
 
   Catcher2(
-    rootWidget: PrefService(
-      service: prefService,
-      child: const StudiPassauApp(),
+    rootWidget: DefaultAssetBundle(
+      bundle: SentryAssetBundle(),
+      child: PrefService(service: prefService, child: const StudiPassauApp()),
     ),
     debugConfig: debugOptions,
     releaseConfig: releaseOptions,
@@ -133,6 +125,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       navigatorKey: Catcher2.navigatorKey,
+      navigatorObservers: [SentryNavigatorObserver()],
       localizationsDelegates: const [
         S.delegate,
         TimetableLocalizationsDelegate(

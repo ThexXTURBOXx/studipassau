@@ -2,13 +2,16 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:black_hole_flutter/black_hole_flutter.dart';
+import 'package:catcher_2/catcher_2.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/env/env.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/schedule/schedule.dart';
 import 'package:studipassau/pages/settings/settings.dart';
@@ -146,6 +149,15 @@ const wideScreenWidth = 600;
 late PackageInfo packageInfo;
 
 late BasePrefService prefService;
+
+final sentryHandler = SentryHandler(
+  SentryClient(SentryFlutterOptions()..dsn = Env.sentryDsn),
+);
+final consoleHandler = ConsoleHandler(enableCustomParameters: true);
+final catcherLocalizations = [
+  LocalizationOptions.buildDefaultEnglishOptions(),
+  LocalizationOptions.buildDefaultGermanOptions(),
+];
 
 String targetRoute = routeSchedule;
 
