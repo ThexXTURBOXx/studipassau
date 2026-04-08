@@ -192,12 +192,6 @@ class _FilesPagePageState extends State<FilesPage>
                                           unawaited(
                                             pd.show(
                                               msg: context.i18n.downloading,
-                                              backgroundColor:
-                                                  context
-                                                      .theme
-                                                      .dialogTheme
-                                                      .backgroundColor ??
-                                                  Colors.white,
                                             ),
                                           );
                                           await downloadFile(
