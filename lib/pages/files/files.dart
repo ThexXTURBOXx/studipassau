@@ -93,128 +93,110 @@ class _FilesPagePageState extends State<FilesPage>
                     onRefresh: () async =>
                         refresh(context, stateL: stateL, state: state),
                     child: state.folderState == FolderState.home
-                        ? SafeArea(
-                            child: CustomScrollView(
-                              slivers: state.courses
-                                  .groupBy(
-                                    (c) => c
-                                        .relationship('start-semester')
-                                        .first
-                                        .id,
-                                  )
-                                  .map(
-                                    (s, cs) => MapEntry(
-                                      state.semesters.firstWhere(
-                                        (se) => se.id == s,
-                                      ),
-                                      cs,
-                                    ),
-                                  )
-                                  .entries
-                                  .sortedBy((e) => e.key.attributes.start)
-                                  .reversed
-                                  .map(
-                                    (e) => SliverStickyHeader(
-                                      header: Container(
-                                        height: 60,
-                                        color: Colors.lightBlue,
-                                        padding: const EdgeInsets.symmetric(
-                                          horizontal: 16,
-                                        ),
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-                                          e.key.attributes.title,
-                                          style: const TextStyle(
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ),
-                                      sliver: SliverList(
-                                        delegate: SliverChildListDelegate.fixed(
-                                          e.value
-                                              .map(
-                                                (c) => CourseWidget(
-                                                  course: c,
-                                                  onTap: () async {
-                                                    await loadCourse(c);
-                                                  },
-                                                ),
-                                              )
-                                              .sortedByCompare(
-                                                (f) => f.sortKey,
-                                                compareNatural,
-                                              )
-                                              .toList(growable: false),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                  .toList(growable: false),
-                            ),
-                          )
-                        : ListView(
-                            children:
-                                <Widget>[
-                                  FolderWidget(
-                                    folder: goUpFolder(),
-                                    onTap: () async {
-                                      state.goUp();
-                                      await refresh(
-                                        context,
-                                        stateL: stateL,
-                                        state: state,
-                                      );
-                                    },
-                                  ),
-                                ] +
-                                state.folders
-                                    .map(
-                                      (f) => FolderWidget(
-                                        folder: f,
-                                        onTap: () async {
-                                          await loadFolder(f);
-                                        },
-                                      ),
-                                    )
-                                    .sortedByCompare(
-                                      (f) => f.sortKey,
-                                      compareNatural,
-                                    )
-                                    .toList(growable: false) +
-                                state.files
-                                    .map(
-                                      (f) => FileWidget(
-                                        file: f,
-                                        onTap: () async {
-                                          final pd = ProgressDialog(
-                                            context: context,
-                                          );
-                                          unawaited(
-                                            pd.show(
-                                              msg: context.i18n.downloading,
-                                            ),
-                                          );
-                                          await downloadFile(
-                                            f,
-                                            onProgress: (perc) =>
-                                                pd.update(value: perc.round()),
-                                            onDone: OpenFilex.open,
-                                          );
-                                        },
-                                        showDownloads: isWideScreen,
-                                      ),
-                                    )
-                                    .sortedByCompare(
-                                      (f) => f.sortKey,
-                                      compareNatural,
-                                    )
-                                    .toList(growable: false),
+                        ? generateHomeList(context, state: state)
+                        : generateFolderList(
+                            context,
+                            stateL: stateL,
+                            state: state,
                           ),
                   ),
                 );
               },
             ),
     ),
+  );
+
+  Widget generateHomeList(BuildContext context, {required FilesState state}) =>
+      SafeArea(
+        child: CustomScrollView(
+          slivers: state.courses
+              .groupBy((c) => c.relationship('start-semester').first.id)
+              .map(
+                (s, cs) => MapEntry(
+                  state.semesters.firstWhere((se) => se.id == s),
+                  cs,
+                ),
+              )
+              .entries
+              .sortedBy((e) => e.key.attributes.start)
+              .reversed
+              .map(
+                (e) => SliverStickyHeader(
+                  header: Container(
+                    height: 60,
+                    color: Colors.lightBlue,
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      e.key.attributes.title,
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  sliver: SliverList(
+                    delegate: SliverChildListDelegate.fixed(
+                      e.value
+                          .map(
+                            (c) => CourseWidget(
+                              course: c,
+                              onTap: () async {
+                                await loadCourse(c);
+                              },
+                            ),
+                          )
+                          .sortedByCompare((f) => f.sortKey, compareNatural)
+                          .toList(growable: false),
+                    ),
+                  ),
+                ),
+              )
+              .toList(growable: false),
+        ),
+      );
+
+  Widget generateFolderList(
+    BuildContext context, {
+    required LoginState stateL,
+    required FilesState state,
+  }) => ListView(
+    children:
+        <Widget>[
+          FolderWidget(
+            folder: goUpFolder(),
+            onTap: () async {
+              state.goUp();
+              await refresh(context, stateL: stateL, state: state);
+            },
+          ),
+        ] +
+        state.folders
+            .map(
+              (f) => FolderWidget(
+                folder: f,
+                onTap: () async {
+                  await loadFolder(f);
+                },
+              ),
+            )
+            .sortedByCompare((f) => f.sortKey, compareNatural)
+            .toList(growable: false) +
+        state.files
+            .map(
+              (f) => FileWidget(
+                file: f,
+                onTap: () async {
+                  final pd = ProgressDialog(context: context);
+                  unawaited(pd.show(msg: context.i18n.downloading));
+                  await downloadFile(
+                    f,
+                    onProgress: (perc) => pd.update(value: perc.round()),
+                    onDone: OpenFilex.open,
+                  );
+                },
+                showDownloads: isWideScreen,
+              ),
+            )
+            .sortedByCompare((f) => f.sortKey, compareNatural)
+            .toList(growable: false),
   );
 
   Future<String> downloadFile(
