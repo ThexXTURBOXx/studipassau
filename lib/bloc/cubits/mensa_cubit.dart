@@ -18,10 +18,10 @@ class MensaCubit extends Cubit<MensaState> {
 
   final MensaRepo _mensaRepo;
 
-  Future<List<DayMenu>?> _loadCachedMensaPlan() async => _storageRepo
-      .getStringList(mensaPlanKey)
-      ?.map((e) => DayMenu.fromJson(jsonDecode(e) as Map<String, dynamic>))
-      .toList(growable: false);
+  Future<List<DayMenu>?> _loadCachedMensaPlan() async =>
+      (await _storageRepo.getStringList(mensaPlanKey))
+          ?.map((e) => DayMenu.fromJson(jsonDecode(e) as Map<String, dynamic>))
+          .toList(growable: false);
 
   Future<void> fetchMensaPlan({required bool onlineSync}) async {
     emit(state.copyWith(state: StudiPassauState.loading));

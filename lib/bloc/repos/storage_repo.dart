@@ -12,18 +12,21 @@ class StorageRepo {
 
   final _secureStorageProvider = SecureStorageDataProvider();
 
-  String? getString(String key) => _sharedStorageProvider.getString(key);
+  Future<String?> getString(String key) async =>
+      _sharedStorageProvider.getString(key);
 
-  List<String>? getStringList(String key) =>
+  Future<List<String>?> getStringList(String key) async =>
       _sharedStorageProvider.getStringList(key);
 
-  Future<bool> writeString({required String key, required String value}) =>
-      _sharedStorageProvider.writeString(key, value);
+  Future<void> writeString({
+    required String key,
+    required String value,
+  }) async => _sharedStorageProvider.writeString(key, value);
 
-  Future<bool> writeStringList({
+  Future<void> writeStringList({
     required String key,
     required List<String> value,
-  }) => _sharedStorageProvider.writeStringList(key, value);
+  }) async => _sharedStorageProvider.writeStringList(key, value);
 
   Future<Map<String, String>> readAllSecure() =>
       _secureStorageProvider.readAll();

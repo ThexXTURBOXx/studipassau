@@ -40,10 +40,11 @@ Future main() async {
     consoleHandler,
   ], localizationOptions: catcherLocalizations);
 
+  // TODO(Nico): Migrate to async or cached version at some point
+  //             (probably need to migrate away from pref then, though...).
+  //             This will also get rid of this ugly static reference...
   SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
 
-  // TODO(Nico): Yes, this is not optimal. We should fix the underlying issue
-  //             at some point, i.e. remove the global reference...
   prefService = await PrefServiceShared.init(defaults: defaults);
   targetRoute = getPref(startRoutePref);
 

@@ -22,25 +22,25 @@ class NewsCubit extends Cubit<NewsState> {
 
   final CoursesRepo _coursesRepo;
 
-  Future<List<News>?> _loadCachedNews() async => _storageRepo
-      .getStringList(newsKey)
-      ?.map(
-        (e) => News.fromJson(
-          jsonDecode(e) as Map<String, dynamic>,
-          (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
-        ),
-      )
-      .toList(growable: false);
+  Future<List<News>?> _loadCachedNews() async =>
+      (await _storageRepo.getStringList(newsKey))
+          ?.map(
+            (e) => News.fromJson(
+              jsonDecode(e) as Map<String, dynamic>,
+              (a) => NewsAttributes.fromJson(a as Map<String, dynamic>),
+            ),
+          )
+          .toList(growable: false);
 
-  Future<List<Course>?> _loadCachedCourses() async => _storageRepo
-      .getStringList(courseNewsKey)
-      ?.map(
-        (e) => Course.fromJson(
-          jsonDecode(e) as Map<String, dynamic>,
-          (a) => CourseAttributes.fromJson(a as Map<String, dynamic>),
-        ),
-      )
-      .toList(growable: false);
+  Future<List<Course>?> _loadCachedCourses() async =>
+      (await _storageRepo.getStringList(courseNewsKey))
+          ?.map(
+            (e) => Course.fromJson(
+              jsonDecode(e) as Map<String, dynamic>,
+              (a) => CourseAttributes.fromJson(a as Map<String, dynamic>),
+            ),
+          )
+          .toList(growable: false);
 
   Future<void> fetchNews({required bool onlineSync}) async {
     emit(state.copyWith(state: StudiPassauState.loading));

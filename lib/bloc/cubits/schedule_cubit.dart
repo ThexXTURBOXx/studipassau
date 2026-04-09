@@ -17,10 +17,10 @@ class ScheduleCubit extends Cubit<ScheduleState> {
 
   final ScheduleRepo _scheduleRepo;
 
-  Future<List<StudiPassauEvent>?> _loadCachedSchedule() async => _storageRepo
-      .getStringList(scheduleKey)
-      ?.map((e) => StudiPassauEvent.fromJson(jsonDecode(e)))
-      .toList(growable: false);
+  Future<List<StudiPassauEvent>?> _loadCachedSchedule() async =>
+      (await _storageRepo.getStringList(scheduleKey))
+          ?.map((e) => StudiPassauEvent.fromJson(jsonDecode(e)))
+          .toList(growable: false);
 
   Future<void> fetchSchedule(String userId, {required bool onlineSync}) async {
     emit(state.copyWith(state: StudiPassauState.loading));

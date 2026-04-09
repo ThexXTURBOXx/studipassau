@@ -21,7 +21,7 @@ class LoginCubit extends Cubit<LoginState> {
   final StorageRepo _storageRepo;
 
   Future<User?> _loadCachedMe() async {
-    final cfgJson = _storageRepo.getString(userDataKey);
+    final cfgJson = await _storageRepo.getString(userDataKey);
     return cfgJson == null
         ? null
         : User.fromJson(
