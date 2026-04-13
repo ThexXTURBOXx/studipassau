@@ -121,7 +121,7 @@ class CoursesCubit extends Cubit<CoursesState> {
       final results2 = await Future.wait(
         extraCourseIds.map((id) => _coursesRepo.getCourse(id)),
       );
-      final extraCourses = {...(state.extraCourses ?? {}), ...idMap(results2)};
+      final extraCourses = {...state.extraCoursesOrEmpty, ...idMap(results2)};
 
       emit(
         state.copyWith(

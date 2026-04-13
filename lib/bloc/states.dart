@@ -48,7 +48,7 @@ class ScheduleState extends BlocState {
     Map<String, StudiPassauEvent>? schedule,
   }) => ScheduleState(state ?? this.state, schedule: schedule ?? this.schedule);
 
-  Map<String, StudiPassauEvent> get events => schedule ?? {};
+  Map<String, StudiPassauEvent> get scheduleOrEmpty => schedule ?? {};
 }
 
 class MensaState extends BlocState {
@@ -59,7 +59,7 @@ class MensaState extends BlocState {
   MensaState copyWith({StudiPassauState? state, List<DayMenu>? mensaPlan}) =>
       MensaState(state ?? this.state, mensaPlan: mensaPlan ?? this.mensaPlan);
 
-  List<DayMenu> get menu => mensaPlan ?? [];
+  List<DayMenu> get mensaPlanOrEmpty => mensaPlan ?? [];
 }
 
 class FilesState extends BlocState {
@@ -150,9 +150,16 @@ class CoursesState extends BlocState {
     courseMemberships: courseMemberships ?? this.courseMemberships,
   );
 
+  Map<String, Course> get coursesOrEmpty => courses ?? {};
+
+  Map<String, Course> get extraCoursesOrEmpty => extraCourses ?? {};
+
+  Map<String, CourseMembership> get courseMembershipsOrEmpty =>
+      courseMemberships ?? {};
+
   Map<String, Course> get allCourses => {
-    ...(courses ?? {}),
-    ...(extraCourses ?? {}),
+    ...coursesOrEmpty,
+    ...extraCoursesOrEmpty,
   };
 }
 
@@ -168,6 +175,8 @@ class SemestersState extends BlocState {
     state ?? this.state,
     semesters: semesters ?? this.semesters,
   );
+
+  Map<String, Semester> get semestersOrEmpty => semesters ?? {};
 }
 
 enum StudiPassauState {

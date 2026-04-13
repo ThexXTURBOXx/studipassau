@@ -175,8 +175,10 @@ class _SchedulePagePageState extends State<SchedulePage>
                                 child: TimetableConfig<StudiPassauEvent>(
                                   dateController: dateControllerContent,
                                   timeController: timeController,
-                                  eventProvider: (visible) =>
-                                      getEvents(stateS.events.values, visible),
+                                  eventProvider: (visible) => getEvents(
+                                    stateS.scheduleOrEmpty.values,
+                                    visible,
+                                  ),
                                   eventBuilder: (context, event) =>
                                       StudiPassauEventWidget(
                                         event,

@@ -110,8 +110,8 @@ class _FilesPagePageState extends State<FilesPage>
                                 child: state.folderState == FolderState.home
                                     ? generateHomeList(
                                         context,
-                                        courses: (stateC.courses ?? {}).values,
-                                        semesters: stateS.semesters ?? {},
+                                        courses: stateC.coursesOrEmpty.values,
+                                        semesters: stateS.semestersOrEmpty,
                                       )
                                     : generateFolderList(
                                         context,
