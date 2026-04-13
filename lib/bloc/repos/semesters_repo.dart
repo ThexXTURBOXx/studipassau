@@ -2,7 +2,7 @@ import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/semester.dart';
 
-class SemesterRepo {
+class SemestersRepo {
   final _studIPProvider = StudIPDataProvider();
 
   Future<List<Semester>> getSemesters() async {

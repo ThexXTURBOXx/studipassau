@@ -10,6 +10,7 @@ class StudiPassauEventWidget extends StatelessWidget {
     super.key,
     this.onTap,
     this.margin = const EdgeInsets.only(right: 1),
+    required this.backgroundColorGetter,
   });
 
   final StudiPassauEvent event;
@@ -17,6 +18,8 @@ class StudiPassauEventWidget extends StatelessWidget {
   final VoidCallback? onTap;
 
   final EdgeInsetsGeometry margin;
+
+  final Color? Function(String?) backgroundColorGetter;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -39,7 +42,7 @@ class StudiPassauEventWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
       ),
       clipBehavior: Clip.hardEdge,
-      color: event.backgroundColor,
+      color: event.getBackgroundColor(backgroundColorGetter),
       child: InkWell(
         onTap: onTap,
         child: Padding(
@@ -47,7 +50,9 @@ class StudiPassauEventWidget extends StatelessWidget {
           child: DefaultTextStyle(
             style: context.textTheme.bodyMedium!.copyWith(
               fontSize: 12,
-              color: event.backgroundColor.highEmphasisOnColor,
+              color: event
+                  .getBackgroundColor(backgroundColorGetter)
+                  .highEmphasisOnColor,
             ),
             child: Column(
               children: [
@@ -72,6 +77,7 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
     super.key,
     this.onTap,
     this.style,
+    required this.backgroundColorGetter,
   });
 
   final StudiPassauEvent event;
@@ -79,6 +85,8 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
 
   final VoidCallback? onTap;
   final BasicAllDayEventWidgetStyle? style;
+
+  final Color? Function(String?) backgroundColorGetter;
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -96,7 +104,7 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
     child: CustomPaint(
       painter: AllDayEventBackgroundPainter(
         info: info,
-        color: event.backgroundColor,
+        color: event.getBackgroundColor(backgroundColorGetter),
         radii: AllDayEventBorderRadii(
           cornerRadius: BorderRadius.circular(4),
           leftTipRadius: 4,
@@ -122,7 +130,9 @@ class StudiPassauAllDayEventWidget extends StatelessWidget {
               event.title,
               style: context.theme.textTheme.bodyMedium!.copyWith(
                 fontSize: 14,
-                color: event.backgroundColor.highEmphasisOnColor,
+                color: event
+                    .getBackgroundColor(backgroundColorGetter)
+                    .highEmphasisOnColor,
               ),
               maxLines: 1,
               overflow: TextOverflow.visible,

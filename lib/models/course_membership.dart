@@ -29,5 +29,5 @@ abstract class CourseMembershipAttributes with _$CourseMembershipAttributes {
   factory CourseMembershipAttributes.fromJson(Map<String, dynamic> json) =>
       _$CourseMembershipAttributesFromJson(json);
 
-  Color? get color => getColorOrNotFound(group + 1);
+  Color get color => getColorOrNotFound(group + 1);
 }

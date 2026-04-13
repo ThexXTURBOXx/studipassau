@@ -9,8 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
+import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/cubits/files_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
+import 'package:studipassau/bloc/cubits/semesters_cubit.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
@@ -18,6 +20,7 @@ import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/file_ref.dart';
 import 'package:studipassau/models/folder.dart';
+import 'package:studipassau/models/semester.dart';
 import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
@@ -71,87 +74,105 @@ class _FilesPagePageState extends State<FilesPage>
     body: BlocBuilder<LoginCubit, LoginState>(
       builder: (context, stateL) => stateL.me == null
           ? CenteredRetryScreen.login(context: context, route: routeFiles)
-          : BlocConsumer<FilesCubit, FilesState>(
-              listener: showErrorMessage,
-              builder: (context, state) {
-                isWideScreen = context.mediaQuery.size.width > wideScreenWidth;
-                return PopScope(
-                  canPop: false,
-                  onPopInvokedWithResult: (didPop, _) async {
-                    if (didPop) {
-                      return;
-                    }
-                    final wasHome = state.goUp();
-                    if (wasHome) {
-                      await SystemNavigator.pop();
-                    } else {
-                      await refresh(context, stateL: stateL, state: state);
-                    }
-                  },
-                  child: RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    onRefresh: () async =>
-                        refresh(context, stateL: stateL, state: state),
-                    child: state.folderState == FolderState.home
-                        ? generateHomeList(context, state: state)
-                        : generateFolderList(
-                            context,
-                            stateL: stateL,
-                            state: state,
-                          ),
+          : BlocBuilder<CoursesCubit, CoursesState>(
+              builder: (context, stateC) =>
+                  BlocBuilder<SemestersCubit, SemestersState>(
+                    builder: (context, stateS) =>
+                        BlocConsumer<FilesCubit, FilesState>(
+                          listener: showErrorMessage,
+                          builder: (context, state) {
+                            isWideScreen =
+                                context.mediaQuery.size.width > wideScreenWidth;
+                            return PopScope(
+                              canPop: false,
+                              onPopInvokedWithResult: (didPop, _) async {
+                                if (didPop) {
+                                  return;
+                                }
+                                final wasHome = state.goUp();
+                                if (wasHome) {
+                                  await SystemNavigator.pop();
+                                } else {
+                                  await refresh(
+                                    context,
+                                    stateL: stateL,
+                                    state: state,
+                                  );
+                                }
+                              },
+                              child: RefreshIndicator(
+                                key: _refreshIndicatorKey,
+                                onRefresh: () async => refresh(
+                                  context,
+                                  stateL: stateL,
+                                  state: state,
+                                ),
+                                child: state.folderState == FolderState.home
+                                    ? generateHomeList(
+                                        context,
+                                        courses: (stateC.courses ?? {}).values,
+                                        semesters: stateS.semesters ?? {},
+                                      )
+                                    : generateFolderList(
+                                        context,
+                                        stateL: stateL,
+                                        state: state,
+                                      ),
+                              ),
+                            );
+                          },
+                        ),
                   ),
-                );
-              },
             ),
     ),
   );
 
-  Widget generateHomeList(BuildContext context, {required FilesState state}) =>
-      SafeArea(
-        child: CustomScrollView(
-          slivers: state.courses
-              .groupBy((c) => c.relationship('start-semester').first.id)
-              .map(
-                (s, cs) => MapEntry(
-                  state.semesters.firstWhere((se) => se.id == s),
-                  cs,
+  Widget generateHomeList(
+    BuildContext context, {
+    required Iterable<Course> courses,
+    required Map<String, Semester> semesters,
+  }) => SafeArea(
+    child: CustomScrollView(
+      slivers: courses
+          .groupBy((c) => c.relationship('start-semester').first.id)
+          .map((s, cs) => MapEntry(semesters[s], cs))
+          .entries
+          .where((e) => e.key != null)
+          .map((e) => MapEntry(e.key!, e.value))
+          .sortedBy((e) => e.key.attributes.start)
+          .reversed
+          .map(
+            (e) => SliverStickyHeader(
+              header: Container(
+                height: 60,
+                color: Colors.lightBlue,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  e.key.attributes.title,
+                  style: const TextStyle(color: Colors.white),
                 ),
-              )
-              .entries
-              .sortedBy((e) => e.key.attributes.start)
-              .reversed
-              .map(
-                (e) => SliverStickyHeader(
-                  header: Container(
-                    height: 60,
-                    color: Colors.lightBlue,
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      e.key.attributes.title,
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  sliver: SliverList(
-                    delegate: SliverChildListDelegate.fixed(
-                      e.value
-                          .map(
-                            (c) => CourseWidget(
-                              course: c,
-                              onTap: () async {
-                                await loadCourse(c);
-                              },
-                            ),
-                          )
-                          .sortedByCompare((f) => f.sortKey, compareNatural)
-                          .toList(growable: false),
-                    ),
-                  ),
+              ),
+              sliver: SliverList(
+                delegate: SliverChildListDelegate.fixed(
+                  e.value
+                      .map(
+                        (c) => CourseWidget(
+                          course: c,
+                          onTap: () async {
+                            await loadCourse(c);
+                          },
+                        ),
+                      )
+                      .sortedByCompare((f) => f.sortKey, compareNatural)
+                      .toList(growable: false),
                 ),
-              )
-              .toList(growable: false),
-        ),
-      );
+              ),
+            ),
+          )
+          .toList(growable: false),
+    ),
+  );
 
   Widget generateFolderList(
     BuildContext context, {

@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:collection/collection.dart';
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/models/course.dart';
+import 'package:studipassau/models/course_membership.dart';
 import 'package:studipassau/models/file_ref.dart';
 import 'package:studipassau/models/folder.dart';
 import 'package:studipassau/models/news.dart';
@@ -66,18 +67,14 @@ class FilesState extends BlocState {
     super.state, {
     required this.currentFolders,
     this.currentCourse,
-    this.courses = const [],
     this.files = const [],
     this.folders = const [],
-    this.semesters = const [],
   });
 
   final Queue<Folder> currentFolders;
   Course? currentCourse;
-  final List<Course> courses;
   final List<FileRef> files;
   final List<Folder> folders;
-  final List<Semester> semesters;
 
   FolderState get folderState => currentFolder != null
       ? FolderState.folder
@@ -103,45 +100,74 @@ class FilesState extends BlocState {
     StudiPassauState? state,
     Queue<Folder>? currentFolders,
     Course? currentCourse,
-    List<Course>? courses,
     List<FileRef>? files,
     List<Folder>? folders,
-    List<Semester>? semesters,
   }) => FilesState(
     state ?? this.state,
     currentFolders: currentFolders ?? this.currentFolders,
     currentCourse: currentCourse ?? this.currentCourse,
-    courses: courses ?? this.courses,
     files: files ?? this.files,
     folders: folders ?? this.folders,
-    semesters: semesters ?? this.semesters,
   );
 }
 
 enum FolderState { home, courseHome, folder }
 
 class NewsState extends BlocState {
-  const NewsState(super.state, {this.news, this.courses});
+  const NewsState(super.state, {this.news});
 
   final List<News>? news;
 
-  final List<Course>? courses;
-
-  NewsState copyWith({
-    StudiPassauState? state,
-    List<News>? news,
-    List<Course>? courses,
-  }) => NewsState(
-    state ?? this.state,
-    news: news ?? this.news,
-    courses: courses ?? this.courses,
-  );
+  NewsState copyWith({StudiPassauState? state, List<News>? news}) =>
+      NewsState(state ?? this.state, news: news ?? this.news);
 
   List<News> get newsOrEmpty => news ?? <News>[];
+}
 
-  Course? getCourse(String id) => courses?.firstWhere((c) => c.id == id);
+class CoursesState extends BlocState {
+  const CoursesState(
+    super.state, {
+    this.courses,
+    this.extraCourses,
+    this.courseMemberships,
+  });
 
-  String? getCourseTitle(String id) => getCourse(id)?.attributes.title;
+  final Map<String, Course>? courses;
+
+  final Map<String, Course>? extraCourses;
+
+  final Map<String, CourseMembership>? courseMemberships;
+
+  CoursesState copyWith({
+    StudiPassauState? state,
+    Map<String, Course>? courses,
+    Map<String, Course>? extraCourses,
+    Map<String, CourseMembership>? courseMemberships,
+  }) => CoursesState(
+    state ?? this.state,
+    courses: courses ?? this.courses,
+    extraCourses: extraCourses ?? this.extraCourses,
+    courseMemberships: courseMemberships ?? this.courseMemberships,
+  );
+
+  Map<String, Course> get allCourses => {
+    ...(courses ?? {}),
+    ...(extraCourses ?? {}),
+  };
+}
+
+class SemestersState extends BlocState {
+  const SemestersState(super.state, {this.semesters});
+
+  final Map<String, Semester>? semesters;
+
+  SemestersState copyWith({
+    StudiPassauState? state,
+    Map<String, Semester>? semesters,
+  }) => SemestersState(
+    state ?? this.state,
+    semesters: semesters ?? this.semesters,
+  );
 }
 
 enum StudiPassauState {

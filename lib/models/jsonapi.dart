@@ -3,6 +3,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'jsonapi.freezed.dart';
 part 'jsonapi.g.dart';
 
+Map<String, J> idMap<J extends JsonApiResource<A>, A>(Iterable<J> iterable) => {
+  for (var v in iterable) v.id: v,
+};
+
 JsonApiResource<A> parseObject<A>(
   Map<String, dynamic> json,
   A Function(Object?) fromJsonA,

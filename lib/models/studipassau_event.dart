@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:studipassau/pages/settings/settings.dart';
 import 'package:studipassau/util/json.dart';
 import 'package:timetable/timetable.dart';
 
@@ -14,12 +15,12 @@ sealed class StudiPassauEvent with _$StudiPassauEvent implements Event {
   const factory StudiPassauEvent({
     required String id,
     required String title,
-    required String course,
+    String? courseId,
     required String? description,
     required List<String> categories,
     required String room,
     @BoolConverter() required bool canceled,
-    @ColorConverter() required Color backgroundColor,
+    @ColorConverter() Color? backgroundColor,
     @DateTimeInSaveConverter() required DateTime start,
     @DateTimeInSaveConverter() required DateTime end,
   }) = _StudiPassauEvent;
@@ -29,4 +30,11 @@ sealed class StudiPassauEvent with _$StudiPassauEvent implements Event {
 
   @override
   bool get isAllDay => end.difference(start).inDays >= 1;
+
+  Color getBackgroundColor(Color? Function(String?) courseIdToColor) =>
+      backgroundColor ??
+      (canceled
+          ? Color(getPref(canceledColorPref))
+          : courseIdToColor(courseId)) ??
+      Color(getPref(notFoundColorPref));
 }

@@ -1,7 +1,7 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';
 import 'package:studipassau/bloc/states.dart';
@@ -61,29 +61,33 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
           ? CenteredRetryScreen.login(context: context, route: routeNews)
           : BlocConsumer<NewsCubit, NewsState>(
               listener: showErrorMessage,
-              builder: (context, stateN) => RefreshIndicator(
-                key: _refreshIndicatorKey,
-                onRefresh: () async => refresh(context),
-                child: ListView(
-                  children: stateN.newsOrEmpty
-                      .map(
-                        (e) => NewsWidget(
-                          news: e,
-                          courseTitleGetter: (id) => stateN.courses
-                              ?.firstWhereOrNull((c) => c.id == id)
-                              ?.attributes
-                              .formattedTitle,
-                        ),
-                      )
-                      .toList(growable: false),
-                ),
-              ),
+              builder: (context, stateN) =>
+                  BlocConsumer<CoursesCubit, CoursesState>(
+                    listener: showErrorMessage,
+                    builder: (context, stateC) => RefreshIndicator(
+                      key: _refreshIndicatorKey,
+                      onRefresh: () async => refresh(context, stateL.userId!),
+                      child: ListView(
+                        children: stateN.newsOrEmpty
+                            .map(
+                              (e) => NewsWidget(
+                                news: e,
+                                courseTitleGetter: (id) => stateC
+                                    .allCourses[id]
+                                    ?.attributes
+                                    .formattedTitle,
+                              ),
+                            )
+                            .toList(growable: false),
+                      ),
+                    ),
+                  ),
             ),
     ),
   );
 
-  Future<void> refresh(BuildContext context) async {
-    await context.read<NewsCubit>().fetchNews(onlineSync: onlineSync);
+  Future<void> refresh(BuildContext context, String userId) async {
+    await context.read<NewsCubit>().fetchNews(userId, onlineSync: onlineSync);
     onlineSync = true;
   }
 }
