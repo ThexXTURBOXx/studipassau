@@ -9,6 +9,7 @@ import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/news.dart';
 
 class NewsCubit extends Cubit<NewsState> {
@@ -37,7 +38,7 @@ class NewsCubit extends Cubit<NewsState> {
       try {
         final news = await _loadCachedNews();
         if (news != null) {
-          emit(state.copyWith(news: news));
+          emit(state.copyWith(news: idMap(news)));
         }
       } catch (e, s) {
         Catcher2.reportCheckedError(e, s);
@@ -51,14 +52,14 @@ class NewsCubit extends Cubit<NewsState> {
 
     emit(state.copyWith(state: StudiPassauState.fetching));
     try {
-      final news = await _newsRepo.parseNews();
+      final news = idMap(await _newsRepo.parseNews());
       emit(state.copyWith(state: StudiPassauState.fetched, news: news));
 
       unawaited(
         _coursesCubit.fetchCourses(
           userId,
           onlineSync: onlineSync,
-          extra: news
+          extra: news.values
               .where((n) => n.isCourseNews)
               .map((n) => n.courseId)
               .nonNulls
@@ -68,7 +69,7 @@ class NewsCubit extends Cubit<NewsState> {
 
       await _storageRepo.writeStringList(
         key: newsKey,
-        value: news
+        value: news.values
             .map((n) => jsonEncode(n.toJson((a) => a.toJson())))
             .toList(growable: false),
       );

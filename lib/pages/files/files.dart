@@ -189,7 +189,7 @@ class _FilesPagePageState extends State<FilesPage>
             },
           ),
         ] +
-        state.folders
+        state.folders.values
             .map(
               (f) => FolderWidget(
                 folder: f,
@@ -200,7 +200,7 @@ class _FilesPagePageState extends State<FilesPage>
             )
             .sortedByCompare((f) => f.sortKey, compareNatural)
             .toList(growable: false) +
-        state.files
+        state.files.values
             .map(
               (f) => FileWidget(
                 file: f,

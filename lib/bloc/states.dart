@@ -41,14 +41,14 @@ class LoginState extends BlocState {
 class ScheduleState extends BlocState {
   const ScheduleState(super.state, {this.schedule});
 
-  final List<StudiPassauEvent>? schedule;
+  final Map<String, StudiPassauEvent>? schedule;
 
   ScheduleState copyWith({
     StudiPassauState? state,
-    List<StudiPassauEvent>? schedule,
+    Map<String, StudiPassauEvent>? schedule,
   }) => ScheduleState(state ?? this.state, schedule: schedule ?? this.schedule);
 
-  List<StudiPassauEvent> get events => schedule ?? <StudiPassauEvent>[];
+  Map<String, StudiPassauEvent> get events => schedule ?? {};
 }
 
 class MensaState extends BlocState {
@@ -59,7 +59,7 @@ class MensaState extends BlocState {
   MensaState copyWith({StudiPassauState? state, List<DayMenu>? mensaPlan}) =>
       MensaState(state ?? this.state, mensaPlan: mensaPlan ?? this.mensaPlan);
 
-  List<DayMenu> get menu => mensaPlan ?? <DayMenu>[];
+  List<DayMenu> get menu => mensaPlan ?? [];
 }
 
 class FilesState extends BlocState {
@@ -67,14 +67,14 @@ class FilesState extends BlocState {
     super.state, {
     required this.currentFolders,
     this.currentCourse,
-    this.files = const [],
-    this.folders = const [],
+    this.files = const {},
+    this.folders = const {},
   });
 
   final Queue<Folder> currentFolders;
   Course? currentCourse;
-  final List<FileRef> files;
-  final List<Folder> folders;
+  final Map<String, FileRef> files;
+  final Map<String, Folder> folders;
 
   FolderState get folderState => currentFolder != null
       ? FolderState.folder
@@ -100,8 +100,8 @@ class FilesState extends BlocState {
     StudiPassauState? state,
     Queue<Folder>? currentFolders,
     Course? currentCourse,
-    List<FileRef>? files,
-    List<Folder>? folders,
+    Map<String, FileRef>? files,
+    Map<String, Folder>? folders,
   }) => FilesState(
     state ?? this.state,
     currentFolders: currentFolders ?? this.currentFolders,
@@ -116,12 +116,12 @@ enum FolderState { home, courseHome, folder }
 class NewsState extends BlocState {
   const NewsState(super.state, {this.news});
 
-  final List<News>? news;
+  final Map<String, News>? news;
 
-  NewsState copyWith({StudiPassauState? state, List<News>? news}) =>
+  NewsState copyWith({StudiPassauState? state, Map<String, News>? news}) =>
       NewsState(state ?? this.state, news: news ?? this.news);
 
-  List<News> get newsOrEmpty => news ?? <News>[];
+  Map<String, News> get newsOrEmpty => news ?? {};
 }
 
 class CoursesState extends BlocState {

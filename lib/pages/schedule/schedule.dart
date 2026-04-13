@@ -176,7 +176,7 @@ class _SchedulePagePageState extends State<SchedulePage>
                                   dateController: dateControllerContent,
                                   timeController: timeController,
                                   eventProvider: (visible) =>
-                                      getEvents(stateS.events, visible),
+                                      getEvents(stateS.events.values, visible),
                                   eventBuilder: (context, event) =>
                                       StudiPassauEventWidget(
                                         event,
@@ -238,10 +238,10 @@ class _SchedulePagePageState extends State<SchedulePage>
   );
 
   List<StudiPassauEvent> getEvents(
-    List<StudiPassauEvent> events,
+    Iterable<StudiPassauEvent> events,
     Interval visible,
   ) => events
-      .where((e) => visible.includes(e.start) && visible.includes(e.end))
+      .where((e) => visible.includes(e.start) || visible.includes(e.end))
       .toList(growable: false);
 
   Future<void> refresh(BuildContext context, String userId) async {

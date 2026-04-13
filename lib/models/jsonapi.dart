@@ -7,6 +7,9 @@ Map<String, J> idMap<J extends JsonApiResource<A>, A>(Iterable<J> iterable) => {
   for (var v in iterable) v.id: v,
 };
 
+Map<String, T> idMapCustom<T>(Iterable<T> iterable, String Function(T) idFn) =>
+    {for (var v in iterable) idFn(v): v};
+
 JsonApiResource<A> parseObject<A>(
   Map<String, dynamic> json,
   A Function(Object?) fromJsonA,

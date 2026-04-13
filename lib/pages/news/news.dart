@@ -68,7 +68,7 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
                       key: _refreshIndicatorKey,
                       onRefresh: () async => refresh(context, stateL.userId!),
                       child: ListView(
-                        children: stateN.newsOrEmpty
+                        children: stateN.newsOrEmpty.values
                             .map(
                               (e) => NewsWidget(
                                 news: e,

@@ -9,6 +9,7 @@ import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/repos/schedule_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/studipassau_event.dart';
 
 class ScheduleCubit extends Cubit<ScheduleState> {
@@ -32,7 +33,7 @@ class ScheduleCubit extends Cubit<ScheduleState> {
       try {
         final schedule = await _loadCachedSchedule();
         if (schedule != null) {
-          emit(state.copyWith(schedule: schedule));
+          emit(state.copyWith(schedule: idMapEvent(schedule)));
         }
       } catch (e, s) {
         Catcher2.reportCheckedError(e, s);
@@ -46,12 +47,15 @@ class ScheduleCubit extends Cubit<ScheduleState> {
 
     emit(state.copyWith(state: StudiPassauState.fetching));
     try {
-      final schedule = await _scheduleRepo.parseSchedule(userId);
+      final schedule = idMapEvent(await _scheduleRepo.parseSchedule(userId));
+
       emit(state.copyWith(state: StudiPassauState.fetched, schedule: schedule));
+
       unawaited(_coursesCubit.fetchCourses(userId, onlineSync: onlineSync));
+
       await _storageRepo.writeStringList(
         key: scheduleKey,
-        value: schedule.map(jsonEncode).toList(growable: false),
+        value: schedule.values.map(jsonEncode).toList(growable: false),
       );
     } on SessionInvalidException {
       emit(state.copyWith(state: StudiPassauState.authenticationError));
@@ -63,3 +67,6 @@ class ScheduleCubit extends Cubit<ScheduleState> {
     }
   }
 }
+
+Map<String, StudiPassauEvent> idMapEvent(List<StudiPassauEvent> list) =>
+    idMapCustom(list, (e) => e.id);

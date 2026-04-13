@@ -16,6 +16,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/file_ref.dart';
 import 'package:studipassau/models/folder.dart';
+import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {
@@ -59,16 +60,20 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadCourseTopFolder(course.id);
 
-      final folders = topFolder.item1.sorted(
-        compareBy<Folder, String>(
-          (f) => f.attributes.name,
-        ).thenBy((f) => f.attributes.changeDate),
+      final folders = idMap(
+        topFolder.item1.sorted(
+          compareBy<Folder, String>(
+            (f) => f.attributes.name,
+          ).thenBy((f) => f.attributes.changeDate),
+        ),
       );
 
-      final files = topFolder.item2.sorted(
-        compareBy<FileRef, String>(
-          (f) => f.attributes.name,
-        ).thenBy((f) => f.attributes.changeDate),
+      final files = idMap(
+        topFolder.item2.sorted(
+          compareBy<FileRef, String>(
+            (f) => f.attributes.name,
+          ).thenBy((f) => f.attributes.changeDate),
+        ),
       );
 
       emit(
@@ -95,16 +100,20 @@ class FilesCubit extends Cubit<FilesState> {
     try {
       final topFolder = await _filesRepo.loadFolder(folder.id);
 
-      final folders = topFolder.item1.sorted(
-        compareBy<Folder, String>(
-          (f) => f.attributes.name,
-        ).thenBy((f) => f.attributes.changeDate),
+      final folders = idMap(
+        topFolder.item1.sorted(
+          compareBy<Folder, String>(
+            (f) => f.attributes.name,
+          ).thenBy((f) => f.attributes.changeDate),
+        ),
       );
 
-      final files = topFolder.item2.sorted(
-        compareBy<FileRef, String>(
-          (f) => f.attributes.name,
-        ).thenBy((f) => f.attributes.changeDate),
+      final files = idMap(
+        topFolder.item2.sorted(
+          compareBy<FileRef, String>(
+            (f) => f.attributes.name,
+          ).thenBy((f) => f.attributes.changeDate),
+        ),
       );
 
       emit(

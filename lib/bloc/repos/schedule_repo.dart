@@ -68,7 +68,7 @@ class ScheduleRepo {
           for (var j = 0; j <= eventDaysInFuture - first; j += 7) {
             eventsCache.add(
               StudiPassauEvent(
-                id: entry.id,
+                id: '${entry.id}_${(end + j.days).millisecondsSinceEpoch}',
                 title: entry.attributes.title,
                 description: entry.attributes.description,
                 categories: const [],
