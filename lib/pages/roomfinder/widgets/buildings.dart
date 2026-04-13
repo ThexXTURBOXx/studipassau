@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:string_similarity/string_similarity.dart';
-import 'package:supercharged/supercharged.dart';
 
 /*
 Useful for constructing Polygons:
@@ -708,7 +707,7 @@ List<Marker> get markers =>
 List<Building> searchBuildings(String search) {
   final searchLC = search.toLowerCase();
   return buildings
-      .filter(
+      .where(
         (e) =>
             e.name.toLowerCase().contains(searchLC) ||
             e.abbrev.toLowerCase().contains(searchLC) ||

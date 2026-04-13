@@ -109,7 +109,7 @@ class StwnoDataProvider {
   List<String> parseFoodProperties(String tags) => tags
       .split(',')
       .map((e) => e.trim())
-      .filter((e) => e.isNotEmpty)
+      .where((e) => e.isNotEmpty)
       .map((e) => stwnoProperties[e] ?? stwnoAdditives[e] ?? e)
       .toList(growable: false);
 
@@ -117,11 +117,11 @@ class StwnoDataProvider {
       .allMatches(name)
       .map((e) => e.group(1) ?? '')
       .map((e) => e.trim())
-      .filter((e) => e.isNotEmpty)
+      .where((e) => e.isNotEmpty)
       .map((e) => e.split(','))
       .expand((e) => e)
       .map((e) => e.trim())
-      .filter((e) => e.isNotEmpty)
+      .where((e) => e.isNotEmpty)
       .map((e) => stwnoAdditives[e] ?? stwnoProperties[e] ?? e)
       .toList(growable: false);
 

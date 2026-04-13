@@ -12,7 +12,6 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
-import 'package:supercharged/supercharged.dart';
 
 const routeMensa = '/mensa';
 
@@ -87,7 +86,7 @@ class _MensaPagePageState extends State<MensaPage>
   List<Widget> slivers(List<DayMenu> menu) {
     final today = DateTime.now().startOfDay;
     return menu
-        .filter((e) => e.day.date.startOfDay >= today)
+        .where((e) => e.day.date.startOfDay >= today)
         .sortedBy((e) => e.day.date)
         .map(
           (dm) => SliverStickyHeader(
