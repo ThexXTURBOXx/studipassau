@@ -6,7 +6,7 @@ issue_tracker: https://github.com/ThexXTURBOXx/studipassau/issues
 
 publish_to: 'none'
 
-version: 2.0.4+204
+version: 2.1.0+210
 
 environment:
   flutter: ^3.41.6

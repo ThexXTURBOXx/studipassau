@@ -1,0 +1,4 @@
+» Completely rewritten file view
+» Fix content being hidden behind the navigation bar
+» Animated refresh button is back! (after its demise in 2022)
+» Faster access thanks to improved data structures

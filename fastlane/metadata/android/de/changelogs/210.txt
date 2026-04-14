@@ -1,0 +1,4 @@
+» Komplett überarbeitete Dateiansicht
+» Problem behoben, bei dem Inhalte hinter der Navigationsleiste verborgen waren
+» Animierter Aktualisierungsbutton ist zurück! (nach ihrem Tod im Jahr 2022)
+» Schnellerer Zugriff dank verbesserter Datenstrukturen
