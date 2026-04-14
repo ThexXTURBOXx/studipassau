@@ -151,7 +151,7 @@ enum StudiPassauState {
   notAuthenticated,
 
   /// Only used in login phase (we are currently authenticating against backend)
-  authenticating,
+  authenticating(progressing: true),
 
   /// Only used in login phase (authentication was finished successfully)
   authenticated(finished: true),
@@ -160,10 +160,10 @@ enum StudiPassauState {
   notFetched,
 
   /// Used when something is being loaded from cache
-  loading,
+  loading(progressing: true),
 
   /// Cache load has finished and (updated) data is being fetched from the server
-  fetching,
+  fetching(progressing: true),
 
   /// (Updated) data was fetched from the server successfully
   fetched(finished: true),
@@ -177,8 +177,13 @@ enum StudiPassauState {
   /// There was some miscellaneous error during fetching
   fetchError(finished: true, errored: true);
 
-  const StudiPassauState({this.finished = false, this.errored = false});
+  const StudiPassauState({
+    this.progressing = false,
+    this.finished = false,
+    this.errored = false,
+  });
 
+  final bool progressing;
   final bool finished;
   final bool errored;
 }

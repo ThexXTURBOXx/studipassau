@@ -25,6 +25,7 @@ import 'package:studipassau/pages/files/widgets/course.dart';
 import 'package:studipassau/pages/files/widgets/file.dart';
 import 'package:studipassau/pages/files/widgets/folder.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
+import 'package:studipassau/util/refresh_button.dart';
 import 'package:supercharged/supercharged.dart';
 
 const routeFiles = '/files';
@@ -82,11 +83,12 @@ class _FilesPagePageState extends State<FilesPage>
     appBar: AppBar(
       title: Text(context.i18n.filesTitle),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: context.i18n.refresh,
-          onPressed: () async =>
-              await _refreshIndicatorKey.currentState?.show(),
+        BlocBuilder<FilesCubit, FilesState>(
+          builder: (context, state) => RefreshIconButton(
+            isLoading: state.state.progressing,
+            onPressed: () async =>
+                await _refreshIndicatorKey.currentState?.show(),
+          ),
         ),
       ],
     ),

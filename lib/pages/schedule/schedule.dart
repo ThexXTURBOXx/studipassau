@@ -17,6 +17,7 @@ import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/schedule/widgets/events.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:studipassau/util/refresh_button.dart';
 import 'package:supercharged/supercharged.dart';
 import 'package:timetable/timetable.dart';
 
@@ -103,12 +104,12 @@ class _SchedulePagePageState extends State<SchedulePage>
     appBar: AppBar(
       title: Text(context.i18n.scheduleTitle),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: context.i18n.refresh,
-          onPressed: () async {
-            await _refreshIndicatorKey.currentState?.show();
-          },
+        BlocBuilder<ScheduleCubit, ScheduleState>(
+          builder: (context, state) => RefreshIconButton(
+            isLoading: state.state.progressing,
+            onPressed: () async =>
+                await _refreshIndicatorKey.currentState?.show(),
+          ),
         ),
       ],
     ),

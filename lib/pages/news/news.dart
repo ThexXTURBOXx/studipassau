@@ -10,6 +10,7 @@ import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/pages/login/widgets/retry_screen.dart';
 import 'package:studipassau/pages/news/widgets/news_item.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:studipassau/util/refresh_button.dart';
 
 const routeNews = '/news';
 
@@ -46,11 +47,12 @@ class _NewsPagePageState extends State<NewsPage> with TickerProviderStateMixin {
     appBar: AppBar(
       title: Text(context.i18n.newsTitle),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: context.i18n.refresh,
-          onPressed: () async =>
-              await _refreshIndicatorKey.currentState?.show(),
+        BlocBuilder<NewsCubit, NewsState>(
+          builder: (context, state) => RefreshIconButton(
+            isLoading: state.state.progressing,
+            onPressed: () async =>
+                await _refreshIndicatorKey.currentState?.show(),
+          ),
         ),
       ],
     ),

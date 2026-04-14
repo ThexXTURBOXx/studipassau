@@ -12,6 +12,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/generated/l10n.dart';
 import 'package:studipassau/pages/settings/settings.dart';
+import 'package:studipassau/util/refresh_button.dart';
 
 const routeMensa = '/mensa';
 
@@ -53,11 +54,12 @@ class _MensaPagePageState extends State<MensaPage>
     appBar: AppBar(
       title: Text(context.i18n.mensaPlanTitle),
       actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.refresh),
-          tooltip: context.i18n.refresh,
-          onPressed: () async =>
-              await _refreshIndicatorKey.currentState?.show(),
+        BlocBuilder<MensaCubit, MensaState>(
+          builder: (context, state) => RefreshIconButton(
+            isLoading: state.state.progressing,
+            onPressed: () async =>
+                await _refreshIndicatorKey.currentState?.show(),
+          ),
         ),
       ],
     ),
