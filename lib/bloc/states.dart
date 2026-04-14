@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:collection/collection.dart';
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/course_membership.dart';
@@ -63,38 +62,10 @@ class MensaState extends BlocState {
 }
 
 class FilesState extends BlocState {
-  FilesState(
-    super.state, {
-    required this.currentFolders,
-    this.currentCourse,
-    this.files = const {},
-    this.folders = const {},
-  });
+  FilesState(super.state, {this.files = const {}, this.folders = const {}});
 
-  final Queue<Folder> currentFolders;
-  Course? currentCourse;
   final Map<String, FileRef> files;
   final Map<String, Folder> folders;
-
-  FolderState get folderState => currentFolder != null
-      ? FolderState.folder
-      : currentCourse != null
-      ? FolderState.courseHome
-      : FolderState.home;
-
-  Folder? get currentFolder => currentFolders.firstOrNull;
-
-  bool goUp() {
-    switch (folderState) {
-      case FolderState.home:
-        return true;
-      case FolderState.courseHome:
-        currentCourse = null;
-      case FolderState.folder:
-        currentFolders.removeFirst();
-    }
-    return false;
-  }
 
   FilesState copyWith({
     StudiPassauState? state,
@@ -104,14 +75,10 @@ class FilesState extends BlocState {
     Map<String, Folder>? folders,
   }) => FilesState(
     state ?? this.state,
-    currentFolders: currentFolders ?? this.currentFolders,
-    currentCourse: currentCourse ?? this.currentCourse,
     files: files ?? this.files,
     folders: folders ?? this.folders,
   );
 }
-
-enum FolderState { home, courseHome, folder }
 
 class NewsState extends BlocState {
   const NewsState(super.state, {this.news});

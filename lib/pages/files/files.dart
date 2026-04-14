@@ -4,7 +4,6 @@ import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:open_filex/open_filex.dart';
@@ -14,6 +13,7 @@ import 'package:studipassau/bloc/cubits/files_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/semesters_cubit.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
+import 'package:studipassau/bloc/repos/files_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
@@ -30,10 +30,30 @@ import 'package:supercharged/supercharged.dart';
 const routeFiles = '/files';
 
 class FilesPage extends StatefulWidget {
-  const FilesPage({super.key});
+  final Course? course;
+
+  final Folder? folder;
+
+  const FilesPage({super.key, this.course, this.folder})
+    : assert(course == null || folder == null);
+
+  static Widget construct(
+    BuildContext context, {
+    Course? course,
+    Folder? folder,
+  }) => BlocProvider<FilesCubit>(
+    create: (context) => FilesCubit(
+      context.read<CoursesCubit>(),
+      context.read<SemestersCubit>(),
+      context.read<FilesRepo>(),
+    ),
+    child: FilesPage(course: course, folder: folder),
+  );
 
   @override
   State<StatefulWidget> createState() => _FilesPagePageState();
+
+  bool get isHome => course == null && folder == null;
 }
 
 class _FilesPagePageState extends State<FilesPage>
@@ -83,42 +103,17 @@ class _FilesPagePageState extends State<FilesPage>
                           builder: (context, state) {
                             isWideScreen =
                                 context.mediaQuery.size.width > wideScreenWidth;
-                            return PopScope(
-                              canPop: false,
-                              onPopInvokedWithResult: (didPop, _) async {
-                                if (didPop) {
-                                  return;
-                                }
-                                final wasHome = state.goUp();
-                                if (wasHome) {
-                                  await SystemNavigator.pop();
-                                } else {
-                                  await refresh(
-                                    context,
-                                    stateL: stateL,
-                                    state: state,
-                                  );
-                                }
-                              },
-                              child: RefreshIndicator(
-                                key: _refreshIndicatorKey,
-                                onRefresh: () async => refresh(
-                                  context,
-                                  stateL: stateL,
-                                  state: state,
-                                ),
-                                child: state.folderState == FolderState.home
-                                    ? generateHomeList(
-                                        context,
-                                        courses: stateC.coursesOrEmpty.values,
-                                        semesters: stateS.semestersOrEmpty,
-                                      )
-                                    : generateFolderList(
-                                        context,
-                                        stateL: stateL,
-                                        state: state,
-                                      ),
-                              ),
+                            return RefreshIndicator(
+                              key: _refreshIndicatorKey,
+                              onRefresh: () async =>
+                                  refresh(context, userId: stateL.userId),
+                              child: widget.isHome
+                                  ? generateHomeList(
+                                      context,
+                                      courses: stateC.coursesOrEmpty.values,
+                                      semesters: stateS.semestersOrEmpty,
+                                    )
+                                  : generateFolderList(context, state: state),
                             );
                           },
                         ),
@@ -159,9 +154,7 @@ class _FilesPagePageState extends State<FilesPage>
                       .map(
                         (c) => CourseWidget(
                           course: c,
-                          onTap: () async {
-                            await loadCourse(c);
-                          },
+                          onTap: () => load(context, course: c),
                         ),
                       )
                       .sortedByCompare((f) => f.sortKey, compareNatural)
@@ -176,26 +169,20 @@ class _FilesPagePageState extends State<FilesPage>
 
   Widget generateFolderList(
     BuildContext context, {
-    required LoginState stateL,
     required FilesState state,
   }) => ListView(
     children:
         <Widget>[
           FolderWidget(
             folder: goUpFolder(),
-            onTap: () async {
-              state.goUp();
-              await refresh(context, stateL: stateL, state: state);
-            },
+            onTap: () => Navigator.pop(context),
           ),
         ] +
         state.folders.values
             .map(
               (f) => FolderWidget(
                 folder: f,
-                onTap: () async {
-                  await loadFolder(f);
-                },
+                onTap: () => load(context, folder: f),
               ),
             )
             .sortedByCompare((f) => f.sortKey, compareNatural)
@@ -232,23 +219,19 @@ class _FilesPagePageState extends State<FilesPage>
     onDone: onDone,
   );
 
-  Future<void> loadCourse(Course course) async {
-    await context.read<FilesCubit>().loadCourseTopFolder(course);
-  }
+  void load(BuildContext context, {Course? course, Folder? folder}) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) =>
+              FilesPage.construct(context, course: course, folder: folder),
+        ),
+      );
 
-  Future<void> loadFolder(Folder folder) async {
-    await context.read<FilesCubit>().loadFolder(folder);
-  }
-
-  Future<void> refresh(
-    BuildContext context, {
-    LoginState? stateL,
-    FilesState? state,
-  }) async {
+  Future<void> refresh(BuildContext context, {String? userId}) async {
     await context.read<FilesCubit>().refresh(
-      userId: stateL?.userId,
-      course: state?.currentCourse,
-      folder: state?.currentFolder,
+      userId: userId,
+      course: widget.course,
+      folder: widget.folder,
     );
   }
 }

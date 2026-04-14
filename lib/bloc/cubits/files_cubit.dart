@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:io' as io;
 
 import 'package:catcher_2/catcher_2.dart';
@@ -21,12 +20,7 @@ import 'package:studipassau/util/sort.dart';
 
 class FilesCubit extends Cubit<FilesState> {
   FilesCubit(this._coursesCubit, this._semestersCubit, this._filesRepo)
-    : super(
-        FilesState(
-          StudiPassauState.notFetched,
-          currentFolders: Queue<Folder>(),
-        ),
-      );
+    : super(FilesState(StudiPassauState.notFetched));
 
   final CoursesCubit _coursesCubit;
 
@@ -94,7 +88,7 @@ class FilesCubit extends Cubit<FilesState> {
     }
   }
 
-  Future<void> loadFolder(Folder folder, {bool refresh = false}) async {
+  Future<void> loadFolder(Folder folder) async {
     emit(state.copyWith(state: StudiPassauState.fetching));
 
     try {
@@ -119,9 +113,6 @@ class FilesCubit extends Cubit<FilesState> {
       emit(
         state.copyWith(
           state: StudiPassauState.fetched,
-          currentFolders: refresh
-              ? state.currentFolders
-              : (state.currentFolders..addFirst(folder)),
           folders: folders,
           files: files,
         ),
@@ -138,7 +129,7 @@ class FilesCubit extends Cubit<FilesState> {
 
   Future<void> refresh({String? userId, Course? course, Folder? folder}) async {
     if (folder != null) {
-      return loadFolder(folder, refresh: true);
+      return loadFolder(folder);
     } else if (course != null) {
       return loadCourseTopFolder(course);
     } else if (userId != null) {

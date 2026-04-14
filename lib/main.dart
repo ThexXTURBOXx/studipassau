@@ -143,7 +143,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
         routeLogin: (ctx) => const LoginPage(),
         routeSchedule: (ctx) => const SchedulePage(),
         routeMensa: (ctx) => const MensaPage(),
-        routeFiles: (ctx) => const FilesPage(),
+        routeFiles: (ctx) => FilesPage.construct(ctx),
         routeRoomFinder: (ctx) => const RoomFinderPage(),
         routeNews: (ctx) => const NewsPage(),
         routeSettings: (ctx) => const SettingsPage(),

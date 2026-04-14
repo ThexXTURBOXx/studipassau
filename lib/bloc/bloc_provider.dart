@@ -1,7 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:studipassau/bloc/cubits/courses_cubit.dart';
-import 'package:studipassau/bloc/cubits/files_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/mensa_cubit.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';
@@ -65,13 +64,6 @@ class StudiPassauBlocProvider extends StatelessWidget {
             create: (context) => MensaCubit(
               context.read<StorageRepo>(),
               context.read<MensaRepo>(),
-            ),
-          ),
-          BlocProvider<FilesCubit>(
-            create: (context) => FilesCubit(
-              context.read<CoursesCubit>(),
-              context.read<SemestersCubit>(),
-              context.read<FilesRepo>(),
             ),
           ),
           BlocProvider<NewsCubit>(
