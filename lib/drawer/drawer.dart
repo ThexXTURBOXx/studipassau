@@ -168,12 +168,12 @@ enum DrawerItem {
       case DrawerItem.browser:
         return (context, state) async {
           closeDrawer(context);
-          await launchUrl(studIpProviderUrl);
+          await launchUriString(studIpProviderUrl);
         };
       case DrawerItem.bugReport:
         return (context, state) async {
           closeDrawer(context);
-          await launchUrl(bugReportUrl);
+          await launchUriString(bugReportUrl);
         };
       case DrawerItem.share:
         return (context, state) async {
@@ -188,7 +188,7 @@ enum DrawerItem {
       case DrawerItem.campusPortal:
         return (context, state) async {
           closeDrawer(context);
-          await launchUrl(campusPortalUrl);
+          await launchUriString(campusPortalUrl);
         };
       case DrawerItem.telegramBot:
         return (context, state) async {
@@ -206,7 +206,7 @@ enum DrawerItem {
                 TextButton(
                   onPressed: () {
                     Navigator.pop(context, 'Okay');
-                    launchUrl(telegramBotUrl);
+                    launchUriString(telegramBotUrl);
                   },
                   child: Text(context.i18n.okay),
                 ),

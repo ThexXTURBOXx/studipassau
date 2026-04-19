@@ -9,7 +9,7 @@ import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
 import 'package:studipassau/pages/roomfinder/widgets/buildings.dart';
 import 'package:studipassau/util/geo.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:studipassau/util/navigation.dart';
 
 const routeRoomFinder = '/roomfinder';
 
@@ -95,7 +95,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
             TextSourceAttribution(
               'OpenStreetMap contributors',
               onTap: () async =>
-                  launchUrl(Uri.https('openstreetmap.org', '/copyright')),
+                  launchUri(Uri.https('openstreetmap.org', '/copyright')),
             ),
           ],
         ),

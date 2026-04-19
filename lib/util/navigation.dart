@@ -1,7 +1,7 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:url_launcher/url_launcher_string.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void navigateTo(BuildContext context, String? name, {Object? arguments}) {
   if (name != null) {
@@ -22,14 +22,24 @@ void navigateTo(BuildContext context, String? name, {Object? arguments}) {
   }
 }
 
-Future<void> launchUrl(
+Future<void> launchUriString(
   String url, {
   LaunchMode mode = LaunchMode.externalApplication,
-}) async => await canLaunchUrlString(url)
-    ? await launchUrlString(url, mode: mode)
+}) async => launchUri(Uri.parse(url));
+
+Future<void> launchUri(
+  Uri uri, {
+  LaunchMode mode = LaunchMode.externalApplication,
+}) async => await supportsLaunchMode(mode)
+    ? await canLaunchUrl(uri)
+          ? await launchUrl(uri, mode: mode)
+          : throw PlatformException(
+              code: 'CANT_LAUNCH_URI',
+              message: "Can't launch URI $uri",
+            )
     : throw PlatformException(
-        code: 'CANT_LAUNCH_URL',
-        message: "Can't launch URL $url",
+        code: 'UNSUPPORTED_LAUNCH_MODE',
+        message: "Can't launch URI $uri",
       );
 
 void closeDrawer(BuildContext context) => context.scaffold.openEndDrawer();

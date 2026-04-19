@@ -33,7 +33,7 @@ Future<void> showStudiPassauAbout(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
-          await launchUrl(aboutEmailUrl);
+          await launchUriString(aboutEmailUrl);
         },
       ),
       ElevatedButton.icon(
@@ -43,7 +43,7 @@ Future<void> showStudiPassauAbout(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
-          await launchUrl(translationUrl);
+          await launchUriString(translationUrl);
         },
       ),
       ElevatedButton.icon(
@@ -53,7 +53,7 @@ Future<void> showStudiPassauAbout(
           minimumSize: WidgetStateProperty.all(const Size.fromHeight(35)),
         ),
         onPressed: () async {
-          await launchUrl(githubUrl);
+          await launchUriString(githubUrl);
         },
       ),
     ],
