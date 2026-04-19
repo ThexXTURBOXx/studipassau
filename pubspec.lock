@@ -1014,10 +1014,10 @@ packages:
     dependency: transitive
     description:
       name: quick_actions_android
-      sha256: "8acaeb18ef926ae1ca6214e51b717ebb592b899f3f97674262d21e010061e5fb"
+      sha256: "8e491323342fa68420ca26a9bd5a2bbcdb526bda33db45b6427c6d139fb7316d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.28"
+    version: "1.0.29"
   quick_actions_ios:
     dependency: transitive
     description:
@@ -1070,18 +1070,18 @@ packages:
     dependency: "direct main"
     description:
       name: sentry
-      sha256: "9f9a35c2e74ed79e16373268e0c79bc00988412d4b30b63eb369d2fa32e6814e"
+      sha256: "8c07a413ce5691db5b299024498f1ad6376e015f61b6d8fc8819b042f65df6c7"
       url: "https://pub.dev"
     source: hosted
-    version: "9.17.0"
+    version: "9.18.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: "2de3cc0652934dd9d833aef578e8723ccba73dd229016b60533701e5890395d6"
+      sha256: "0c98ca79261325806c4eccc47274910306e2d914dfefc598650819677ce2b484"
       url: "https://pub.dev"
     source: hosted
-    version: "9.17.0"
+    version: "9.18.0"
   share_plus:
     dependency: "direct main"
     description:
@@ -1332,10 +1332,10 @@ packages:
     dependency: transitive
     description:
       name: synchronized
-      sha256: c254ade258ec8282947a0acbbc90b9575b4f19673533ee46f2f6e9b3aeefd7c0
+      sha256: "63896c27e81b28f8cb4e69ead0d3e8f03f1d1e5fc531a3e579cabed6a2c7c9e5"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.0"
+    version: "3.4.0+1"
   term_glyph:
     dependency: transitive
     description:
@@ -1594,5 +1594,5 @@ packages:
     source: hosted
     version: "3.1.3"
 sdks:
-  dart: ">=3.11.4 <4.0.0"
-  flutter: ">=3.41.6 <4.0.0"
+  dart: ">=3.11.5 <4.0.0"
+  flutter: ">=3.41.7 <4.0.0"
