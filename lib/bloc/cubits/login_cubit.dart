@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
+import 'package:http/retry.dart';
 import 'package:sentry/sentry.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
@@ -50,6 +52,7 @@ class LoginCubit extends Cubit<LoginState> {
         clientId: Env.clientId,
         //clientSecret: Env.clientSecret,
         apiBaseUrl: apiBaseUrl,
+        httpClient: RetryClient(Client()),
       );
       _setApiClient(client);
 

@@ -2,6 +2,8 @@ import 'package:easy_search_bar_2/easy_search_bar_2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:http/http.dart';
+import 'package:http/retry.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
@@ -12,6 +14,8 @@ import 'package:studipassau/util/geo.dart';
 import 'package:studipassau/util/navigation.dart';
 
 const routeRoomFinder = '/roomfinder';
+
+final _osmHttpClient = RetryClient(Client());
 
 class RoomFinderPage extends StatefulWidget {
   const RoomFinderPage({super.key});
@@ -87,6 +91,7 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
         TileLayer(
           urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           userAgentPackageName: packageInfo.packageName,
+          tileProvider: NetworkTileProvider(httpClient: _osmHttpClient),
         ),
         MarkerLayer(markers: markers),
         PolygonLayer(polygons: polygons),

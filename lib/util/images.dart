@@ -1,5 +1,5 @@
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 import 'package:studip/studip.dart';
 
 class StudIPCacheManager extends CacheManager {
@@ -23,7 +23,7 @@ class StudIPHttpFileService extends HttpFileService {
     String url, {
     Map<String, String>? headers,
   }) async {
-    final req = http.Request('GET', Uri.parse(url));
+    final req = Request('GET', Uri.parse(url));
     if (headers != null) {
       req.headers.addAll(headers);
     }
