@@ -1,0 +1,2 @@
+» Fixed a few connection errors (hopefully)
+» Improved error messages such that I can finally identify what does not work during login

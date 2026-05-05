@@ -1,0 +1,2 @@
+» Ein paar Verbindungsfehler (hoffentlich) behoben
+» Bessere Fehlermeldungen, damit ich endlich herausfinden kann, was beim Login noch nicht funktioniert
