@@ -1,11 +1,9 @@
 import 'dart:io' as io;
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:collection/collection.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:studip/studip.dart';
+import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/cubits/semesters_cubit.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
@@ -18,7 +16,7 @@ import 'package:studipassau/models/folder.dart';
 import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/util/sort.dart';
 
-class FilesCubit extends Cubit<FilesState> {
+class FilesCubit extends ErroringCubit<FilesState> {
   FilesCubit(this._coursesCubit, this._semestersCubit, this._filesRepo)
     : super(FilesState(StudiPassauState.notFetched));
 
@@ -38,13 +36,8 @@ class FilesCubit extends Cubit<FilesState> {
       ]);
 
       emit(state.copyWith(state: StudiPassauState.fetched));
-    } on SessionInvalidException {
-      emit(state.copyWith(state: StudiPassauState.authenticationError));
-    } on io.SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.fetchError));
+      handleFetchError(e, s);
     }
   }
 
@@ -78,13 +71,8 @@ class FilesCubit extends Cubit<FilesState> {
           files: files,
         ),
       );
-    } on SessionInvalidException {
-      emit(state.copyWith(state: StudiPassauState.authenticationError));
-    } on io.SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.fetchError));
+      handleFetchError(e, s);
     }
   }
 
@@ -117,13 +105,8 @@ class FilesCubit extends Cubit<FilesState> {
           files: files,
         ),
       );
-    } on SessionInvalidException {
-      emit(state.copyWith(state: StudiPassauState.authenticationError));
-    } on io.SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.fetchError));
+      handleFetchError(e, s);
     }
   }
 

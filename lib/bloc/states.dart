@@ -10,21 +10,24 @@ import 'package:studipassau/models/semester.dart';
 import 'package:studipassau/models/studipassau_event.dart';
 import 'package:studipassau/models/user.dart';
 
-class BlocState {
+abstract class BlocState<S> {
   const BlocState(this.state);
 
   final StudiPassauState state;
+
+  S copyWith({StudiPassauState? state});
 
   bool get finished => state.finished;
 
   bool get errored => state.errored;
 }
 
-class LoginState extends BlocState {
+class LoginState extends BlocState<LoginState> {
   const LoginState(super.state, {this.me});
 
   final User? me;
 
+  @override
   LoginState copyWith({StudiPassauState? state, User? me}) =>
       LoginState(state ?? this.state, me: me ?? this.me);
 
@@ -37,11 +40,12 @@ class LoginState extends BlocState {
   String? get avatarNormal => me?.meta?['avatar']?['normal']?.toString();
 }
 
-class ScheduleState extends BlocState {
+class ScheduleState extends BlocState<ScheduleState> {
   const ScheduleState(super.state, {this.schedule});
 
   final Map<String, StudiPassauEvent>? schedule;
 
+  @override
   ScheduleState copyWith({
     StudiPassauState? state,
     Map<String, StudiPassauEvent>? schedule,
@@ -50,23 +54,25 @@ class ScheduleState extends BlocState {
   Map<String, StudiPassauEvent> get scheduleOrEmpty => schedule ?? {};
 }
 
-class MensaState extends BlocState {
+class MensaState extends BlocState<MensaState> {
   const MensaState(super.state, {this.mensaPlan});
 
   final List<DayMenu>? mensaPlan;
 
+  @override
   MensaState copyWith({StudiPassauState? state, List<DayMenu>? mensaPlan}) =>
       MensaState(state ?? this.state, mensaPlan: mensaPlan ?? this.mensaPlan);
 
   List<DayMenu> get mensaPlanOrEmpty => mensaPlan ?? [];
 }
 
-class FilesState extends BlocState {
+class FilesState extends BlocState<FilesState> {
   FilesState(super.state, {this.files = const {}, this.folders = const {}});
 
   final Map<String, FileRef> files;
   final Map<String, Folder> folders;
 
+  @override
   FilesState copyWith({
     StudiPassauState? state,
     Queue<Folder>? currentFolders,
@@ -80,18 +86,19 @@ class FilesState extends BlocState {
   );
 }
 
-class NewsState extends BlocState {
+class NewsState extends BlocState<NewsState> {
   const NewsState(super.state, {this.news});
 
   final Map<String, News>? news;
 
+  @override
   NewsState copyWith({StudiPassauState? state, Map<String, News>? news}) =>
       NewsState(state ?? this.state, news: news ?? this.news);
 
   Map<String, News> get newsOrEmpty => news ?? {};
 }
 
-class CoursesState extends BlocState {
+class CoursesState extends BlocState<CoursesState> {
   const CoursesState(
     super.state, {
     this.courses,
@@ -105,6 +112,7 @@ class CoursesState extends BlocState {
 
   final Map<String, CourseMembership>? courseMemberships;
 
+  @override
   CoursesState copyWith({
     StudiPassauState? state,
     Map<String, Course>? courses,
@@ -130,11 +138,12 @@ class CoursesState extends BlocState {
   };
 }
 
-class SemestersState extends BlocState {
+class SemestersState extends BlocState<SemestersState> {
   const SemestersState(super.state, {this.semesters});
 
   final Map<String, Semester>? semesters;
 
+  @override
   SemestersState copyWith({
     StudiPassauState? state,
     Map<String, Semester>? semesters,

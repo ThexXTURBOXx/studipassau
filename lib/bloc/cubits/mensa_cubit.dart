@@ -1,16 +1,15 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:openmensa/openmensa.dart';
+import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 
-class MensaCubit extends Cubit<MensaState> {
+class MensaCubit extends ErroringCubit<MensaState> {
   MensaCubit(this._storageRepo, this._mensaRepo)
     : super(const MensaState(StudiPassauState.notFetched));
 
@@ -53,11 +52,8 @@ class MensaCubit extends Cubit<MensaState> {
         key: mensaPlanKey,
         value: mensaPlan.map(jsonEncode).toList(growable: false),
       );
-    } on SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.fetchError));
+      handleFetchError(e, s);
     }
   }
 }

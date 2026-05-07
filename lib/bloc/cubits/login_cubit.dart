@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
 import 'package:sentry/sentry.dart';
 import 'package:studip/studip.dart';
+import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/providers/studip_provider.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
@@ -16,7 +15,7 @@ import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/user.dart';
 import 'package:studipassau/util/images.dart';
 
-class LoginCubit extends Cubit<LoginState> {
+class LoginCubit extends ErroringCubit<LoginState> {
   LoginCubit(this._storageRepo)
     : super(const LoginState(StudiPassauState.notAuthenticated));
 
@@ -67,13 +66,8 @@ class LoginCubit extends Cubit<LoginState> {
         key: userDataKey,
         value: jsonEncode(me.toJson((a) => a.toJson())),
       );
-    } on StateError {
-      emit(state.copyWith(state: StudiPassauState.httpError));
-    } on SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.authenticationError));
+      handleLoginError(e, s);
     }
   }
 

@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:studip/studip.dart';
+import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/repos/courses_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
@@ -11,7 +9,7 @@ import 'package:studipassau/models/course.dart';
 import 'package:studipassau/models/course_membership.dart';
 import 'package:studipassau/models/jsonapi.dart';
 
-class CoursesCubit extends Cubit<CoursesState> {
+class CoursesCubit extends ErroringCubit<CoursesState> {
   CoursesCubit(this._storageRepo, this._coursesRepo)
     : super(const CoursesState(StudiPassauState.notFetched));
 
@@ -136,13 +134,8 @@ class CoursesCubit extends Cubit<CoursesState> {
             .map((c) => jsonEncode(c.toJson((a) => a.toJson())))
             .toList(growable: false),
       );
-    } on SessionInvalidException {
-      emit(state.copyWith(state: StudiPassauState.authenticationError));
-    } on SocketException {
-      emit(state.copyWith(state: StudiPassauState.httpError));
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
-      emit(state.copyWith(state: StudiPassauState.fetchError));
+      handleFetchError(e, s);
     }
   }
 }
