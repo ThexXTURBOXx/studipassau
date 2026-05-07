@@ -41,9 +41,9 @@ dependencies:
   json_annotation: ^4.11.0
   latlong2: '>=0.9.0 <1.0.0'
   maps_launcher: ^3.0.0+1
-  oauth2_client: ^4.0.0
+  oauth2_client: ^4.3.2
   open_filex: ^4.6.0
-  openmensa: ^3.0.0-alpha.3
+  openmensa: ^3.0.0
   package_info_plus: ^9.0.0
   path_provider: ^2.0.11
   pref: ^2.5.0
