@@ -18,7 +18,7 @@ dependencies:
   catcher_2: ^2.0.0
   collection: ^1.15.0
   dart_date: ^1.1.0
-  device_info_plus: ^12.0.0
+  device_info_plus: ^13.0.0
   easy_search_bar_2: ^1.0.0
   envied: ^1.0.0
   filesize: ^2.0.1
@@ -41,16 +41,16 @@ dependencies:
   json_annotation: ^4.11.0
   latlong2: '>=0.9.0 <1.0.0'
   maps_launcher: ^3.0.0+1
-  oauth2_client: ^4.3.2
+  oauth2_client: ^5.0.0-alpha.0
   open_filex: ^4.6.0
   openmensa: ^3.0.0
-  package_info_plus: ^9.0.0
+  package_info_plus: ^10.0.0
   path_provider: ^2.0.11
   pref: ^2.5.0
   quick_actions: ^1.0.0
   sentry: ^9.0.0
   sentry_flutter: ^9.0.0
-  share_plus: ^12.0.0
+  share_plus: ^13.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^1.0.8
   sprintf: ^7.0.0
@@ -66,7 +66,7 @@ dev_dependencies:
   envied_generator: ^1.0.0
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^6.0.0
-  freezed: ^3.2.5
+  freezed: ^3.2.6-dev.1
   intl_utils: 2.8.14
   json_serializable: ^6.13.0
 
