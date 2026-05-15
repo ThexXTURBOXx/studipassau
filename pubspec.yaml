@@ -40,7 +40,6 @@ dependencies:
   intl: '>=0.19.0 <1.0.0'
   json_annotation: ^4.11.0
   latlong2: '>=0.9.0 <1.0.0'
-  maps_launcher: ^3.0.0+1
   oauth2_client: ^5.0.0-alpha.0
   open_filex: ^4.6.0
   openmensa: ^3.0.0

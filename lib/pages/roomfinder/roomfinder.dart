@@ -5,7 +5,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:maps_launcher/maps_launcher.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/drawer/drawer.dart';
@@ -75,8 +74,13 @@ class _RoomFinderPagePageState extends State<RoomFinderPage>
                             const Size.fromHeight(35),
                           ),
                         ),
-                        onPressed: () async =>
-                            await MapsLauncher.launchQuery(building.address),
+                        onPressed: () async => launchUriForce(
+                          Uri(
+                            scheme: 'geo',
+                            host: 'ul',
+                            queryParameters: {'q': building.address},
+                          ),
+                        ),
                       ),
                     ],
                   ),
