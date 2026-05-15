@@ -1,0 +1,2 @@
+» Fixed a few more errors
+» Updated a few dependencies
