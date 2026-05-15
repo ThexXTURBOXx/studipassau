@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:catcher_2/catcher_2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oauth2_client/oauth2_exception.dart';
@@ -9,6 +10,14 @@ import 'package:studipassau/bloc/states.dart';
 
 class ErroringCubit<State extends BlocState> extends Cubit<State> {
   ErroringCubit(super.initialState);
+
+  @override
+  @protected
+  void emit(State state) {
+    if (!isClosed) {
+      super.emit(state);
+    }
+  }
 
   void handleLoginError(Object e, StackTrace s) {
     if (e is StateError) {
