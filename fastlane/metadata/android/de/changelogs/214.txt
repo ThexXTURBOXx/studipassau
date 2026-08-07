@@ -1,0 +1,2 @@
+» Flutter und Abhängigkeiten aktualisiert
+» Unterstützung für Android 17

@@ -1,0 +1,2 @@
+» Flutter and dependencies updated
+» Add support for Android 17
