@@ -21,7 +21,7 @@ kotlin {
 
 android {
     namespace = "studip_uni_passau.femtopedia.de.unipassaustudip"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37 // flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
@@ -32,7 +32,7 @@ android {
     defaultConfig {
         applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
         minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
+        targetSdk = 37 // flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
