@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_sticky_header/flutter_sticky_header.dart';
-import 'package:open_filex/open_filex.dart';
+import 'package:open_file/open_file.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/cubits/files_cubit.dart';
@@ -199,7 +199,7 @@ class _FilesPagePageState extends State<FilesPage>
                   await downloadFile(
                     f,
                     onProgress: (perc) => pd.update(value: perc.round()),
-                    onDone: OpenFilex.open,
+                    onDone: OpenFile.open,
                   );
                 },
                 showDownloads: isWideScreen,
