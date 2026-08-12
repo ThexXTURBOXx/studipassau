@@ -21,7 +21,7 @@ kotlin {
 
 android {
     namespace = "studip_uni_passau.femtopedia.de.unipassaustudip"
-    compileSdkVersion = "android-37.0" // flutter.compileSdkVersion
+    compileSdk { version = release(37) { minorApiLevel = 0 } } // flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
