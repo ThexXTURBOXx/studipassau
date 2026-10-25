@@ -9,17 +9,17 @@ publish_to: 'none'
 version: 2.1.4+214
 
 environment:
-  flutter: ^3.44.9
-  sdk: ^3.12.2
+  flutter: ^3.47.8
+  sdk: ^3.13.7
 
 dependencies:
-  black_hole_flutter: ^1.0.1
-  cached_network_image: ^3.1.0
-  catcher_2: ^2.0.0
+  black_hole_flutter: ^2.0.0
+  cached_network_image: ^4.0.0
+  catcher_2: ^3.0.0-alpha.0
   collection: ^1.15.0
   dart_date: ^1.1.0
   device_info_plus: ^13.0.0
-  easy_search_bar_2: ^1.0.0
+  easy_search_bar_2: ^2.0.0
   envied: ^1.0.0
   filesize: ^2.0.1
   flutter:
@@ -40,15 +40,16 @@ dependencies:
   intl: '>=0.19.0 <1.0.0'
   json_annotation: ^4.12.0
   latlong2: '>=0.9.0 <1.0.0'
+  material_ui: ^1.1.1
   oauth2_client: ^5.0.0-alpha.1
   open_file: ^4.0.0
   openmensa: ^3.0.0
   package_info_plus: ^10.0.0
   path_provider: ^2.0.11
-  pref: ^2.5.0
+  pref: ^3.0.0
   quick_actions: ^1.0.0
-  sentry: ^9.0.0
-  sentry_flutter: ^9.0.0
+  sentry: ^10.0.0
+  sentry_flutter: ^10.0.0
   share_plus: ^13.0.0
   shared_preferences: ^2.0.15
   sn_progress_dialog: ^2.0.0
@@ -65,7 +66,7 @@ dev_dependencies:
   envied_generator: ^1.0.0
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^6.0.0
-  freezed: ^4.0.0-dev.3
+  freezed: ^4.0.3
   intl_utils: 2.8.14
   json_serializable: ^6.13.0
 
@@ -73,9 +74,14 @@ dependency_overrides:
   intl_utils:
     git:
       url: https://github.com/ThexXTURBOXx/intl_utils.git
+  sn_progress_dialog:
+    git:
+      url: https://github.com/ThexXTURBOXx/Flutter-Progress-Dialog.git
+      ref: master
   timetable:
     git:
-      url: https://github.com/ThexXTURBOXx/timetable
+      url: https://github.com/ThexXTURBOXx/timetable.git
+      ref: material_ui
 
 flutter_launcher_icons:
   adaptive_icon_background: '#2898f1'
