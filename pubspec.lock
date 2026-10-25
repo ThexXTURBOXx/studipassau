@@ -577,12 +577,13 @@ packages:
     source: hosted
     version: "0.17.4"
   fluttertoast:
-    dependency: transitive
+    dependency: "direct overridden"
     description:
-      name: fluttertoast
-      sha256: a5c39007e19fff5eeb7810d5be651c02bb5a1c06104bdd203b037bbfe49bd827
-      url: "https://pub.dev"
-    source: hosted
+      path: "."
+      ref: f822240c716c222fc383332786dc322c8714c9cc
+      resolved-ref: f822240c716c222fc383332786dc322c8714c9cc
+      url: "https://github.com/taufiqsejati/FlutterToast.git"
+    source: git
     version: "10.0.2"
   freezed:
     dependency: "direct dev"

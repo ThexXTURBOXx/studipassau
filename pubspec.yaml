@@ -71,6 +71,10 @@ dev_dependencies:
   json_serializable: ^6.13.0
 
 dependency_overrides:
+  fluttertoast:
+    git:
+      url: https://github.com/taufiqsejati/FlutterToast.git
+      ref: f822240c716c222fc383332786dc322c8714c9cc
   intl_utils:
     git:
       url: https://github.com/ThexXTURBOXx/intl_utils.git
