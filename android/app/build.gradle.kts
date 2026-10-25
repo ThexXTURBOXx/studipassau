@@ -31,7 +31,7 @@ android {
 
     defaultConfig {
         applicationId = "studip_uni_passau.femtopedia.de.unipassaustudip"
-        minSdk = flutter.minSdkVersion
+        minSdk = 26 // flutter.minSdkVersion
         targetSdk = 37 // flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName

@@ -29,8 +29,6 @@ Future main() async {
 
   packageInfo = await PackageInfo.fromPlatform();
 
-  await installRootCertificates();
-
   final debugOptions = Catcher2Options(SilentReportMode(), [
     consoleHandler,
   ], localizationOptions: catcherLocalizations);
