@@ -9,6 +9,7 @@ import 'package:pref/pref.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:shared_preferences/util/legacy_to_async_migration_util.dart';
 import 'package:studipassau/bloc/bloc_provider.dart';
 import 'package:studipassau/bloc/providers/shared_storage_provider.dart';
 import 'package:studipassau/constants.dart';
@@ -37,12 +38,18 @@ Future main() async {
     consoleHandler,
   ], localizationOptions: catcherLocalizations);
 
-  // TODO(Nico): Migrate to async or cached version at some point
-  //             (probably need to migrate away from pref then, though...).
-  //             This will also get rid of this ugly static reference...
-  SharedStorageDataProvider.sharedPrefs = await SharedPreferences.getInstance();
+  await migrateLegacySharedPreferencesToSharedPreferencesAsyncIfNecessary(
+    legacySharedPreferencesInstance: await SharedPreferences.getInstance(),
+    sharedPreferencesAsyncOptions: const SharedPreferencesOptions(),
+    migrationCompletedKey: 'SPLegacyMigrationCompleted',
+  );
 
-  prefService = await PrefServiceShared.init(defaults: defaults);
+  SharedStorageDataProvider.sharedPrefs =
+      await SharedPreferencesWithCache.create(
+        cacheOptions: const SharedPreferencesWithCacheOptions(),
+      );
+
+  prefService = await PrefServiceSharedWithCache.init(defaults: defaults);
   targetRoute = getPref(startRoutePref);
 
   const quickActions = QuickActions();

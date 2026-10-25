@@ -77,6 +77,10 @@ dependency_overrides:
   intl_utils:
     git:
       url: https://github.com/ThexXTURBOXx/intl_utils.git
+  pref:
+    git:
+      url: https://github.com/ThexXTURBOXx/flutter_pref.git
+      path: pref
   sn_progress_dialog:
     git:
       url: https://github.com/ThexXTURBOXx/Flutter-Progress-Dialog.git

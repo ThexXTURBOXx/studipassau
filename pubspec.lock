@@ -306,7 +306,7 @@ packages:
     source: hosted
     version: "0.4.0"
   device_info_plus:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: device_info_plus
       sha256: ade1c36f8355d6284c98e4a47992ea263887ed3d1acb281e37635dd45f04c4aa
@@ -1045,10 +1045,11 @@ packages:
   pref:
     dependency: "direct main"
     description:
-      name: pref
-      sha256: "5c70e449c5dc716663346b166accc4a71d8df00060975b1c18afbc4ae93fb59f"
-      url: "https://pub.dev"
-    source: hosted
+      path: pref
+      ref: HEAD
+      resolved-ref: "5baaaeb22c6dcc4bccdd74ed60bd7465fdd29c71"
+      url: "https://github.com/ThexXTURBOXx/flutter_pref.git"
+    source: git
     version: "3.0.0"
   proj4dart:
     dependency: transitive
