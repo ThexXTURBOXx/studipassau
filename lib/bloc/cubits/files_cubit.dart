@@ -49,17 +49,15 @@ class FilesCubit extends ErroringCubit<FilesState> {
 
       final folders = idMap(
         topFolder.item1.sorted(
-          compareBy<Folder, String>(
-            (f) => f.attributes.name,
-          ).thenBy((f) => f.attributes.changeDate),
+          compareBy<Folder, String>((f) => f.attributes.name)
+              .thenBy((f) => f.attributes.changeDate),
         ),
       );
 
       final files = idMap(
         topFolder.item2.sorted(
-          compareBy<FileRef, String>(
-            (f) => f.attributes.name,
-          ).thenBy((f) => f.attributes.changeDate),
+          compareBy<FileRef, String>((f) => f.attributes.name)
+              .thenBy((f) => f.attributes.changeDate),
         ),
       );
 
@@ -84,17 +82,15 @@ class FilesCubit extends ErroringCubit<FilesState> {
 
       final folders = idMap(
         topFolder.item1.sorted(
-          compareBy<Folder, String>(
-            (f) => f.attributes.name,
-          ).thenBy((f) => f.attributes.changeDate),
+          compareBy<Folder, String>((f) => f.attributes.name)
+              .thenBy((f) => f.attributes.changeDate),
         ),
       );
 
       final files = idMap(
         topFolder.item2.sorted(
-          compareBy<FileRef, String>(
-            (f) => f.attributes.name,
-          ).thenBy((f) => f.attributes.changeDate),
+          compareBy<FileRef, String>((f) => f.attributes.name)
+              .thenBy((f) => f.attributes.changeDate),
         ),
       );
 
