@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:studipassau/pages/settings/settings.dart';
 import 'package:studipassau/util/json.dart';
 import 'package:timetable/timetable.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/folder.dart';

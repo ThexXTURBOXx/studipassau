@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/login/login.dart';
 import 'package:studipassau/pages/login/widgets/retry_button.dart';

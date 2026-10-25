@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/cubits/news_cubit.dart';

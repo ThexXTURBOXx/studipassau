@@ -1,8 +1,8 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:studipassau/bloc/cubits/login_cubit.dart';
 import 'package:studipassau/bloc/states.dart';

@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:catcher_2/catcher_2.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/intl_standalone.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pref/pref.dart';
 import 'package:quick_actions/quick_actions.dart';
@@ -127,16 +126,15 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
       ),
       navigatorKey: Catcher2.navigatorKey,
       navigatorObservers: [SentryNavigatorObserver()],
-      localizationsDelegates: const [
-        S.delegate,
-        TimetableLocalizationsDelegate(
-          setIntlLocale: false,
-          fallbackLocale: Locale('en', 'US'),
-        ),
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
+      localizationsDelegates:
+          const <LocalizationsDelegate<dynamic>>[
+            S.delegate,
+            TimetableLocalizationsDelegate(
+              setIntlLocale: false,
+              fallbackLocale: Locale('en', 'US'),
+            ),
+          ] +
+          GlobalMaterialLocalizations.delegates,
       supportedLocales: S.delegate.supportedLocales,
       initialRoute: getPref(autoLoginPref) ? routeLogin : targetRoute,
       routes: {

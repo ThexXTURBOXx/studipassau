@@ -1,7 +1,7 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:pref/pref.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/pages/settings/settings.dart';

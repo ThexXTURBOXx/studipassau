@@ -1,7 +1,7 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_widget_from_html_core/flutter_widget_from_html_core.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/news.dart';
 
