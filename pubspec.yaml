@@ -66,7 +66,6 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.1
   flutter_lints: ^6.0.0
   freezed: ^4.0.3
-  intl_utils: 2.8.14
   json_serializable: ^6.13.0
 
 dependency_overrides:
@@ -74,9 +73,6 @@ dependency_overrides:
     git:
       url: https://github.com/ponnamkarthik/FlutterToast.git
       ref: 04481c8801b9729ca4edd05e044c34a13f772cf1
-  intl_utils:
-    git:
-      url: https://github.com/ThexXTURBOXx/intl_utils.git
   pref:
     git:
       url: https://github.com/ThexXTURBOXx/flutter_pref.git
@@ -107,12 +103,8 @@ flutter:
     - family: StudiPassauIcons
       fonts:
         - asset: fonts/StudiPassauIcons.ttf
+  generate: true
   uses-material-design: true
-
-flutter_intl:
-  enabled: true
-  localizely:
-    project_id: 32cea4c8-ff53-4e34-94d8-bcdc8643b236
 
 flutter_native_splash:
   color: '#2898f1'

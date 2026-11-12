@@ -140,7 +140,7 @@ class _StudiPassauAppState extends State<StudiPassauApp> {
             ),
           ] +
           GlobalMaterialLocalizations.delegates,
-      supportedLocales: S.delegate.supportedLocales,
+      supportedLocales: S.supportedLocales,
       initialRoute: getPref(autoLoginPref) ? routeLogin : targetRoute,
       routes: {
         routeLogin: (ctx) => const LoginPage(),

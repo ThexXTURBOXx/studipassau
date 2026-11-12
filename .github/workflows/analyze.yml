@@ -27,7 +27,7 @@ jobs:
 
       - name: Generate additional files
         run: |
-          dart run intl_utils:generate
+          flutter gen-l10n
           dart run build_runner build
 
       - name: Lint

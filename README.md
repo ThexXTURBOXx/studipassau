@@ -33,7 +33,7 @@ The compilation from source should be straight forward (only Android):
    ```
 5. Generate the language files:
     ```shell
-    dart run intl_utils:generate
+    flutter gen-l10n
     ```
 6. Generate additional files (env variables/schemas/etc.) automatically:
     ```shell
