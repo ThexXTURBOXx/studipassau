@@ -31,7 +31,7 @@ dependencies:
   flutter_map: ^8.0.0
   flutter_native_splash: ^2.0.1+1
   flutter_secure_storage: ^11.0.0
-  flutter_sticky_header: ^0.8.0
+  flutter_sticky_header: ^0.11.0
   flutter_widget_from_html_core: ^0.17.0
   freezed_annotation: ^3.1.0
   fwfh_url_launcher: ^0.16.0
@@ -72,8 +72,8 @@ dev_dependencies:
 dependency_overrides:
   fluttertoast:
     git:
-      url: https://github.com/taufiqsejati/FlutterToast.git
-      ref: f822240c716c222fc383332786dc322c8714c9cc
+      url: https://github.com/ponnamkarthik/FlutterToast.git
+      ref: 04481c8801b9729ca4edd05e044c34a13f772cf1
   intl_utils:
     git:
       url: https://github.com/ThexXTURBOXx/intl_utils.git
