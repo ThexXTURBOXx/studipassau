@@ -1,0 +1,2 @@
+» Flutter und viele Abhängigkeiten aktualisiert
+» Internetfehler werden nicht mehr gesondert gemeldet

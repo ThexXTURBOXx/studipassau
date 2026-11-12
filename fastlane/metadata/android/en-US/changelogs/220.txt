@@ -1,0 +1,2 @@
+» Flutter and lots of dependencies updated
+» Internet errors are no longer reported separately
