@@ -1,12 +1,12 @@
 import 'dart:io';
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oauth2_client/oauth2_exception.dart';
 import 'package:studip/studip.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/constants.dart';
 
 class ErroringCubit<State extends BlocState> extends Cubit<State> {
   ErroringCubit(super.initialState);
@@ -34,7 +34,7 @@ class ErroringCubit<State extends BlocState> extends Cubit<State> {
         }
         extraData['origTrace'] = e.causeTrace;
       }
-      Catcher2.reportCheckedError(e, s, extraData: extraData);
+      reportError(e, s, extraData: extraData);
       emit(state.copyWith(state: StudiPassauState.authenticationError));
     }
   }
@@ -54,7 +54,7 @@ class ErroringCubit<State extends BlocState> extends Cubit<State> {
         }
         extraData['origTrace'] = e.causeTrace;
       }
-      Catcher2.reportCheckedError(e, s, extraData: extraData);
+      reportError(e, s, extraData: extraData);
       emit(state.copyWith(state: StudiPassauState.fetchError));
     }
   }

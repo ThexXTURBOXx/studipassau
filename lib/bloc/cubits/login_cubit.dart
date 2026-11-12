@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
 import 'package:sentry/sentry.dart';
@@ -39,7 +38,7 @@ class LoginCubit extends ErroringCubit<LoginState> {
         emit(state.copyWith(me: me));
       }
     } catch (e, s) {
-      Catcher2.reportCheckedError(e, s);
+      reportError(e, s);
     }
 
     emit(state.copyWith(state: StudiPassauState.authenticating));

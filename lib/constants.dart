@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:catcher_2/catcher_2.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -230,6 +231,17 @@ void showErrorMessage(BuildContext context, BlocState state) {
 
 void showSnackBar(BuildContext context, String msg) {
   context.scaffoldMessenger.showSnackBar(SnackBar(content: Text(msg)));
+}
+
+void reportError(
+  dynamic error,
+  dynamic stackTrace, {
+  Map<String, dynamic>? extraData,
+}) {
+  // TODO(Nico): Add some way to report ClientExceptions as well?
+  if (error == null || error is! ClientException) {
+    Catcher2.reportCheckedError(error, stackTrace, extraData: extraData);
+  }
 }
 
 /// Debug method as described in https://github.com/flutter/flutter/issues/22665

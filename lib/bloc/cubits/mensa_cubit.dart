@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:openmensa/openmensa.dart';
 import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/repos/mensa_repo.dart';
@@ -31,7 +30,7 @@ class MensaCubit extends ErroringCubit<MensaState> {
           emit(state.copyWith(mensaPlan: mensaPlan));
         }
       } catch (e, s) {
-        Catcher2.reportCheckedError(e, s);
+        reportError(e, s);
       }
     }
 

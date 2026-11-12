@@ -1,4 +1,3 @@
-import 'package:catcher_2/catcher_2.dart';
 import 'package:http/http.dart';
 import 'package:http/retry.dart';
 import 'package:openmensa/openmensa.dart';
@@ -44,7 +43,7 @@ class StwnoDataProvider {
       try {
         addToMenu(plan, entries);
       } catch (e, s) {
-        Catcher2.reportCheckedError(e, s);
+        reportError(e, s);
       }
     }
     return plan.entries
@@ -70,7 +69,7 @@ class StwnoDataProvider {
       // Only report entries with at least 2 columns.
       // The rest are most likely just empty rows...
       if (entry.length > 1) {
-        Catcher2.reportCheckedError(null, null, extraData: {'entry': entry});
+        reportError(null, null, extraData: {'entry': entry});
       }
 
       return null;

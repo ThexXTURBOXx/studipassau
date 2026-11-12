@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/repos/semesters_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/semester.dart';
 
@@ -35,7 +35,7 @@ class SemestersCubit extends ErroringCubit<SemestersState> {
           emit(state.copyWith(semesters: idMap(semesters)));
         }
       } catch (e, s) {
-        Catcher2.reportCheckedError(e, s);
+        reportError(e, s);
       }
     }
 

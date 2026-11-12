@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:catcher_2/catcher_2.dart';
 import 'package:studipassau/bloc/cubits/courses_cubit.dart';
 import 'package:studipassau/bloc/erroring_cubit.dart';
 import 'package:studipassau/bloc/repos/news_repo.dart';
 import 'package:studipassau/bloc/repos/storage_repo.dart';
 import 'package:studipassau/bloc/states.dart';
+import 'package:studipassau/constants.dart';
 import 'package:studipassau/models/jsonapi.dart';
 import 'package:studipassau/models/news.dart';
 
@@ -39,7 +39,7 @@ class NewsCubit extends ErroringCubit<NewsState> {
           emit(state.copyWith(news: idMap(news)));
         }
       } catch (e, s) {
-        Catcher2.reportCheckedError(e, s);
+        reportError(e, s);
       }
     }
 
