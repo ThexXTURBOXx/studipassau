@@ -1,7 +1,10 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:catcher_2/catcher_2.dart';
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
@@ -231,6 +234,19 @@ void showErrorMessage(BuildContext context, BlocState state) {
 
 void showSnackBar(BuildContext context, String msg) {
   context.scaffoldMessenger.showSnackBar(SnackBar(content: Text(msg)));
+}
+
+Future<void> installRootCertificates() async {
+  if (Platform.isAndroid) {
+    final androidInfo = await DeviceInfoPlugin().androidInfo;
+    // API 26 is Oreo (8.0), older versions have outdated root certificates!
+    if (androidInfo.version.sdkInt < 26) {
+      final data = await PlatformAssetBundle().load('assets/ca/root-certs.pem');
+      SecurityContext.defaultContext.setTrustedCertificatesBytes(
+        data.buffer.asUint8List(),
+      );
+    }
+  }
 }
 
 void reportError(

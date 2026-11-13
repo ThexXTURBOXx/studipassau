@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: de5ac590b8155e4e676088d714bd41ea620449a6adc0f7950c5073874b287ddb
+      sha256: "2fda90592c0afd219c5e285618a98da835cd10df38372666093d25dfe457a2d0"
       url: "https://pub.dev"
     source: hosted
-    version: "4.6.0"
+    version: "4.7.1"
   args:
     dependency: transitive
     description:
@@ -306,7 +306,7 @@ packages:
     source: hosted
     version: "0.4.2"
   device_info_plus:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: device_info_plus
       sha256: ade1c36f8355d6284c98e4a47992ea263887ed3d1acb281e37635dd45f04c4aa
@@ -551,26 +551,26 @@ packages:
     dependency: transitive
     description:
       name: flutter_web_auth_2
-      sha256: "2725022bea4dd51cc588d7cc12808291fe2cc97088144a770ea1674c39a39f16"
+      sha256: "53f43b2b5d32856cb84334b19372d24a78ad446f81d142e6faad0a0bd7750eee"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-alpha.10"
+    version: "6.0.0-alpha.11"
   flutter_web_auth_2_desktop_webview:
     dependency: transitive
     description:
       name: flutter_web_auth_2_desktop_webview
-      sha256: f09cfd6d51441838f78ea392d0290bcd99a0afa0ed9469b3d9f44f55bb6f7378
+      sha256: "883549c457e0cf3bc9abd101bcffe105b59cc2f1b614fb7f9439bdaad2727ea6"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-alpha.10"
+    version: "6.0.0-alpha.11"
   flutter_web_auth_2_platform_interface:
     dependency: transitive
     description:
       name: flutter_web_auth_2_platform_interface
-      sha256: d1fabf4a00229e11570866045e5d0c203d7fd1f7680840cb190f315dd12da2fd
+      sha256: "0d67383bf47ea1a7465ddbe506a55d2cb2dec84190ba130129712e9a79a832ef"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0-alpha.9"
+    version: "6.0.0-alpha.11"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -837,10 +837,10 @@ packages:
     dependency: "direct main"
     description:
       name: oauth2_client
-      sha256: "8e1277852165899feddaf0903514f535b993dbab55bb94c288959985df93221f"
+      sha256: "6d0ce4a80b33681907f9236934febedfb303d694156abd27eaff28d8d82a6b9f"
       url: "https://pub.dev"
     source: hosted
-    version: "5.0.0-alpha.2"
+    version: "5.0.0-alpha.3"
   objective_c:
     dependency: transitive
     description:
@@ -1174,18 +1174,18 @@ packages:
     dependency: "direct main"
     description:
       name: sentry
-      sha256: de233eb7a4d30e8fc18dafffde344b1846f92ffd079f454c56872e064145e396
+      sha256: "6549d5e63700434b76a21d4ee6a273fb7e1735307409777d043621f50d7ff9e2"
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.0"
+    version: "10.4.0"
   sentry_flutter:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: "798acb5d181869403828a0c0ac54989c9b1f7189efd13cc2a55102d18454bf23"
+      sha256: cd123c354b7189bae98b9e9d23ba915d2ecdc3ab98675b6cb85a84baad86199c
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.0"
+    version: "10.4.0"
   share_plus:
     dependency: "direct main"
     description:
