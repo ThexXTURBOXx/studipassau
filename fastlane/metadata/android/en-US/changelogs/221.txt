@@ -1,0 +1,6 @@
+2.2.1:
+» Android 7 is supported again
+
+2.2.0:
+» Flutter and lots of dependencies updated
+» Internet errors are no longer reported separately
